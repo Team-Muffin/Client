@@ -1,23 +1,13 @@
-import React from "react";
-// import Header from './components/Header';
-// import Footer from './components/Footer';
-// import MainPage from './pages/MainPage';
-// import LoginPage from './pages/LoginPage';
-import { BrowserRouter, Routes } from "react-router-dom";
+// import "./App.css";
+import { RouterProvider } from "react-router-dom";
+import routerComponent from "./routers/router";
 
-const App: React.FC = () => {
+function App() {
   return (
     <>
-      <BrowserRouter>
-        {/* <Header></Header> */}
-        <Routes>
-          {/* <Route path='/' element={<MainPage />}></Route>
-          <Route path='/login' element={<LoginPage />}></Route> */}
-        </Routes>
-      </BrowserRouter>
-      {/* <Footer></Footer> */}
+      <RouterProvider router={routerComponent} />
     </>
   );
-};
+}
 
 export default App;
