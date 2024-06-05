@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../routes/Layout";
-import Home from "../routes/Home";
+import Navbar from "../routes/Navbar";
 
 export const mainRouter = [
   {
@@ -9,7 +9,7 @@ export const mainRouter = [
     children: [
       {
         path: "",
-        element: <Home />,
+        element: <Navbar />,
       },
     ],
   },
