@@ -1,7 +1,9 @@
+import logo from "../assets/smallLogo.png";
+
 const Home = () => {
   return (
     <>
-      <h1>hi</h1>
+      <img src={logo}></img>
     </>
   );
 };
