@@ -34,28 +34,28 @@ export default function PostList() {
       {/* 세트로 들고 다녀야 됨 */}
 
       <div className="flex justify-center">
-        <div
+        <p
           className={`${
             category === "유저" ? selectedCategoryCss : defaultCategoryCss
           } cursor-pointer`}
           onClick={() => handleCategoryClick("유저")}
         >
           유저
-        </div>
-        <div
+        </p>
+        <p
           className={`${
             category === "기업" ? selectedCategoryCss : defaultCategoryCss
           } cursor-pointer`}
           onClick={() => handleCategoryClick("기업")}
         >
           기업
-        </div>
+        </p>
       </div>
 
       {category === "유저" ? (
         <div className="flex justify-around mt-4 text-sm">
           {categories.map((cat) => (
-            <div
+            <p
               key={cat}
               className={`${
                 userCategory === cat
@@ -65,7 +65,7 @@ export default function PostList() {
               onClick={() => handleUserCategoryClick(cat)}
             >
               {cat}
-            </div>
+            </p>
           ))}
         </div>
       ) : null}
