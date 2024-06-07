@@ -160,7 +160,8 @@ export default function PostList() {
         className="fixed bottom-[8vh] right-[4vw] z-5"
         src={writeButton}
       ></img>
-      {/* <Navbar /> */}
+      <div className="mb-[8vh]" />
+      <Navbar />
     </div>
   );
 }
