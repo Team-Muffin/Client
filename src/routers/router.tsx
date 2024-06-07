@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../routes/Layout";
-import Navbar from "../routes/Navbar";
+import ChallengePage from "../routes/ChallengePage";
 
 export const mainRouter = [
   {
@@ -9,7 +9,7 @@ export const mainRouter = [
     children: [
       {
         path: "",
-        element: <Navbar />,
+        element: <ChallengePage />,
       },
     ],
   },
