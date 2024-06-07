@@ -3,8 +3,9 @@ import Header from "../components/Header";
 import Dropdown from "../components/Dropdown";
 import writeButton from "../assets/writeButton.svg";
 import PostCard from "../components/PostCard";
+import Navbar from "./Navbar";
 
-export default function Post() {
+export default function PostList() {
   const [category, setCategory] = useState("유저");
   const [userCategory, setUserCategory] = useState("맞춤");
   const categories = ["맞춤", "꿀팁", "소비", "절약", "투자"];
@@ -159,6 +160,7 @@ export default function Post() {
         className="fixed bottom-[8vh] right-[4vw] z-5"
         src={writeButton}
       ></img>
+      {/* <Navbar /> */}
     </div>
   );
 }
