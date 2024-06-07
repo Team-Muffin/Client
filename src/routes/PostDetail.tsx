@@ -5,15 +5,25 @@ import writeButton from "../assets/writeButton.svg";
 import PostCard from "../components/PostCard";
 import Navbar from "./Navbar";
 import character1 from "../assets/character1.svg";
+import character1_small from "../assets/character1_small.svg";
+import character2 from "../assets/character2.svg";
 import Heart from "../assets/heart_empty.svg";
+import RedHeart from "../assets/heart_filled.svg";
 import Reply from "../assets/reply.svg";
 import Scrap from "../assets/scrap.svg";
+import FilledScrap from "../assets/scrap_filled.svg";
+import Send from "../assets/send.svg";
 
 export default function PostDetail() {
-  const [category, setCategory] = useState("유저");
+  const [heartClicked, setHeartClicked] = useState(false);
+  const [scrapClicked, setScrapClicked] = useState(false);
 
-  const handleCategoryClick = (selection: string) => {
-    setCategory(selection);
+  const handleHeartClicked = (selection: boolean) => {
+    setHeartClicked(selection);
+  };
+
+  const handleScrapClicked = (selection: boolean) => {
+    setScrapClicked(selection);
   };
 
   return (
@@ -31,6 +41,7 @@ export default function PostDetail() {
               <p className="text-[0.8rem] text-C333333">2시간 전</p>
             </div>
           </div>
+
           {/* 여기 민우 TODO */}
           <p className=" py-[1vh] text-[1.25rem] font-medium">
             ⭐️️ 내가 들었던 펀드 추천 글 ⭐
@@ -63,12 +74,23 @@ export default function PostDetail() {
             <br />
           </p>
           {/* 까지 민우 TODO */}
+
           <div className="flex justify-between ">
             <div className="flex items-center">
-              <img
-                src={Heart}
-                className="w-[1.2rem] mr-[1vw] text-C333333"
-              ></img>
+              {heartClicked === true ? (
+                <img
+                  src={RedHeart}
+                  className="w-[1.2rem] mr-[1vw] text-C333333"
+                  onClick={() => handleHeartClicked(false)}
+                />
+              ) : (
+                <img
+                  src={Heart}
+                  className="w-[1.2rem] mr-[1vw] text-C333333"
+                  onClick={() => handleHeartClicked(true)}
+                />
+              )}
+
               <p className="text-[0.85rem] mr-[1.75vw] text-C333333">7</p>
               <img
                 src={Reply}
@@ -77,18 +99,69 @@ export default function PostDetail() {
               <p className="text-[0.85rem] mr-[1vw] text-C333333">3</p>
             </div>
             <div className="flex bg-[#F8F5F5] p-[1.5vw] rounded-[0.5rem]">
-              <img
-                src={Scrap}
-                className="w-[1.2rem] mr-[1vw] text-C333333"
-              ></img>
+              {scrapClicked === true ? (
+                <img
+                  src={FilledScrap}
+                  className="w-[1.2rem] mr-[1vw] text-C333333"
+                  onClick={() => handleScrapClicked(false)}
+                />
+              ) : (
+                <img
+                  src={Scrap}
+                  className="w-[1.2rem] mr-[1vw] text-C333333"
+                  onClick={() => handleScrapClicked(true)}
+                />
+              )}
               <p className="text-[0.85rem] mr-[1vw] text-C333333">저장</p>
             </div>
           </div>
         </div>
-        <hr className="border-CD9D9D9 mt-[1vh]" />
+        <hr className="border-CD9D9D9 my-[1vh]" />
 
-        <div></div>
+        <div className=" mt-[2vh]  p-[2.75vw] shadow rounded-[0.5rem]">
+          <div className="flex justify-between">
+            <div className="flex items-center">
+              <img className="pr-[2vw]" src={character2} />
+              <div>
+                <p className="text-[0.85rem] text-C333333 ">동원참치</p>
+                <p className="text-[0.7rem] text-C333333">1시간 전</p>
+              </div>
+            </div>
+            <p className="text-[0.7rem] text-C333333"> 답글 </p>
+          </div>
+          <p className="text-[0.8rem] mt-[1vh] text-C333333">
+            좋은 정보 감사합니다 *^^*
+          </p>
+        </div>
+        <div className=" ml-[7vw] mt-[2vh]  p-[2.75vw] shadow rounded-[0.5rem]">
+          <div className="flex justify-between">
+            <div className="flex items-center">
+              <img className="pr-[2vw]" src={character1_small} />
+              <div>
+                <p className="text-[0.85rem] text-C333333 ">이듀미</p>
+                <p className="text-[0.7rem] text-C333333">1시간 전</p>
+              </div>
+            </div>
+            <div>
+              <span className="text-[0.7rem] text-C333333"> 답글 </span>
+              <span className="text-[0.7rem] pl-[1vw] text-C333333">
+                {" "}
+                삭제{" "}
+              </span>
+            </div>
+          </div>
+          <p className="text-[0.8rem] mt-[1vh] text-C333333">
+            네!! 2탄 금방 올릴게요 ~ ㅎ
+          </p>
+        </div>
 
+        {/* TODO 댓글 작성 부분 UI 수정 필요 */}
+
+        <div className="fixed bottom-[9vh] w-[95vw] bg-white flex justify-between items-center text-C333333 text-[1rem] bg-CF4F3FA py-[1vh] px-[4vw] rounded-[0.5rem] z-20">
+          <p className="text-[0.95rem]">댓글을 작성해보세요!</p>
+          <img src={Send} alt="Send"></img>
+        </div>
+        <div className="mb-[10vh]" />
         <Navbar />
       </div>
     </>
