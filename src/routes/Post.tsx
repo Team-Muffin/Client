@@ -17,8 +17,6 @@ export default function Post() {
     setUserCategory(selection);
   };
 
-  console.log(category);
-
   const selectedCategoryCss =
     "text-base text-C748BFF bg-CECF0FF py-[0.5vh] px-[13vw] rounded-xl shadow";
   const defaultCategoryCss = "text-base text-C333333 px-[13vw] py-[0.5vh]";
@@ -75,7 +73,7 @@ export default function Post() {
         <Dropdown defaultFilter="인기순" filterList={["인기순", "최신순"]} />
       ) : null}
 
-      <hr className="mt-[1vh]" />
+      <hr className="border-CD9D9D9 mt-[1vh]" />
       <PostCard
         title="⭐️내가 들었던 펀드 추천 글⭐️"
         description=" 오늘은 내가 들었던 펀드 중에 가장 좋았던 펀드는 신한은행의"

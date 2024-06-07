@@ -54,7 +54,7 @@ const PostCard: React.FC<PostCardProps> = ({
           alt="Post Thumbnail"
         />
       </div>
-      <hr />
+      <hr className="border-CD9D9D9" />
     </Link>
   );
 };
