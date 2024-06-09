@@ -26,14 +26,12 @@ const ChallengePage = () => {
 
         <a
           href="#"
-          className="block w-[48vw] h-[8vh] py-[1vh] px-[2vw] mb-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+          className="block w-[48vw] h-[8vh] py-[1vh] px-[2vw] mb-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
         >
           <div className="flex justify-between items-center">
             <div className="flex flex-col">
-              <p className="text-sm font-black text-gray-900 dark:text-white">
-                감정 저축하기
-              </p>
-              <p className="text-xs font-normal text-gray-700 dark:text-gray-400">
+              <p className="text-sm font-black text-gray-900">감정 저축하기</p>
+              <p className="text-xs font-normal text-gray-700">
                 2일째 도전 중이에요
               </p>
             </div>
@@ -45,14 +43,14 @@ const ChallengePage = () => {
 
         <a
           href="#"
-          className="block w-[48vw] h-[8vh] py-[1vh] px-[2vw] mb-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+          className="block w-[48vw] h-[8vh] py-[1vh] px-[2vw] mb-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
         >
           <div className="flex justify-between items-center">
             <div className="flex flex-col">
-              <p className="text-sm font-black text-gray-900 dark:text-white">
+              <p className="text-sm font-black text-gray-900">
                 청년 저축 챌린지
               </p>
-              <p className="text-xs font-normal text-gray-700 dark:text-gray-400">
+              <p className="text-xs font-normal text-gray-700">
                 12일째 도전 중이에요
               </p>
             </div>
@@ -66,7 +64,7 @@ const ChallengePage = () => {
 
       <div className="relative border -mt-6 px-[8vw] py-[3vh] h-[22vh] rounded-[30px] bg-[#ECF0FF] ">
         <div className="flex ">
-          <p className="text- base items-center r-3 mb-4 mr-2 font-bold text-black-900 dark:text-white">
+          <p className="text- base items-center r-3 mb-4 mr-2 font-bold text-black-900">
             신규 챌린지
           </p>
 
@@ -75,9 +73,7 @@ const ChallengePage = () => {
 
         <div className="flex justify-between">
           <div className="flex flex-col">
-            <p className="text-base font-bold text-black-900 dark:text-white">
-              감정 저축하기
-            </p>
+            <p className="text-base font-bold text-black-900">감정 저축하기</p>
             <p className="text-xs ml-1 font-bold text-gray-600">
               마감 기한 없음
             </p>
@@ -90,9 +86,7 @@ const ChallengePage = () => {
       </div>
 
       <div className="relative border -mt-10 px-[8vw] py-[3vh] h-[40vh] rounded-[30px] bg-white">
-        <p className="text-base font-bold text-black-900 dark:text-white">
-          모집중 챌린지
-        </p>
+        <p className="text-base font-bold text-black-900">모집중 챌린지</p>
 
         <div className="flex justify-end mt-[2vh]">
           <div
