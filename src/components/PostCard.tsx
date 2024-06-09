@@ -29,27 +29,23 @@ const PostCard: React.FC<PostCardProps> = ({
     <Link to={`/${link}`}>
       <div className="flex justify-between items-center my-[1.3vh] px-[0.5vw]">
         <div className="pr-[2.5vw] mr-[0.8vw]">
-          <div className="text-base text-C333333">{title}</div>
-          <div className="text-[0.85rem] text-C333333 line-clamp-1">
+          <p className="text-base text-C333333">{title}</p>
+          <p className="text-[0.85rem] text-C333333 line-clamp-1">
             {description}
-          </div>
-          <div className="text-[0.85rem] text-C333333">
+          </p>
+          <p className="text-[0.85rem] text-C333333">
             {author} | {time}
-            {/* TimeAgo 처리 필요 */}
-          </div>
+            {/* TODO TimeAgo 처리 필요 */}
+          </p>
           <div className="flex">
             <img src={Heart} className="mr-[1vw] text-C333333"></img>
-            <div className="text-[0.85rem] mr-[1vw] text-C333333">
-              {heartCount}
-            </div>
+            <p className="text-[0.85rem] mr-[1vw] text-C333333">{heartCount}</p>
             <img src={Reply} className="mr-[1vw] text-C333333"></img>
-            <div className="text-[0.85rem] mr-[1vw] text-C333333">
-              {replyCount}
-            </div>
+            <p className="text-[0.85rem] mr-[1vw] text-C333333">{replyCount}</p>
           </div>
         </div>
         <img
-          className="w-[22vw] h-[22vw] rounded-[5px]"
+          className="w-[22vw] h-[22vw] rounded-[0.75rem]"
           src={imageUrl}
           alt="Post Thumbnail"
         />

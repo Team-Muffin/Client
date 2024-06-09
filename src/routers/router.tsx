@@ -2,10 +2,10 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "../routes/Layout";
 
 import Home from "../routes/Home";
-import Post from "../routes/Post";
+import PostList from "../routes/PostList";
 
+import PostDetail from "../routes/PostDetail";
 import ChallengePage from "../routes/ChallengePage";
-
 
 export const mainRouter = [
   {
@@ -18,7 +18,11 @@ export const mainRouter = [
       },
       {
         path: "/post",
-        element: <Post />,
+        element: <PostList />,
+      },
+      {
+        path: "/postDetail",
+        element: <PostDetail />,
       },
     ],
   },

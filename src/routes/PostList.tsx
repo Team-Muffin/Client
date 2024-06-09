@@ -3,8 +3,9 @@ import Header from "../components/Header";
 import Dropdown from "../components/Dropdown";
 import writeButton from "../assets/writeButton.svg";
 import PostCard from "../components/PostCard";
+import Navbar from "./Navbar";
 
-export default function Post() {
+export default function PostList() {
   const [category, setCategory] = useState("유저");
   const [userCategory, setUserCategory] = useState("맞춤");
   const categories = ["맞춤", "꿀팁", "소비", "절약", "투자"];
@@ -33,28 +34,28 @@ export default function Post() {
       {/* 세트로 들고 다녀야 됨 */}
 
       <div className="flex justify-center">
-        <div
+        <p
           className={`${
             category === "유저" ? selectedCategoryCss : defaultCategoryCss
           } cursor-pointer`}
           onClick={() => handleCategoryClick("유저")}
         >
           유저
-        </div>
-        <div
+        </p>
+        <p
           className={`${
             category === "기업" ? selectedCategoryCss : defaultCategoryCss
           } cursor-pointer`}
           onClick={() => handleCategoryClick("기업")}
         >
           기업
-        </div>
+        </p>
       </div>
 
       {category === "유저" ? (
         <div className="flex justify-around mt-4 text-sm">
           {categories.map((cat) => (
-            <div
+            <p
               key={cat}
               className={`${
                 userCategory === cat
@@ -64,7 +65,7 @@ export default function Post() {
               onClick={() => handleUserCategoryClick(cat)}
             >
               {cat}
-            </div>
+            </p>
           ))}
         </div>
       ) : null}
@@ -159,6 +160,8 @@ export default function Post() {
         className="fixed bottom-[8vh] right-[4vw] z-5"
         src={writeButton}
       ></img>
+      <div className="mb-[8vh]" />
+      <Navbar />
     </div>
   );
 }
