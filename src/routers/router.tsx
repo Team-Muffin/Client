@@ -7,6 +7,7 @@ import PostList from "../routes/PostList";
 import PostDetail from "../routes/PostDetail";
 import ChallengePage from "../routes/ChallengePage";
 import ChallengeDetailPage from "../routes/ChallengeDetailPage";
+import ChallengeCAL from "../routes/ChallengeCAL";
 
 export const mainRouter = [
   {
@@ -20,6 +21,10 @@ export const mainRouter = [
       {
         path: "/challenge",
         element: <ChallengeDetailPage />,
+      },
+      {
+        path: "/challenge/cal",
+        element: <ChallengeCAL />,
       },
       {
         path: "/post",
