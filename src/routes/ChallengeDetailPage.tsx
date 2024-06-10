@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import EmotionSave from "../assets/emotionSave.svg?react";
 import SmallLogo from "../assets/smallProfile.svg?react";
@@ -7,6 +7,7 @@ import Check from "../assets/check.svg?react";
 import Happy from "../assets/happyFace.svg?react";
 import Sad from "../assets/sadFace.svg?react";
 import Angry from "../assets/angryFace.svg?react";
+import ChallengeCAL from "./ChallengeCAL";
 import Navbar from "./Navbar";
 
 const ChallengeDetailPage = () => {
@@ -48,9 +49,12 @@ const ChallengeDetailPage = () => {
         </div>
 
         <div className="flex justify-center mt-[2vh]">
-          <button className="text-base font-semibold text-[#748BFF] bg-[#ECF0FF] rounded-3xl shadow py-[0.5vh] px-[10vw]">
+          <Link
+            to="/challenge/cal"
+            className="text-base font-semibold text-[#748BFF] bg-[#ECF0FF] rounded-3xl shadow py-[0.5vh] px-[10vw]"
+          >
             참여하기
-          </button>
+          </Link>
         </div>
         <div className="w-full h-[2vh] bg-[#F4F3F8] mt-[2vh] mb-[5vh]"></div>
 
