@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-
-import Dropdown from "../components/Dropdown";
+import { useState } from "react";
 
 import BackBtn from "../assets/back.svg";
 import {
@@ -12,7 +10,7 @@ import {
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
-export default function PostWritePage() {
+export default function BoardWritePage() {
   const [selected, setSelected] = useState("꿀팁");
   const filterList = ["꿀팁", "소비", "절약", "투자"];
 

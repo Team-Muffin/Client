@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Header from "../components/Header";
 import Dropdown from "../components/Dropdown";
 import writeButton from "../assets/writeButton.svg";
 import PostCard from "../components/PostCard";
 import Navbar from "./Navbar";
+import { Link } from "react-router-dom";
 
-export default function PostListPage() {
+export default function BoardListPage() {
   const [category, setCategory] = useState("유저");
   const [userCategory, setUserCategory] = useState("맞춤");
   const categories = ["맞춤", "꿀팁", "소비", "절약", "투자"];
@@ -83,7 +84,7 @@ export default function PostListPage() {
         heartCount={7}
         replyCount={3}
         imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
-        link="postDetail"
+        link="boardDetail"
       />
       <PostCard
         title="⭐️내가 들었던 펀드 추천 글⭐️"
@@ -155,11 +156,9 @@ export default function PostListPage() {
         imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
         link=""
       />
-
-      <img
-        className="fixed bottom-[8vh] right-[4vw] z-5"
-        src={writeButton}
-      ></img>
+      <Link to={`/boardWrite`}>
+        <img className="fixed bottom-[8vh] right-[4vw] z-5" src={writeButton} />
+      </Link>
       <div className="pb-[7.5vh]" />
       <Navbar />
     </div>
