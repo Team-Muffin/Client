@@ -14,7 +14,7 @@ import Scrap from "../assets/scrap.svg";
 import FilledScrap from "../assets/scrap_filled.svg";
 import Send from "../assets/send.svg";
 
-export default function PostDetail() {
+export default function PostDetailPage() {
   const [heartClicked, setHeartClicked] = useState(false);
   const [scrapClicked, setScrapClicked] = useState(false);
 

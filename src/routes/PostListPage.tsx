@@ -5,7 +5,7 @@ import writeButton from "../assets/writeButton.svg";
 import PostCard from "../components/PostCard";
 import Navbar from "./Navbar";
 
-export default function PostList() {
+export default function PostListPage() {
   const [category, setCategory] = useState("유저");
   const [userCategory, setUserCategory] = useState("맞춤");
   const categories = ["맞춤", "꿀팁", "소비", "절약", "투자"];
