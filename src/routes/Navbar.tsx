@@ -8,9 +8,9 @@ import Profile from "../assets/profile.svg?react";
 const Navbar = () => {
   const linkClasses =
     "flex flex-col items-center space-y-1 px-2 rounded md:p-0 transition-colors duration-200";
-  const defaultClasses = "text-gray-900 dark:text-white";
-  const hoverClasses = "hover:text-[#748BFF] dark:hover:text-[#748BFF]";
-  const activeClasses = "focus:text-[#748BFF] dark:focus:text-[#748BFF]";
+  const defaultClasses = "text-gray-900 ";
+  const hoverClasses = "hover:text-[#748BFF] ";
+  const activeClasses = "focus:text-[#748BFF] ";
 
   const [activeNavItem, setActiveNavItem] = useState(null);
 
@@ -29,10 +29,10 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed w-full z-20 bottom-0 left-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-600">
+    <nav className="fixed w-full z-20 bottom-0 left-0 bg-white border-t border-gray-200 h-[7.5vh]">
       <div className="mx-auto flex items-center justify-center">
         <div className="w-full md:w-auto">
-          <ul className="flex justify-center space-x-8 p-2 md:p-0 font-medium border-t md:border-t-0 bg-gray-50 md:bg-transparent dark:bg-gray-800 md:dark:bg-transparent">
+          <ul className="flex justify-center space-x-8 p-2 md:p-0 font-medium border-t md:border-t-0 bg-gray-50 ">
             {navItems.map((item) => (
               <li key={item.name}>
                 <a
