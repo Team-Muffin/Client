@@ -8,12 +8,22 @@ import PostDetail from "../routes/PostDetail";
 import ChallengePage from "../routes/ChallengePage";
 import ChallengeDetailPage from "../routes/ChallengeDetailPage";
 import ChallengeCAL from "../routes/ChallengeCAL";
+import LoginPage from "../routes/LoginPage";
+import SignUpPage from "../routes/SignUpPage";
 
 export const mainRouter = [
   {
     path: "",
     element: <Layout />,
     children: [
+      {
+        path: "/login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/signup",
+        element: <SignUpPage />,
+      },
       {
         path: "",
         element: <ChallengePage />,
