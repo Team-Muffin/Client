@@ -5,7 +5,7 @@ import writeButton from "../assets/writeButton.svg";
 import PostCard from "../components/PostCard";
 import Navbar from "./Navbar";
 
-export default function PostList() {
+export default function PostListPage() {
   const [category, setCategory] = useState("유저");
   const [userCategory, setUserCategory] = useState("맞춤");
   const categories = ["맞춤", "꿀팁", "소비", "절약", "투자"];
@@ -83,7 +83,7 @@ export default function PostList() {
         heartCount={7}
         replyCount={3}
         imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
-        link=""
+        link="postDetail"
       />
       <PostCard
         title="⭐️내가 들었던 펀드 추천 글⭐️"
@@ -160,7 +160,7 @@ export default function PostList() {
         className="fixed bottom-[8vh] right-[4vw] z-5"
         src={writeButton}
       ></img>
-      <div className="mb-[8vh]" />
+      <div className="pb-[7.5vh]" />
       <Navbar />
     </div>
   );

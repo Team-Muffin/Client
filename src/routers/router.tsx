@@ -2,9 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "../routes/Layout";
 
 import Home from "../routes/Home";
-import PostList from "../routes/PostList";
-
-import PostDetail from "../routes/PostDetail";
+import PostListPage from "../routes/PostListPage";
+import PostWritePage from "../routes/PostWritePage";
+import PostDetailPage from "../routes/PostDetailPage";
 import ChallengePage from "../routes/ChallengePage";
 import ChallengeDetailPage from "../routes/ChallengeDetailPage";
 import ChallengeCAL from "../routes/ChallengeCAL";
@@ -38,11 +38,15 @@ export const mainRouter = [
       },
       {
         path: "/post",
-        element: <PostList />,
+        element: <PostListPage />,
       },
       {
         path: "/postDetail",
-        element: <PostDetail />,
+        element: <PostDetailPage />,
+      },
+      {
+        path: "/postWrite",
+        element: <PostWritePage />,
       },
     ],
   },

@@ -14,7 +14,7 @@ import Scrap from "../assets/scrap.svg";
 import FilledScrap from "../assets/scrap_filled.svg";
 import Send from "../assets/send.svg";
 
-export default function PostDetail() {
+export default function PostDetailPage() {
   const [heartClicked, setHeartClicked] = useState(false);
   const [scrapClicked, setScrapClicked] = useState(false);
 
@@ -154,16 +154,21 @@ export default function PostDetail() {
             네!! 2탄 금방 올릴게요 ~ ㅎ
           </p>
         </div>
-
-        {/* TODO 댓글 작성 부분 UI 수정 필요 */}
-
-        <div className="fixed bottom-[9vh] w-[95vw] bg-white flex justify-between items-center text-C333333 text-[1rem] bg-CF4F3FA py-[1vh] px-[4vw] rounded-[0.5rem] z-20">
-          <p className="text-[0.95rem]">댓글을 작성해보세요!</p>
+        <div className="pb-[14vh]" />
+      </div>
+      <div className="fixed bg-white bottom-[7.5vh] left-0 right-0 h-[8vh] py-[1.5vh]">
+        <div className=" w-[93vw] mx-auto flex justify-between items-center text-C333333 text-[1rem] bg-[#F4F3FA] py-[1.25vh] px-[4vw] rounded-[0.9rem] z-20">
+          <input
+            type="text"
+            id="small-input"
+            className="block w-full text-[0.95rem] border-none bg-[#F4F3FA] p-[0] m-[0]"
+            placeholder="댓글을 작성해보세요!"
+          ></input>
           <img src={Send} alt="Send"></img>
         </div>
-        <div className="mb-[10vh]" />
-        <Navbar />
       </div>
+
+      <Navbar />
     </>
   );
 }
