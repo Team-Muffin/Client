@@ -1,8 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Header from "../components/Header";
-import Dropdown from "../components/Dropdown";
-import writeButton from "../assets/writeButton.svg";
-import PostCard from "../components/PostCard";
 import Navbar from "./Navbar";
 import character1 from "../assets/character1.svg";
 import character1_small from "../assets/character1_small.svg";
@@ -14,7 +11,7 @@ import Scrap from "../assets/scrap.svg";
 import FilledScrap from "../assets/scrap_filled.svg";
 import Send from "../assets/send.svg";
 
-export default function PostDetailPage() {
+export default function BoardDetailPage() {
   const [heartClicked, setHeartClicked] = useState(false);
   const [scrapClicked, setScrapClicked] = useState(false);
 
