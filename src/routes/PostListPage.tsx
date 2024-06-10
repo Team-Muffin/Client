@@ -83,7 +83,7 @@ export default function PostListPage() {
         heartCount={7}
         replyCount={3}
         imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
-        link=""
+        link="postDetail"
       />
       <PostCard
         title="⭐️내가 들었던 펀드 추천 글⭐️"
@@ -160,7 +160,7 @@ export default function PostListPage() {
         className="fixed bottom-[8vh] right-[4vw] z-5"
         src={writeButton}
       ></img>
-      <div className="mb-[8vh]" />
+      <div className="pb-[7.5vh]" />
       <Navbar />
     </div>
   );
