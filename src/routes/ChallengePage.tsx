@@ -3,6 +3,7 @@ import { useState } from "react";
 import Coin from "../assets/coin30.svg?react";
 import User1 from "../assets/userIcon1.svg?react";
 import EmotionSave from "../assets/emotionSave.svg?react";
+import Navbar from "./Navbar";
 
 const ChallengePage = () => {
   const [category, setCategory] = useState("최신순");
@@ -108,6 +109,7 @@ const ChallengePage = () => {
             마감기한순
           </div>
         </div>
+        <Navbar />
       </div>
     </>
   );
