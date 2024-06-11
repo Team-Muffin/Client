@@ -10,6 +10,7 @@ import ChallengeDetailPage from "../routes/ChallengeDetailPage";
 import ChallengeCAL from "../routes/ChallengeCAL";
 import LoginPage from "../routes/LoginPage";
 import SignUpPage from "../routes/SignUpPage";
+import SignUpProfilePage from "../routes/SignUpProfilePage";
 
 export const mainRouter = [
   {
@@ -23,6 +24,10 @@ export const mainRouter = [
       {
         path: "/signup",
         element: <SignUpPage />,
+      },
+      {
+        path: "/signup/profile",
+        element: <SignUpProfilePage />,
       },
       {
         path: "",
