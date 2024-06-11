@@ -11,6 +11,7 @@ import ChallengeCAL from "../routes/ChallengeCAL";
 import LoginPage from "../routes/LoginPage";
 import SignUpPage from "../routes/SignUpPage";
 import SignUpProfilePage from "../routes/SignUpProfilePage";
+import AssetConnectPage from "../routes/AssetConnectPage";
 // import ProductListPage from "../routes/ProductListPage";
 
 export const mainRouter = [
@@ -29,6 +30,10 @@ export const mainRouter = [
       {
         path: "/signup/profile",
         element: <SignUpProfilePage />,
+      },
+      {
+        path: "/signup/assetinfo",
+        element: <AssetConnectPage />,
       },
       {
         path: "",
