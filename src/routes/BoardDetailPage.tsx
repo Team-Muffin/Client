@@ -2,13 +2,13 @@ import { useState } from "react";
 import Header from "../components/Header";
 import Navbar from "./Navbar";
 import character1 from "../assets/character1.svg";
-import character1_small from "../assets/character1_small.svg";
+import character1_small from "../assets/character1-small.svg";
 import character2 from "../assets/character2.svg";
-import Heart from "../assets/heart_empty.svg";
-import RedHeart from "../assets/heart_filled.svg";
+import Heart from "../assets/heart-empty.svg";
+import RedHeart from "../assets/heart-filled.svg";
 import Reply from "../assets/reply.svg";
 import Scrap from "../assets/scrap.svg";
-import FilledScrap from "../assets/scrap_filled.svg";
+import FilledScrap from "../assets/scrap-filled.svg";
 import Send from "../assets/send.svg";
 
 export default function BoardDetailPage() {

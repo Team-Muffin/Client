@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import TimeAgo from "./TimeAgo";
-import Heart from "../assets/heart_empty.svg";
+import Heart from "../assets/heart-empty.svg";
 import Reply from "../assets/reply.svg";
 
 interface PostCardProps {

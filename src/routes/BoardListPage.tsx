@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import Dropdown from "../components/Dropdown";
-import writeButton from "../assets/writeButton.svg";
+import writeButton from "../assets/write-button.svg";
 import PostCard from "../components/PostCard";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
