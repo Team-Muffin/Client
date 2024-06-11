@@ -11,7 +11,7 @@ import ChallengeCAL from "../routes/ChallengeCAL";
 import LoginPage from "../routes/LoginPage";
 import SignUpPage from "../routes/SignUpPage";
 import SignUpProfilePage from "../routes/SignUpProfilePage";
-import ProductListPage from "../routes/ProductListPage";
+// import ProductListPage from "../routes/ProductListPage";
 
 export const mainRouter = [
   {
@@ -54,10 +54,10 @@ export const mainRouter = [
         path: "/boardWrite",
         element: <BoardWritePage />,
       },
-      {
-        path: "/productList",
-        element: <ProductListPage />,
-      },
+      // {
+      //   path: "/productList",
+      //   element: <ProductListPage />,
+      // },
     ],
   },
 ];
