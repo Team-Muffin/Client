@@ -2,15 +2,16 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "../routes/Layout";
 
 import Home from "../routes/Home";
-import PostListPage from "../routes/PostListPage";
-import PostWritePage from "../routes/PostWritePage";
-import PostDetailPage from "../routes/PostDetailPage";
+import BoardListPage from "../routes/BoardListPage";
+import BoardWritePage from "../routes/BoardWritePage";
+import BoardDetailPage from "../routes/BoardDetailPage";
 import ChallengePage from "../routes/ChallengePage";
 import ChallengeDetailPage from "../routes/ChallengeDetailPage";
 import ChallengeCAL from "../routes/ChallengeCAL";
 import LoginPage from "../routes/LoginPage";
 import SignUpPage from "../routes/SignUpPage";
 import SignUpProfilePage from "../routes/SignUpProfilePage";
+import ProductListPage from "../routes/ProductListPage";
 
 export const mainRouter = [
   {
@@ -42,16 +43,20 @@ export const mainRouter = [
         element: <ChallengeCAL />,
       },
       {
-        path: "/post",
-        element: <PostListPage />,
+        path: "/boardList",
+        element: <BoardListPage />,
       },
       {
-        path: "/postDetail",
-        element: <PostDetailPage />,
+        path: "/boardDetail",
+        element: <BoardDetailPage />,
       },
       {
-        path: "/postWrite",
-        element: <PostWritePage />,
+        path: "/boardWrite",
+        element: <BoardWritePage />,
+      },
+      {
+        path: "/productList",
+        element: <ProductListPage />,
       },
     ],
   },
