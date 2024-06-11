@@ -2,15 +2,15 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "../routes/Layout";
 
 import Home from "../routes/Home";
-import BoardListPage from "../routes/BoardListPage";
-import BoardWritePage from "../routes/BoardWritePage";
-import BoardDetailPage from "../routes/BoardDetailPage";
+import BoardListPage from "../routes/Board/BoardListPage";
+import BoardWritePage from "../routes/Board/BoardWritePage";
+import BoardDetailPage from "../routes/Board/BoardDetailPage";
 import ChallengePage from "../routes/ChallengePage";
 import ChallengeDetailPage from "../routes/ChallengeDetailPage";
 import ChallengeCAL from "../routes/ChallengeCAL";
 import LoginPage from "../routes/LoginPage";
 import SignUpPage from "../routes/SignUpPage";
-import ProductListPage from "../routes/ProductListPage";
+import ProductListPage from "../routes/Product/ProductListPage";
 
 export const mainRouter = [
   {

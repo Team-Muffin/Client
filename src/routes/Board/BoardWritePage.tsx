@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import BackBtn from "../assets/back.svg";
+import BackBtn from "../../assets/back.svg";
 import {
   Menu,
   MenuButton,
