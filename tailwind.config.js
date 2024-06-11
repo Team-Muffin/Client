@@ -12,6 +12,9 @@ module.exports = {
         C333333: "#333333",
         CD9D9D9: "#D9D9D9",
       },
+      boxShadow: {
+        productCard: "1px 1px 1px 2px rgba(0, 0, 0, 0.1)",
+      },
     },
   },
   plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],
