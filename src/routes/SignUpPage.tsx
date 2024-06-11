@@ -18,7 +18,7 @@ const SignUpPage = () => {
           먼저 로그인하기 위한 <br />
           아이디와 비밀번호를 입력해주세요{" "}
         </p>
-        <div className="flex mb-[2vh] items-center">
+        <div className="flex mb-[1vh] items-center">
           <p className="text-lg font-semibold mr-[1vw]">아이디</p>
           <Essential />
         </div>
@@ -30,7 +30,7 @@ const SignUpPage = () => {
           required
         />
 
-        <div className="flex my-[2vh] items-center">
+        <div className="flex mt-[3vh] mb-[1vh] items-center">
           <p className="text-lg font-semibold mr-[1vw]">비밀번호</p>
           <Essential />
         </div>
@@ -38,11 +38,11 @@ const SignUpPage = () => {
           type="password"
           id="password"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          placeholder="PassWord"
+          placeholder="Password"
           required
         />
 
-        <div className="flex my-[2vh] items-center">
+        <div className="flex mt-[3vh] mb-[1vh] items-center">
           <p className="text-lg font-semibold mr-[1vw]">비밀번호 확인</p>
           <Essential />
         </div>
@@ -50,7 +50,7 @@ const SignUpPage = () => {
           type="password"
           id="password_check"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          placeholder="PassWord Check"
+          placeholder="Password_check"
           required
         />
       </div>

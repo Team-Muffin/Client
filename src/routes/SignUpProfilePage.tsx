@@ -51,7 +51,7 @@ const SignUpProfilePage = () => {
           </div>
         </div>
 
-        <div className="flex mb-[2vh] items-center">
+        <div className="flex mb-[1vh] items-center">
           <p className="text-lg font-semibold mr-[1vw]">닉네임</p>
           <Essential />
         </div>
@@ -63,7 +63,7 @@ const SignUpProfilePage = () => {
           required
         />
 
-        <div className="flex my-[2vh] items-center">
+        <div className="flex mt-[3vh] mb-[1vh] items-center">
           <p className="text-lg font-semibold mr-[1vw]">생년월일</p>
           <Essential />
         </div>
@@ -75,7 +75,7 @@ const SignUpProfilePage = () => {
           required
         />
 
-        <p className="text-lg font-semibold my-[2vh]">직업</p>
+        <p className="text-lg font-semibold mt-[3vh] mb-[1vh]">직업</p>
         <input
           type="text"
           id="job"
@@ -93,7 +93,7 @@ const SignUpProfilePage = () => {
           <MiniCircle className="w-3 h-3" />
         </div>
         <button className="text-lg font-normal text-white text-center bg-[#748BFF] rounded-[1rem] shadow py-[2vh] w-full">
-          나의 자산 연결하기
+          나의 자산 연결하러 가기
         </button>
       </div>
 
