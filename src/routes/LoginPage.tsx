@@ -1,6 +1,5 @@
-import MainLogo from "../assets/mainLogo.svg?react";
+import MainLogo from "../assets/main-logo.svg?react";
 import { Link } from "react-router-dom";
-import SignUpPage from "./SignUpPage";
 
 const LoginPage = () => {
   return (

@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
-import EmotionSave from "../assets/emotionSave.svg?react";
-import SmallLogo from "../assets/smallProfile.svg?react";
+import EmotionSave from "../assets/emotion-save.svg?react";
+import SmallLogo from "../assets/small-profile.svg?react";
 import Date from "../assets/date.svg?react";
 import Check from "../assets/check.svg?react";
-import Happy from "../assets/happyFace.svg?react";
-import Sad from "../assets/sadFace.svg?react";
-import Angry from "../assets/angryFace.svg?react";
+import Happy from "../assets/happy-face.svg?react";
+import Sad from "../assets/sad-face.svg?react";
+import Angry from "../assets/angry-face.svg?react";
 import ChallengeCAL from "./ChallengeCAL";
 import Navbar from "./Navbar";
 

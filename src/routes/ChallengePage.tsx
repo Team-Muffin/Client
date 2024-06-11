@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 import Coin from "../assets/coin30.svg?react";
-import User1 from "../assets/userIcon1.svg?react";
-import EmotionSave from "../assets/emotionSave.svg?react";
+import User1 from "../assets/user-icon.svg?react";
+import EmotionSave from "../assets/emotion-save.svg?react";
 import Navbar from "./Navbar";
 
 const ChallengePage = () => {

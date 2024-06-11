@@ -12,7 +12,7 @@ const Navbar = () => {
   const hoverClasses = "hover:text-[#748BFF] ";
   const activeClasses = "focus:text-[#748BFF] ";
 
-  const [activeNavItem, setActiveNavItem] = useState(null);
+  const [activeNavItem, setActiveNavItem] = useState<string | null>(null);
 
   const handleItemClick = (itemName: string) => {
     setActiveNavItem(
