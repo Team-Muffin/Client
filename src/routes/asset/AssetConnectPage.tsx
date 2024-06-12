@@ -1,7 +1,7 @@
 import { useState } from "react";
-import MiniCircle from "../assets/minicircle.svg?react";
-import Essential from "../assets/required.svg?react";
-import Checked from "../assets/checked.svg?react";
+import MiniCircle from "../../assets/minicircle.svg?react";
+import Essential from "../../assets/required.svg?react";
+import Checked from "../../assets/checked.svg?react";
 
 const AssetConnectPage = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

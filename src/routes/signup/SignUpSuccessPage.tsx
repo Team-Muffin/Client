@@ -1,4 +1,4 @@
-import MainLogo from "../assets/main-logo.svg?react";
+import MainLogo from "../../assets/main-logo.svg?react";
 import Confetti from "react-confetti";
 
 const SignUpSuccessPage = () => {
