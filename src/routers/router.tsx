@@ -13,6 +13,7 @@ import SignUpPage from "../routes/SignUpPage";
 import SignUpProfilePage from "../routes/SignUpProfilePage";
 import AssetConnectPage from "../routes/AssetConnectPage";
 import AssetLoadingPage from "../routes/AssetLoadingPage";
+import ConnectedAssetPage from "../routes/ConnectedAssetPage";
 // import ProductListPage from "../routes/ProductListPage";
 
 export const mainRouter = [
@@ -39,6 +40,10 @@ export const mainRouter = [
       {
         path: "/signup/assetconnect",
         element: <AssetLoadingPage />,
+      },
+      {
+        path: "/signup/connectedasset",
+        element: <ConnectedAssetPage />,
       },
       {
         path: "",
