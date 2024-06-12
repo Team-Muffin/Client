@@ -2,7 +2,6 @@ import { useState } from "react";
 import Header from "../../components/Header";
 import BoardCard from "../../components/BoardCard";
 import Navbar from "../Navbar";
-import Search from "../../assets/search-gray.svg";
 import SHCard from "../../assets/card-sh.svg";
 import SHLogo from "../../assets/logo-sh.svg";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
@@ -156,7 +155,7 @@ export default function ProductListPage() {
         <hr className="mt-[2vh]" />
 
         {/* 리뷰 컴포넌트 */}
-        <div className="flex ml-[3vw] items-start mt-[2vh]">
+        <div className="flex ml-[3vw] items-start my-[2vh]">
           <img className="relative t-0" src={Character} />
           <div className="ml-[2.5vw]">
             <div>
@@ -178,7 +177,7 @@ export default function ProductListPage() {
           </div>
         </div>
 
-        <hr className="mt-[2vh]" />
+        <hr />
         <div className="flex ml-[3vw] items-start mt-[2vh]">
           <img className="relative t-0" src={Character} />
           <div className="ml-[2.5vw]">
