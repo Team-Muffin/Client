@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import Coin from "../assets/coin30.svg?react";
-import User1 from "../assets/user-icon.svg?react";
-import EmotionSave from "../assets/emotion-save.svg?react";
-import Navbar from "./Navbar";
+import Coin from "../../assets/coin30.svg?react";
+import User1 from "../../assets/user-icon.svg?react";
+import EmotionSave from "../../assets/emotion-save.svg?react";
+import Navbar from "../../components/Navbar";
 
 const ChallengePage = () => {
   const [category, setCategory] = useState("최신순");

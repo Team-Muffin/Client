@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Dropdown from "../components/Dropdown";
 import writeButton from "../assets/writeButton.svg";
 import PostCard from "../components/PostCard";
-import Navbar from "./Navbar";
+import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 
 export default function BoardListPage() {
