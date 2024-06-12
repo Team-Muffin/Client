@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 
 interface StarRateProps {
   rate: number;
+  w: number;
+  h: number;
 }
 
-function StarRate({ rate }: StarRateProps) {
+function StarRate({ rate, w = 20, h = 20 }: StarRateProps) {
   const STAR_IDX_ARR = ["first", "second", "third", "fourth", "last"];
   const [ratesResArr, setRatesResArr] = useState<number[]>([0, 0, 0, 0, 0]);
 
@@ -32,8 +34,8 @@ function StarRate({ rate }: StarRateProps) {
           <span className="inline-flex" key={`${item}_${idx}`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
+              width={w}
+              height={h}
               viewBox="0 0 14 13"
               fill="#cacaca"
             >
