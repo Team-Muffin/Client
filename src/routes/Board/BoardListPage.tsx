@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Header from "../components/Header";
-import Dropdown from "../components/Dropdown";
-import writeButton from "../assets/writeButton.svg";
-import PostCard from "../components/PostCard";
-import Navbar from "./Navbar";
+import Header from "../../components/Header";
+import Dropdown from "../../components/Dropdown";
+import writeButton from "../../assets/write-button.svg";
+import BoardCard from "../../components/BoardCard";
+import Navbar from "../Navbar";
 import { Link } from "react-router-dom";
 
 export default function BoardListPage() {
@@ -31,7 +31,7 @@ export default function BoardListPage() {
     <div className="py-[2vh] px-[4.5vw]">
       {/* 헤더랑 */}
       <Header text="게시글" type={0} />
-      <div className="mt-[4vh]"></div>
+      <div className="mt-[5.5vh]"></div>
       {/* 세트로 들고 다녀야 됨 */}
 
       <div className="flex justify-center">
@@ -76,7 +76,7 @@ export default function BoardListPage() {
       ) : null}
 
       <hr className="border-CD9D9D9 mt-[1vh]" />
-      <PostCard
+      <BoardCard
         title="⭐️내가 들었던 펀드 추천 글⭐️"
         description=" 오늘은 내가 들었던 펀드 중에 가장 좋았던 펀드는 신한은행의"
         author="이듀미"
@@ -86,7 +86,7 @@ export default function BoardListPage() {
         imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
         link="boardDetail"
       />
-      <PostCard
+      <BoardCard
         title="⭐️내가 들었던 펀드 추천 글⭐️"
         description=" 오늘은 내가 들었던 펀드 중에 가장 좋았던 펀드는 신한은행의"
         author="이듀미"
@@ -96,7 +96,7 @@ export default function BoardListPage() {
         imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
         link=""
       />
-      <PostCard
+      <BoardCard
         title="⭐️내가 들었던 펀드 추천 글⭐️"
         description=" 오늘은 내가 들었던 펀드 중에 가장 좋았던 펀드는 신한은행의"
         author="이듀미"
@@ -106,7 +106,7 @@ export default function BoardListPage() {
         imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
         link=""
       />
-      <PostCard
+      <BoardCard
         title="⭐️내가 들었던 펀드 추천 글⭐️"
         description=" 오늘은 내가 들었던 펀드 중에 가장 좋았던 펀드는 신한은행의"
         author="이듀미"
@@ -116,7 +116,7 @@ export default function BoardListPage() {
         imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
         link=""
       />
-      <PostCard
+      <BoardCard
         title="⭐️내가 들었던 펀드 추천 글⭐️"
         description=" 오늘은 내가 들었던 펀드 중에 가장 좋았던 펀드는 신한은행의"
         author="이듀미"
@@ -126,7 +126,7 @@ export default function BoardListPage() {
         imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
         link=""
       />
-      <PostCard
+      <BoardCard
         title="⭐️내가 들었던 펀드 추천 글⭐️"
         description=" 오늘은 내가 들었던 펀드 중에 가장 좋았던 펀드는 신한은행의"
         author="이듀미"
@@ -136,7 +136,7 @@ export default function BoardListPage() {
         imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
         link=""
       />
-      <PostCard
+      <BoardCard
         title="⭐️내가 들었던 펀드 추천 글⭐️"
         description=" 오늘은 내가 들었던 펀드 중에 가장 좋았던 펀드는 신한은행의"
         author="이듀미"
@@ -146,7 +146,7 @@ export default function BoardListPage() {
         imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
         link=""
       />
-      <PostCard
+      <BoardCard
         title="⭐️내가 들었던 펀드 추천 글⭐️"
         description=" 오늘은 내가 들었던 펀드 중에 가장 좋았던 펀드는 신한은행의"
         author="이듀미"
