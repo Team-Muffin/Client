@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import TimeAgo from "./TimeAgo";
-import Heart from "../assets/heart_empty.svg";
+import TimeAgo from "../utils/TimeAgo";
+import Heart from "../assets/heart-empty.svg";
 import Reply from "../assets/reply.svg";
 
 interface PostCardProps {
@@ -15,7 +15,7 @@ interface PostCardProps {
   link: string;
 }
 
-const PostCard: React.FC<PostCardProps> = ({
+const BoardCard: React.FC<PostCardProps> = ({
   title,
   description,
   author,
@@ -55,4 +55,4 @@ const PostCard: React.FC<PostCardProps> = ({
   );
 };
 
-export default PostCard;
+export default BoardCard;

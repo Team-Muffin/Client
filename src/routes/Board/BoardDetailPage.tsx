@@ -1,15 +1,15 @@
 import { useState } from "react";
-import Header from "../components/Header";
-import Navbar from "./Navbar";
-import character1 from "../assets/character1.svg";
-import character1_small from "../assets/character1_small.svg";
-import character2 from "../assets/character2.svg";
-import Heart from "../assets/heart_empty.svg";
-import RedHeart from "../assets/heart_filled.svg";
-import Reply from "../assets/reply.svg";
-import Scrap from "../assets/scrap.svg";
-import FilledScrap from "../assets/scrap_filled.svg";
-import Send from "../assets/send.svg";
+import Header from "../../components/Header";
+import Navbar from "../Navbar";
+import character1 from "../../assets/character1.svg";
+import character1_small from "../../assets/character1-small.svg";
+import character2 from "../../assets/character2.svg";
+import Heart from "../../assets/heart-empty.svg";
+import RedHeart from "../../assets/heart-filled.svg";
+import Reply from "../../assets/reply.svg";
+import Scrap from "../../assets/scrap.svg";
+import FilledScrap from "../../assets/scrap-filled.svg";
+import Send from "../../assets/send.svg";
 
 export default function BoardDetailPage() {
   const [heartClicked, setHeartClicked] = useState(false);
@@ -28,7 +28,7 @@ export default function BoardDetailPage() {
       <div className="py-[2vh] px-[4.5vw]">
         {/* 헤더랑 */}
         <Header text="꿀팁" type={1} />
-        <div className="mt-[4vh]"></div>
+        <div className="mt-[5.5vh]"></div>
         {/* 세트로 들고 다녀야 됨 */}
         <div className="px-[3vw]">
           <div className="flex items-center">
