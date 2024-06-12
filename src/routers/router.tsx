@@ -10,8 +10,16 @@ import ChallengeDetailPage from "../routes/ChallengeDetailPage";
 import ChallengeCAL from "../routes/ChallengeCAL";
 import LoginPage from "../routes/LoginPage";
 import SignUpPage from "../routes/SignUpPage";
+
 import ProductListPage from "../routes/Product/ProductListPage";
 import ProductDetailPage from "../routes/Product/ProductDetailPage";
+import SignUpProfilePage from "../routes/SignUpProfilePage";
+import AssetConnectPage from "../routes/AssetConnectPage";
+import AssetLoadingPage from "../routes/AssetLoadingPage";
+import ConnectedAssetPage from "../routes/ConnectedAssetPage";
+import TendencyAnalysisPage from "../routes/TendencyAnalysisPage";
+
+
 
 export const mainRouter = [
   {
@@ -25,6 +33,26 @@ export const mainRouter = [
       {
         path: "/signup",
         element: <SignUpPage />,
+      },
+      {
+        path: "/signup/profile",
+        element: <SignUpProfilePage />,
+      },
+      {
+        path: "/signup/assetinfo",
+        element: <AssetConnectPage />,
+      },
+      {
+        path: "/signup/assetconnect",
+        element: <AssetLoadingPage />,
+      },
+      {
+        path: "/signup/connectedasset",
+        element: <ConnectedAssetPage />,
+      },
+      {
+        path: "/signup/tendency",
+        element: <TendencyAnalysisPage />,
       },
       {
         path: "",
@@ -50,6 +78,7 @@ export const mainRouter = [
         path: "/boardWrite",
         element: <BoardWritePage />,
       },
+
       {
         path: "/productList",
         element: <ProductListPage />,
@@ -58,6 +87,7 @@ export const mainRouter = [
         path: "/productDetail",
         element: <ProductDetailPage />,
       },
+
     ],
   },
 ];

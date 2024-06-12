@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
-import Happy from "../assets/happyFace.svg?react";
-import Sad from "../assets/sadFace.svg?react";
-import Angry from "../assets/angryFace.svg?react";
+import Happy from "../assets/happy-face.svg?react";
+import Sad from "../assets/sad-face.svg?react";
+import Angry from "../assets/angry-face.svg?react";
 import Navbar from "./Navbar";
 import Header from "../components/Header";
 

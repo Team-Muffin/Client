@@ -12,8 +12,27 @@ module.exports = {
         C333333: "#333333",
         CD9D9D9: "#D9D9D9",
       },
+
       boxShadow: {
         productCard: "1px 1px 1px 2px rgba(0, 0, 0, 0.1)",
+    },
+
+      animation: {
+        shimmer: "shimmer 1.5s infinite linear",
+      },
+      keyframes: {
+        shimmer: {
+          "0%": { backgroundPosition: "200%" },
+          "100%": { backgroundPosition: "-200%" },
+        },
+      },
+      backgroundImage: {
+        "gradient-custom":
+          "linear-gradient(to right, #D9D9D9 0%, #EDEEF1 50%, #D9D9D9 100%)",
+      },
+      backgroundSize: {
+        custom: "300% 100%",
+
       },
     },
   },
