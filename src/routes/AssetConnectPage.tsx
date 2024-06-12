@@ -137,7 +137,7 @@ const AssetConnectPage = () => {
         />
       </div>
 
-      <div className="fixed w-full px-[8vw] bottom-[3vh]">
+      <div className="fixed w-full px-[8vw] pb-[3vh]">
         <div className="flex justify-center mb-[3vh]">
           <MiniCircle className="w-3 h-3 mr-5" />
           <MiniCircle className="w-3 h-3 mr-5" />
