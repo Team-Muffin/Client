@@ -14,6 +14,7 @@ import SignUpProfilePage from "../routes/SignUpProfilePage";
 import AssetConnectPage from "../routes/AssetConnectPage";
 import AssetLoadingPage from "../routes/AssetLoadingPage";
 import ConnectedAssetPage from "../routes/ConnectedAssetPage";
+import TendencyAnalysisPage from "../routes/TendencyAnalysisPage";
 // import ProductListPage from "../routes/ProductListPage";
 
 export const mainRouter = [
@@ -44,6 +45,10 @@ export const mainRouter = [
       {
         path: "/signup/connectedasset",
         element: <ConnectedAssetPage />,
+      },
+      {
+        path: "/signup/tendency",
+        element: <TendencyAnalysisPage />,
       },
       {
         path: "",
