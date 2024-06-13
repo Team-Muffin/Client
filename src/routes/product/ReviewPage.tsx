@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Header from "../../components/Header";
-import Navbar from "../Navbar";
+import Navbar from "../../components/Navbar";
 import StarRate from "../../components/StarRate";
 import Character from "../../assets/character1-small.svg";
 import Dropdown from "../../components/Dropdown";
