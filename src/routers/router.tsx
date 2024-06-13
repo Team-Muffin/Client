@@ -2,24 +2,25 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "../routes/Layout";
 
 import Home from "../routes/Home";
-import BoardListPage from "../routes/Board/BoardListPage";
-import BoardWritePage from "../routes/Board/BoardWritePage";
-import BoardDetailPage from "../routes/Board/BoardDetailPage";
+import BoardListPage from "../routes/board/BoardListPage";
+import BoardWritePage from "../routes/board/BoardWritePage";
+import BoardDetailPage from "../routes/board/BoardDetailPage";
 import ChallengePage from "../routes/ChallengePage";
 import ChallengeDetailPage from "../routes/ChallengeDetailPage";
 import ChallengeCAL from "../routes/ChallengeCAL";
 import LoginPage from "../routes/LoginPage";
 import SignUpPage from "../routes/SignUpPage";
 
-import ProductListPage from "../routes/Product/ProductListPage";
-import ProductDetailPage from "../routes/Product/ProductDetailPage";
+import ProductListPage from "../routes/product/ProductListPage";
+import ProductDetailPage from "../routes/product/ProductDetailPage";
+import ReviewPage from "../routes/product/ReviewPage";
+import RelatedBoardPage from "../routes/product/RelatedBoardPage";
+
 import SignUpProfilePage from "../routes/SignUpProfilePage";
 import AssetConnectPage from "../routes/AssetConnectPage";
 import AssetLoadingPage from "../routes/AssetLoadingPage";
 import ConnectedAssetPage from "../routes/ConnectedAssetPage";
 import TendencyAnalysisPage from "../routes/TendencyAnalysisPage";
-
-
 
 export const mainRouter = [
   {
@@ -87,7 +88,14 @@ export const mainRouter = [
         path: "/productDetail",
         element: <ProductDetailPage />,
       },
-
+      {
+        path: "/review",
+        element: <ReviewPage />,
+      },
+      {
+        path: "/relatedBoard",
+        element: <RelatedBoardPage />,
+      },
     ],
   },
 ];
