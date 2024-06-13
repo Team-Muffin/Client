@@ -1,12 +1,12 @@
 import { useState } from "react";
-import MiniCircle from "../assets/minicircle.svg?react";
-import ProfileCircle from "../assets/profile-circle.svg?react";
-import Camera from "../assets/camera.svg?react";
-import Essential from "../assets/required.svg?react";
-import UserIcon1 from "../assets/user-icon1.svg?react";
-import UserIcon2 from "../assets/user-icon2.svg?react";
-import UserIcon3 from "../assets/user-icon3.svg?react";
-import UserIcon4 from "../assets/user-icon4.svg?react";
+import MiniCircle from "../../assets/minicircle.svg?react";
+import ProfileCircle from "../../assets/profile-circle.svg?react";
+import Camera from "../../assets/camera.svg?react";
+import Essential from "../../assets/required.svg?react";
+import UserIcon1 from "../../assets/user-icon1.svg?react";
+import UserIcon2 from "../../assets/user-icon2.svg?react";
+import UserIcon3 from "../../assets/user-icon3.svg?react";
+import UserIcon4 from "../../assets/user-icon4.svg?react";
 
 const SignUpProfilePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
