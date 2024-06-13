@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import MiniCircle from "../assets/minicircle.svg?react";
-import Deposit from "../assets/deposit.svg?react";
-import Invest from "../assets/invest.svg?react";
-import Card from "../assets/card.svg?react";
-import Loan from "../assets/loan.svg?react";
-import Info from "../assets/info.svg?react";
-import Review from "../assets/review.svg?react";
-import Rocket from "../assets/rocket.svg?react";
+import MiniCircle from "../../assets/minicircle.svg?react";
+import Deposit from "../../assets/deposit.svg?react";
+import Invest from "../../assets/invest.svg?react";
+import Card from "../../assets/card.svg?react";
+import Loan from "../../assets/loan.svg?react";
+import Info from "../../assets/info.svg?react";
+import Review from "../../assets/review.svg?react";
+import Rocket from "../../assets/rocket.svg?react";
 
 const TendencyAnalysisPage = () => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);

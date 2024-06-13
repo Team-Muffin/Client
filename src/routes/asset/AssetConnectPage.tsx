@@ -1,7 +1,7 @@
 import { useState } from "react";
-import MiniCircle from "../assets/minicircle.svg?react";
-import Essential from "../assets/required.svg?react";
-import Checked from "../assets/checked.svg?react";
+import MiniCircle from "../../assets/minicircle.svg?react";
+import Essential from "../../assets/required.svg?react";
+import Checked from "../../assets/checked.svg?react";
 
 const AssetConnectPage = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -137,7 +137,7 @@ const AssetConnectPage = () => {
         />
       </div>
 
-      <div className="fixed w-full px-[8vw] bottom-[3vh]">
+      <div className="fixed w-full px-[8vw] pb-[3vh]">
         <div className="flex justify-center mb-[3vh]">
           <MiniCircle className="w-3 h-3 mr-5" />
           <MiniCircle className="w-3 h-3 mr-5" />

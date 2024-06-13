@@ -1,4 +1,3 @@
-import React from "react";
 import MiniCircle from "../assets/minicircle.svg?react";
 import Essential from "../assets/required.svg?react";
 

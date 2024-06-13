@@ -1,6 +1,6 @@
-import ShinhanLogo from "../assets/shinhan-logo.svg?react";
-import Checked from "../assets/checked.svg?react";
-import MiniCircle from "../assets/minicircle.svg?react";
+import ShinhanLogo from "../../assets/shinhan-logo.svg?react";
+import Checked from "../../assets/checked.svg?react";
+import MiniCircle from "../../assets/minicircle.svg?react";
 
 const ConnectedAssetPage = () => {
   return (
