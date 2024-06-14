@@ -1,5 +1,6 @@
 import MiniCircle from "../../assets/minicircle.svg?react";
 import Essential from "../../assets/required.svg?react";
+import PurpleBtn from "../../components/PurpleBtn";
 
 const SignUpPage = () => {
   return (
@@ -61,9 +62,7 @@ const SignUpPage = () => {
           <MiniCircle className="w-3 h-3 mr-5" />
           <MiniCircle className="w-3 h-3" />
         </div>
-        <button className="text-lg font-normal text-white text-center bg-[#748BFF] rounded-[1rem] shadow py-[2vh] w-full">
-          로그인 정보 작성하기
-        </button>
+        <PurpleBtn to="/signup/profile" label="로그인 정보 작성하기" />
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 import { PulseLoader } from "react-spinners";
 import MiniCircle from "../../assets/minicircle.svg?react";
 import Bank from "../../assets/bank.svg?react";
+import PurpleBtn from "../../components/PurpleBtn";
 
 const AssetLoadingPage = () => {
   return (
@@ -44,9 +45,7 @@ const AssetLoadingPage = () => {
           <MiniCircle className="w-3 h-3" />
         </div>
         <div className="relative flex justify-center items-center">
-          <button className="text-lg text-[#748BFF] font-normal text-center bg-[#748BFF] rounded-[1rem] shadow py-[2vh] w-full">
-            연결 중
-          </button>
+          <PurpleBtn to="/signup/connectedasset" label="  " />
           <div className="absolute">
             <PulseLoader color={"#ffffff"} />
           </div>
