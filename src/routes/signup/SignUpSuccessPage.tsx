@@ -1,5 +1,6 @@
 import MainLogo from "../../assets/main-logo.svg?react";
 import Confetti from "react-confetti";
+import PurpleBtn from "../../components/PurpleBtn";
 
 const SignUpSuccessPage = () => {
   return (
@@ -21,10 +22,7 @@ const SignUpSuccessPage = () => {
       <Confetti />
       <div className="absolute w-full px-[8vw] pb-[3vh] bottom-[3vh]">
         {" "}
-        {/* Changed fixed to absolute */}
-        <button className="text-lg font-normal text-white text-center bg-[#748BFF] rounded-[1rem] shadow py-[2vh] w-full">
-          로그인 하러 가기
-        </button>
+        <PurpleBtn to="/login" label="로그인 하러 가기" />
       </div>
     </>
   );

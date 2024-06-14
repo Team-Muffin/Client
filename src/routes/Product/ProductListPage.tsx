@@ -3,7 +3,7 @@ import Header from "../../components/Header";
 import Dropdown from "../../components/Dropdown";
 import writeButton from "../../assets/write-button.svg";
 import ProductCard from "../../components/ProductCard";
-import Navbar from "../Navbar";
+import Navbar from "../../components/Navbar";
 import Search from "../../assets/search-gray.svg";
 import SHCard from "../../assets/card-sh.svg";
 

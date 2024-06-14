@@ -7,6 +7,7 @@ import Loan from "../../assets/loan.svg?react";
 import Info from "../../assets/info.svg?react";
 import Review from "../../assets/review.svg?react";
 import Rocket from "../../assets/rocket.svg?react";
+import PurpleBtn from "../../components/PurpleBtn";
 
 const TendencyAnalysisPage = () => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
@@ -130,9 +131,7 @@ const TendencyAnalysisPage = () => {
           <MiniCircle className="w-3 h-3 mr-5" />
           <MiniCircle className="w-3 h-3" style={{ fill: "#748BFF" }} />
         </div>
-        <button className="text-lg font-normal text-white text-center bg-[#748BFF] rounded-[1rem] shadow py-[2vh] w-full">
-          성향 분석 완료하기
-        </button>
+        <PurpleBtn to="/signup/success" label="성향 분석 완료하기" />
       </div>
     </>
   );

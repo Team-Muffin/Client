@@ -19,8 +19,9 @@ import AssetLoadingPage from "../routes/asset/AssetLoadingPage";
 import ConnectedAssetPage from "../routes/asset/ConnectedAssetPage";
 import TendencyAnalysisPage from "../routes/signup/TendencyAnalysisPage";
 import SignUpSuccessPage from "../routes/signup/SignUpSuccessPage";
+import ProfilePage from "../routes/profile/ProfilePage";
+import EditProfilePage from "../routes/profile/EditProfilePage";
 // import ProductListPage from "../routes/ProductListPage";
-
 
 export const mainRouter = [
   {
@@ -60,11 +61,11 @@ export const mainRouter = [
         element: <SignUpSuccessPage />,
       },
       {
-        path: "",
+        path: "/challenge",
         element: <ChallengePage />,
       },
       {
-        path: "/challenge",
+        path: "/challenge/detail",
         element: <ChallengeDetailPage />,
       },
       {
@@ -92,7 +93,14 @@ export const mainRouter = [
         path: "/productDetail",
         element: <ProductDetailPage />,
       },
-
+      {
+        path: "/mypage",
+        element: <ProfilePage />,
+      },
+      {
+        path: "/editprofile",
+        element: <EditProfilePage />,
+      },
     ],
   },
 ];

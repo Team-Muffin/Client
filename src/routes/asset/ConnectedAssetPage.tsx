@@ -1,6 +1,7 @@
 import ShinhanLogo from "../../assets/shinhan-logo.svg?react";
 import Checked from "../../assets/checked.svg?react";
 import MiniCircle from "../../assets/minicircle.svg?react";
+import PurpleBtn from "../../components/PurpleBtn";
 
 const ConnectedAssetPage = () => {
   return (
@@ -140,9 +141,7 @@ const ConnectedAssetPage = () => {
           <MiniCircle className="w-3 h-3 mr-5" style={{ fill: "#748BFF" }} />
           <MiniCircle className="w-3 h-3" />
         </div>
-        <button className="text-lg font-normal text-white text-center bg-[#748BFF] rounded-[1rem] shadow py-[2vh] w-full">
-          나의 자산 연결하기
-        </button>
+        <PurpleBtn to="/signup/tendency" label="나의 자산 연결하기" />
       </div>
     </>
   );
