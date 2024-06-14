@@ -150,7 +150,7 @@ export default function ProductListPage() {
           <span className="text-[0.6rem] text-C333333">더보기 {">"}</span>
         </div>
 
-        <p className="text-center font-semibold text-[1.2rem] mt-[3vh]">4.26</p>
+        <p className="text-center font-semibold text-[1.2rem] mt-[1vh]">4.26</p>
         <StarRate rate={4.26} w={20} h={20} />
         <hr className="mt-[2vh]" />
 
