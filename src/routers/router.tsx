@@ -10,7 +10,7 @@ import ProductListPage from "../routes/product/ProductListPage";
 import ProductDetailPage from "../routes/product/ProductDetailPage";
 import ReviewPage from "../routes/product/ReviewPage";
 import RelatedBoardPage from "../routes/product/RelatedBoardPage";
-
+import ReviewWritePage from "../routes/product/ReviewWritePage";
 
 import ChallengePage from "../routes/challenge/ChallengePage";
 import ChallengeDetailPage from "../routes/challenge/ChallengeDetailPage";
@@ -101,6 +101,10 @@ export const mainRouter = [
       {
         path: "/relatedBoard",
         element: <RelatedBoardPage />,
+      },
+      {
+        path: "/reviewWrite",
+        element: <ReviewWritePage />,
       },
     ],
   },

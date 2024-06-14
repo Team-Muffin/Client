@@ -33,29 +33,33 @@ export default function ProductListPage() {
         </div>
 
         <div>
-          <img className="w-[3.5vh] inline mr-[0.6vw]" src={SHLogo} />
-          <span className="text-[0.75rem] text-C333333">신한카드</span>
+          <div className="flex items-align">
+            <img className="w-[3.5vh] inline mr-[0.6vw]" src={SHLogo} />
+            <span className="text-[0.85rem] text-C333333 mt-[0.1rem]">
+              신한카드
+            </span>
+          </div>
           <div>
-            <p className="font-semibold text-[1.25rem] ml-[1.5vw] mb-[0.6vh]">
+            <p className="font-semibold text-[1.4rem] ml-[1.5vw] mb-[0.6vh]">
               신한카드 Mr.Life
             </p>
             <div className="mb-[1vh]">
               {benefits.map((benefit, index) => (
                 <span
                   key={index}
-                  className="ml-[1.5vw] text-[0.7rem] mr-[1vw] p-[1vw] bg-CECF0FF rounded-[0.25rem]"
+                  className="ml-[1.5vw] text-[0.75rem] mr-[1vw] p-[1vw] bg-CECF0FF rounded-[0.25rem]"
                 >
                   #{benefit}
                 </span>
               ))}
             </div>
-            <div className="flex ml-[1.5vw] items-center">
+            <div className="flex ml-[1.5vw] items-center my-[1.2vh]">
               <img src={Star} className="h-[1.8vh]" />
-              <span className="ml-[0.25vh] text-[0.85rem]">4.26 (20,239)</span>
+              <span className="ml-[0.25vh] text-[0.9rem]">4.26 (20,239)</span>
             </div>
 
             <div className="flex mt-[1vh] bg-[#F4F3F8] rounded-[1rem] p-[0.5vh]">
-              <table className="  m-[1.5vw]  text-xs">
+              <table className="  m-[1.5vw]  text-[0.85rem]">
                 <tr>
                   <td className="mr-[3vw] w-[20vw] text-[#80848B] p-[2vw]">
                     연회비지원
@@ -83,7 +87,9 @@ export default function ProductListPage() {
                   className="justify-center flex mt-[1vh] cursor-pointer"
                   onClick={toggleShowDetail}
                 >
-                  <span className="text-C333333 text-sm">상세정보 보기</span>
+                  <span className="text-C333333 text-[0.85rem]">
+                    상세정보 보기
+                  </span>
                   <ChevronUpIcon
                     className="-mr-1 h-5 w-5 text-C333333"
                     aria-hidden="true"
@@ -121,7 +127,7 @@ export default function ProductListPage() {
 
       <div className="h-[1.5vh] bg-[#F4F3F8]" />
       <div className="py-[2vh] px-[4.5vw] pb-[1vh]">
-        <p className="font-medium text-[1rem] ml-[1.5vw]">리뷰 통계</p>
+        <p className="font-semibold text-[1.15rem] ml-[1.5vw]">리뷰 통계</p>
         <div className="flex justify-center p-[5vw]">
           <div className="flex mr-[7vw]">
             <img src={Happy}></img>
@@ -142,12 +148,14 @@ export default function ProductListPage() {
       <div className="py-[2vh] px-[4.5vw] pb-[1vh]">
         <div className="flex justify-between items-center">
           <div className="inline">
-            <span className="font-medium text-[1rem] ml-[1.5vw]">리뷰</span>
-            <span className="font-medium text-[1rem] ml-[1.5vw] text-[#738BFF]">
+            <span className="font-semibold text-[1.15rem] ml-[1.5vw]">
+              리뷰
+            </span>
+            <span className="font-semibold text-[1.15rem] ml-[1.5vw] text-[#738BFF]">
               20,239
             </span>
           </div>
-          <span className="text-[0.6rem] text-C333333">더보기 {">"}</span>
+          <span className="text-[0.75rem] text-C333333">더보기 {">"}</span>
         </div>
 
         <p className="text-center font-semibold text-[1.2rem] mt-[1vh]">4.26</p>
@@ -156,49 +164,52 @@ export default function ProductListPage() {
 
         {/* 리뷰 컴포넌트 */}
         <div className="flex ml-[3vw] items-start my-[2vh]">
-          <img className="relative t-0" src={Character} />
+          <img className="relative t-0 w-[10vw]" src={Character} />
           <div className="ml-[2.5vw]">
             <div>
-              <span className="font-semibold text-[0.95rem] text-C333333">
+              <span className="font-semibold text-[1rem] text-C333333">
                 권모술수
               </span>
-              <span className="text-[0.8rem] text-[#9B9B9B] ml-[1vw]">
-                {" "}
+              <span className="text-[0.85rem] text-[#9B9B9B] ml-[1vw]">
                 40대/회사원
               </span>
             </div>
             <div className="flex items-center mt-[0.1vh]">
-              <StarRate rate={4.5} w={13} h={13} />
-              <span className="text-[0.7rem] text-[#9B9B9B] ml-[1vw]">
+              <StarRate rate={4.5} w={15} h={15} />
+              <span className="text-[0.85rem] text-[#9B9B9B] ml-[1vw]">
                 2024.06.02
               </span>
             </div>
-            <div className=" mt-[1vh]  text-[0.9rem]">좋네요 추천합니다</div>
+            <div className=" mt-[1vh]  text-[1rem]">좋네요 추천합니다</div>
           </div>
         </div>
 
         <hr />
-        <div className="flex ml-[3vw] items-start mt-[2vh]">
-          <img className="relative t-0" src={Character} />
+        {/* 여기까지 */}
+        {/* 리뷰 컴포넌트 */}
+        <div className="flex ml-[3vw] items-start my-[2vh]">
+          <img className="relative t-0 w-[10vw]" src={Character} />
           <div className="ml-[2.5vw]">
             <div>
-              <span className="font-semibold text-[0.95rem] text-C333333">
+              <span className="font-semibold text-[1rem] text-C333333">
                 권모술수
               </span>
-              <span className="text-[0.8rem] text-[#9B9B9B] ml-[1vw]">
-                {" "}
+              <span className="text-[0.85rem] text-[#9B9B9B] ml-[1vw]">
                 40대/회사원
               </span>
             </div>
             <div className="flex items-center mt-[0.1vh]">
-              <StarRate rate={4.5} w={13} h={13} />
-              <span className="text-[0.7rem] text-[#9B9B9B] ml-[1vw]">
+              <StarRate rate={4.5} w={15} h={15} />
+              <span className="text-[0.85rem] text-[#9B9B9B] ml-[1vw]">
                 2024.06.02
               </span>
             </div>
-            <div className=" mt-[1vh]  text-[0.9rem]">좋네요 추천합니다</div>
+            <div className=" mt-[1vh]  text-[1rem]">좋네요 추천합니다</div>
           </div>
         </div>
+
+        <hr />
+        {/* 여기까지 */}
 
         <hr className="mt-[2vh]" />
       </div>
@@ -206,14 +217,14 @@ export default function ProductListPage() {
       <div className="py-[2vh] px-[4.5vw] pb-[1vh]">
         <div className="flex justify-between items-center">
           <div className="inline">
-            <span className="font-medium text-[1rem] ml-[1.5vw]">
+            <span className="font-semibold text-[1.15rem] ml-[1.5vw]">
               관련 게시글
             </span>
-            <span className="font-medium text-[1rem] ml-[1.5vw] text-[#738BFF]">
+            <span className="font-semibold text-[1.15rem] ml-[1.5vw] text-[#738BFF]">
               9
             </span>
           </div>
-          <span className="text-[0.6rem] text-C333333">더보기 {">"}</span>
+          <span className="text-[0.75rem] text-C333333">더보기 {">"}</span>
         </div>
 
         <BoardCard

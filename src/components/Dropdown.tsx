@@ -30,10 +30,10 @@ const Dropdown: React.FC<DropdownProps> = ({ defaultFilter, filterList }) => {
       className="mx-3 mt-[1vh] flex justify-end inline-block text-left"
     >
       <div className="mr-[1vw]">
-        <MenuButton className="inline-flex w-full justify-center rounded-md bg-white text-xs text-C333333">
+        <MenuButton className="inline-flex w-full justify-center rounded-md bg-white text-[0.9rem] text-C333333">
           {selected}
           <ChevronDownIcon
-            className="-mr-1 h-4 w-4 text-C333333"
+            className="-mr-1 h-5 w-5 text-C333333"
             aria-hidden="true"
           />
         </MenuButton>
@@ -57,7 +57,7 @@ const Dropdown: React.FC<DropdownProps> = ({ defaultFilter, filterList }) => {
                       href="#"
                       className={`${
                         active ? "bg-gray-100 text-gray-900" : "text-gray-700"
-                      } block px-4 py-2 text-xs`}
+                      } block px-4 py-2 text-[0.9rem]`}
                     >
                       {text}
                     </a>
