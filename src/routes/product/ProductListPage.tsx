@@ -20,8 +20,8 @@ export default function ProductListPage() {
   };
 
   const selectedCategoryCss =
-    "text-base text-C748BFF bg-CECF0FF py-[0.3vh] px-[6.5vw] rounded-[0.5rem] shadow";
-  const defaultCategoryCss = "text-base text-C333333 px-[6.5vw] py-[0.3vh]";
+    "text-base text-C748BFF bg-CECF0FF py-[0.3vh] px-[5.5vw] rounded-[0.5rem] shadow";
+  const defaultCategoryCss = "text-base text-C333333 px-[5.5vw] py-[0.3vh]";
 
   return (
     <>
@@ -31,7 +31,7 @@ export default function ProductListPage() {
         <div className="mt-[4vh]"></div>
         {/* 세트로 들고 다녀야 됨 */}
 
-        <div className="flex justify-center">
+        <div className="flex justify-between">
           {categories.map((cat) => (
             <p
               key={cat}
@@ -46,7 +46,7 @@ export default function ProductListPage() {
         </div>
       </div>
 
-      <div className="bg-CECF0FF rounded-t-[1.75rem]">
+      {/* <div className="bg-CECF0FF rounded-t-[1.75rem]">
         <p className="p-[4vh] pb-[3vh] text-[1.25rem] font-bold">
           <span className="text-[#738BFF]">{userInfo}</span>이
           <br /> 가장 많이 사용하는{" "}
@@ -80,14 +80,14 @@ export default function ProductListPage() {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className="px-[4.5vw] mt-[3.5vw]">
+      <div className="px-[4.5vw] mt-[0.5vw]">
         <div className=" w-[93vw] mx-auto flex justify-between items-center text-C333333 text-[1rem] bg-[#F4F3FA] py-[1.25vh] px-[4vw] rounded-[0.9rem]">
           <input
             type="text"
             id="small-input"
-            className="block w-full text-[0.95rem] border-none bg-[#F4F3FA] p-[0] m-[0]"
+            className="block w-full text-[0.95rem] border-none bg-[#F4F3FA] p-[0] m-[0] mr-[2vw]"
             placeholder="궁금한 상품을 검색해보세요!"
           />
           <img src={Search} />
@@ -104,7 +104,7 @@ export default function ProductListPage() {
           benefits={["#연회비 지원", "#관리비"]}
           rating={4.7}
           reviewCount={530}
-          link="/"
+          link="/productDetail"
         />
         <ProductCard
           cardName="신한카드 Mr.Life"
@@ -112,7 +112,7 @@ export default function ProductListPage() {
           benefits={["#연회비 지원", "#관리비"]}
           rating={4.7}
           reviewCount={530}
-          link="/"
+          link="/productDetail"
         />
         <ProductCard
           cardName="신한카드 Mr.Life"
@@ -120,7 +120,7 @@ export default function ProductListPage() {
           benefits={["#연회비 지원", "#관리비"]}
           rating={4.7}
           reviewCount={530}
-          link="/"
+          link="/productDetail"
         />
         <ProductCard
           cardName="신한카드 Mr.Life"
@@ -128,7 +128,7 @@ export default function ProductListPage() {
           benefits={["#연회비 지원", "#관리비"]}
           rating={4.7}
           reviewCount={530}
-          link="/"
+          link="/productDetail"
         />
 
         <img className="fixed bottom-[8vh] right-[4vw] z-5" src={writeButton} />

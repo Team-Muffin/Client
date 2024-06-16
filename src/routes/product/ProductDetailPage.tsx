@@ -53,12 +53,12 @@ export default function ProductListPage() {
                 </span>
               ))}
             </div>
-            <div className="flex ml-[1.5vw] items-center my-[1.2vh]">
+            {/* <div className="flex ml-[1.5vw] items-center my-[1.2vh]">
               <img src={Star} className="h-[1.8vh]" />
               <span className="ml-[0.25vh] text-[0.9rem]">4.26 (20,239)</span>
-            </div>
+            </div> */}
 
-            <div className="flex mt-[1vh] bg-[#F4F3F8] rounded-[1rem] p-[0.5vh]">
+            <div className="flex mt-[2.5vh] bg-[#F4F3F8] rounded-[1rem] p-[0.5vh]">
               <table className="  m-[1.5vw]  text-[0.85rem]">
                 <tr>
                   <td className="mr-[3vw] w-[20vw] text-[#80848B] p-[2vw]">
@@ -144,9 +144,9 @@ export default function ProductListPage() {
         </div>
       </div>
 
-      <div className="h-[1.5vh] bg-[#F4F3F8]" />
-      <div className="py-[2vh] px-[4.5vw] pb-[1vh]">
-        <div className="flex justify-between items-center">
+      {/* <div className="h-[1.5vh] bg-[#F4F3F8]" /> */}
+      {/* <div className="py-[2vh] px-[4.5vw] pb-[1vh]"> */}
+      {/* <div className="flex justify-between items-center">
           <div className="inline">
             <span className="font-semibold text-[1.15rem] ml-[1.5vw]">
               리뷰
@@ -160,10 +160,10 @@ export default function ProductListPage() {
 
         <p className="text-center font-semibold text-[1.2rem] mt-[1vh]">4.26</p>
         <StarRate rate={4.26} w={20} h={20} />
-        <hr className="mt-[2vh]" />
+        <hr className="mt-[2vh]" /> */}
 
-        {/* 리뷰 컴포넌트 */}
-        <div className="flex ml-[3vw] items-start my-[2vh]">
+      {/* 리뷰 컴포넌트 */}
+      {/* <div className="flex ml-[3vw] items-start my-[2vh]">
           <img className="relative t-0 w-[10vw]" src={Character} />
           <div className="ml-[2.5vw]">
             <div>
@@ -184,41 +184,18 @@ export default function ProductListPage() {
           </div>
         </div>
 
-        <hr />
-        {/* 여기까지 */}
-        {/* 리뷰 컴포넌트 */}
-        <div className="flex ml-[3vw] items-start my-[2vh]">
-          <img className="relative t-0 w-[10vw]" src={Character} />
-          <div className="ml-[2.5vw]">
-            <div>
-              <span className="font-semibold text-[1rem] text-C333333">
-                권모술수
-              </span>
-              <span className="text-[0.85rem] text-[#9B9B9B] ml-[1vw]">
-                40대/회사원
-              </span>
-            </div>
-            <div className="flex items-center mt-[0.1vh]">
-              <StarRate rate={4.5} w={15} h={15} />
-              <span className="text-[0.85rem] text-[#9B9B9B] ml-[1vw]">
-                2024.06.02
-              </span>
-            </div>
-            <div className=" mt-[1vh]  text-[1rem]">좋네요 추천합니다</div>
-          </div>
-        </div>
+        <hr /> */}
+      {/* 여기까지 */}
+      {/* 리뷰 컴포넌트 */}
 
-        <hr />
-        {/* 여기까지 */}
-
-        <hr className="mt-[2vh]" />
-      </div>
+      {/* <hr className="mt-[2vh]" />
+      </div> */}
       <div className="h-[1.5vh] bg-[#F4F3F8]" />
       <div className="py-[2vh] px-[4.5vw] pb-[1vh]">
         <div className="flex justify-between items-center">
           <div className="inline">
             <span className="font-semibold text-[1.15rem] ml-[1.5vw]">
-              관련 게시글
+              관련 핀
             </span>
             <span className="font-semibold text-[1.15rem] ml-[1.5vw] text-[#738BFF]">
               9
