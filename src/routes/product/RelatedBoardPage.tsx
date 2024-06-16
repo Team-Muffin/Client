@@ -14,7 +14,7 @@ export default function RelatedBoardPage() {
           <div className="flex justify-between items-center">
             <div className="inline">
               <span className="font-medium text-[1rem] ml-[1.5vw]">
-                관련 게시글
+                관련 핀
               </span>
               <span className="font-medium text-[1rem] ml-[1.5vw] text-[#738BFF]">
                 9

@@ -7,74 +7,44 @@ import Navbar from "../../components/Navbar";
 import { Link } from "react-router-dom";
 
 export default function BoardListPage() {
-  const [category, setCategory] = useState("유저");
-  const [userCategory, setUserCategory] = useState("맞춤");
-  const categories = ["맞춤", "꿀팁", "소비", "절약", "투자"];
-
-  const handleCategoryClick = (selection: string) => {
-    setCategory(selection);
-  };
+  const [userCategory, setUserCategory] = useState("꿀팁");
+  const categories = ["꿀팁", "소비", "절약", "투자", "기업"];
 
   const handleUserCategoryClick = (selection: string) => {
     setUserCategory(selection);
   };
 
   const selectedCategoryCss =
-    "text-base text-C748BFF bg-CECF0FF py-[0.5vh] px-[13vw] rounded-xl shadow text-[1.1rem]";
+    "text-base text-C748BFF bg-CECF0FF py-[0.3vh] px-[5.5vw] rounded-[0.5rem] shadow text-[1.1rem]";
   const defaultCategoryCss =
-    "text-base text-C333333 px-[13vw] py-[0.5vh] text-[1.1rem]";
+    "text-base text-C333333 px-[5.5vw] py-[0.3vh] text-[1.1rem]";
 
-  const selectedUserCategoryCss =
-    "px-[1.2vw] text-C333333 border-solid border-b-2 border-C748BFF text-[0.95rem]";
-  const defaultUserCategoryCss = "px-[1.2vw] text-C333333 text-[0.95rem]";
+  // const selectedUserCategoryCss =
+  //   "px-[1.2vw] text-C333333 border-solid border-b-2 border-C748BFF text-[0.95rem]";
+  // const defaultUserCategoryCss = "px-[1.2vw] text-C333333 text-[0.95rem]";
 
   return (
     <div className="py-[2vh] px-[4.5vw]">
       {/* 헤더랑 */}
-      <Header text="게시글" type={0} />
-      <div className="mt-[5.5vh]"></div>
+      <Header text="핀" type={0} />
+      <div className="mt-[4vh]"></div>
       {/* 세트로 들고 다녀야 됨 */}
 
-      <div className="flex justify-center">
-        <p
-          className={`${
-            category === "유저" ? selectedCategoryCss : defaultCategoryCss
-          } cursor-pointer`}
-          onClick={() => handleCategoryClick("유저")}
-        >
-          유저
-        </p>
-        <p
-          className={`${
-            category === "기업" ? selectedCategoryCss : defaultCategoryCss
-          } cursor-pointer`}
-          onClick={() => handleCategoryClick("기업")}
-        >
-          기업
-        </p>
+      <div className="flex justify-between  text-sm">
+        {categories.map((cat) => (
+          <p
+            key={cat}
+            className={`${
+              userCategory === cat ? selectedCategoryCss : defaultCategoryCss
+            } cursor-pointer`}
+            onClick={() => handleUserCategoryClick(cat)}
+          >
+            {cat}
+          </p>
+        ))}
       </div>
 
-      {category === "유저" ? (
-        <div className="flex justify-around mt-4 text-sm">
-          {categories.map((cat) => (
-            <p
-              key={cat}
-              className={`${
-                userCategory === cat
-                  ? selectedUserCategoryCss
-                  : defaultUserCategoryCss
-              } cursor-pointer`}
-              onClick={() => handleUserCategoryClick(cat)}
-            >
-              {cat}
-            </p>
-          ))}
-        </div>
-      ) : null}
-
-      {userCategory !== "맞춤" || category === "기업" ? (
-        <Dropdown defaultFilter="인기순" filterList={["인기순", "최신순"]} />
-      ) : null}
+      <Dropdown defaultFilter="인기순" filterList={["인기순", "최신순"]} />
 
       <hr className="border-CD9D9D9 mt-[1vh]" />
       <BoardCard

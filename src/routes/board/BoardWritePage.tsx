@@ -9,10 +9,15 @@ import {
   Transition,
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { useNavigate } from "react-router-dom";
 
 export default function BoardWritePage() {
   const [selected, setSelected] = useState("꿀팁");
   const filterList = ["꿀팁", "소비", "절약", "투자"];
+  const navigate = useNavigate();
+  const handleBackButtonClick = () => {
+    navigate(-1);
+  };
 
   const handleMenuItemClick = (text: string) => {
     setSelected(text);
@@ -23,7 +28,12 @@ export default function BoardWritePage() {
         {/* 헤더;; */}
         <nav className="fixed top-0 left-0 right-0 bg-[#ffffff]">
           <div className="relative flex justify-center items-center h-[6vh]">
-            <img src={BackBtn} alt="Back" className="absolute left-4" />
+            <img
+              src={BackBtn}
+              alt="Back"
+              className="absolute left-4"
+              onClick={handleBackButtonClick}
+            />
             <Menu as="div" className=" flex justify-end inline-block text-left">
               <div className="">
                 <MenuButton className="inline-flex w-full justify-center rounded-md bg-white text-lg text-black font-medium">
@@ -69,7 +79,7 @@ export default function BoardWritePage() {
             <div className="absolute right-4 font-medium text-lg">등록</div>
           </div>
         </nav>
-        {/* 여기까지 헤더;; */}
+        {/* 여기까지 헤더 */}
         <div className="mt-[4vh]"></div>
 
         {/* 민우 TODO: 여기부터 Editor 관련 */}

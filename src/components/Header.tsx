@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import SearchBtn from "../assets/search-black.svg";
 import BackBtn from "../assets/back.svg";
 import SettingBtn from "../assets/settings.svg";
+
+import { useNavigate } from "react-router-dom";
+
 import ScrapBtn from "../assets/scrap.svg"; // Import Scrap image
 import ReplaceBtn from "../assets/replace.svg"; // Import Replace image
 import LogoutBtn from "../assets/logout.svg"; // Import Logout image
 import { Link } from "react-router-dom";
+
 
 type HeaderProps = {
   text: string;
@@ -14,6 +18,17 @@ type HeaderProps = {
 };
 
 const Header: React.FC<HeaderProps> = ({ text, type, to = -1 }) => {
+
+  const navigate = useNavigate();
+  const handleBackButtonClick = () => {
+    if (typeof to === "string") {
+      navigate(to);
+    } else if (to === -1) {
+      navigate(-1);
+    }
+  };
+
+  
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const toggleDropdown = () => {
@@ -33,7 +48,7 @@ const Header: React.FC<HeaderProps> = ({ text, type, to = -1 }) => {
         )}
         {type === 1 && (
           <>
-            <img src={BackBtn} alt="Back" className="absolute left-4" />
+            <img src={BackBtn} alt="Back" className="absolute left-4"  />
             <div className="flex-1 text-center font-semibold text-lg">
               {text}
             </div>
@@ -86,6 +101,7 @@ const Header: React.FC<HeaderProps> = ({ text, type, to = -1 }) => {
           </>
         )}
         {type === 3 && (
+
           <div className="flex-1 text-center font-semibold text-lg">{text}</div>
         )}
       </div>
