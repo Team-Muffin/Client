@@ -22,9 +22,9 @@ const Navbar = () => {
 
   const navItems = [
     { name: "홈", href: "#", Icon: Home },
-    { name: "게시글", href: "#", Icon: Post },
+    { name: "핀", href: "/boardList", Icon: Post },
     { name: "챌린지", href: "#", Icon: Star },
-    { name: "상품", href: "#", Icon: Product },
+    { name: "상품", href: "/productList", Icon: Product },
     { name: "프로필", href: "#", Icon: Profile },
   ];
 
