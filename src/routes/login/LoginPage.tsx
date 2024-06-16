@@ -1,4 +1,5 @@
 import MainLogo from "../../assets/main-logo.svg?react";
+import PurpleBtn from "../../components/PurpleBtn";
 import { Link } from "react-router-dom";
 
 const LoginPage = () => {
@@ -32,15 +33,12 @@ const LoginPage = () => {
         />
 
         <div className="flex mt-[5vh]">
-          <Link
-            to="/challenge/cal"
-            className="text-lg font-normal text-white text-center bg-[#748BFF] rounded-[1rem] shadow py-[2vh] w-full"
-          >
-            ToFin 시작하기 !
-          </Link>
+          <PurpleBtn to="/challenge" label="ToFin 시작하기 !" />
         </div>
         <div className="flex justify-center mt-[2vh]">
-          <p className="text-xs text-gray mr-[2vw]">아직 계정이 없다면?</p>
+          <Link to="/challenge" className="text-xs text-gray mr-[2vw]">
+            게스트로 입장하기
+          </Link>
           <Link to="/signup" className="text-xs font-medium ml-[3vw]">
             회원가입하기
           </Link>

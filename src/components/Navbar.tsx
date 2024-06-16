@@ -21,6 +21,7 @@ const Navbar = () => {
   };
 
   const navItems = [
+
     { name: "홈", href: "#", Icon: Home },
     { name: "핀", href: "/boardList", Icon: Post },
     { name: "챌린지", href: "#", Icon: Star },
