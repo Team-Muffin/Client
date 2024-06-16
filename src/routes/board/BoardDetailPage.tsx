@@ -28,7 +28,7 @@ export default function BoardDetailPage() {
       <div className="py-[2vh] px-[4.5vw]">
         {/* 헤더랑 */}
         <Header text="꿀팁" type={1} />
-        <div className="mt-[5.5vh]"></div>
+        <div className="mt-[4vh]"></div>
         {/* 세트로 들고 다녀야 됨 */}
         <div className="px-[3vw]">
           <div className="flex items-center">
