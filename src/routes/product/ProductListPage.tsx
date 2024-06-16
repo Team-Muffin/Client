@@ -69,12 +69,12 @@ export default function ProductListPage() {
               신한카드 이용하고
               <br className="m-0 p-0" /> 최대 10만원 캐시백 받아가자!
             </p>
-            <p className=" text-[0.75rem] text-C333333">• 공과금 10% 할인</p>
-            <p className=" text-[0.75rem] text-C333333">
+            <p className=" text-[0.8rem] text-C333333">• 공과금 10% 할인</p>
+            <p className=" text-[0.8rem] text-C333333">
               • 마트, 편의점 10% 할인
             </p>
-            <p className=" text-[0.75rem] text-C333333">• 식음료 10% 할인</p>
-            <p className="text-[0.6rem] text-C333333 text-end mt-[1rem]">
+            <p className=" text-[0.8rem] text-C333333">• 식음료 10% 할인</p>
+            <p className="text-[0.75rem] text-C333333 text-end mt-[1rem]">
               {" "}
               더보기 {">"}
             </p>

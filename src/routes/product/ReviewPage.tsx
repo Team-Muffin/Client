@@ -15,8 +15,10 @@ export default function ReviewPage() {
         <div className="flex justify-between">
           <div className="flex justify-between items-center">
             <div className="inline">
-              <span className="font-medium text-[1rem] ml-[1.5vw]">리뷰</span>
-              <span className="font-medium text-[1rem] ml-[1.5vw] text-[#738BFF]">
+              <span className="font-semibold text-[1.15rem] ml-[1.5vw]">
+                리뷰
+              </span>
+              <span className="font-semibold text-[1.15rem] ml-[1.5vw] text-[#738BFF]">
                 20,239
               </span>
             </div>

@@ -43,7 +43,7 @@ export default function BoardDetailPage() {
           <p className=" py-[1vh] text-[1.25rem] font-medium">
             ⭐️️ 내가 들었던 펀드 추천 글 ⭐
           </p>
-          <p className=" text-[0.75rem]">
+          <p className=" text-[0.95rem]">
             오늘은 내가 들었던 펀드 중에 제일 좋았던 신한은행의 펀드를
             이야기해볼게! 투자에 관심이 있다면 한 번쯤은 펀드를 고려해 봤을
             거야. 그 중에서도 신한은행의 펀드는 안정성과 수익률 모두에서 우수한
@@ -72,44 +72,44 @@ export default function BoardDetailPage() {
           </p>
           {/* 까지 민우 TODO */}
 
-          <div className="flex justify-between ">
+          <div className="flex justify-between mt-[1.3vh]">
             <div className="flex items-center">
               {heartClicked === true ? (
                 <img
                   src={RedHeart}
-                  className="w-[1.2rem] mr-[1vw] text-C333333"
+                  className="w-[1.3rem] mr-[1vw] text-C333333"
                   onClick={() => handleHeartClicked(false)}
                 />
               ) : (
                 <img
                   src={Heart}
-                  className="w-[1.2rem] mr-[1vw] text-C333333"
+                  className="w-[1.3rem] mr-[1vw] text-C333333"
                   onClick={() => handleHeartClicked(true)}
                 />
               )}
 
-              <p className="text-[0.85rem] mr-[1.75vw] text-C333333">7</p>
+              <p className="text-[1rem] mr-[1.75vw] text-C333333">7</p>
               <img
                 src={Reply}
-                className="w-[1.25rem] mr-[1vw] text-C333333"
+                className="w-[1.3rem] mr-[1vw] text-C333333"
               ></img>
-              <p className="text-[0.85rem] mr-[1vw] text-C333333">3</p>
+              <p className="text-[1rem] mr-[1vw] text-C333333">3</p>
             </div>
             <div className="flex bg-[#F8F5F5] p-[1.5vw] rounded-[0.5rem]">
               {scrapClicked === true ? (
                 <img
                   src={FilledScrap}
-                  className="w-[1.2rem] mr-[1vw] text-C333333"
+                  className="w-[1.3rem] mr-[1vw] text-C333333"
                   onClick={() => handleScrapClicked(false)}
                 />
               ) : (
                 <img
                   src={Scrap}
-                  className="w-[1.2rem] mr-[1vw] text-C333333"
+                  className="w-[1.3rem] mr-[1vw] text-C333333"
                   onClick={() => handleScrapClicked(true)}
                 />
               )}
-              <p className="text-[0.85rem] mr-[1vw] text-C333333">저장</p>
+              <p className="text-[0.95rem] mr-[1vw] text-C333333">저장</p>
             </div>
           </div>
         </div>
@@ -118,36 +118,40 @@ export default function BoardDetailPage() {
         <div className=" mt-[2vh]  p-[2.75vw] shadow rounded-[0.5rem]">
           <div className="flex justify-between">
             <div className="flex items-center">
-              <img className="pr-[2vw]" src={character2} />
+              <img className="pr-[2vw] w-[13vw]" src={character2} />
               <div>
-                <p className="text-[0.85rem] text-C333333 ">동원참치</p>
-                <p className="text-[0.7rem] text-C333333">1시간 전</p>
+                <p className="text-[0.9rem] font-medium text-C333333 ">
+                  동원참치
+                </p>
+                <p className="text-[0.8rem] text-C333333">1시간 전</p>
               </div>
             </div>
-            <p className="text-[0.7rem] text-C333333"> 답글 </p>
+            <p className="text-[0.85rem] text-C333333"> 답글 </p>
           </div>
-          <p className="text-[0.8rem] mt-[1vh] text-C333333">
+          <p className="text-[0.95rem] mt-[1vh] text-C333333">
             좋은 정보 감사합니다 *^^*
           </p>
         </div>
         <div className=" ml-[7vw] mt-[2vh]  p-[2.75vw] shadow rounded-[0.5rem]">
           <div className="flex justify-between">
             <div className="flex items-center">
-              <img className="pr-[2vw]" src={character1_small} />
+              <img className="pr-[2vw] w-[13vw]" src={character1_small} />
               <div>
-                <p className="text-[0.85rem] text-C333333 ">이듀미</p>
-                <p className="text-[0.7rem] text-C333333">1시간 전</p>
+                <p className="text-[0.9rem]  font-medium text-C333333 ">
+                  이듀미
+                </p>
+                <p className="text-[0.8rem] text-C333333">1시간 전</p>
               </div>
             </div>
             <div>
-              <span className="text-[0.7rem] text-C333333"> 답글 </span>
-              <span className="text-[0.7rem] pl-[1vw] text-C333333">
+              <span className="text-[0.85rem] text-C333333"> 답글 </span>
+              <span className="text-[0.85rem] pl-[1vw] text-C333333">
                 {" "}
                 삭제{" "}
               </span>
             </div>
           </div>
-          <p className="text-[0.8rem] mt-[1vh] text-C333333">
+          <p className="text-[0.95rem] mt-[1vh] text-C333333">
             네!! 2탄 금방 올릴게요 ~ ㅎ
           </p>
         </div>

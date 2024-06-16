@@ -27,20 +27,20 @@ const BoardCard: React.FC<PostCardProps> = ({
 }) => {
   return (
     <Link to={`/${link}`}>
-      <div className="flex justify-between items-center my-[1.3vh] px-[0.5vw]">
+      <div className="flex justify-between items-center my-[1.75vh] px-[0.5vw]">
         <div className="pr-[2.5vw] mr-[0.8vw]">
-          <p className="text-base text-C333333">{title}</p>
-          <p className="text-[0.85rem] text-C333333 line-clamp-1">
+          <p className="text-[1.05rem] text-C333333 font-medium">{title}</p>
+          <p className="text-[0.9rem] text-C333333 line-clamp-1 mt-[0.25vh]">
             {description}
           </p>
           <p className="text-[0.85rem] text-C333333">
             {author} | {time}
             {/* TODO TimeAgo 처리 필요 */}
           </p>
-          <div className="flex">
-            <img src={Heart} className="mr-[1vw] text-C333333"></img>
+          <div className="flex mt-[0.2vh]">
+            <img src={Heart} className="w-[1.5vh] mr-[1vw] text-C333333"></img>
             <p className="text-[0.85rem] mr-[1vw] text-C333333">{heartCount}</p>
-            <img src={Reply} className="mr-[1vw] text-C333333"></img>
+            <img src={Reply} className="w-[1.5vh] mr-[1vw] text-C333333"></img>
             <p className="text-[0.85rem] mr-[1vw] text-C333333">{replyCount}</p>
           </div>
         </div>

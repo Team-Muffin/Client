@@ -20,12 +20,13 @@ export default function BoardListPage() {
   };
 
   const selectedCategoryCss =
-    "text-base text-C748BFF bg-CECF0FF py-[0.5vh] px-[13vw] rounded-xl shadow";
-  const defaultCategoryCss = "text-base text-C333333 px-[13vw] py-[0.5vh]";
+    "text-base text-C748BFF bg-CECF0FF py-[0.5vh] px-[13vw] rounded-xl shadow text-[1.1rem]";
+  const defaultCategoryCss =
+    "text-base text-C333333 px-[13vw] py-[0.5vh] text-[1.1rem]";
 
   const selectedUserCategoryCss =
-    "px-[1.2vw] text-C333333 border-solid border-b-2 border-C748BFF";
-  const defaultUserCategoryCss = "px-[1.2vw] text-C333333";
+    "px-[1.2vw] text-C333333 border-solid border-b-2 border-C748BFF text-[0.95rem]";
+  const defaultUserCategoryCss = "px-[1.2vw] text-C333333 text-[0.95rem]";
 
   return (
     <div className="py-[2vh] px-[4.5vw]">

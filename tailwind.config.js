@@ -15,7 +15,7 @@ module.exports = {
 
       boxShadow: {
         productCard: "1px 1px 1px 2px rgba(0, 0, 0, 0.1)",
-    },
+      },
 
       animation: {
         shimmer: "shimmer 1.5s infinite linear",
@@ -32,8 +32,8 @@ module.exports = {
       },
       backgroundSize: {
         custom: "300% 100%",
-
       },
+      css: {},
     },
   },
   plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],
