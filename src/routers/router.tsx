@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../routes/Layout";
 
-import Home from "../routes/Home";
+import Home from "../routes/home/Home";
 
 import BoardListPage from "../routes/board/BoardListPage";
 import BoardWritePage from "../routes/board/BoardWritePage";
@@ -11,7 +11,7 @@ import ProductDetailPage from "../routes/product/ProductDetailPage";
 import ReviewPage from "../routes/product/ReviewPage";
 import RelatedBoardPage from "../routes/product/RelatedBoardPage";
 import ReviewWritePage from "../routes/product/ReviewWritePage";
-
+import HomePage from "../routes/home/Home";
 import ChallengePage from "../routes/challenge/ChallengePage";
 import ChallengeDetailPage from "../routes/challenge/ChallengeDetailPage";
 import ChallengeCAL from "../routes/challenge/ChallengeCAL";
@@ -108,6 +108,10 @@ export const mainRouter = [
       {
         path: "/reviewWrite",
         element: <ReviewWritePage />,
+      },
+      {
+        path: "/",
+        element: <HomePage />,
       },
     ],
   },
