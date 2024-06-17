@@ -14,7 +14,8 @@ module.exports = {
       },
 
       boxShadow: {
-        productCard: "1px 1px 1px 2px rgba(0, 0, 0, 0.1)",
+        default: "0 0 3px rgba(0, 0, 0, 0.2)",
+        productCard: "0 0 3px rgba(0, 0, 0, 0.2)",
       },
 
       animation: {
