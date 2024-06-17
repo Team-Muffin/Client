@@ -125,18 +125,6 @@ const AssetConnectPage = () => {
           placeholder="Phonenumber"
           required
         />
-
-        <div className="flex mt-[2vh] mb-[1vh] items-center">
-          <p className="text-lg font-semibold mr-[1vw]">전화번호 확인</p>
-          <Essential />
-        </div>
-        <input
-          type="password"
-          id="Phonenumber_check"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          placeholder="Phonenumber_check"
-          required
-        />
       </div>
 
       <div className="fixed w-full px-[8vw] bottom-[3vh]">
