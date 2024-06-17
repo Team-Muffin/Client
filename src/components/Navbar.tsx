@@ -15,11 +15,11 @@ const Navbar = () => {
   const location = useLocation();
 
   const navItems = [
-    { name: "홈", href: "/", Icon: HomeIcon },
-    { name: "핀", href: "/boardList", Icon: PostIcon },
-    { name: "챌린지", href: "/challenge", Icon: StarIcon },
-    { name: "상품", href: "/productList", Icon: ProductIcon },
-    { name: "프로필", href: "/mypage", Icon: ProfileIcon },
+    { name: "홈", href: "/home", Icon: HomeIcon, exact: true },
+    { name: "핀", href: "/board", Icon: PostIcon, exact: false },
+    { name: "챌린지", href: "/challenge", Icon: StarIcon, exact: false },
+    { name: "상품", href: "/product", Icon: ProductIcon, exact: false },
+    { name: "프로필", href: "/mypage", Icon: ProfileIcon, exact: false },
   ];
 
   return (
@@ -31,11 +31,16 @@ const Navbar = () => {
               <li key={item.name}>
                 <NavLink
                   to={item.href}
-                  className={`${linkClasses} ${defaultClasses} ${hoverClasses} ${
-                    location.pathname === item.href ? activeClasses : ""
-                  }`}
+                  className={({ isActive }) =>
+                    `${linkClasses} ${defaultClasses} ${hoverClasses} ${
+                      isActive ? activeClasses : ""
+                    }`
+                  }
                   aria-current={
-                    location.pathname === item.href ? "page" : undefined
+                    location.pathname === item.href ||
+                    (!item.exact && location.pathname.startsWith(item.href))
+                      ? "page"
+                      : undefined
                   }
                 >
                   <img
@@ -44,18 +49,23 @@ const Navbar = () => {
                     className="h-7 w-7 filter transition-all duration-300 group-hover:filter-none group-hover:fill-current group-focus:fill-current"
                     style={{
                       filter:
-                        location.pathname === item.href
+                        location.pathname === item.href ||
+                        (!item.exact && location.pathname.startsWith(item.href))
                           ? "invert(64%) sepia(69%) saturate(4107%) hue-rotate(206deg) brightness(100%) contrast(102%)"
                           : "none",
                       fill:
-                        location.pathname === item.href
+                        location.pathname === item.href ||
+                        (!item.exact && location.pathname.startsWith(item.href))
                           ? "#748BFF"
                           : "currentColor",
                     }}
                   />
                   <p
                     className={`text-xs ${
-                      location.pathname === item.href ? activeClasses : ""
+                      location.pathname === item.href ||
+                      (!item.exact && location.pathname.startsWith(item.href))
+                        ? activeClasses
+                        : ""
                     }`}
                   >
                     {item.name}

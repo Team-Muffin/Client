@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "../routes/Layout";
 
 import Home from "../routes/home/Home";
-
 import BoardListPage from "../routes/board/BoardListPage";
 import BoardWritePage from "../routes/board/BoardWritePage";
 import BoardDetailPage from "../routes/board/BoardDetailPage";
@@ -26,25 +25,26 @@ import SignUpSuccessPage from "../routes/signup/SignUpSuccessPage";
 import ProfilePage from "../routes/profile/ProfilePage";
 import EditProfilePage from "../routes/profile/EditProfilePage";
 import StampBoard from "../routes/challenge/StampBoard";
-import { Children } from "react";
-// import ProductListPage from "../routes/ProductListPage";
 
 export const mainRouter = [
   {
-    path: "",
+    path: "/",
     element: <Layout />,
     children: [
       {
-        path: "/signin",
+        path: "home",
         index: true,
+        element: <HomePage />,
+      },
+      {
+        path: "signin",
         element: <LoginPage />,
       },
       {
-        path: "/signup",
+        path: "signup",
         children: [
           {
             path: "",
-            index: true,
             element: <SignUpPage />,
           },
           {
@@ -58,34 +58,31 @@ export const mainRouter = [
         ],
       },
       {
-        path: "/asset",
+        path: "asset",
         children: [
           {
             path: "",
-            index: true,
             element: <AssetConnectPage />,
           },
           {
-            path: "/loading",
+            path: "loading",
             element: <AssetLoadingPage />,
           },
           {
-            path: "/connect",
+            path: "connect",
             element: <ConnectedAssetPage />,
           },
           {
-            path: "/tendency",
+            path: "tendency",
             element: <TendencyAnalysisPage />,
           },
         ],
       },
-
       {
-        path: "/challenge",
-        Children: [
+        path: "challenge",
+        children: [
           {
             path: "",
-            index: true,
             element: <ChallengePage />,
           },
           {
@@ -103,11 +100,10 @@ export const mainRouter = [
         ],
       },
       {
-        path: "/board",
+        path: "board",
         children: [
           {
             path: "",
-            index: true,
             element: <BoardListPage />,
           },
           {
@@ -120,30 +116,25 @@ export const mainRouter = [
           },
         ],
       },
-
       {
-        path: "/productList",
+        path: "product",
         element: <ProductListPage />,
       },
       {
-        path: "/productDetail",
+        path: "productDetail",
         element: <ProductDetailPage />,
       },
       {
-        path: "/mypage",
+        path: "mypage",
         element: <ProfilePage />,
       },
       {
-        path: "/editprofile",
+        path: "editprofile",
         element: <EditProfilePage />,
       },
       {
-        path: "/reviewWrite",
+        path: "reviewWrite",
         element: <ReviewWritePage />,
-      },
-      {
-        path: "/",
-        element: <HomePage />,
       },
     ],
   },
