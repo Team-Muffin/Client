@@ -26,6 +26,7 @@ import SignUpSuccessPage from "../routes/signup/SignUpSuccessPage";
 import ProfilePage from "../routes/profile/ProfilePage";
 import EditProfilePage from "../routes/profile/EditProfilePage";
 import StampBoard from "../routes/challenge/StampBoard";
+import { Children } from "react";
 // import ProductListPage from "../routes/ProductListPage";
 
 export const mainRouter = [
@@ -34,64 +35,90 @@ export const mainRouter = [
     element: <Layout />,
     children: [
       {
-        path: "/login",
+        path: "/signin",
+        index: true,
         element: <LoginPage />,
       },
       {
         path: "/signup",
-        element: <SignUpPage />,
+        children: [
+          {
+            path: "",
+            index: true,
+            element: <SignUpPage />,
+          },
+          {
+            path: "profile",
+            element: <SignUpProfilePage />,
+          },
+          {
+            path: "success",
+            element: <SignUpSuccessPage />,
+          },
+        ],
       },
       {
-        path: "/signup/profile",
-        element: <SignUpProfilePage />,
+        path: "/asset",
+        children: [
+          {
+            path: "",
+            index: true,
+            element: <AssetConnectPage />,
+          },
+          {
+            path: "/loading",
+            element: <AssetLoadingPage />,
+          },
+          {
+            path: "/connect",
+            element: <ConnectedAssetPage />,
+          },
+          {
+            path: "/tendency",
+            element: <TendencyAnalysisPage />,
+          },
+        ],
       },
-      {
-        path: "/signup/assetinfo",
-        element: <AssetConnectPage />,
-      },
-      {
-        path: "/signup/assetconnect",
-        element: <AssetLoadingPage />,
-      },
-      {
-        path: "/signup/connectedasset",
-        element: <ConnectedAssetPage />,
-      },
-      {
-        path: "/signup/tendency",
-        element: <TendencyAnalysisPage />,
-      },
-      {
-        path: "/signup/success",
-        element: <SignUpSuccessPage />,
-      },
+
       {
         path: "/challenge",
-        element: <ChallengePage />,
+        Children: [
+          {
+            path: "",
+            index: true,
+            element: <ChallengePage />,
+          },
+          {
+            path: "detail",
+            element: <ChallengeDetailPage />,
+          },
+          {
+            path: "calendar",
+            element: <ChallengeCAL />,
+          },
+          {
+            path: "stampboard",
+            element: <StampBoard />,
+          },
+        ],
       },
       {
-        path: "/challenge/detail",
-        element: <ChallengeDetailPage />,
-      },
-      {
-        path: "/challenge/cal",
-        element: <ChallengeCAL />,
-      },
-      {
-        path: "/challenge/detail/stampboard",
-        element: <StampBoard />,
-      },
-      {
-        path: "/boardList",
-        element: <BoardListPage />,
-      },
-      {
-        path: "/boardDetail",
-        element: <BoardDetailPage />,
-      },
-      {
-        path: "/boardWrite",
-        element: <BoardWritePage />,
+        path: "/board",
+        children: [
+          {
+            path: "",
+            index: true,
+            element: <BoardListPage />,
+          },
+          {
+            path: ":boardId",
+            element: <BoardDetailPage />,
+          },
+          {
+            path: "write",
+            element: <BoardWritePage />,
+          },
+        ],
       },
 
       {
