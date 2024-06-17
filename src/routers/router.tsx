@@ -25,6 +25,7 @@ import TendencyAnalysisPage from "../routes/signup/TendencyAnalysisPage";
 import SignUpSuccessPage from "../routes/signup/SignUpSuccessPage";
 import ProfilePage from "../routes/profile/ProfilePage";
 import EditProfilePage from "../routes/profile/EditProfilePage";
+import StampBoard from "../routes/challenge/StampBoard";
 // import ProductListPage from "../routes/ProductListPage";
 
 export const mainRouter = [
@@ -75,6 +76,10 @@ export const mainRouter = [
       {
         path: "/challenge/cal",
         element: <ChallengeCAL />,
+      },
+      {
+        path: "/challenge/detail/stampboard",
+        element: <StampBoard />,
       },
       {
         path: "/boardList",

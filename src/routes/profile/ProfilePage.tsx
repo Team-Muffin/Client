@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Header from "../../components/Header";
 import ProfileCircle from "../../assets/myprofile.svg?react";
 import Checked from "../../assets/checked.svg?react";
@@ -6,7 +7,6 @@ import MyChallenge from "../../assets/challenge-count.svg?react";
 import Navbar from "../../components/Navbar";
 import MyResponsivePie from "./PieChart";
 import MyResponsiveBar from "./BarChart";
-
 const ProfilePage = () => {
   const [userCategory, setUserCategory] = useState("게시물");
   const [isFollowing, setIsFollowing] = useState(false);
@@ -86,7 +86,9 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className="flex justify-center gap-[9vw] items-center">
-          <MyChallenge />
+          <Link to="/challenge/detail/stampboard">
+            <MyChallenge />
+          </Link>
           <div className="flex flex-col items-center">
             <div className="flex items-center">
               <p className="text-2xl mr-[2vw]">홍길동</p>
