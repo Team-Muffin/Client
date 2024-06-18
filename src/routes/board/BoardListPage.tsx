@@ -1,27 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import Dropdown from "../../components/Dropdown";
 import writeButton from "../../assets/write-button.svg";
 import BoardCard from "../../components/BoardCard";
 import Navbar from "../../components/Navbar";
 import { Link } from "react-router-dom";
+import { fetchBoardList } from "../../libs/apis/board";
 
 export default function BoardListPage() {
-  const [userCategory, setUserCategory] = useState("꿀팁");
-  const categories = ["꿀팁", "소비", "절약", "투자", "기업"];
+  const [userCategory, setUserCategory] = useState("정보");
+  const categories = ["정보", "재미", "투자", "기업", "고급"];
 
   const handleUserCategoryClick = (selection: string) => {
     setUserCategory(selection);
   };
 
   const selectedCategoryCss =
-    "text-base text-C748BFF bg-CECF0FF py-[0.3vh] px-[5.5vw] rounded-[0.5rem] shadow text-[1.1rem]";
+    "text-base text-C748BFF bg-CECF0FF py-[0.3vh] px-[4.5vw] rounded-[0.5rem] shadow text-[1.1rem]";
   const defaultCategoryCss =
-    "text-base text-C333333 px-[5.5vw] py-[0.3vh] text-[1.1rem]";
+    "text-base text-C333333 px-[4.5vw] py-[0.3vh] text-[1.1rem]";
 
   // const selectedUserCategoryCss =
   //   "px-[1.2vw] text-C333333 border-solid border-b-2 border-C748BFF text-[0.95rem]";
   // const defaultUserCategoryCss = "px-[1.2vw] text-C333333 text-[0.95rem]";
+
+  const [boardData, setBoardData] = useState([]);
+  const callBoardData = async () => {
+    try {
+      const response = await fetchBoardList(1, 10, 1, "popular");
+      console.log(response);
+    } catch (error) {
+      console.error("보드 데이터 호출 중 에러:", error);
+    }
+  };
+  useEffect(() => {
+    callBoardData();
+  }, []);
 
   return (
     <div className="py-[2vh] px-[4.5vw]">
