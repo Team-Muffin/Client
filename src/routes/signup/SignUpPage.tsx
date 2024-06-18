@@ -1,8 +1,17 @@
 import MiniCircle from "../../assets/minicircle.svg?react";
 import Essential from "../../assets/required.svg?react";
 import PurpleBtn from "../../components/PurpleBtn";
+import { useAuthStore } from "../store";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
+  const login = useAuthStore((state) => state.login);
+  const navigate = useNavigate();
+  const handleSignUp = () => {
+    const userId = // 서버에서 받은 사용자 ID
+      //login(userId);
+      navigate("/signup/profile");
+  };
   return (
     <>
       <div className="px-[8vw] pt-[5vh]">
