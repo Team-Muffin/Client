@@ -1,17 +1,29 @@
+import React, { useState } from "react";
 import MiniCircle from "../../assets/minicircle.svg?react";
 import Essential from "../../assets/required.svg?react";
 import PurpleBtn from "../../components/PurpleBtn";
-import { useAuthStore } from "../store";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../store";
 
 const SignUpPage = () => {
-  const login = useAuthStore((state) => state.login);
   const navigate = useNavigate();
-  const handleSignUp = () => {
-    const userId = // 서버에서 받은 사용자 ID
-      //login(userId);
-      navigate("/signup/profile");
+  const [userId, setUserId] = useState("");
+  const [userInfo, setuserInfo] = useState("");
+  const [userInfoCheck, setuserInfoCheck] = useState("");
+
+  const login = useAuthStore((state) => state.login);
+
+  const handleNext = () => {
+    if (userInfo !== userInfoCheck) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    login(userId, userInfo, "", "", ""); // 이 부분에서 Zustand의 login 함수 호출
+
+    navigate("/signup/profile");
   };
+
   return (
     <>
       <div className="px-[8vw] pt-[5vh]">
@@ -22,7 +34,6 @@ const SignUpPage = () => {
         <p className="text-2xl font-medium mb-[2.5vh]">
           오신 것을 환영합니다!{" "}
         </p>
-
         <p className="text-base mb-[7vh]">
           먼저 로그인하기 위한 <br />
           아이디와 비밀번호를 입력해주세요{" "}
@@ -37,6 +48,8 @@ const SignUpPage = () => {
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="ID"
           required
+          value={userId}
+          onChange={(e) => setUserId(e.target.value)}
         />
 
         <div className="flex mt-[3vh] mb-[1vh] items-center">
@@ -49,6 +62,8 @@ const SignUpPage = () => {
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="Password"
           required
+          value={userInfo}
+          onChange={(e) => setuserInfo(e.target.value)}
         />
 
         <div className="flex mt-[3vh] mb-[1vh] items-center">
@@ -61,6 +76,8 @@ const SignUpPage = () => {
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="Password_check"
           required
+          value={userInfoCheck}
+          onChange={(e) => setuserInfoCheck(e.target.value)}
         />
       </div>
 
@@ -71,7 +88,11 @@ const SignUpPage = () => {
           <MiniCircle className="w-3 h-3 mr-5" />
           <MiniCircle className="w-3 h-3" />
         </div>
-        <PurpleBtn to="/signup/profile" label="로그인 정보 작성하기" />
+        <PurpleBtn
+          label="로그인 정보 작성하기"
+          onClick={handleNext}
+          to="/signup/profile"
+        />
       </div>
     </>
   );
