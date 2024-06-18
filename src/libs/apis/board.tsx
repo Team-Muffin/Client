@@ -39,14 +39,14 @@ interface BoardListResponse {
 // 각 게시글 조회
 export async function fetchBoardDetail(
   boardId: string
-): Promise<{ data: BoardDetailResponse["data"] }> {
-  const response = await instance.get<BoardDetailResponse>(
+): Promise<{ data: BoardData["data"] }> {
+  const response = await instance.get<BoardData>(
     `/board-service/boards/${boardId}`
   );
   return { data: response.data.data };
 }
 
-interface BoardDetailResponse {
+interface BoardData {
   success: boolean;
   message: string;
   data: {

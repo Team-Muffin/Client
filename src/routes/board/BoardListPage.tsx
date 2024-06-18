@@ -65,7 +65,7 @@ export default function BoardListPage() {
         userId: userId,
       });
       setBoardData(data);
-      console.log({ data });
+      // console.log({ data });
     } catch (error) {
       console.error("보드 데이터 호출 중 에러:", error);
     }
