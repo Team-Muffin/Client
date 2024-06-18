@@ -1,5 +1,4 @@
 import ShinhanLogo from "../../assets/shinhan-logo.svg?react";
-import Checked from "../../assets/checked.svg?react";
 import MiniCircle from "../../assets/minicircle.svg?react";
 import PurpleBtn from "../../components/PurpleBtn";
 
@@ -31,9 +30,7 @@ const ConnectedAssetPage = () => {
                 <p className="text-base font-semibold">237,735원</p>
                 <p className="text-sm font-normal">쏠편한 입출금통장</p>
               </div>
-              <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                <Checked />
-              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900"></div>
             </div>
           </li>
           <li className="p-[0.5vh]">
@@ -45,9 +42,7 @@ const ConnectedAssetPage = () => {
                 <p className="text-base font-semibold">237,735원</p>
                 <p className="text-sm font-normal">쏠편한 입출금통장</p>
               </div>
-              <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                <Checked />
-              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900"></div>
             </div>
           </li>
           <li className="p-[0.5vh]">
@@ -59,9 +54,7 @@ const ConnectedAssetPage = () => {
                 <p className="text-base font-semibold">237,735원</p>
                 <p className="text-sm font-normal">쏠편한 입출금통장</p>
               </div>
-              <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                <Checked />
-              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900"></div>
             </div>
           </li>
           <li className="p-[0.5vh]">
@@ -73,9 +66,7 @@ const ConnectedAssetPage = () => {
                 <p className="text-base font-semibold">237,735원</p>
                 <p className="text-sm font-normal">쏠편한 입출금통장</p>
               </div>
-              <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                <Checked />
-              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900"></div>
             </div>
           </li>
         </ul>

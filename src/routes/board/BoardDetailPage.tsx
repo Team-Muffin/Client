@@ -7,8 +7,8 @@ import character2 from "../../assets/character2.svg";
 import Heart from "../../assets/heart-empty.svg";
 import RedHeart from "../../assets/heart-filled.svg";
 import Reply from "../../assets/reply.svg";
-import Scrap from "../../assets/scrap.svg";
-import FilledScrap from "../../assets/scrap-filled.svg";
+import Scrap from "../../assets/pin.svg";
+import FilledScrap from "../../assets/pin-filled.svg";
 import Send from "../../assets/send.svg";
 
 export default function BoardDetailPage() {
@@ -31,11 +31,16 @@ export default function BoardDetailPage() {
         <div className="mt-[4vh]"></div>
         {/* 세트로 들고 다녀야 됨 */}
         <div className="px-[3vw]">
-          <div className="flex items-center">
-            <img className="pr-[3vw]" src={character1} />
-            <div>
-              <p className="text-[1.2rem] text-C333333 font-medium">이듀미</p>
-              <p className="text-[0.8rem] text-C333333">2시간 전</p>
+          <div className="flex justify-between items-center">
+            <div className="flex items-center">
+              <img className="pr-[3vw]" src={character1} />
+              <div>
+                <p className="text-[1.2rem] text-C333333 font-medium">이듀미</p>
+                <p className="text-[0.8rem] text-C333333">2시간 전</p>
+              </div>
+            </div>
+            <div className="bg-[#EDF0FF] text-[#748BFF] py-[1.5vw] px-[3.75vw] rounded-[0.8rem]">
+              팔로잉
             </div>
           </div>
 
@@ -109,7 +114,7 @@ export default function BoardDetailPage() {
                   onClick={() => handleScrapClicked(true)}
                 />
               )}
-              <p className="text-[0.95rem] mr-[1vw] text-C333333">저장</p>
+              <p className="text-[0.95rem] mr-[1vw] text-C333333">핀하기</p>
             </div>
           </div>
         </div>

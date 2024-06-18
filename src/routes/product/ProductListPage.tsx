@@ -5,9 +5,6 @@ import writeButton from "../../assets/write-button.svg";
 import ProductCard from "../../components/ProductCard";
 import Navbar from "../../components/Navbar";
 import Search from "../../assets/search-gray.svg";
-import SHCard from "../../assets/card-sh.svg";
-
-import Star from "../../assets/star-filled.svg";
 
 export default function ProductListPage() {
   const [category, setCategory] = useState("카드");
@@ -102,7 +99,6 @@ export default function ProductListPage() {
           cardName="신한카드 Mr.Life"
           cardBrand="신한카드"
           benefits={["#연회비 지원", "#관리비"]}
-          rating={4.7}
           reviewCount={530}
           link="/productDetail"
         />
@@ -110,7 +106,6 @@ export default function ProductListPage() {
           cardName="신한카드 Mr.Life"
           cardBrand="신한카드"
           benefits={["#연회비 지원", "#관리비"]}
-          rating={4.7}
           reviewCount={530}
           link="/productDetail"
         />
@@ -118,7 +113,6 @@ export default function ProductListPage() {
           cardName="신한카드 Mr.Life"
           cardBrand="신한카드"
           benefits={["#연회비 지원", "#관리비"]}
-          rating={4.7}
           reviewCount={530}
           link="/productDetail"
         />
@@ -126,7 +120,6 @@ export default function ProductListPage() {
           cardName="신한카드 Mr.Life"
           cardBrand="신한카드"
           benefits={["#연회비 지원", "#관리비"]}
-          rating={4.7}
           reviewCount={530}
           link="/productDetail"
         />

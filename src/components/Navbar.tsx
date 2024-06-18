@@ -1,70 +1,85 @@
-<<<<<<< Updated upstream
+
 import { useState } from "react";
 import Home from "../assets/home.svg?react";
 import Post from "../assets/post.svg?react";
 import Star from "../assets/star.svg?react";
 import Product from "../assets/thumbs-up.svg?react";
 import Profile from "../assets/profile.svg?react";
-=======
+
 import { NavLink, useLocation } from "react-router-dom";
 import HomeIcon from "../assets/home.svg";
 import PostIcon from "../assets/post.svg";
 import StarIcon from "../assets/star.svg";
 import ProductIcon from "../assets/box.svg";
 import ProfileIcon from "../assets/profile.svg";
->>>>>>> Stashed changes
+
 
 const Navbar = () => {
   const linkClasses =
     "flex flex-col items-center space-y-1 px-2 rounded md:p-0 transition-colors duration-200";
   const defaultClasses = "text-gray-900 ";
   const hoverClasses = "hover:text-[#748BFF] ";
-  const activeClasses = "focus:text-[#748BFF] ";
+  const activeClasses = "text-[#748BFF]"; // Active class for text color
 
-  const [activeNavItem, setActiveNavItem] = useState<string | null>(null);
-
-  const handleItemClick = (itemName: string) => {
-    setActiveNavItem(
-      (prevItem) => (prevItem === itemName ? null : itemName) as null
-    );
-  };
+  const location = useLocation();
 
   const navItems = [
-
-    { name: "홈", href: "#", Icon: Home },
-    { name: "핀", href: "/boardList", Icon: Post },
-    { name: "챌린지", href: "#", Icon: Star },
-    { name: "상품", href: "/productList", Icon: Product },
-    { name: "프로필", href: "#", Icon: Profile },
+    { name: "홈", href: "/home", Icon: HomeIcon, exact: true },
+    { name: "핀", href: "/board", Icon: PostIcon, exact: false },
+    { name: "챌린지", href: "/challenge", Icon: StarIcon, exact: false },
+    { name: "상품", href: "/product", Icon: ProductIcon, exact: false },
+    { name: "프로필", href: "/mypage", Icon: ProfileIcon, exact: false },
   ];
 
   return (
     <nav className="fixed w-full z-20 bottom-0 left-0 bg-white border-t border-gray-200 h-[7.5vh]">
       <div className="mx-auto flex items-center justify-center">
         <div className="w-full md:w-auto">
-          <ul className="flex justify-center space-x-8 p-2 md:p-0 font-medium border-t md:border-t-0 bg-gray-50 ">
+          <ul className="flex justify-center space-x-8 p-2 md:p-0 font-medium border-t md:border-t-0 bg-gray-50">
             {navItems.map((item) => (
               <li key={item.name}>
-                <a
-                  href={item.href}
-                  className={`${linkClasses} ${defaultClasses} ${
-                    activeNavItem === item.name || item.name === activeNavItem
-                      ? hoverClasses
-                      : ""
-                  } ${activeClasses}`}
-                  aria-current={item.name === "Home" ? "page" : undefined}
-                  onMouseEnter={() => setActiveNavItem(item.name)}
-                  onMouseLeave={() => setActiveNavItem(null)}
-                  onClick={() => handleItemClick(item.name)}
+                <NavLink
+                  to={item.href}
+                  className={({ isActive }) =>
+                    `${linkClasses} ${defaultClasses} ${hoverClasses} ${
+                      isActive ? activeClasses : ""
+                    }`
+                  }
+                  aria-current={
+                    location.pathname === item.href ||
+                    (!item.exact && location.pathname.startsWith(item.href))
+                      ? "page"
+                      : undefined
+                  }
                 >
-                  <item.Icon
-                    fill={
-                      activeNavItem === item.name ? "#748BFF" : "currentColor"
-                    }
+                  <img
+                    src={item.Icon}
+                    alt={item.name}
                     className="h-7 w-7 filter transition-all duration-300 group-hover:filter-none group-hover:fill-current group-focus:fill-current"
+                    style={{
+                      filter:
+                        location.pathname === item.href ||
+                        (!item.exact && location.pathname.startsWith(item.href))
+                          ? "invert(64%) sepia(69%) saturate(4107%) hue-rotate(206deg) brightness(100%) contrast(102%)"
+                          : "none",
+                      fill:
+                        location.pathname === item.href ||
+                        (!item.exact && location.pathname.startsWith(item.href))
+                          ? "#748BFF"
+                          : "currentColor",
+                    }}
                   />
-                  <p className="text-xs">{item.name}</p>
-                </a>
+                  <p
+                    className={`text-xs ${
+                      location.pathname === item.href ||
+                      (!item.exact && location.pathname.startsWith(item.href))
+                        ? activeClasses
+                        : ""
+                    }`}
+                  >
+                    {item.name}
+                  </p>
+                </NavLink>
               </li>
             ))}
           </ul>

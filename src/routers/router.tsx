@@ -1,8 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../routes/Layout";
 
-import Home from "../routes/Home";
-
+import Home from "../routes/home/Home";
 import BoardListPage from "../routes/board/BoardListPage";
 import BoardWritePage from "../routes/board/BoardWritePage";
 import BoardDetailPage from "../routes/board/BoardDetailPage";
@@ -11,7 +10,7 @@ import ProductDetailPage from "../routes/product/ProductDetailPage";
 import ReviewPage from "../routes/product/ReviewPage";
 import RelatedBoardPage from "../routes/product/RelatedBoardPage";
 import ReviewWritePage from "../routes/product/ReviewWritePage";
-
+import HomePage from "../routes/home/Home";
 import ChallengePage from "../routes/challenge/ChallengePage";
 import ChallengeDetailPage from "../routes/challenge/ChallengeDetailPage";
 import ChallengeCAL from "../routes/challenge/ChallengeCAL";
@@ -25,88 +24,116 @@ import TendencyAnalysisPage from "../routes/signup/TendencyAnalysisPage";
 import SignUpSuccessPage from "../routes/signup/SignUpSuccessPage";
 import ProfilePage from "../routes/profile/ProfilePage";
 import EditProfilePage from "../routes/profile/EditProfilePage";
-// import ProductListPage from "../routes/ProductListPage";
+import StampBoard from "../routes/challenge/StampBoard";
 
 export const mainRouter = [
   {
-    path: "",
+    path: "/",
     element: <Layout />,
     children: [
       {
-        path: "/login",
+        path: "home",
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: "signin",
         element: <LoginPage />,
       },
       {
-        path: "/signup",
-        element: <SignUpPage />,
+        path: "signup",
+        children: [
+          {
+            path: "",
+            element: <SignUpPage />,
+          },
+          {
+            path: "profile",
+            element: <SignUpProfilePage />,
+          },
+          {
+            path: "success",
+            element: <SignUpSuccessPage />,
+          },
+        ],
       },
       {
-        path: "/signup/profile",
-        element: <SignUpProfilePage />,
+        path: "asset",
+        children: [
+          {
+            path: "",
+            element: <AssetConnectPage />,
+          },
+          {
+            path: "loading",
+            element: <AssetLoadingPage />,
+          },
+          {
+            path: "connect",
+            element: <ConnectedAssetPage />,
+          },
+          {
+            path: "tendency",
+            element: <TendencyAnalysisPage />,
+          },
+        ],
       },
       {
-        path: "/signup/assetinfo",
-        element: <AssetConnectPage />,
+        path: "challenge",
+        children: [
+          {
+            path: "",
+            element: <ChallengePage />,
+          },
+          {
+            path: "detail",
+            element: <ChallengeDetailPage />,
+          },
+          {
+            path: "calendar",
+            element: <ChallengeCAL />,
+          },
+          {
+            path: "stampboard",
+            element: <StampBoard />,
+          },
+        ],
       },
       {
-        path: "/signup/assetconnect",
-        element: <AssetLoadingPage />,
+        path: "board",
+        children: [
+          {
+            path: "",
+            element: <BoardListPage />,
+          },
+          {
+            path: ":boardId",
+            element: <BoardDetailPage />,
+          },
+          {
+            path: "write",
+            element: <BoardWritePage />,
+          },
+        ],
       },
       {
-        path: "/signup/connectedasset",
-        element: <ConnectedAssetPage />,
-      },
-      {
-        path: "/signup/tendency",
-        element: <TendencyAnalysisPage />,
-      },
-      {
-        path: "/signup/success",
-        element: <SignUpSuccessPage />,
-      },
-      {
-        path: "/challenge",
-        element: <ChallengePage />,
-      },
-      {
-        path: "/challenge/detail",
-        element: <ChallengeDetailPage />,
-      },
-      {
-        path: "/challenge/cal",
-        element: <ChallengeCAL />,
-      },
-      {
-        path: "/boardList",
-        element: <BoardListPage />,
-      },
-      {
-        path: "/boardDetail",
-        element: <BoardDetailPage />,
-      },
-      {
-        path: "/boardWrite",
-        element: <BoardWritePage />,
-      },
-
-      {
-        path: "/productList",
+        path: "product",
         element: <ProductListPage />,
       },
       {
-        path: "/productDetail",
+        path: "productDetail",
         element: <ProductDetailPage />,
       },
       {
-        path: "/mypage",
+        path: "mypage",
         element: <ProfilePage />,
       },
       {
-        path: "/editprofile",
+        path: "editprofile",
         element: <EditProfilePage />,
       },
       {
-        path: "/reviewWrite",
+        path: "reviewWrite",
         element: <ReviewWritePage />,
       },
     ],
