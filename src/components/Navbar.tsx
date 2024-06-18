@@ -1,9 +1,18 @@
+
+import { useState } from "react";
+import Home from "../assets/home.svg?react";
+import Post from "../assets/post.svg?react";
+import Star from "../assets/star.svg?react";
+import Product from "../assets/thumbs-up.svg?react";
+import Profile from "../assets/profile.svg?react";
+
 import { NavLink, useLocation } from "react-router-dom";
 import HomeIcon from "../assets/home.svg";
 import PostIcon from "../assets/post.svg";
 import StarIcon from "../assets/star.svg";
-import ProductIcon from "../assets/thumbs-up.svg";
+import ProductIcon from "../assets/box.svg";
 import ProfileIcon from "../assets/profile.svg";
+
 
 const Navbar = () => {
   const linkClasses =

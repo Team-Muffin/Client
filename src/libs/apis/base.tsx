@@ -5,10 +5,10 @@ const instance = axios.create({
 });
 
 instance.interceptors.response.use(
-  function (response) {
+  function (response: any) {
     return response;
   },
-  function (error) {
+  function (error: any) {
     console.log(error);
     if (error.response.status === 500) {
     }
