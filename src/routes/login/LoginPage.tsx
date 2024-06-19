@@ -1,5 +1,5 @@
 import MainLogo from "../../assets/main-logo.svg?react";
-import PurpleBtn from "../../components/PurpleBtn";
+import PurpleBtn from "../../components/common/PurpleBtn";
 import { Link } from "react-router-dom";
 
 const LoginPage = () => {

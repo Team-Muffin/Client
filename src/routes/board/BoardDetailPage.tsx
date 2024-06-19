@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Header from "../../components/Header";
-import Navbar from "../../components/Navbar";
+import Header from "../../components/common/Header";
+import Navbar from "../../components/common/Navbar";
 import character1 from "../../assets/character1.svg";
 import character1_small from "../../assets/character1-small.svg";
 import character2 from "../../assets/character2.svg";

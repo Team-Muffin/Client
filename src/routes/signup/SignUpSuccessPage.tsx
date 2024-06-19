@@ -1,6 +1,6 @@
 import MainLogo from "../../assets/main-logo.svg?react";
 import Confetti from "react-confetti";
-import PurpleBtn from "../../components/PurpleBtn";
+import PurpleBtn from "../../components/common/PurpleBtn";
 
 const SignUpSuccessPage = () => {
   return (

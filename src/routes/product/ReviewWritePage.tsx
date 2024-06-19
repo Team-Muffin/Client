@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Rating } from "react-simple-star-rating";
-import Header from "../../components/Header";
-import Navbar from "../../components/Navbar";
+import Header from "../../components/common/Header";
+import Navbar from "../../components/common/Navbar";
 import SHLogo from "../../assets/logo-sh.svg";
 import Happy from "../../assets/happy.svg";
 import Sad from "../../assets/disappointed.svg";

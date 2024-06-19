@@ -1,7 +1,7 @@
 import { PulseLoader } from "react-spinners";
 import MiniCircle from "../../assets/minicircle.svg?react";
 import Bank from "../../assets/bank.svg?react";
-import PurpleBtn from "../../components/PurpleBtn";
+import PurpleBtn from "../../components/common/PurpleBtn";
 
 const AssetLoadingPage = () => {
   return (

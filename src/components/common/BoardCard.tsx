@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import TimeAgo from "../utils/TimeAgo";
-import Heart from "../assets/heart-empty.svg";
-import Reply from "../assets/reply.svg";
+import TimeAgo from "../../utils/TimeAgo";
+import Heart from "../../assets/heart-empty.svg";
+import Reply from "../../assets/reply.svg";
 
 interface PostCardProps {
   title: string;
@@ -12,7 +12,7 @@ interface PostCardProps {
   heartCount: number;
   replyCount: number;
   imageUrl: string;
-  authorImageUrl: string;
+  authorImageUrl?: string;
   link: string;
 }
 

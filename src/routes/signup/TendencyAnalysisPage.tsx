@@ -7,7 +7,7 @@ import Loan from "../../assets/loan.svg?react";
 import Info from "../../assets/info.svg?react";
 import Review from "../../assets/review.svg?react";
 import Rocket from "../../assets/rocket.svg?react";
-import PurpleBtn from "../../components/PurpleBtn";
+import PurpleBtn from "../../components/common/PurpleBtn";
 
 const TendencyAnalysisPage = () => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);

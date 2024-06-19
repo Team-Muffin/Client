@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Header from "../../components/Header";
-import Navbar from "../../components/Navbar";
-import BoardCard from "../../components/BoardCard";
+import Header from "../../components/common/Header";
+import Navbar from "../../components/common/Navbar";
+import BoardCard from "../../components/common/BoardCard";
 
 export default function RelatedBoardPage() {
   return (

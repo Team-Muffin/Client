@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Header from "../../components/Header";
-import Dropdown from "../../components/Dropdown";
+import Header from "../../components/common/Header";
+import Dropdown from "../../components/common/Dropdown";
 import writeButton from "../../assets/write-button.svg";
-import BoardCard from "../../components/BoardCard";
-import Navbar from "../../components/Navbar";
+import BoardCard from "../../components/common/BoardCard";
+import Navbar from "../../components/common/Navbar";
 import { Link } from "react-router-dom";
 import { fetchBoardList } from "../../libs/apis/board";
 

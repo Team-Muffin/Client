@@ -7,7 +7,7 @@ import UserIcon1 from "../../assets/user-icon1.svg?react";
 import UserIcon2 from "../../assets/user-icon2.svg?react";
 import UserIcon3 from "../../assets/user-icon3.svg?react";
 import UserIcon4 from "../../assets/user-icon4.svg?react";
-import PurpleBtn from "../../components/PurpleBtn";
+import PurpleBtn from "../../components/common/PurpleBtn";
 
 const SignUpProfilePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

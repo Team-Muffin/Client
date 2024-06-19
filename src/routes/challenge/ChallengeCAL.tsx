@@ -3,8 +3,8 @@ import dayjs from "dayjs";
 import Happy from "../../assets/happy-face.svg?react";
 import Sad from "../../assets/sad-face.svg?react";
 import Angry from "../../assets/angry-face.svg?react";
-import Navbar from "../../components/Navbar";
-import Header from "../../components/Header";
+import Navbar from "../../components/common/Navbar";
+import Header from "../../components/common/Header";
 
 type DateObject = {
   currentMonth: boolean;

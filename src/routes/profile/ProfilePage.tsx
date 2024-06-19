@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Header from "../../components/Header";
+import Header from "../../components/common/Header";
 import ProfileCircle from "../../assets/myprofile.svg?react";
 import Checked from "../../assets/checked.svg?react";
 import MyChallenge from "../../assets/challenge-count.svg?react";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/common/Navbar";
 import MyResponsivePie from "./PieChart";
 import MyResponsiveBar from "./BarChart";
 const ProfilePage = () => {

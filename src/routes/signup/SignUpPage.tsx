@@ -1,6 +1,6 @@
 import MiniCircle from "../../assets/minicircle.svg?react";
 import Essential from "../../assets/required.svg?react";
-import PurpleBtn from "../../components/PurpleBtn";
+import PurpleBtn from "../../components/common/PurpleBtn";
 
 const SignUpPage = () => {
   return (

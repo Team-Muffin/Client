@@ -4,7 +4,7 @@ import Stingy from "../../assets/stingy-person.svg";
 import Bookworm from "../../assets/book-worm.svg";
 import Report from "../../assets/report.svg";
 import Cook from "../../assets/cook.svg";
-import Header from "../../components/Header";
+import Header from "../../components/common/Header";
 
 export default function StampBoard() {
   const stamps = [

@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import SearchBtn from "../assets/search-black.svg";
-import BackBtn from "../assets/back.svg";
-import SettingBtn from "../assets/settings.svg";
-import AlarmBtn from "../assets/alarm.svg";
-import Logo from "../assets/main-logo.svg";
+import SearchBtn from "../../assets/search-black.svg";
+import BackBtn from "../../assets/back.svg";
+import SettingBtn from "../../assets/settings.svg";
+import AlarmBtn from "../../assets/alarm.svg";
+import Logo from "../../assets/main-logo.svg";
 import { useNavigate } from "react-router-dom";
-import SearchGraybtn from "../assets/search-gray.svg";
+import SearchGraybtn from "../../assets/search-gray.svg";
 
-import ScrapBtn from "../assets/scrap.svg"; // Import Scrap image
-import ReplaceBtn from "../assets/replace.svg"; // Import Replace image
-import LogoutBtn from "../assets/logout.svg"; // Import Logout image
+import ScrapBtn from "../../assets/scrap.svg"; // Import Scrap image
+import ReplaceBtn from "../../assets/replace.svg"; // Import Replace image
+import LogoutBtn from "../../assets/logout.svg"; // Import Logout image
 import { Link } from "react-router-dom";
 
 type HeaderProps = {

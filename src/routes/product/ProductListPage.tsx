@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Header from "../../components/Header";
-import Dropdown from "../../components/Dropdown";
+import Header from "../../components/common/Header";
+import Dropdown from "../../components/common/Dropdown";
 import writeButton from "../../assets/write-button.svg";
-import ProductCard from "../../components/ProductCard";
-import Navbar from "../../components/Navbar";
+import ProductCard from "../../components/common/ProductCard";
+import Navbar from "../../components/common/Navbar";
 import Search from "../../assets/search-gray.svg";
 
 export default function ProductListPage() {
@@ -14,6 +14,11 @@ export default function ProductListPage() {
 
   const handleCategoryClick = (selection: string) => {
     setCategory(selection);
+  };
+  const [selectedFilter, setSelectedFilter] = useState("최신순");
+
+  const handleFilterChange = (newFilter: string) => {
+    setSelectedFilter(newFilter);
   };
 
   const selectedCategoryCss =
@@ -93,6 +98,7 @@ export default function ProductListPage() {
         <Dropdown
           defaultFilter="리뷰 많은 순"
           filterList={["리뷰 많은 순", "별점 높은 순", "최신순"]}
+          onFilterChange={handleFilterChange}
         />
 
         <ProductCard

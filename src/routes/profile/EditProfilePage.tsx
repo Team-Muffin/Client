@@ -3,7 +3,7 @@ import ProfileCircle from "../../assets/profile-circle.svg?react";
 import Camera from "../../assets/camera.svg?react";
 import UserIcon1 from "../../assets/user-icon1.svg?react";
 import Essential from "../../assets/required.svg?react";
-import PurpleBtn from "../../components/PurpleBtn";
+import PurpleBtn from "../../components/common/PurpleBtn";
 
 export default function EditProfilePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);

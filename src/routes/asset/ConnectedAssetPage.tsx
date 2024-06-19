@@ -1,6 +1,6 @@
 import ShinhanLogo from "../../assets/shinhan-logo.svg?react";
 import MiniCircle from "../../assets/minicircle.svg?react";
-import PurpleBtn from "../../components/PurpleBtn";
+import PurpleBtn from "../../components/common/PurpleBtn";
 
 const ConnectedAssetPage = () => {
   return (

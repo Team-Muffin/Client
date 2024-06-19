@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Header from "../../components/Header";
-import BoardCard from "../../components/BoardCard";
-import Navbar from "../../components/Navbar";
+import Header from "../../components/common/Header";
+import BoardCard from "../../components/common/BoardCard";
+import Navbar from "../../components/common/Navbar";
 import SHCard from "../../assets/card-sh.svg";
 import SHLogo from "../../assets/logo-sh.svg";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";

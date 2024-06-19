@@ -1,14 +1,14 @@
 import React from "react";
 import Slider from "react-slick";
 import { useState } from "react";
-import Header from "../../components/Header";
-import Navbar from "../../components/Navbar";
+import Header from "../../components/common/Header";
+import Navbar from "../../components/common/Navbar";
 import { Link } from "react-router-dom";
 import Heart from "../../assets/heart-empty.svg";
 import Reply from "../../assets/reply.svg";
 import character1_small from "../../assets/character1-small.svg";
 import ChallengeLogo from "../../assets/coin30.svg";
-import ProductCard from "../../components/ProductCard";
+import ProductCard from "../../components/common/ProductCard";
 
 export default function HomePage() {
   const settings = {
