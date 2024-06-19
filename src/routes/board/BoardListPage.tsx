@@ -120,7 +120,7 @@ export default function BoardListPage() {
         </React.Fragment>
       ))}
 
-      <Link to={`/boardWrite`}>
+      <Link to={`/board/write`}>
         <img className="fixed bottom-[8vh] right-[4vw] z-5" src={writeButton} />
       </Link>
       <div className="pb-[7.5vh]" />

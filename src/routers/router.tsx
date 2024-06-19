@@ -32,7 +32,7 @@ export const mainRouter = [
     element: <Layout />,
     children: [
       {
-        path: "home",
+        path: "",
         index: true,
         element: <HomePage />,
       },
@@ -112,6 +112,10 @@ export const mainRouter = [
           },
           {
             path: "write",
+            element: <BoardWritePage />,
+          },
+          {
+            path: ":boardId/edit",
             element: <BoardWritePage />,
           },
         ],

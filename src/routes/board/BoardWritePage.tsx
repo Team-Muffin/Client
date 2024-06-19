@@ -12,8 +12,8 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useNavigate } from "react-router-dom";
 
 export default function BoardWritePage() {
-  const [selected, setSelected] = useState("꿀팁");
-  const filterList = ["꿀팁", "소비", "절약", "투자"];
+  const [selected, setSelected] = useState("정보");
+  const filterList = ["정보", "재미", "절약", "투자", "기업"];
   const navigate = useNavigate();
   const handleBackButtonClick = () => {
     navigate(-1);
@@ -26,7 +26,7 @@ export default function BoardWritePage() {
     <>
       <div className="py-[2vh] px-[4.5vw]">
         {/* 헤더;; */}
-        <nav className="fixed top-0 left-0 right-0 bg-[#ffffff]">
+        <nav className="fixed top-1 left-0 right-0 bg-[#ffffff]">
           <div className="relative flex justify-center items-center h-[6vh]">
             <img
               src={BackBtn}

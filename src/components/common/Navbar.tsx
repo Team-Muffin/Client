@@ -15,7 +15,7 @@ const Navbar = () => {
   const location = useLocation();
 
   const navItems = [
-    { name: "홈", href: "/home", Icon: HomeIcon, exact: true },
+    { name: "홈", href: "/", Icon: HomeIcon, exact: true },
     { name: "핀", href: "/board", Icon: PostIcon, exact: false },
     { name: "챌린지", href: "/challenge", Icon: StarIcon, exact: false },
     { name: "상품", href: "/product", Icon: ProductIcon, exact: false },
