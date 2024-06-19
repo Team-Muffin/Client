@@ -1,6 +1,8 @@
-import ShinhanLogo from "../../assets/shinhan-logo.svg?react";
-import MiniCircle from "../../assets/minicircle.svg?react";
+import MiniCircleImg from "../../assets/minicircle.svg";
 import PurpleBtn from "../../components/PurpleBtn";
+import ShinhanLogo from "../../assets/shinhan-logo.svg";
+
+// Assuming ShinhanLogo.svg is imported similarly as MiniCircleImg
 
 const ConnectedAssetPage = () => {
   return (
@@ -24,7 +26,11 @@ const ConnectedAssetPage = () => {
           <li className="p-[0.5vh]">
             <div className="flex items-center space-x-4 rtl:space-x-reverse">
               <div className="flex-shrink-0">
-                <ShinhanLogo />
+                <img
+                  src={ShinhanLogo}
+                  className="h-10 w-10"
+                  alt="Shinhan Logo"
+                />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-base font-semibold">237,735원</p>
@@ -33,42 +39,7 @@ const ConnectedAssetPage = () => {
               <div className="inline-flex items-center text-base font-semibold text-gray-900"></div>
             </div>
           </li>
-          <li className="p-[0.5vh]">
-            <div className="flex items-center space-x-4 rtl:space-x-reverse ">
-              <div className="flex-shrink-0">
-                <ShinhanLogo />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-base font-semibold">237,735원</p>
-                <p className="text-sm font-normal">쏠편한 입출금통장</p>
-              </div>
-              <div className="inline-flex items-center text-base font-semibold text-gray-900"></div>
-            </div>
-          </li>
-          <li className="p-[0.5vh]">
-            <div className="flex items-center space-x-4 rtl:space-x-reverse">
-              <div className="flex-shrink-0">
-                <ShinhanLogo />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-base font-semibold">237,735원</p>
-                <p className="text-sm font-normal">쏠편한 입출금통장</p>
-              </div>
-              <div className="inline-flex items-center text-base font-semibold text-gray-900"></div>
-            </div>
-          </li>
-          <li className="p-[0.5vh]">
-            <div className="flex items-center space-x-4 rtl:space-x-reverse">
-              <div className="flex-shrink-0">
-                <ShinhanLogo />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-base font-semibold">237,735원</p>
-                <p className="text-sm font-normal">쏠편한 입출금통장</p>
-              </div>
-              <div className="inline-flex items-center text-base font-semibold text-gray-900"></div>
-            </div>
-          </li>
+          {/* Repeat the above structure for each connected asset */}
         </ul>
         <div className="flex justify-between mt-[4vh] mb-[0.5vh]">
           <p className="text-xl font-semibold">자산 공개 여부</p>
@@ -127,14 +98,23 @@ const ConnectedAssetPage = () => {
       </div>
       <div className="fixed w-full px-[8vw] bottom-[3vh]">
         <div className="flex justify-center mb-[3vh]">
-          <MiniCircle className="w-3 h-3 mr-5" />
-          <MiniCircle className="w-3 h-3 mr-5" />
-          <MiniCircle className="w-3 h-3 mr-5" style={{ fill: "#748BFF" }} />
-          <MiniCircle className="w-3 h-3" />
+          <img src={MiniCircleImg} className="w-3 h-3 mr-5" alt="Mini Circle" />
+          <img src={MiniCircleImg} className="w-3 h-3 mr-5" alt="Mini Circle" />
+          <img
+            src={MiniCircleImg}
+            className="w-3 h-3 mr-5"
+            alt="Mini Circle"
+            style={{
+              filter:
+                "invert(64%) sepia(69%) saturate(4107%) hue-rotate(206deg) brightness(100%) contrast(102%)",
+            }}
+          />
+          <img src={MiniCircleImg} className="w-3 h-3" alt="Mini Circle" />
         </div>
         <PurpleBtn to="/signup/tendency" label="나의 자산 연결하기" />
       </div>
     </>
   );
 };
+
 export default ConnectedAssetPage;

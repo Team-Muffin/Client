@@ -1,15 +1,21 @@
-import React, { useState } from "react";
-import MiniCircle from "../../assets/minicircle.svg?react";
-import Essential from "../../assets/required.svg?react";
-import PurpleBtn from "../../components/PurpleBtn";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../store";
+import { useAuthStore } from "../../store/useAuthStore";
+import { checkUserIdAvailability } from "../../libs/apis/user";
+import PurpleBtn from "../../components/PurpleBtn";
+import miniCircle from "../../assets/minicircle.svg";
+import essential from "../../assets/required.svg";
+import checkedIcon from "../../assets/checked.svg";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
   const [userId, setUserId] = useState("");
-  const [userInfo, setuserInfo] = useState("");
-  const [userInfoCheck, setuserInfoCheck] = useState("");
+  const [userInfo, setUserInfo] = useState("");
+  const [userInfoCheck, setUserInfoCheck] = useState("");
+  const [isUserIdAvailable, setIsUserIdAvailable] = useState<boolean | null>(
+    null
+  );
+  const [userIdCheckReason, setUserIdCheckReason] = useState<string>("");
 
   const login = useAuthStore((state) => state.login);
 
@@ -19,10 +25,44 @@ const SignUpPage = () => {
       return;
     }
 
-    login(userId, userInfo, "", "", ""); // 이 부분에서 Zustand의 login 함수 호출
+    if (isUserIdAvailable === false) {
+      alert(
+        userIdCheckReason ||
+          "이미 사용중인 아이디입니다. 다른 아이디를 입력해주세요."
+      );
+      return;
+    }
 
+    login(userId, userInfo, "", "", ""); // Call Zustand's login function
     navigate("/signup/profile");
   };
+
+  // Function to check user ID availability
+  const checkAvailability = async (id: string) => {
+    if (id) {
+      try {
+        const response = await checkUserIdAvailability(id);
+        console.log("API Response:", response); // Debugging line
+        setIsUserIdAvailable(response.data.available); // Ensure the response contains 'available' field
+        setUserIdCheckReason(response.data.reason);
+      } catch (error) {
+        console.error("Error checking user ID availability:", error);
+        setIsUserIdAvailable(false);
+        setUserIdCheckReason("오류 발생");
+      }
+    } else {
+      setIsUserIdAvailable(null);
+      setUserIdCheckReason("");
+    }
+  };
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      checkAvailability(userId);
+    }, 500); // Debounce the API call
+
+    return () => clearTimeout(delayDebounceFn); // Cleanup the timeout
+  }, [userId]);
 
   return (
     <>
@@ -40,35 +80,50 @@ const SignUpPage = () => {
         </p>
         <div className="flex mb-[1vh] items-center">
           <p className="text-lg font-semibold mr-[1vw]">아이디</p>
-          <Essential />
+          <img src={essential} alt="Essential" />
         </div>
         <input
           type="text"
           id="id"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus
+focus
+block w-full p-2.5"
           placeholder="ID"
           required
           value={userId}
           onChange={(e) => setUserId(e.target.value)}
         />
-
+        {isUserIdAvailable === null ? null : isUserIdAvailable ? (
+          <div className="flex items-center text-green-600 mr-[5vw]">
+            사용 가능한 아이디입니다
+            <img
+              src={checkedIcon}
+              alt="Checked Icon"
+              className="w-[4vw] h-[4h]"
+            />
+          </div>
+        ) : (
+          <div className="text-red-600">{userIdCheckReason}</div>
+        )}
         <div className="flex mt-[3vh] mb-[1vh] items-center">
           <p className="text-lg font-semibold mr-[1vw]">비밀번호</p>
-          <Essential />
+          <img src={essential} alt="Essential" />
         </div>
         <input
           type="password"
           id="password"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus
+focus
+block w-full p-2.5"
           placeholder="Password"
           required
           value={userInfo}
-          onChange={(e) => setuserInfo(e.target.value)}
+          onChange={(e) => setUserInfo(e.target.value)}
         />
 
         <div className="flex mt-[3vh] mb-[1vh] items-center">
           <p className="text-lg font-semibold mr-[1vw]">비밀번호 확인</p>
-          <Essential />
+          <img src={essential} alt="Essential" />
         </div>
         <input
           type="password"
@@ -77,16 +132,24 @@ const SignUpPage = () => {
           placeholder="Password_check"
           required
           value={userInfoCheck}
-          onChange={(e) => setuserInfoCheck(e.target.value)}
+          onChange={(e) => setUserInfoCheck(e.target.value)}
         />
       </div>
 
       <div className="fixed w-full px-[8vw] bottom-[3vh]">
         <div className="flex justify-center mb-[3vh]">
-          <MiniCircle className="w-3 h-3 mr-5" style={{ fill: "#748BFF" }} />
-          <MiniCircle className="w-3 h-3 mr-5" />
-          <MiniCircle className="w-3 h-3 mr-5" />
-          <MiniCircle className="w-3 h-3" />
+          <img
+            src={miniCircle}
+            alt="Mini Circle"
+            className="w-3 h-3 mr-5"
+            style={{
+              filter:
+                "invert(64%) sepia(69%) saturate(4107%) hue-rotate(206deg) brightness(100%) contrast(102%)",
+            }}
+          />
+          <img src={miniCircle} alt="Mini Circle" className="w-3 h-3 mr-5" />
+          <img src={miniCircle} alt="Mini Circle" className="w-3 h-3 mr-5" />
+          <img src={miniCircle} alt="Mini Circle" className="w-3 h-3" />
         </div>
         <PurpleBtn
           label="로그인 정보 작성하기"

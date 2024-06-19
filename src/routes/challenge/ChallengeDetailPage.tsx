@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import Header from "../../components/Header";
-import EmotionSave from "../../assets/emotion-save.svg?react";
-import SmallLogo from "../../assets/small-profile.svg?react";
-import Date from "../../assets/date.svg?react";
-import Check from "../../assets/check.svg?react";
-import Happy from "../../assets/happy-face.svg?react";
-import Sad from "../../assets/sad-face.svg?react";
-import Angry from "../../assets/angry-face.svg?react";
+import EmotionSaveImg from "../../assets/emotion-save.svg";
+import SmallLogoImg from "../../assets/small-profile.svg";
+import DateImg from "../../assets/date.svg";
+import CheckImg from "../../assets/check.svg";
+import HappyImg from "../../assets/happy-face.svg";
+import SadImg from "../../assets/sad-face.svg";
+import AngryImg from "../../assets/angry-face.svg";
 import Navbar from "../../components/Navbar";
 
 const ChallengeDetailPage = () => {
@@ -16,7 +16,12 @@ const ChallengeDetailPage = () => {
       <div className="mt-[4.5vh]"></div>
       <div className="flex flex-col items-center">
         <div>
-          <EmotionSave width={"12vh"} height={"12vh"}></EmotionSave>
+          <img
+            src={EmotionSaveImg}
+            width={"80vw"}
+            height={"70vh"}
+            alt="Emotion Save"
+          />
         </div>
 
         <p className="text-xs text-[#748BFF] bg-[#ECF0FF] rounded-xl shadow mb-[1vh] py-[0.5vh] px-[2vw]">
@@ -27,11 +32,23 @@ const ChallengeDetailPage = () => {
         <div className="w-[80vw] px-[5.5vw] py-[2vh] rounded-xl flex flex-col items-center bg-[#F4F3F8]">
           <div className="flex justify-between w-full">
             <div className="flex flex-col items-center pl-[5vw]">
-              <Date width={"4vw"} height={"3vh"} />
+              <img
+                src={DateImg}
+                width={"20vw"}
+                height={"20vh"}
+                alt="Date"
+                style={{ marginBottom: "1vh" }}
+              />
 
-              <SmallLogo width={"4vw"} height={"3vh"} />
+              <img
+                src={SmallLogoImg}
+                width={"20vw"}
+                height={"20vh"}
+                alt="Small Logo"
+                style={{ marginBottom: "0.5vh" }}
+              />
 
-              <Check width={"4vw"} height={"3vh"} />
+              <img src={CheckImg} width={"20vw"} height={"20vh"} alt="Check" />
             </div>
             <div className="flex flex-col pr-[5vw]">
               <p className="items-center text-xs font-semibold text-black-900 dark:text-black my-[0.5vh]">
@@ -62,17 +79,27 @@ const ChallengeDetailPage = () => {
         </p>
         <div className="flex justify-between w-[75vw] mb-[4vh]">
           <div className="flex flex-col items-center">
-            <Angry width={"8vh"} height={"8vh"}></Angry>
+            <img
+              src={AngryImg}
+              width={"50vw"}
+              height={"50vh"}
+              alt="Angry Face"
+            />
             <p className="text-sm font-extrabold text-black">화가 날 땐</p>
             <p className="text-xs font-normal text-black">1818원</p>
           </div>
           <div className="flex flex-col items-center">
-            <Sad width={"9vh"} height={"8vh"}></Sad>
+            <img src={SadImg} width={"50vh"} height={"50vh"} alt="Sad Face" />
             <p className="text-sm font-extrabold text-black">슬플 땐</p>
             <p className="text-xs font-normal text-black">666원</p>
           </div>
           <div className="flex flex-col items-center">
-            <Happy width={"8vh"} height={"8vh"}></Happy>
+            <img
+              src={HappyImg}
+              width={"50vw"}
+              height={"50vh"}
+              alt="Happy Face"
+            />
             <p className="text-sm font-extrabold text-black">기쁠 땐</p>
             <p className="text-xs font-normal text-black">5959원</p>
           </div>

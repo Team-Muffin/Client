@@ -1,5 +1,6 @@
+// pages/SignUpProfilePage.tsx
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MiniCircle from "../../assets/minicircle.svg";
 import ProfileCircle from "../../assets/profile-circle.svg";
 import Camera from "../../assets/camera.svg";
@@ -9,21 +10,21 @@ import UserIcon2 from "../../assets/user-icon2.svg";
 import UserIcon3 from "../../assets/user-icon3.svg";
 import UserIcon4 from "../../assets/user-icon4.svg";
 import PurpleBtn from "../../components/PurpleBtn";
-import { signUp } from "../../libs/apis/user"; // API 파일 경로 확인 필요
-import { useAuthStore } from "../../store"; // store 파일 경로 확인 필요
+import { signUp } from "../../libs/apis/user";
+import { useAuthStore } from "../../store/useAuthStore";
 
 const SignUpProfilePage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { userId, password } = useAuthStore(); // Zustand에서 userId와 password 가져오기
+  const { userId, userInfo, login } = useAuthStore((state) => ({
+    userId: state.userId,
+    userInfo: state.userInfo,
+    login: state.login,
+  }));
 
-  const [nickname, setNickname] = useState("");
-  const [birthdate, setBirthdate] = useState("");
-  const [selectedIcon, setSelectedIcon] = useState(UserIcon1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Zustand에서 정의한 상태 및 액션 사용
-  const login = useAuthStore((state) => state.login);
+  const [nickname, setNickname] = useState<string>("");
+  const [birthdate, setBirthdate] = useState<string>("");
+  const [selectedIcon, setSelectedIcon] = useState<string>("http://naver.com");
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const handleCameraClick = () => {
     setIsModalOpen(true);
@@ -35,25 +36,25 @@ const SignUpProfilePage = () => {
   };
 
   const handleSignUp = async () => {
-    if (!userId || !password) {
-      console.error("userId 또는 password가 존재하지 않습니다.");
+    if (!userId || !userInfo) {
+      console.error("userId 또는 userInfo가 존재하지 않습니다.");
       return;
     }
 
     const userData = {
       tofinId: userId,
-      password,
-      userInfo: "", // 필요에 따라 추가 정보 입력
-      profileImg: "http://naver.com",
+      userInfo,
+      profileImg: selectedIcon, // 선택한 아이콘 URL 저장
       nickname,
       birth: birthdate,
     };
 
     try {
-      await signUp(userData); // 회원가입 API 호출
-      console.log("회원가입 상태:", userData); // Zustand 상태 출력
+      await signUp(userData);
+      // Zustand 상태 업데이트
+      login(userId, userInfo, nickname, selectedIcon, birthdate);
       alert("회원가입이 완료되었습니다.");
-      navigate("/signup/assetinfo");
+      navigate("/asset");
     } catch (error) {
       console.error("회원가입 중 오류 발생:", error);
       alert("회원가입에 실패했습니다.");
@@ -135,7 +136,10 @@ const SignUpProfilePage = () => {
             src={MiniCircle}
             alt="Mini Circle"
             className="w-3 h-3 mr-5"
-            style={{ fill: "#748BFF" }}
+            style={{
+              filter:
+                "invert(64%) sepia(69%) saturate(4107%) hue-rotate(206deg) brightness(100%) contrast(102%)",
+            }}
           />
           <img src={MiniCircle} alt="Mini Circle" className="w-3 h-3 mr-5" />
           <img src={MiniCircle} alt="Mini Circle" className="w-3 h-3" />

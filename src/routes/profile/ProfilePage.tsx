@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../components/Header";
-import ProfileCircle from "../../assets/myprofile.svg?react";
-import Checked from "../../assets/checked.svg?react";
-import MyChallenge from "../../assets/challenge-count.svg?react";
+import ProfileCircleImg from "../../assets/myprofile.svg"; // SVG 파일 import
+import CheckedImg from "../../assets/checked.svg"; // SVG 파일 import
+import MyChallengeImg from "../../assets/challenge-count.svg"; // SVG 파일 import
 import Navbar from "../../components/Navbar";
 import MyResponsivePie from "./PieChart";
 import MyResponsiveBar from "./BarChart";
+
 const ProfilePage = () => {
   const [userCategory, setUserCategory] = useState("게시물");
   const [isFollowing, setIsFollowing] = useState(false);
@@ -78,7 +79,11 @@ const ProfilePage = () => {
             <p className="text-xl font-bold">10K</p>
           </div>
 
-          <ProfileCircle className="w-[35vw]" />
+          <img
+            src={ProfileCircleImg}
+            alt="Profile Circle"
+            className="w-[35vw]"
+          />
 
           <div className="flex flex-col items-center mt-[3vh]">
             <p className="text-base">팔로우</p>
@@ -87,12 +92,12 @@ const ProfilePage = () => {
         </div>
         <div className="flex justify-center gap-[9vw] items-center">
           <Link to="/challenge/detail/stampboard">
-            <MyChallenge />
+            <img src={MyChallengeImg} alt="My Challenge" />
           </Link>
           <div className="flex flex-col items-center">
             <div className="flex items-center">
               <p className="text-2xl mr-[2vw]">홍길동</p>
-              <Checked />
+              <img src={CheckedImg} alt="Checked" />
             </div>
             <p className="text-base mr-[2vw] mb-[0.3vh]">@gildong</p>
             <p className="text-xs text-[#748BFF]">30대 백수</p>
@@ -128,7 +133,7 @@ const ProfilePage = () => {
           <p className="text-lg ml-[3vw]">홍길동님의 순자산</p>
           <p className="text-xl font-bold ml-[3vw]">3000만원대</p>
           <div style={{ height: "20vh" }}>
-            <MyResponsiveBar data={asset} />
+          <MyResponsiveBar data={asset} />
           </div>
 
           <div className="flex justify-center">
