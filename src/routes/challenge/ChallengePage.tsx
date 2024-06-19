@@ -1,20 +1,21 @@
 import { useState } from "react";
-
-import Coin from "../../assets/coin30.svg?react";
-import User1 from "../../assets/user-icon.svg?react";
-import EmotionSave from "../../assets/emotion-save.svg?react";
+import CoinImg from "../../assets/coin30.svg";
+import User1Img from "../../assets/user-icon.svg";
+import EmotionSaveImg from "../../assets/emotion-save.svg";
 import Navbar from "../../components/Navbar";
 
 const ChallengePage = () => {
   const [category, setCategory] = useState("최신순");
+
   const handleCategoryClick = (selection: string) => {
     setCategory(selection);
   };
+
   const selectedCategoryCss =
-    "text-xs text-white bg-[#748BFF] rounded-xl shadow  py-[0.5vh] px-[2vw]";
+    "text-xs text-white bg-[#748BFF] rounded-xl shadow py-[0.5vh] px-[2vw]";
   const defaultCategoryCss =
     "text-xs text-[#748BFF] bg-[#ECF0FF] rounded-xl shadow py-[0.5vh] px-[2vw]";
-  console.log(category);
+
   return (
     <>
       <div className="relative py-[3vh] px-[8vw] bg-[#758BFF] w-screen">
@@ -37,7 +38,12 @@ const ChallengePage = () => {
               </p>
             </div>
             <div>
-              <EmotionSave width={"5vh"} height={"5vh"}></EmotionSave>
+              <img
+                src={EmotionSaveImg}
+                width={"40vw"}
+                height={"30vh"}
+                alt="Emotion Save"
+              />
             </div>
           </div>
         </a>
@@ -59,13 +65,13 @@ const ChallengePage = () => {
         </a>
 
         <div className="absolute bottom-0 right-0">
-          <User1 />
+          <img src={User1Img} alt="User Icon" />
         </div>
       </div>
 
-      <div className="relative border -mt-6 px-[8vw] py-[3vh] h-[22vh] rounded-[30px] bg-[#ECF0FF] ">
-        <div className="flex ">
-          <p className="text- base items-center r-3 mb-4 mr-2 font-bold text-black-900">
+      <div className="relative border -mt-6 px-[8vw] py-[3vh] h-[22vh] rounded-[30px] bg-[#ECF0FF]">
+        <div className="flex">
+          <p className="text-base items-center mb-4 mr-2 font-bold text-black-900">
             신규 챌린지
           </p>
 
@@ -81,7 +87,7 @@ const ChallengePage = () => {
           </div>
 
           <a className="items-center">
-            <Coin />
+            <img src={CoinImg} alt="Coin" />
           </a>
         </div>
       </div>

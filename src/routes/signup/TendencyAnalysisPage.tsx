@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import MiniCircle from "../../assets/minicircle.svg?react";
-import Deposit from "../../assets/deposit.svg?react";
-import Invest from "../../assets/invest.svg?react";
-import Card from "../../assets/card.svg?react";
-import Loan from "../../assets/loan.svg?react";
-import Info from "../../assets/info.svg?react";
-import Review from "../../assets/review.svg?react";
-import Rocket from "../../assets/rocket.svg?react";
+import MiniCircleImg from "../../assets/minicircle.svg"; // Import SVG file
+import DepositImg from "../../assets/deposit.svg"; // Import SVG file
+import InvestImg from "../../assets/invest.svg"; // Import SVG file
+import CardImg from "../../assets/card.svg"; // Import SVG file
+import LoanImg from "../../assets/loan.svg"; // Import SVG file
+import InfoImg from "../../assets/info.svg"; // Import SVG file
+import ReviewImg from "../../assets/review.svg"; // Import SVG file
+import RocketImg from "../../assets/rocket.svg"; // Import SVG file
 import PurpleBtn from "../../components/PurpleBtn";
 
 const TendencyAnalysisPage = () => {
@@ -57,7 +57,7 @@ const TendencyAnalysisPage = () => {
             }`}
             onClick={() => handleItemClick("deposit")}
           >
-            <Deposit className="w-[20vw] h-[8vh]" />
+            <img src={DepositImg} alt="Deposit" className="w-[20vw] h-[8vh]" />
             <p className="text-sm font-semibold">예적금</p>
           </div>
           <div
@@ -66,7 +66,11 @@ const TendencyAnalysisPage = () => {
             }`}
             onClick={() => handleItemClick("invest")}
           >
-            <Invest className="w-[20vw] h-[8vh] mb-[0.5vh]" />
+            <img
+              src={InvestImg}
+              alt="Invest"
+              className="w-[20vw] h-[8vh] mb-[0.5vh]"
+            />
             <p className="text-sm font-semibold">투자</p>
           </div>
           <div
@@ -75,7 +79,7 @@ const TendencyAnalysisPage = () => {
             }`}
             onClick={() => handleItemClick("card")}
           >
-            <Card className="w-[20vw] h-[8vh]" />
+            <img src={CardImg} alt="Card" className="w-[20vw] h-[8vh]" />
             <p className="text-sm font-semibold">카드</p>
           </div>
           <div
@@ -84,7 +88,11 @@ const TendencyAnalysisPage = () => {
             }`}
             onClick={() => handleItemClick("loan")}
           >
-            <Loan className="w-[20vw] h-[8vh] mb-[0.2vh]" />
+            <img
+              src={LoanImg}
+              alt="Loan"
+              className="w-[20vw] h-[8vh] mb-[0.2vh]"
+            />
             <p className="text-sm font-semibold">대출</p>
           </div>
         </div>
@@ -100,7 +108,7 @@ const TendencyAnalysisPage = () => {
             }`}
             onClick={() => handlePurposeClick("info")}
           >
-            <Info className="w-[20vw] h-[8vh]" />
+            <img src={InfoImg} alt="Info" className="w-[20vw] h-[8vh]" />
             <p className="text-sm font-semibold">정보</p>
           </div>
           <div
@@ -109,7 +117,7 @@ const TendencyAnalysisPage = () => {
             }`}
             onClick={() => handlePurposeClick("review")}
           >
-            <Review className="w-[20vw] h-[8vh]" />
+            <img src={ReviewImg} alt="Review" className="w-[20vw] h-[8vh]" />
             <p className="text-sm font-semibold">리뷰</p>
           </div>
           <div
@@ -118,7 +126,7 @@ const TendencyAnalysisPage = () => {
             }`}
             onClick={() => handlePurposeClick("fun")}
           >
-            <Rocket className="w-[20vw] h-[8vh]" />
+            <img src={RocketImg} alt="Rocket" className="w-[20vw] h-[8vh]" />
             <p className="text-sm font-semibold">재미</p>
           </div>
         </div>
@@ -126,10 +134,18 @@ const TendencyAnalysisPage = () => {
 
       <div className="fixed w-full px-[8vw] bottom-[3vh]">
         <div className="flex justify-center mb-[3vh]">
-          <MiniCircle className="w-3 h-3 mr-5" />
-          <MiniCircle className="w-3 h-3 mr-5" />
-          <MiniCircle className="w-3 h-3 mr-5" />
-          <MiniCircle className="w-3 h-3" style={{ fill: "#748BFF" }} />
+          <img src={MiniCircleImg} alt="Mini Circle" className="w-3 h-3 mr-5" />
+          <img src={MiniCircleImg} alt="Mini Circle" className="w-3 h-3 mr-5" />
+          <img src={MiniCircleImg} alt="Mini Circle" className="w-3 h-3 mr-5" />
+          <img
+            src={MiniCircleImg}
+            alt="Mini Circle"
+            className="w-3 h-3"
+            style={{
+              filter:
+                "invert(64%) sepia(69%) saturate(4107%) hue-rotate(206deg) brightness(100%) contrast(102%)",
+            }}
+          />
         </div>
         <PurpleBtn to="/signup/success" label="성향 분석 완료하기" />
       </div>

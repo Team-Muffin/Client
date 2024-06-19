@@ -1,6 +1,6 @@
-import { useState } from "react";
-import ProfileCircle from "../../assets/profile-circle.svg?react";
-import Camera from "../../assets/camera.svg?react";
+import React, { useState } from "react";
+import ProfileCircleImg from "../../assets/profile-circle.svg"; // SVG 파일 import
+import CameraImg from "../../assets/camera.svg"; // SVG 파일 import
 import UserIcon1 from "../../assets/user-icon1.svg?react";
 import Essential from "../../assets/required.svg?react";
 import PurpleBtn from "../../components/PurpleBtn";
@@ -28,9 +28,11 @@ export default function EditProfilePage() {
 
         <div className="flex justify-center mb-[4vh]">
           <div className="relative">
-            <ProfileCircle />
+            <img src={ProfileCircleImg} alt="Profile Circle" />
             <SelectedIcon className="absolute bottom-0 m-auto w-[100%] h-[90%]" />
-            <Camera
+            <img
+              src={CameraImg}
+              alt="Camera"
               className="absolute bottom-0 right-0 cursor-pointer"
               onClick={handleCameraClick}
             />
@@ -52,12 +54,12 @@ export default function EditProfilePage() {
         <input
           type="text"
           id="job"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5z"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="Job"
           required
         />
 
-        <div className="flex justify-between mt-[4vh] mb-[0.5vh]">
+        {/* <div className="flex justify-between mt-[4vh] mb-[0.5vh]">
           <p className="text-xl font-semibold">자산 공개 여부</p>
           <div className="text-right">
             <p className="text-xs font-normal">
@@ -66,8 +68,8 @@ export default function EditProfilePage() {
             </p>
           </div>
         </div>
-        <div className="bg-[#CDCACA] w-full h-[0.2vh]"></div>
-        <ul className="max-w-md divide-y divide-gray-200">
+        <div className="bg-[#CDCACA] w-full h-[0.2vh]"></div> */}
+        {/* <ul className="max-w-md divide-y divide-gray-200">
           <li className="p-[1vh]">
             <div className="flex justify-between items-center">
               <div className="flex min-w-0 items-center space-x-4 rtl:space-x-reverse">
@@ -110,7 +112,7 @@ export default function EditProfilePage() {
               </div>
             </div>
           </li>
-        </ul>
+        </ul> */}
       </div>
       <div className="fixed w-full px-[8vw] bottom-[3vh]">
         <PurpleBtn to="/mypage" label="변경 완료" />

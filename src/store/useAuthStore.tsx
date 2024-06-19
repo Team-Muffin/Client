@@ -3,11 +3,11 @@ import { create } from "zustand";
 
 interface AuthState {
   isAuthenticated: boolean;
-  userId: string | null;
-  userInfo: string | null;
-  nickname: string | null;
-  imgUrl: string | null;
-  birthdate: string | null;
+  userId: string;
+  userInfo: string;
+  nickname: string;
+  imgUrl: string;
+  birthdate: string;
   login: (
     userId: string,
     userInfo: string,
@@ -20,28 +20,27 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => ({
   isAuthenticated: false,
-  userId: null,
-  userInfo: null,
-  nickname: null,
-  imgUrl: null,
-  birthdate: null,
+  userId: "",
+  userInfo: "",
+  nickname: "",
+  imgUrl: "",
+  birthdate: "",
   login: (userId, userInfo, nickname, imgUrl, birthdate) =>
-    set((state) => ({
-      ...state,
+    set({
       isAuthenticated: true,
       userId,
       userInfo,
       nickname,
       imgUrl,
       birthdate,
-    })),
+    }),
   logout: () =>
     set({
       isAuthenticated: false,
-      userId: null,
-      userInfo: null,
-      nickname: null,
-      imgUrl: null,
-      birthdate: null,
+      userId: "",
+      userInfo: "",
+      nickname: "",
+      imgUrl: "",
+      birthdate: "",
     }),
 }));
