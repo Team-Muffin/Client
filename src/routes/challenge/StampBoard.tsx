@@ -18,7 +18,7 @@ export default function StampBoard() {
 
   return (
     <>
-      <Header text="챌린지 도장판" type={1} />
+      <Header text="챌린지 도장판" type="backLeftTextCenter" />
       <div className="mt-[4vh]"></div>
       <div className="flex flex-wrap justify-center px-[2vw]">
         {stamps.map((stamp, index) => (

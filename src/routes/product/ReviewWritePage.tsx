@@ -33,7 +33,7 @@ export default function ReviewWritePage() {
   return (
     <>
       <div className="py-[2vh] px-[4.5vw] pb-[1vh]">
-        <Header text="리뷰 작성" type={1} />
+        <Header text="리뷰 작성" type="backLeftTextCenter" />
         <div className="mt-[4vh]" />
 
         <div className="mt-[4vh]">

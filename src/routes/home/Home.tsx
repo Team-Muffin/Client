@@ -68,7 +68,7 @@ export default function HomePage() {
     <>
       <div className="pt-[2vh] px-[4.5vw]">
         {/* 헤더랑 */}
-        <Header type={4} />
+        <Header type="logoLeftSearchAndAlarmRight" />
         <div className="mt-[5.5vh]"></div>
         {/* 세트로 들고 다녀야 됨 */}
         <div className="flex justify-between items-center mb-[1.5vh]">

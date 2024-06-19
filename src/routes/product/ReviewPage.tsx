@@ -8,7 +8,7 @@ import Dropdown from "../../components/Dropdown";
 export default function ReviewPage() {
   return (
     <>
-      <Header text="Mr.Life" type={1} />
+      <Header text="Mr.Life" type="backLeftTextCenter" />
       <div className="mt-[4vh]" />
 
       <div className="py-[2vh]  px-[4.5vw] pb-[1vh]">
@@ -26,6 +26,7 @@ export default function ReviewPage() {
           <Dropdown
             defaultFilter="최신순"
             filterList={["최신순", "별점 높은 순", "별점 낮은 순"]}
+            onFilterChange={}
           />
         </div>
 

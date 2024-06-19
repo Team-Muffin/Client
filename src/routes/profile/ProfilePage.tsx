@@ -70,7 +70,7 @@ const ProfilePage = () => {
   return (
     <>
       <div className="py-[2vh] px-[4.5vw]">
-        <Header text="마이페이지" type={2} />
+        <Header text="마이페이지" type="backLeftTextCenterSettingRight" />
         <div className="mt-[5.5vh]"></div>
         <div className="flex justify-center gap-[7vw]">
           <div className="flex flex-col items-center mt-[3vh]">

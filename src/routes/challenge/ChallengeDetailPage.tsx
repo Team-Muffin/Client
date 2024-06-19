@@ -12,7 +12,7 @@ import Navbar from "../../components/Navbar";
 const ChallengeDetailPage = () => {
   return (
     <>
-      <Header text="감정 저축 챌린지" type={0} />
+      <Header text="감정 저축 챌린지" type="textCenterSearchRight" />
       <div className="mt-[4.5vh]"></div>
       <div className="flex flex-col items-center">
         <div>

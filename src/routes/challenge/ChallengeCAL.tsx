@@ -91,7 +91,7 @@ const ChallengeCAL: React.FC = () => {
 
   return (
     <>
-      <Header text="감정 저축 챌린지" type={0} />
+      <Header text="감정 저축 챌린지" type="textCenterSearchRight" />
       <div className="mt-[4.5vh]"></div>
       <div className="relative w-[90vw] mx-auto mt-[10vh] p-[3vh] shadow-xl">
         {/* Add the current month number */}

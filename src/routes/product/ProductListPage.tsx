@@ -24,7 +24,7 @@ export default function ProductListPage() {
     <>
       <div className="py-[2vh] px-[4.5vw]">
         {/* 헤더랑 */}
-        <Header text="상품" type={3} />
+        <Header text="상품" type="textCenter" />
         <div className="mt-[4vh]"></div>
         {/* 세트로 들고 다녀야 됨 */}
 

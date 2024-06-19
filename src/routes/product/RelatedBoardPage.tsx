@@ -6,7 +6,7 @@ import BoardCard from "../../components/BoardCard";
 export default function RelatedBoardPage() {
   return (
     <>
-      <Header text="Mr.Life" type={1} />
+      <Header text="Mr.Life" type="backLeftTextCenter" />
       <div className="mt-[4vh]" />
 
       <div className="py-[2vh]  px-[4.5vw] pb-[1vh]">

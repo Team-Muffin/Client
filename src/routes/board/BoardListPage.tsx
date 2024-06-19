@@ -78,7 +78,7 @@ export default function BoardListPage() {
   return (
     <div className="py-[2vh] px-[4.5vw]">
       {/* 헤더랑 */}
-      <Header text="핀" type={0} />
+      <Header text="핀" type="textCenterSearchRight" />
       <div className="mt-[4vh]"></div>
       {/* 세트로 들고 다녀야 됨 */}
 

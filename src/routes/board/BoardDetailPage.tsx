@@ -85,7 +85,7 @@ export default function BoardDetailPage() {
       {boardData ? (
         <>
           <div className="py-[2vh] px-[4.5vw]">
-            <Header text="꿀팁" type={1} />
+            <Header text="꿀팁" type="backLeftTextCenter" />
             <div className="mt-[4vh]"></div>
             <div className="px-[3vw]">
               <div className="flex justify-between items-center">
@@ -120,7 +120,9 @@ export default function BoardDetailPage() {
                     className="w-[1.3rem] mr-[1vw] text-C333333"
                     onClick={() => handleHeartClicked(!heartClicked)}
                   />
-                  <p className="text-[1rem] mr-[1.75vw] text-C333333">7</p>
+                  <p className="text-[1rem] mr-[1.75vw] text-C333333">
+                    {boardData.likeCount}
+                  </p>
                   <img
                     src={Reply}
                     className="w-[1.3rem] mr-[1vw] text-C333333"
@@ -141,7 +143,7 @@ export default function BoardDetailPage() {
 
             {boardData.comments.map((comment) => (
               <>
-                <div key={comment.id} className=" p-[2.75vw]">
+                <div key={comment.id} className=" py-[2.75vw]">
                   <div className=" p-[2.75vw] shadow rounded-[0.5rem]">
                     <div className="flex justify-between ">
                       <div className="flex items-center">
@@ -158,7 +160,12 @@ export default function BoardDetailPage() {
                           </p>
                         </div>
                       </div>
-                      <p className="text-[0.85rem] text-C333333">답글</p>
+                      <div>
+                        <span className="text-[0.8rem] text-C333333">답글</span>
+                        <span className="text-[0.8rem] pl-[1vw] text-C333333">
+                          삭제
+                        </span>
+                      </div>
                     </div>
 
                     <p className="text-[0.95rem] mt-[1vh] text-C333333">
@@ -187,10 +194,10 @@ export default function BoardDetailPage() {
                             </div>
                           </div>
                           <div>
-                            <span className="text-[0.85rem] text-C333333">
+                            <span className="text-[0.8rem] text-C333333">
                               답글
                             </span>
-                            <span className="text-[0.85rem] pl-[1vw] text-C333333">
+                            <span className="text-[0.8rem] pl-[1vw] text-C333333">
                               삭제
                             </span>
                           </div>

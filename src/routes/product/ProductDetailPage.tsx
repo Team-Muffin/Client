@@ -25,7 +25,7 @@ export default function ProductListPage() {
   return (
     <>
       <div className="py-[2vh] px-[4.5vw] pb-[1vh]">
-        <Header text="Mr.Life" type={1} />
+        <Header text="Mr.Life" type="backLeftTextCenter" />
         <div className="mt-[4vh]" />
 
         <div className="flex justify-center p-[2vh]">
