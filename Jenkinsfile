@@ -46,10 +46,8 @@ pipeline {
       steps {
         sh 'pwd'
         echo 'build react'
-        sh 'docker build -t tofin-client .'
-        sh 'docker run --name tofin-client -v ./output:/output tofin-client'
-
-        sh 'docker rm tofin-client'
+        sh 'docker build -t bkkmw/tofin-client .'
+        // sh 'docker run --name tofin-client -v ./output:/output tofin-client'
       }
     }
     stage('deploy') {
@@ -72,14 +70,14 @@ def publishOverSSH(serverName) {
           sshTransfer(
             cleanRemote: false, // clean remote dir
             excludes: '',
-            execCommand: "pwd; cp -rfT ./jenkins/ /home/ubuntu/ws/nginx/html/",
+            execCommand: "/bin/bash /home/ubuntu/jenkins/deploy.sh",
             execTimeout: 120000,
             makeEmptyDirs: true,
             noDefaultExcludes: false,
             remoteDirectory: 'jenkins',
             remoteDirectorySDF: false,
-            removePrefix: 'output',
-            sourceFiles: 'output/**'
+            removePrefix: 'script',
+            sourceFiles: 'script/deploy.sh'
           )
         ]
       )
