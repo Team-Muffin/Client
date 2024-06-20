@@ -1,11 +1,13 @@
 import instance from "./base";
 
+//회원가입
 interface SignUpRequest {
   tofinId: string;
   userInfo: string;
   profileImg: string;
   nickname: string;
   birth: string;
+  job?: string;
 }
 
 export async function signUp(userData: SignUpRequest) {
@@ -18,6 +20,7 @@ export async function signUp(userData: SignUpRequest) {
   }
 }
 
+//아이디 조회
 interface checkUserIdAvailabilityResp {
   success: boolean;
   message: string;
@@ -48,6 +51,7 @@ export async function checkUserIdAvailability(
   }
 }
 
+//로그인
 interface SignInRequest {
   tofinId: string;
   userInfo: string;
@@ -63,6 +67,26 @@ export async function signIn(credentials: SignInRequest) {
     return response.data;
   } catch (error) {
     console.error("로그인 중 오류 발생:", error);
+    throw error;
+  }
+}
+
+//직업 조회
+export interface JobResp {
+  success: boolean;
+  message: string;
+  data: [string];
+}
+
+export async function fetchJobs(target: string): Promise<JobResp> {
+  try {
+    const response = await instance.get(`user-service/users/jobs`, {
+      params: { target },
+    });
+    console.log("Jobs Reponse Data:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("직업 조회 오류 발생", error);
     throw error;
   }
 }
