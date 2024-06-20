@@ -90,3 +90,41 @@ export async function fetchJobs(target: string): Promise<JobResp> {
     throw error;
   }
 }
+
+//전화번호 확인
+interface checkUserContactAvailabilityResp {
+  success: boolean;
+  message: string;
+  data: {
+    contact: string;
+    available: boolean;
+    reason: string;
+  };
+}
+
+export async function CheckUserContactAvailability(
+  target: string
+): Promise<checkUserContactAvailabilityResp> {
+  try {
+    const response = await instance.get(
+      `/user-service/users/available-contact`,
+      { params: { target } }
+    );
+    console.log("API Response Data:", response.data);
+    if (response.data.data.hasOwnProperty("available")) {
+      return response.data;
+    } else {
+      throw new Error("Unexpected response format");
+    }
+  } catch (error) {
+    console.error("사용가능한 전화번호 조회 중 오류 발생:", error);
+    throw error;
+  }
+}
+
+//자산 연결
+interface AssetRequest {
+  socialName: string;
+  backSocialId: string;
+  contact: string;
+}

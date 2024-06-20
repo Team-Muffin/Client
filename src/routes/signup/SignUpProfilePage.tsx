@@ -18,6 +18,7 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
+import { Dialog } from "./Dialog";
 
 const SignUpProfilePage = () => {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ const SignUpProfilePage = () => {
   const [jobs, setJobs] = useState<string[]>([]); // 직업 리스트 상태
   const [selectedJob, setSelectedJob] = useState<string>(""); // State to hold selected job
   const [open, setOpen] = useState(false); // State to manage dropdown open/close
+  const [selected, setSelected] = useState<Date>();
 
   useEffect(() => {
     // 컴포넌트 마운트 시 직업 리스트를 가져오는 함수 호출
@@ -119,7 +121,6 @@ const SignUpProfilePage = () => {
             />
           </div>
         </div>
-
         <div className="flex mb-[1vh] items-center">
           <p className="text-lg font-semibold mr-[1vw]">닉네임</p>
           <img src={Essential} alt="Essential" />
@@ -133,12 +134,13 @@ const SignUpProfilePage = () => {
           value={nickname}
           onChange={(e) => setNickname(e.target.value)}
         />
-
         <div className="flex mt-[3vh] mb-[1vh] items-center">
           <p className="text-lg font-semibold mr-[1vw]">생년월일</p>
           <img src={Essential} alt="Essential" />
         </div>
-        <input
+        <Dialog birthdate={birthdate} setBirthdate={setBirthdate} />
+
+        {/* <input
           type="text"
           id="birthdate"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -146,7 +148,7 @@ const SignUpProfilePage = () => {
           required
           value={birthdate}
           onChange={(e) => setBirthdate(e.target.value)}
-        />
+        /> */}
 
         <div className="flex mt-[3vh] mb-[1vh] items-center">
           <p className="text-lg font-semibold mr-[1vw]">직업</p>
