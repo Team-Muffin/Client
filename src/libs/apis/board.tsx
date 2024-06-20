@@ -39,14 +39,14 @@ interface BoardListResponse {
 // 각 게시글 조회
 export async function fetchBoardDetail(
   boardId: string
-): Promise<{ data: BoardResponse["data"] }> {
+): Promise<{ data: BoardResponse }> {
   const response = await instance.get<BoardResponse>(
     `/board-service/boards/${boardId}`
   );
-  return { data: response.data.data };
+  return { data: response.data };
 }
 
-interface BoardResponse {
+export interface BoardResponse {
   success: boolean;
   message: string;
   data: {
@@ -79,6 +79,36 @@ interface BoardResponse {
     authorNickname: string;
     authorProfile: string;
   };
+}
+
+export interface CommentResponse {
+  success: boolean;
+  message: string;
+  data: {
+    id: number;
+    content: string;
+    authorId: number;
+    authorName: string;
+    authorProfile: string;
+    replies: {
+      id: number;
+      content: string;
+      authorId: number;
+      authorName: string;
+      authorProfile: string;
+      createdTime: string;
+    }[];
+    createdTime: string;
+  }[];
+}
+
+export async function fetchComment(
+  boardId: string
+): Promise<{ data: CommentResponse }> {
+  const response = await instance.get<CommentResponse>(
+    `/board-service/boards/${boardId}/comments`
+  );
+  return { data: response.data };
 }
 
 export async function createBookmark(boardId: string) {
