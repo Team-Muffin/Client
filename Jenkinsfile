@@ -44,9 +44,12 @@ pipeline {
     }
     stage('build') {
       steps {
+        sh 'pwd'
         echo 'build react'
         sh 'docker build -t tofin-client .'
         sh 'docker run --name tofin-client -v ./output:/output tofin-client'
+
+        sh 'docker rm tofin-client'
       }
     }
     stage('deploy') {
