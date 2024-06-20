@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Header from "../../components/common/Header";
 import {
   Menu,
@@ -40,6 +40,11 @@ export default function BoardDetailPage() {
   const [likeCnt, setLikeCnt] = useState(0);
   const [commentContent, setCommentContent] = useState("");
   const [clickedCommentId, setClickedCommentId] = useState(0);
+  const [clickedCommentIdForDelete, setClickedCommentIdForDelete] = useState(0);
+  const commentInput = useRef<HTMLInputElement>(null);
+  const createCommentBtn = useRef<HTMLInputElement>(null);
+  const commentInputArea = useRef<HTMLInputElement>(null);
+
   const navigate = useNavigate();
 
   const params = useParams();
@@ -114,8 +119,12 @@ export default function BoardDetailPage() {
   };
 
   const handleScrapClicked = async (selection: boolean) => {
-    await createBookmark(boardId);
-    setScrapClicked(selection);
+    try {
+      await createBookmark(boardId);
+      setScrapClicked(selection);
+    } catch (error) {
+      console.error("핀하기 중 오류 발생: ", error);
+    }
   };
 
   const handleBoardDelete = async () => {
@@ -141,18 +150,45 @@ export default function BoardDetailPage() {
   };
 
   const handleCommentWriteClick = () => {
-    handleCommentWrite();
+    if (commentContent === "") {
+      alert("내용을 입력해주세요!");
+      return;
+    }
+    if (clickedCommentId > 0) handleCommentWrite(clickedCommentId);
+    else handleCommentWrite();
   };
 
+  useEffect(() => {
+    const clickOutside = (e: MouseEvent) => {
+      if (
+        createCommentBtn.current &&
+        !createCommentBtn.current.contains(e.target as Node) &&
+        commentInputArea.current &&
+        !commentInputArea.current.contains(e.target as Node)
+      ) {
+        setClickedCommentId(-1);
+      }
+    };
+
+    document.addEventListener("mousedown", clickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", clickOutside);
+    };
+  }, []);
+
   const handleDeleteCommentClick = async (commentId: number) => {
-    setClickedCommentId(commentId);
     await deleteComment(commentId);
     // window.location.reload();
   };
 
   const handleCreateReplyClick = (commentId: number) => {
     setClickedCommentId(commentId);
+    if (commentInput.current) {
+      commentInput.current.focus();
+    }
   };
+  console.log(clickedCommentId);
   return (
     <>
       {boardData ? (
@@ -319,6 +355,7 @@ export default function BoardDetailPage() {
                         <span
                           className="text-[0.8rem] text-C333333"
                           onClick={() => handleCreateReplyClick(comment.id)}
+                          ref={createCommentBtn}
                         >
                           답글
                         </span>
@@ -357,7 +394,10 @@ export default function BoardDetailPage() {
                             </div>
                           </div>
                           <div>
-                            <span className="text-[0.8rem] pl-[1vw] text-C333333">
+                            <span
+                              className="text-[0.8rem] pl-[1vw] text-C333333"
+                              onClick={() => handleDeleteCommentClick(reply.id)}
+                            >
                               삭제
                             </span>
                           </div>
@@ -373,9 +413,13 @@ export default function BoardDetailPage() {
             ))}
             <div className="pb-[14vh]" />
 
-            <div className="fixed bg-white bottom-[7.5vh] left-0 right-0 h-[8vh] py-[1.5vh]">
+            <div
+              className="fixed bg-white bottom-[7.5vh] left-0 right-0 h-[8vh] py-[1.5vh]"
+              ref={commentInputArea}
+            >
               <div className="w-[93vw] mx-auto flex justify-between items-center text-C333333 text-[1rem] bg-[#F4F3FA] py-[1.25vh] px-[4vw] rounded-[0.9rem] z-20">
                 <input
+                  ref={commentInput}
                   type="text"
                   id="small-input"
                   className="block w-full text-[0.95rem] border-none bg-[#F4F3FA] p-[0] m-[0]"

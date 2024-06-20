@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function BoardWritePage() {
   const [selected, setSelected] = useState("정보");
-  const filterList = ["정보", "재미", "절약", "투자", "기업"];
+  const filterList = ["정보", "재미", "투자", "기업", "고급"];
   const navigate = useNavigate();
   const handleBackButtonClick = () => {
     navigate(-1);
