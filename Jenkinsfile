@@ -39,7 +39,7 @@ pipeline {
       steps {
         echo 'copy configuration files'
         sh 'pwd'
-        sh 'cp /var/jenkins_home/workspace/config/.env.client .env'
+        sh 'cp /var/jenkins_home/workspace/configs/client/.env. .env'
       }
     }
     stage('build') {
