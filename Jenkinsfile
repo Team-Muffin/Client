@@ -47,12 +47,13 @@ pipeline {
         sh 'pwd'
         echo 'build react'
         sh 'docker build -t bkkmw/tofin-client .'
+        sh 'docker push bkkmw/tofin-client'
         // sh 'docker run --name tofin-client -v ./output:/output tofin-client'
       }
     }
     stage('deploy') {
       steps {
-        echo 'run docker container'
+        echo 'publish over ssh'
         publishOverSSH('webserver')
       }
     }
@@ -70,11 +71,11 @@ def publishOverSSH(serverName) {
           sshTransfer(
             cleanRemote: false, // clean remote dir
             excludes: '',
-            execCommand: "/bin/bash /home/ubuntu/jenkins/deploy.sh tofin-client",
+            execCommand: "/bin/bash /home/ubuntu/depl/deploy.sh tofin-client",
             execTimeout: 120000,
             makeEmptyDirs: true,
             noDefaultExcludes: false,
-            remoteDirectory: 'jenkins',
+            remoteDirectory: 'depl',
             remoteDirectorySDF: false,
             removePrefix: 'script',
             sourceFiles: 'script/deploy.sh'
