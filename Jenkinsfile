@@ -46,7 +46,7 @@ pipeline {
       steps {
         echo 'build react'
         sh 'docker build -t tofin-client .'
-        sh 'docker run --name tofin-client -v ./output:/output'
+        sh 'docker run --name tofin-client -v ./output:/output tofin-client'
       }
     }
     stage('deploy') {
