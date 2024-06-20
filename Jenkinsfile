@@ -70,7 +70,7 @@ def publishOverSSH(serverName) {
           sshTransfer(
             cleanRemote: false, // clean remote dir
             excludes: '',
-            execCommand: "/bin/bash /home/ubuntu/jenkins/deploy.sh",
+            execCommand: "/bin/bash /home/ubuntu/jenkins/deploy.sh tofin-client",
             execTimeout: 120000,
             makeEmptyDirs: true,
             noDefaultExcludes: false,
