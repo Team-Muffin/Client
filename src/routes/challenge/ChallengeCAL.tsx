@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
-import Happy from "../../assets/happy-face.svg?react";
-import Sad from "../../assets/sad-face.svg?react";
-import Angry from "../../assets/angry-face.svg?react";
 import Navbar from "../../components/common/Navbar";
 import Header from "../../components/common/Header";
+import HappyImg from "../../assets/happy-face.svg";
+import SadImg from "../../assets/sad-face.svg";
+import AngryImg from "../../assets/angry-face.svg";
 
 type DateObject = {
   currentMonth: boolean;
@@ -56,20 +56,6 @@ export const generateDate = (
   return arrayOfDate;
 };
 
-export const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
 const daysOfWeek = ["S", "M", "T", "W", "T", "F", "S"];
 
 const ChallengeCAL: React.FC = () => {
@@ -115,13 +101,25 @@ const ChallengeCAL: React.FC = () => {
             >
               {dateObj.date.date()}
               {dateObj.emotion === "happy" && (
-                <Happy className="absolute inset-0 m-auto w-[10vw] h-[6vh]" />
+                <img
+                  src={HappyImg}
+                  className="absolute inset-0 m-auto w-[10vw] h-[6vh]"
+                  alt="Happy Face"
+                />
               )}
               {dateObj.emotion === "sad" && (
-                <Sad className="absolute inset-0 m-auto w-[10vw] h-[6vh]" />
+                <img
+                  src={SadImg}
+                  className="absolute inset-0 m-auto w-[10vw] h-[6vh]"
+                  alt="Sad Face"
+                />
               )}
               {dateObj.emotion === "angry" && (
-                <Angry className="absolute inset-0 m-auto w-[10vw] h-[6vh]" />
+                <img
+                  src={AngryImg}
+                  className="absolute inset-0 m-auto w-[10vw] h-[6vh]"
+                  alt="Angry Face"
+                />
               )}
             </div>
           ))}
@@ -131,10 +129,12 @@ const ChallengeCAL: React.FC = () => {
         <div className="flex justify-center p-[5vh]">
           <div className="flex justify-between w-[80vw] mb-[4vh]">
             <div className="flex flex-col items-center">
-              <Angry
-                width={"8vh"}
-                height={"8vh"}
+              <img
+                src={AngryImg}
+                width={"50vw"}
+                height={"50vh"}
                 onClick={() => handleEmotionClick("angry")}
+                alt="Angry Face"
               />
               <button
                 className="text-sm font-semibold text-[#748BFF] bg-[#ECF0FF] rounded-3xl shadow py-[0.5vh] px-[3vw] my-[1vh]"
@@ -145,10 +145,12 @@ const ChallengeCAL: React.FC = () => {
               <p className="text-xs font-normal text-black">1818원 저축</p>
             </div>
             <div className="flex flex-col items-center">
-              <Sad
-                width={"9vh"}
-                height={"8vh"}
+              <img
+                src={SadImg}
+                width={"50vw"}
+                height={"50vh"}
                 onClick={() => handleEmotionClick("sad")}
+                alt="Sad Face"
               />
               <button
                 className="text-sm font-semibold text-[#748BFF] bg-[#ECF0FF] rounded-3xl shadow py-[0.5vh] px-[3vw] my-[1vh]"
@@ -159,10 +161,12 @@ const ChallengeCAL: React.FC = () => {
               <p className="text-xs font-normal text-black">666원 저축</p>
             </div>
             <div className="flex flex-col items-center">
-              <Happy
-                width={"8vh"}
-                height={"8vh"}
+              <img
+                src={HappyImg}
+                width={"50vw"}
+                height={"50vh"}
                 onClick={() => handleEmotionClick("happy")}
+                alt="Happy Face"
               />
               <button
                 className="text-sm font-semibold text-[#748BFF] bg-[#ECF0FF] rounded-3xl shadow py-[0.5vh] px-[3vw] my-[1vh]"
@@ -188,4 +192,5 @@ const ChallengeCAL: React.FC = () => {
     </>
   );
 };
+
 export default ChallengeCAL;

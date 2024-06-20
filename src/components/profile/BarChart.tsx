@@ -2,9 +2,9 @@ import { ResponsiveBar, BarDatum } from "@nivo/bar";
 
 interface AssetData extends BarDatum {
   id: string;
-  deposit: number;
-  saving: number;
-  invest: number;
+  입출금: number;
+  저축: number;
+  투자: number;
 }
 
 interface MyResponsiveBarProps {

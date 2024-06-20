@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import MiniCircle from "../../assets/minicircle.svg?react";
-import Essential from "../../assets/required.svg?react";
-import Checked from "../../assets/checked.svg?react";
+import MiniCircle from "../../assets/minicircle.svg";
+import Essential from "../../assets/required.svg";
+import Checked from "../../assets/checked.svg";
 import PurpleBtn from "../../components/common/PurpleBtn";
 
 const AssetConnectPage = () => {
@@ -30,7 +30,7 @@ const AssetConnectPage = () => {
 
         <div className="flex mb-[1vh] items-center">
           <p className="text-lg font-semibold mr-[1vw]">동의 서약</p>
-          <Essential />
+          <img src={Essential} alt="Essential" />
         </div>
 
         {/* 동의 서약 드롭다운 버튼 */}
@@ -43,7 +43,11 @@ const AssetConnectPage = () => {
         >
           나의 자산 연결하기(나의 자산){" "}
           {isAgreed ? (
-            <Checked className="w-[4.5vw] h-[3vh]" />
+            <img
+              src={Checked}
+              alt="Checked Icon"
+              className="w-[4.5vw] h-[3vh]"
+            />
           ) : (
             <svg
               className="w-[3vw] h-[3vh]"
@@ -92,7 +96,7 @@ const AssetConnectPage = () => {
 
         <div className="flex mt-[2vh] mb-[1vh] items-center">
           <p className="text-lg font-semibold mr-[1vw]">이름</p>
-          <Essential />
+          <img src={Essential} alt="Essential" />
         </div>
         <input
           type="text"
@@ -104,7 +108,7 @@ const AssetConnectPage = () => {
 
         <div className="flex mt-[2vh] mb-[1vh] items-center">
           <p className="text-lg font-semibold mr-[1vw]">주민등록번호</p>
-          <Essential />
+          <img src={Essential} alt="Essential" />
         </div>
         <input
           type="text"
@@ -116,7 +120,7 @@ const AssetConnectPage = () => {
 
         <div className="flex mt-[2vh] mb-[1vh] items-center">
           <p className="text-lg font-semibold mr-[1vw]">전화번호</p>
-          <Essential />
+          <img src={Essential} alt="Essential" />
         </div>
         <input
           type="text"
@@ -129,10 +133,23 @@ const AssetConnectPage = () => {
 
       <div className="fixed w-full px-[8vw] bottom-[3vh]">
         <div className="flex justify-center mb-[3vh]">
-          <MiniCircle className="w-3 h-3 mr-5" />
-          <MiniCircle className="w-3 h-3 mr-5" />
-          <MiniCircle className="w-3 h-3 mr-5" style={{ fill: "#748BFF" }} />
-          <MiniCircle className="w-3 h-3" />
+          <img
+            src={MiniCircle}
+            alt="Mini Circle"
+            className="w-3 h-3 mr-5"
+            style={{ fill: "#748BFF" }}
+          />
+          <img src={MiniCircle} alt="Mini Circle" className="w-3 h-3 mr-5" />
+          <img
+            src={MiniCircle}
+            alt="Mini Circle"
+            className="w-3 h-3 mr-5"
+            style={{
+              filter:
+                "invert(64%) sepia(69%) saturate(4107%) hue-rotate(206deg) brightness(100%) contrast(102%)",
+            }}
+          />
+          <img src={MiniCircle} alt="Mini Circle" className="w-3 h-3" />
         </div>
         <PurpleBtn to="/signup/assetconnect" label="나의 자산 연결하기" />
         <div className="flex justify-center">
