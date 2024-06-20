@@ -72,7 +72,7 @@ def publishOverSSH(serverName) {
           sshTransfer(
             cleanRemote: false, // clean remote dir
             excludes: '',
-            execCommand: "pwd; cp -rfT ./jenkins/output/ /home/ubuntu/ws/nginx/html",
+            execCommand: "pwd; cp -rfT ./jenkins/ /home/ubuntu/ws/nginx/html/",
             execTimeout: 120000,
             makeEmptyDirs: true,
             noDefaultExcludes: false,
