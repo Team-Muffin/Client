@@ -90,6 +90,16 @@ body {
   scrollbar-width: none;
 }
 
+:root {
+  --rdp-accent-color: indigo;
+  --rdp-background-color: gray;
+  --rdp-caption-font-size: "0.3rem";
+}
+.rdp-dropdown {
+  font-size: small;
+  width: 15vw;
+}
+
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
