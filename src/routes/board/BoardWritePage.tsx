@@ -1,5 +1,5 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import BackBtn from "../../assets/back.svg";
 import {
   Menu,
@@ -9,19 +9,46 @@ import {
   Transition,
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { useNavigate } from "react-router-dom";
 
 export default function BoardWritePage() {
-  const [selected, setSelected] = useState("정보");
+  const [selected, setSelected] = useState("");
   const filterList = ["정보", "재미", "투자", "기업", "고급"];
   const navigate = useNavigate();
   const handleBackButtonClick = () => {
     navigate(-1);
   };
+  const location = useLocation();
+  const params = useParams();
+  const boardId = params.boardId;
+  const categoryId = location.state.category;
+  console.log(categoryId);
+
+  useEffect(() => {
+    if (boardId) {
+      switch (categoryId) {
+        case "1":
+          setSelected("정보");
+          break;
+        case "2":
+          setSelected("재미");
+          break;
+        case "3":
+          setSelected("투자");
+          break;
+        case "4":
+          setSelected("기업");
+          break;
+        case "5":
+          setSelected("고급");
+          break;
+      }
+    }
+  }, [boardId, categoryId]);
 
   const handleMenuItemClick = (text: string) => {
     setSelected(text);
   };
+
   return (
     <>
       <div className="py-[2vh] px-[4.5vw]">
@@ -76,7 +103,10 @@ export default function BoardWritePage() {
               </Transition>
             </Menu>
 
-            <div className="absolute right-4 font-medium text-lg">등록</div>
+            <div className="absolute right-4 font-medium text-lg">
+              {" "}
+              {boardId ? "수정" : "작성"}
+            </div>
           </div>
         </nav>
         {/* 여기까지 헤더 */}
