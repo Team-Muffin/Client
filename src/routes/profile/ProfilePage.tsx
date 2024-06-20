@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Header from "../../components/Header";
-import Navbar from "../../components/Navbar";
+import Header from "../../components/common/Header";
+import Navbar from "../../components/common/Navbar";
 import UserStats from "../../components/profile/UserStats";
 import UserProfile from "../../components/profile/UserProfile";
 import CategoryTabs from "../../components/profile/CategoryTabs";
@@ -45,7 +45,7 @@ const ProfilePage = () => {
   return (
     <>
       <div className="py-[2vh] px-[4.5vw]">
-        <Header text="마이페이지" type={2} />
+        <Header text="마이페이지" type="backLeftTextCenterSettingRight" />
         <div className="mt-[5.5vh]" />
         <UserStats />
         <UserProfile
