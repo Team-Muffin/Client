@@ -1,12 +1,12 @@
 import { useState } from "react";
-import Header from "../../components/Header";
-import Navbar from "../../components/Navbar";
-import BoardCard from "../../components/BoardCard";
+import Header from "../../components/common/Header";
+import Navbar from "../../components/common/Navbar";
+import BoardCard from "../../components/common/BoardCard";
 
 export default function RelatedBoardPage() {
   return (
     <>
-      <Header text="Mr.Life" type={1} />
+      <Header text="Mr.Life" type="backLeftTextCenter" />
       <div className="mt-[4vh]" />
 
       <div className="py-[2vh]  px-[4.5vw] pb-[1vh]">

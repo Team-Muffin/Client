@@ -1,11 +1,11 @@
 import React from "react";
-import Header from "../../components/Header";
+import Header from "../../components/common/Header";
 import Challenge from "../../components/challenge/Challenge";
 import SaveKingImg from "../../assets/save-king.svg"; // 감정 저축 챌린지 이미지
 import EcoKingImg from "../../assets/eco-king.svg"; // ESG투자 챌린지 이미지 등 추가 필요
 import ReportImg from "../../assets/report.svg";
 import BookwormImg from "../../assets/book-worm.svg";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/common/Navbar";
 import CookImg from "../../assets/cook.svg";
 import DetailImg from "../../assets/detail-description.svg";
 
@@ -58,7 +58,7 @@ const ChallengeDetailPage = () => {
 
   return (
     <>
-      <Header text="챌린지 상세 페이지" type={0} />
+      <Header text="감정 저축 챌린지" type={"textCenterSearchRight"} />
       <div className="mt-[4.5vh]"></div>
 
       {challenges.map((challenge, index) => (

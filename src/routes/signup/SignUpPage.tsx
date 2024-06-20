@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore";
 import { checkUserIdAvailability } from "../../libs/apis/user";
-import PurpleBtn from "../../components/PurpleBtn";
+import PurpleBtn from "../../components/common/PurpleBtn";
 import miniCircle from "../../assets/minicircle.svg";
 import essential from "../../assets/required.svg";
 import checkedIcon from "../../assets/checked.svg";

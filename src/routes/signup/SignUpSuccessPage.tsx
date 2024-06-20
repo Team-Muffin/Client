@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Confetti from "react-confetti";
-import PurpleBtn from "../../components/PurpleBtn";
+import PurpleBtn from "../../components/common/PurpleBtn";
 import MainLogoImg from "../../assets/main-logo.svg"; // Import SVG file
 
 const SignUpSuccessPage = () => {

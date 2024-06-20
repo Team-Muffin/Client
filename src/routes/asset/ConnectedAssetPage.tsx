@@ -1,5 +1,5 @@
 import MiniCircleImg from "../../assets/minicircle.svg";
-import PurpleBtn from "../../components/PurpleBtn";
+import PurpleBtn from "../../components/common/PurpleBtn";
 import ShinhanLogo from "../../assets/shinhan-logo.svg";
 
 // Assuming ShinhanLogo.svg is imported similarly as MiniCircleImg

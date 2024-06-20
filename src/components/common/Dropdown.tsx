@@ -8,20 +8,24 @@ import {
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
-}
-
 type DropdownProps = {
   defaultFilter: string;
   filterList: string[];
+  onFilterChange: (newFilter: string) => void;
 };
 
-const Dropdown: React.FC<DropdownProps> = ({ defaultFilter, filterList }) => {
-  const [selected, setSelected] = useState(defaultFilter);
+const Dropdown: React.FC<DropdownProps> = ({
+  defaultFilter,
+  filterList,
+  onFilterChange,
+}) => {
+  const [selected, setSelected] = useState<string>(defaultFilter);
 
-  const handleMenuItemClick = (text: string) => {
-    setSelected(text);
+  const handleFilterChange = (newFilter: string) => {
+    setSelected(newFilter);
+    console.log(newFilter);
+
+    onFilterChange(newFilter);
   };
 
   return (
@@ -50,8 +54,8 @@ const Dropdown: React.FC<DropdownProps> = ({ defaultFilter, filterList }) => {
         <MenuItems className="absolute z-10 mt-[3.5vh] w-30 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
             {filterList.map((text, index) => (
-              <div onClick={() => handleMenuItemClick(text)}>
-                <MenuItem key={index}>
+              <div key={index} onClick={() => handleFilterChange(text)}>
+                <MenuItem>
                   {({ active }) => (
                     <a
                       href="#"

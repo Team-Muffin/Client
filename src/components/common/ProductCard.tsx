@@ -1,6 +1,6 @@
 import React from "react";
-import KBCard from "../assets/card-kb.svg";
-import Star from "../assets/star-filled.svg";
+import KBCard from "../../assets/card-kb.svg";
+import Star from "../../assets/star-filled.svg";
 import { Link } from "react-router-dom";
 
 interface ProductCardProps {

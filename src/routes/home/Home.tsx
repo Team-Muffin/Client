@@ -1,14 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
-import { useState } from "react";
-import Header from "../../components/Header";
-import Navbar from "../../components/Navbar";
-import { Link } from "react-router-dom";
-import Heart from "../../assets/heart-empty.svg";
-import Reply from "../../assets/reply.svg";
-import character1_small from "../../assets/character1-small.svg";
-import ChallengeLogo from "../../assets/coin30.svg";
-import ProductCard from "../../components/ProductCard";
+import Header from "../../components/common/Header";
+import Navbar from "../../components/common/Navbar";
+import ProductCard from "../../components/common/ProductCard";
+import ChallengeCard from "../../components/home/ChallengeCard";
+import BoardCardVertical from "../../components/home/BoardCardVertical";
 
 export default function HomePage() {
   const settings = {
@@ -24,22 +20,22 @@ export default function HomePage() {
       imageUrl:
         "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202107/29/0a0a379f-05c8-4777-a071-b29abcf9f542.jpg",
       title: "⭐️️ 내가 들었던 펀드 추천 글 ⭐",
-      content: "오늘은 내가 들었던 펀드 중에 제일 좋았던 신한은행의 @@@ 펀드야",
-      author: "이듀미",
-      createdAt: "3분전",
-      likes: 3,
-      replies: 5,
+      summary: "오늘은 내가 들었던 펀드 중에 제일 좋았던 신한은행의 @@@ 펀드야",
+      authorNickname: "이듀미",
+      createdTime: 3,
+      likeCount: 3,
+      commentCount: 5,
     },
     {
-      id: 2,
+      id: 1,
       imageUrl:
-        "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/135/bd671ac15bc9ef902fff7f0d6d2655c5_res.jpeg",
+        "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202107/29/0a0a379f-05c8-4777-a071-b29abcf9f542.jpg",
       title: "⭐️️ 내가 들었던 펀드 추천 글 ⭐",
-      content: "오늘은 내가 들었던 펀드 중에 제일 좋았던 신한은행의 @@@ 펀드야",
-      author: "이듀미",
-      createdAt: "3분전",
-      likes: 3,
-      replies: 5,
+      summary: "오늘은 내가 들었던 펀드 중에 제일 좋았던 신한은행의 @@@ 펀드야",
+      authorNickname: "이듀미",
+      createdTime: 3,
+      likeCount: 3,
+      commentCount: 5,
     },
   ];
 
@@ -48,19 +44,22 @@ export default function HomePage() {
       bgColor: "#F9D1E3",
       title: "금융 도서 추천",
       description: "금융 도서를 타 유저에게 추천하세요",
-      participants: "참여자 751명",
+      participants: 751,
+      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-J0LYyB-YOa6R7T1D_SAo64qrJgWs_zhHUQ&s",
     },
     {
       bgColor: "#8DBDFF",
-      title: "금융 도서 추천하기",
+      title: "금융 도서 추천",
       description: "금융 도서를 타 유저에게 추천하세요",
-      participants: "참여자 751명",
+      participants: 751,
+      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-J0LYyB-YOa6R7T1D_SAo64qrJgWs_zhHUQ&s",
     },
     {
       bgColor: "#F8D560",
-      title: "금융 도서 추천하기",
+      title: "금융 도서 추천",
       description: "금융 도서를 타 유저에게 추천하세요",
-      participants: "참여자 751명",
+      participants: 751,
+      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-J0LYyB-YOa6R7T1D_SAo64qrJgWs_zhHUQ&s",
     },
   ];
 
@@ -68,7 +67,7 @@ export default function HomePage() {
     <>
       <div className="pt-[2vh] px-[4.5vw]">
         {/* 헤더랑 */}
-        <Header type={4} />
+        <Header type="logoLeftSearchAndAlarmRight" />
         <div className="mt-[5.5vh]"></div>
         {/* 세트로 들고 다녀야 됨 */}
         <div className="flex justify-between items-center mb-[1.5vh]">
@@ -78,23 +77,16 @@ export default function HomePage() {
 
         {/* 챌린지 카드 컴포넌트 */}
         <div className="whitespace-nowrap overflow-x-auto flex scrollbar-hide">
-          {challenges.map((challenge, index) => (
-            <div
-              key={index}
-              className={`min-w-[37vw] p-[2vh] rounded-[1.5rem] mr-[4vw]`}
-              style={{ backgroundColor: challenge.bgColor }}
-            >
-              <div className="flex justify-center pb-[2vh] pt-[0.5vh]">
-                <img src={ChallengeLogo} className="h-[10vh]" />
-              </div>
-              <p className="text-[1rem] font-medium">{challenge.title}</p>
-              <p className="mt-[0.5vh] text-C333333 text-[0.8rem] whitespace-normal leading-tight">
-                {challenge.description}
-              </p>
-              <p className="text-C333333 text-[0.75rem] mt-[0.5vh]">
-                {challenge.participants}
-              </p>
-            </div>
+          {challenges.map((challenge) => (
+            <>
+              <ChallengeCard
+                title={challenge.title}
+                description={challenge.description}
+                participants={challenge.participants}
+                bgColor={challenge.bgColor}
+                ChallengeLogo={challenge.logo}
+              />
+            </>
           ))}
         </div>
 
@@ -103,61 +95,20 @@ export default function HomePage() {
         </div>
 
         <div>
-          {data.map((item) => (
+          {data.map((data) => (
             <>
-              <hr />
-              <div
-                key={item.id}
-                className="max-w-sm m-auto bg-white rounded-lg shadow-default "
-              >
-                <Link to={`/`}>
-                  <div className="my-[1.75vh]">
-                    <img
-                      className="rounded-t-lg w-full h-[20vh]"
-                      src={item.imageUrl}
-                      alt=""
-                    />
-
-                    <div className="flex justify-between items-center ">
-                      <div className="px-[2.5vw] mr-[0.8vw] mt-[1.5vh] ">
-                        <p className="text-[1.1rem] text-C333333 font-medium">
-                          {item.title}
-                        </p>
-                        <p className="leading-tight text-[0.9rem] text-C333333 line-clamp-1 mt-[0.25vh]">
-                          {item.content}
-                        </p>
-                        <div className="flex items-center mt-[0.5vh] mb-[1.5vh] justify-between">
-                          <div className="flex">
-                            <img
-                              src={character1_small}
-                              className="w-[4.5vw] mr-[1vw]"
-                            />
-                            <p className="text-[0.85rem] text-C333333">
-                              {item.author} | {item.createdAt}
-                            </p>
-                          </div>
-                          <div className="flex ">
-                            <img
-                              src={Heart}
-                              className="w-[1.5vh] mr-[0.5vw] text-C333333"
-                            ></img>
-                            <p className="text-[0.85rem] mr-[1.2vw] text-C333333">
-                              {item.likes}
-                            </p>
-                            <img
-                              src={Reply}
-                              className="w-[1.5vh] mr-[0.5vw] text-C333333"
-                            ></img>
-                            <p className="text-[0.85rem] text-C333333">
-                              {item.replies}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              </div>
+              <BoardCardVertical
+                title={data.title}
+                description={data.summary}
+                author={data.authorNickname}
+                time={data.createdTime}
+                heartCount={data.likeCount}
+                replyCount={data.commentCount}
+                imageUrl="https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg"
+                // imageUrl={data.thumbnail}
+                authorImageUrl="https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg"
+                link={`board/${data.id}`}
+              />
             </>
           ))}
         </div>

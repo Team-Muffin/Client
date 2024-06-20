@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Header from "../../components/Header";
-import BoardCard from "../../components/BoardCard";
-import Navbar from "../../components/Navbar";
+import Header from "../../components/common/Header";
+import BoardCard from "../../components/common/BoardCard";
+import Navbar from "../../components/common/Navbar";
 import SHCard from "../../assets/card-sh.svg";
 import SHLogo from "../../assets/logo-sh.svg";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
@@ -25,7 +25,7 @@ export default function ProductListPage() {
   return (
     <>
       <div className="py-[2vh] px-[4.5vw] pb-[1vh]">
-        <Header text="Mr.Life" type={1} />
+        <Header text="Mr.Life" type="backLeftTextCenter" />
         <div className="mt-[4vh]" />
 
         <div className="flex justify-center p-[2vh]">

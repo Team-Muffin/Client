@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import MiniCircle from "../../assets/minicircle.svg";
 import Essential from "../../assets/required.svg";
 import Checked from "../../assets/checked.svg";
-import PurpleBtn from "../../components/PurpleBtn";
+import PurpleBtn from "../../components/common/PurpleBtn";
 
 const AssetConnectPage = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

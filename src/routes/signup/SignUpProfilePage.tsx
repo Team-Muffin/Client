@@ -8,7 +8,7 @@ import UserIcon1 from "../../assets/user-icon1.svg";
 import UserIcon2 from "../../assets/user-icon2.svg";
 import UserIcon3 from "../../assets/user-icon3.svg";
 import UserIcon4 from "../../assets/user-icon4.svg";
-import PurpleBtn from "../../components/PurpleBtn";
+import PurpleBtn from "../../components/common/PurpleBtn";
 import { signUp } from "../../libs/apis/user";
 import { useAuthStore } from "../../store/useAuthStore";
 import { fetchJobs, JobResp } from "../../libs/apis/user"; // API 호출 함수와 인터페이스 가져오기

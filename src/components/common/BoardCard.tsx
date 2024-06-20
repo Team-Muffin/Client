@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import TimeAgo from "../utils/TimeAgo";
-import Heart from "../assets/heart-empty.svg";
-import Reply from "../assets/reply.svg";
+import TimeAgo from "../../utils/TimeAgo";
+import Heart from "../../assets/heart-empty.svg";
+import Reply from "../../assets/reply.svg";
 
 interface PostCardProps {
   title: string;
@@ -12,6 +12,7 @@ interface PostCardProps {
   heartCount: number;
   replyCount: number;
   imageUrl: string;
+  authorImageUrl?: string;
   link: string;
 }
 
@@ -23,6 +24,7 @@ const BoardCard: React.FC<PostCardProps> = ({
   heartCount,
   replyCount,
   imageUrl,
+  authorImageUrl,
   link,
 }) => {
   return (
@@ -33,10 +35,12 @@ const BoardCard: React.FC<PostCardProps> = ({
           <p className="text-[0.9rem] text-C333333 line-clamp-1 mt-[0.25vh]">
             {description}
           </p>
-          <p className="text-[0.85rem] text-C333333">
-            {author} | {time}
-            {/* TODO TimeAgo 처리 필요 */}
-          </p>
+          <div className="flex">
+            <img src={authorImageUrl} className="w-[4.5vw] mr-[1vw]" />
+            <p className="text-[0.85rem] text-C333333">
+              {author} | {TimeAgo({ createdTime: time })}
+            </p>
+          </div>
           <div className="flex mt-[0.2vh]">
             <img src={Heart} className="w-[1.5vh] mr-[1vw] text-C333333"></img>
             <p className="text-[0.85rem] mr-[1vw] text-C333333">{heartCount}</p>

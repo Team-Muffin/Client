@@ -3,7 +3,7 @@ import SaveKing from "../../assets/save-king.svg";
 import Bookworm from "../../assets/book-worm.svg";
 import Report from "../../assets/report.svg";
 import Cook from "../../assets/cook.svg";
-import Header from "../../components/Header";
+import Header from "../../components/common/Header";
 
 export default function StampBoard() {
   const stamps = [
@@ -16,7 +16,7 @@ export default function StampBoard() {
 
   return (
     <>
-      <Header text="챌린지 도장판" type={1} />
+      <Header text="챌린지 도장판" type="backLeftTextCenter" />
       <div className="mt-[4vh]"></div>
       <div className="flex flex-wrap justify-center px-[2vw]">
         {stamps.map((stamp, index) => (

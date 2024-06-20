@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Header from "../../components/Header";
-import Dropdown from "../../components/Dropdown";
+import Header from "../../components/common/Header";
+import Dropdown from "../../components/common/Dropdown";
 import writeButton from "../../assets/write-button.svg";
-import ProductCard from "../../components/ProductCard";
-import Navbar from "../../components/Navbar";
+import ProductCard from "../../components/common/ProductCard";
+import Navbar from "../../components/common/Navbar";
 import Search from "../../assets/search-gray.svg";
 
 export default function ProductListPage() {
@@ -15,6 +15,11 @@ export default function ProductListPage() {
   const handleCategoryClick = (selection: string) => {
     setCategory(selection);
   };
+  const [selectedFilter, setSelectedFilter] = useState("최신순");
+
+  const handleFilterChange = (newFilter: string) => {
+    setSelectedFilter(newFilter);
+  };
 
   const selectedCategoryCss =
     "text-base text-C748BFF bg-CECF0FF py-[0.3vh] px-[5.5vw] rounded-[0.5rem] shadow";
@@ -24,7 +29,7 @@ export default function ProductListPage() {
     <>
       <div className="py-[2vh] px-[4.5vw]">
         {/* 헤더랑 */}
-        <Header text="상품" type={3} />
+        <Header text="상품" type="textCenter" />
         <div className="mt-[4vh]"></div>
         {/* 세트로 들고 다녀야 됨 */}
 
@@ -93,6 +98,7 @@ export default function ProductListPage() {
         <Dropdown
           defaultFilter="리뷰 많은 순"
           filterList={["리뷰 많은 순", "별점 높은 순", "최신순"]}
+          onFilterChange={handleFilterChange}
         />
 
         <ProductCard

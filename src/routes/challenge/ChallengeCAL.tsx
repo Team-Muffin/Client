@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
-import Navbar from "../../components/Navbar";
-import Header from "../../components/Header";
+import Navbar from "../../components/common/Navbar";
+import Header from "../../components/common/Header";
 import HappyImg from "../../assets/happy-face.svg";
 import SadImg from "../../assets/sad-face.svg";
 import AngryImg from "../../assets/angry-face.svg";
@@ -77,7 +77,7 @@ const ChallengeCAL: React.FC = () => {
 
   return (
     <>
-      <Header text="감정 저축 챌린지" type={0} />
+      <Header text="감정 저축 챌린지" type="textCenterSearchRight" />
       <div className="mt-[4.5vh]"></div>
       <div className="relative w-[90vw] mx-auto mt-[10vh] p-[3vh] shadow-xl">
         {/* Add the current month number */}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import MainLogoImg from "../../assets/main-logo.svg";
-import PurpleBtn from "../../components/PurpleBtn";
+import PurpleBtn from "../../components/common/PurpleBtn";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore"; // Zustand에서 useAuthStore 가져오기
 import { signIn } from "../../libs/apis/user"; // login API 호출 함수 가져오기

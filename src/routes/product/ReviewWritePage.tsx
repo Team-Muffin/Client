@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Rating } from "react-simple-star-rating";
-import Header from "../../components/Header";
-import Navbar from "../../components/Navbar";
+import Header from "../../components/common/Header";
+import Navbar from "../../components/common/Navbar";
 import SHLogo from "../../assets/logo-sh.svg";
 import Happy from "../../assets/happy.svg";
 import Sad from "../../assets/disappointed.svg";
@@ -33,7 +33,7 @@ export default function ReviewWritePage() {
   return (
     <>
       <div className="py-[2vh] px-[4.5vw] pb-[1vh]">
-        <Header text="리뷰 작성" type={1} />
+        <Header text="리뷰 작성" type="backLeftTextCenter" />
         <div className="mt-[4vh]" />
 
         <div className="mt-[4vh]">

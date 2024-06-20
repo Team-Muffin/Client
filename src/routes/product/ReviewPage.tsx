@@ -1,14 +1,20 @@
 import { useState } from "react";
-import Header from "../../components/Header";
-import Navbar from "../../components/Navbar";
+import Header from "../../components/common/Header";
+import Navbar from "../../components/common/Navbar";
 import StarRate from "../../components/StarRate";
 import Character from "../../assets/character1-small.svg";
-import Dropdown from "../../components/Dropdown";
+import Dropdown from "../../components/common/Dropdown";
 
 export default function ReviewPage() {
+  const [selectedFilter, setSelectedFilter] = useState("최신순");
+
+  const handleFilterChange = (newFilter: string) => {
+    setSelectedFilter(newFilter);
+  };
+
   return (
     <>
-      <Header text="Mr.Life" type={1} />
+      <Header text="Mr.Life" type="backLeftTextCenter" />
       <div className="mt-[4vh]" />
 
       <div className="py-[2vh]  px-[4.5vw] pb-[1vh]">
@@ -26,6 +32,7 @@ export default function ReviewPage() {
           <Dropdown
             defaultFilter="최신순"
             filterList={["최신순", "별점 높은 순", "별점 낮은 순"]}
+            onFilterChange={handleFilterChange}
           />
         </div>
 

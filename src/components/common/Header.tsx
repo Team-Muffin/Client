@@ -1,20 +1,20 @@
 import React, { useState } from "react";
-import SearchBtn from "../assets/search-black.svg";
-import BackBtn from "../assets/back.svg";
-import SettingBtn from "../assets/settings.svg";
-import AlarmBtn from "../assets/alarm.svg";
-import Logo from "../assets/main-logo.svg";
+import SearchBtn from "../../assets/search-black.svg";
+import BackBtn from "../../assets/back.svg";
+import SettingBtn from "../../assets/settings.svg";
+import AlarmBtn from "../../assets/alarm.svg";
+import Logo from "../../assets/main-logo.svg";
 import { useNavigate } from "react-router-dom";
-import SearchGraybtn from "../assets/search-gray.svg";
+import SearchGraybtn from "../../assets/search-gray.svg";
 
-import ScrapBtn from "../assets/scrap.svg"; // Import Scrap image
-import ReplaceBtn from "../assets/replace.svg"; // Import Replace image
-import LogoutBtn from "../assets/logout.svg"; // Import Logout image
+import ScrapBtn from "../../assets/scrap.svg"; // Import Scrap image
+import ReplaceBtn from "../../assets/replace.svg"; // Import Replace image
+import LogoutBtn from "../../assets/logout.svg"; // Import Logout image
 import { Link } from "react-router-dom";
 
 type HeaderProps = {
   text?: string;
-  type: number;
+  type: string;
   to?: number | string;
 };
 
@@ -37,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({ text, type, to = -1 }) => {
   return (
     <nav className="fixed top-0 left-0 right-0 bg-[#ffffff]">
       <div className="relative flex justify-center items-center h-[6vh]">
-        {type === 0 && (
+        {type === "textCenterSearchRight" && (
           // 가운데 텍스트, 우측 검색
           <>
             <div className="flex-1 text-center font-semibold text-lg">
@@ -46,7 +46,7 @@ const Header: React.FC<HeaderProps> = ({ text, type, to = -1 }) => {
             <img src={SearchBtn} alt="Search" className="absolute right-4" />
           </>
         )}
-        {type === 1 && (
+        {type === "backLeftTextCenter" && (
           // 뒤로가기, 가운데 텍스트
           <>
             <img
@@ -60,7 +60,7 @@ const Header: React.FC<HeaderProps> = ({ text, type, to = -1 }) => {
             </div>
           </>
         )}
-        {type === 2 && (
+        {type === "backLeftTextCenterSettingRight" && (
           // 뒤로 가기. 가운데 텍스트. 오른쪽 세팅
           <>
             <img
@@ -112,11 +112,11 @@ const Header: React.FC<HeaderProps> = ({ text, type, to = -1 }) => {
             )}
           </>
         )}
-        {type === 3 && (
+        {type === "textCenter" && (
           // 가운데 텍스트
           <div className="flex-1 text-center font-semibold text-lg">{text}</div>
         )}
-        {type === 4 && (
+        {type === "logoLeftSearchAndAlarmRight" && (
           <>
             <img
               src={Logo}
