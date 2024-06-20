@@ -1,5 +1,4 @@
-// pages/SignUpProfilePage.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MiniCircle from "../../assets/minicircle.svg";
 import ProfileCircle from "../../assets/profile-circle.svg";
@@ -12,6 +11,13 @@ import UserIcon4 from "../../assets/user-icon4.svg";
 import PurpleBtn from "../../components/PurpleBtn";
 import { signUp } from "../../libs/apis/user";
 import { useAuthStore } from "../../store/useAuthStore";
+import { fetchJobs, JobResp } from "../../libs/apis/user"; // API 호출 함수와 인터페이스 가져오기
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from "@headlessui/react";
 
 const SignUpProfilePage = () => {
   const navigate = useNavigate();
@@ -23,8 +29,29 @@ const SignUpProfilePage = () => {
 
   const [nickname, setNickname] = useState<string>("");
   const [birthdate, setBirthdate] = useState<string>("");
-  const [selectedIcon, setSelectedIcon] = useState<string>("http://naver.com");
+  const [selectedIcon, setSelectedIcon] = useState<string>("http://naver.com"); // 기본 아이콘 설정
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [jobs, setJobs] = useState<string[]>([]); // 직업 리스트 상태
+  const [selectedJob, setSelectedJob] = useState<string>(""); // State to hold selected job
+  const [open, setOpen] = useState(false); // State to manage dropdown open/close
+
+  useEffect(() => {
+    // 컴포넌트 마운트 시 직업 리스트를 가져오는 함수 호출
+    async function fetchJobList() {
+      try {
+        const response: JobResp = await fetchJobs(""); // API 호출
+        if (response.success) {
+          setJobs(response.data); // 가져온 직업 리스트 상태 업데이트
+        } else {
+          console.error("직업 리스트 조회 실패:", response.message);
+        }
+      } catch (error) {
+        console.error("직업 리스트 조회 중 오류 발생:", error);
+      }
+    }
+
+    fetchJobList(); // 함수 호출
+  }, []); // 빈 배열을 전달하여 한 번만 호출하도록 설정
 
   const handleCameraClick = () => {
     setIsModalOpen(true);
@@ -47,6 +74,7 @@ const SignUpProfilePage = () => {
       profileImg: selectedIcon, // 선택한 아이콘 URL 저장
       nickname,
       birth: birthdate,
+      job: selectedJob,
     };
 
     try {
@@ -120,13 +148,47 @@ const SignUpProfilePage = () => {
           onChange={(e) => setBirthdate(e.target.value)}
         />
 
-        <p className="text-lg font-semibold mt-[3vh] mb-[1vh]">직업</p>
-        <input
-          type="text"
-          id="job"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          placeholder="Job"
-        />
+        <div className="flex mt-[3vh] mb-[1vh] items-center">
+          <p className="text-lg font-semibold mr-[1vw]">직업</p>
+          <img src={Essential} alt="Essential" />
+        </div>
+        {/* 직업 선택 dropdown */}
+        <Listbox value={selectedJob} onChange={setSelectedJob}>
+          <ListboxButton className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1 text-left">
+            {selectedJob ? (
+              <span className="block truncate">{selectedJob}</span>
+            ) : (
+              <span className="block text-gray-500 truncate">
+                직업을 선택하세요
+              </span>
+            )}
+          </ListboxButton>
+          <ListboxOptions
+            className="absolute mt-1 w-[85vw] bg-white shadow-lg max-h-[17vh] rounded-lg py-1 text-base overflow-auto z-10 border border-gray-300"
+            style={{ maxHeight: "10vh", bottom: "2vh" }}
+          >
+            {jobs.map((job, index) => (
+              <ListboxOption key={index} value={job}>
+                {({ selected }) => (
+                  <div
+                    className={`${
+                      selected ? "bg-blue-100" : ""
+                    } cursor-pointer select-none relative py-[2vw] pl-[3vw] pr-[3vw] `}
+                    onClick={() => setSelectedJob(job)}
+                  >
+                    <span
+                      className={`block truncate ${
+                        selected ? "font-semibold" : "font-normal"
+                      }`}
+                    >
+                      {job}
+                    </span>
+                  </div>
+                )}
+              </ListboxOption>
+            ))}
+          </ListboxOptions>
+        </Listbox>
       </div>
 
       <div className="fixed w-full px-[8vw] bottom-[3vh]">
