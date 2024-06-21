@@ -189,10 +189,10 @@ interface LoanProductDetailResponse {
 
 export interface LoanProductDetail {
   productId: number;
-  description: LoanFeature[];
+  description: string;
 }
 
-interface LoanFeature {
+export interface LoanFeature {
   title: string;
   content: string;
   order: number;

@@ -3,9 +3,6 @@ import Header from "../../components/common/Header";
 import BoardCard from "../../components/common/BoardCard";
 import Navbar from "../../components/common/Navbar";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
-import Happy from "../../assets/happy.svg";
-import Sad from "../../assets/disappointed.svg";
-
 import {
   fetchProductBasic,
   ProductBasic,
@@ -17,6 +14,7 @@ import {
   fetchFundProductSummary,
   fetchLoanProductSummary,
   LoanProductSummary,
+  LoanFeature,
   fetchLoanProductDetail,
   LoanProductDetail,
   fetchSavingProductDetail,
@@ -28,6 +26,7 @@ import { useParams, useLocation } from "react-router-dom";
 import ProductSummary from "../../components/product/ProductSummary";
 import SavingDetail from "../../components/product/SavingDetail";
 import FundDetail from "../../components/product/FundDetail";
+import LoanDetail from "../../components/product/LoanDetail";
 
 export default function ProductListPage() {
   const [benefits, setBenefits] = useState<
@@ -36,7 +35,7 @@ export default function ProductListPage() {
   const [cardBenefits, setCardBenefits] = useState<CardProductSummary | null>(
     null
   );
-  let loanDetailJsonArray;
+  const [isLoanDetailLoaded, setIsLoanDetailLoaded] = useState(false);
   const [savingBenefits, setSavingBenefits] =
     useState<SavingProductSummary | null>(null);
   const [fundBenefits, setFundBenefits] = useState<FundProductSummary | null>(
@@ -56,6 +55,7 @@ export default function ProductListPage() {
   const productId = params.productId ?? "";
   const [productBasic, setProductBasic] = useState<ProductBasic | null>(null);
   const [productType, setProductType] = useState("");
+  const [loanDetailArray, setLoanDetailArray] = useState<LoanFeature[]>([]);
 
   const location = useLocation();
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
@@ -132,8 +132,14 @@ export default function ProductListPage() {
 
         const loanDetailResponse = await fetchLoanProductDetail(productId);
         if (loanDetailResponse.data) {
-          console.log(loanDetailResponse.data);
+          // console.log(loanDetailResponse.data);
           setLoanDetail(loanDetailResponse.data);
+          let jsonString = loanDetail?.description.replace(/'/g, '"');
+          if (jsonString) {
+            const jsonArray = JSON.parse(jsonString);
+            setLoanDetailArray(jsonArray);
+            setIsLoanDetailLoaded(true);
+          }
         } else {
           console.error("상품 대출 디테일 데이터가 없습니다.");
         }
@@ -142,6 +148,32 @@ export default function ProductListPage() {
       console.error("상품 베이직 데이터 호출 중 에러:", error);
     }
   };
+  useEffect(() => {
+    console.log("aa");
+    const fetchData = async () => {
+      try {
+        const loanDetailResponse = await fetchLoanProductDetail(productId);
+        if (loanDetailResponse.data) {
+          setLoanDetail(loanDetailResponse.data);
+          let jsonString = loanDetailResponse.data?.description.replace(
+            /'/g,
+            '"'
+          );
+          if (jsonString) {
+            const jsonArray = JSON.parse(jsonString);
+            setLoanDetailArray(jsonArray);
+
+            setIsLoanDetailLoaded(true);
+          }
+        } else {
+          console.error("상품 대출 디테일 데이터가 없습니다.");
+        }
+      } catch (error) {
+        console.error("대출 디테일 데이터 불러오는데서 오류:", error);
+      }
+    };
+    fetchData();
+  }, [productId]);
 
   useEffect(() => {
     const productTypeFromState = location.state.productType;
@@ -255,9 +287,12 @@ export default function ProductListPage() {
                   />
                 </div>
                 <p className="text-xs mt-[2vh] px-[2vh] border py-[2vh]">
-                  {loanDetailJsonArray ? <></> : <></>}
                   <SavingDetail savingDetail={savingDetail} />
                   <FundDetail fundDetail={fundDetail} />
+                  <LoanDetail
+                    loanDetailArray={loanDetailArray}
+                    isLoanDetailLoaded={isLoanDetailLoaded}
+                  />
                 </p>
               </>
             ) : (
