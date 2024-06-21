@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import TimeAgo from "../../utils/TimeAgo";
+import TimeAgo from "../../utils/timeAgo";
 import Heart from "../../assets/heart-empty.svg";
 import Reply from "../../assets/reply.svg";
 
@@ -13,7 +13,6 @@ interface PostCardProps {
   replyCount: number;
   imageUrl: string;
   authorImageUrl?: string;
-  link: string;
 }
 
 const BoardCard: React.FC<PostCardProps> = ({
@@ -25,11 +24,10 @@ const BoardCard: React.FC<PostCardProps> = ({
   replyCount,
   imageUrl,
   authorImageUrl,
-  link,
 }) => {
   return (
-    <Link to={`/${link}`}>
-      <div className="flex justify-between items-center my-[1.75vh] px-[0.5vw]">
+    <>
+      <div className="flex justify-between items-center my-[1.75vh] px-[0.5vw] ">
         <div className="pr-[2.5vw] mr-[0.8vw]">
           <p className="text-[1.05rem] text-C333333 font-medium">{title}</p>
           <p className="text-[0.9rem] text-C333333 line-clamp-1 mt-[0.25vh]">
@@ -55,7 +53,7 @@ const BoardCard: React.FC<PostCardProps> = ({
         />
       </div>
       <hr className="border-CD9D9D9" />
-    </Link>
+    </>
   );
 };
 

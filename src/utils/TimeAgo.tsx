@@ -1,10 +1,10 @@
 import React from "react";
 
-interface TimeAgoProps {
+interface timeAgoProps {
   createdTime: string;
 }
 
-const TimeAgo: React.FC<TimeAgoProps> = ({ createdTime }) => {
+const timeAgo: React.FC<timeAgoProps> = ({ createdTime }) => {
   const timeAgo = (createdTime: string) => {
     const now = new Date();
     const updatedTime = new Date(createdTime);
@@ -32,4 +32,4 @@ const TimeAgo: React.FC<TimeAgoProps> = ({ createdTime }) => {
   return <span>{timeAgo(createdTime)}</span>;
 };
 
-export default TimeAgo;
+export default timeAgo;

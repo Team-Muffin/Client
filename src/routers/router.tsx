@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../routes/Layout";
 
-import Home from "../routes/home/Home";
 import BoardListPage from "../routes/board/BoardListPage";
 import BoardWritePage from "../routes/board/BoardWritePage";
 import BoardDetailPage from "../routes/board/BoardDetailPage";
@@ -25,6 +24,7 @@ import SignUpSuccessPage from "../routes/signup/SignUpSuccessPage";
 import ProfilePage from "../routes/profile/ProfilePage";
 import EditProfilePage from "../routes/profile/EditProfilePage";
 import StampBoard from "../routes/challenge/StampBoard";
+import Dogs from "../routes/Dogs";
 
 export const mainRouter = [
   {

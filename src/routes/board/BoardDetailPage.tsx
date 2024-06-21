@@ -19,7 +19,7 @@ import {
   deleteComment,
   fetchComment,
 } from "../../libs/apis/board";
-import TimeAgo from "../../utils/TimeAgo";
+import TimeAgo from "../../utils/timeAgo";
 import BackBtn from "../../assets/back.svg";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import BoardSection from "../../components/board/BoardSection";
