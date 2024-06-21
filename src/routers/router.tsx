@@ -121,12 +121,18 @@ export const mainRouter = [
       },
       {
         path: "product",
-        element: <ProductListPage />,
+        children: [
+          {
+            path: "",
+            element: <ProductListPage />,
+          },
+          {
+            path: ":productId",
+            element: <ProductDetailPage />,
+          },
+        ],
       },
-      {
-        path: "productDetail",
-        element: <ProductDetailPage />,
-      },
+
       {
         path: "mypage",
         element: <ProfilePage />,

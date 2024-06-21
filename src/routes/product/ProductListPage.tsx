@@ -1,21 +1,28 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Header from "../../components/common/Header";
 import Dropdown from "../../components/common/Dropdown";
 import writeButton from "../../assets/write-button.svg";
 import ProductCard from "../../components/common/ProductCard";
 import Navbar from "../../components/common/Navbar";
 import Search from "../../assets/search-gray.svg";
+import { fetchProductList, ProductList } from "../../libs/apis/product";
 
 export default function ProductListPage() {
   const [category, setCategory] = useState("카드");
   const categories = ["카드", "예적금", "투자", "대출"];
   const [userInfo, setUserInfo] = useState("20대 여성");
   const [productInfo, setProductInfo] = useState("체크카드");
+  const [productListData, setProductListData] = useState<ProductList[]>([]);
+  const [pageNo, setPageNo] = useState(0);
+  const [size, setSize] = useState(10);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState("최신순");
+  const elementRef = useRef<HTMLDivElement | null>(null);
 
   const handleCategoryClick = (selection: string) => {
     setCategory(selection);
   };
-  const [selectedFilter, setSelectedFilter] = useState("최신순");
 
   const handleFilterChange = (newFilter: string) => {
     setSelectedFilter(newFilter);
@@ -24,6 +31,30 @@ export default function ProductListPage() {
   const selectedCategoryCss =
     "text-base text-C748BFF bg-CECF0FF py-[0.3vh] px-[5.5vw] rounded-[0.5rem] shadow";
   const defaultCategoryCss = "text-base text-C333333 px-[5.5vw] py-[0.3vh]";
+
+  const callProductListData = async () => {
+    try {
+      const response = await fetchProductList({
+        pageNo,
+        size,
+        category: category === "투자" ? "펀드" : category,
+        sort: selectedFilter,
+      });
+
+      if (response.data) {
+        console.log(response.data);
+        setProductListData(response.data.data.products);
+      } else {
+        console.error("상품 리스트 데이터가 없습니다.");
+      }
+    } catch (error) {
+      console.error("상품 리스트 데이터 호출 중 에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    callProductListData();
+  }, [pageNo, size, category, selectedFilter]);
 
   return (
     <>
@@ -96,39 +127,36 @@ export default function ProductListPage() {
         </div>
 
         <Dropdown
-          defaultFilter="리뷰 많은 순"
-          filterList={["리뷰 많은 순", "별점 높은 순", "최신순"]}
+          defaultFilter="최신순"
+          filterList={["인기순", "최신순"]}
           onFilterChange={handleFilterChange}
         />
 
-        <ProductCard
-          cardName="신한카드 Mr.Life"
-          cardBrand="신한카드"
-          benefits={["#연회비 지원", "#관리비"]}
-          reviewCount={530}
-          link="/productDetail"
-        />
-        <ProductCard
-          cardName="신한카드 Mr.Life"
-          cardBrand="신한카드"
-          benefits={["#연회비 지원", "#관리비"]}
-          reviewCount={530}
-          link="/productDetail"
-        />
-        <ProductCard
-          cardName="신한카드 Mr.Life"
-          cardBrand="신한카드"
-          benefits={["#연회비 지원", "#관리비"]}
-          reviewCount={530}
-          link="/productDetail"
-        />
-        <ProductCard
-          cardName="신한카드 Mr.Life"
-          cardBrand="신한카드"
-          benefits={["#연회비 지원", "#관리비"]}
-          reviewCount={530}
-          link="/productDetail"
-        />
+        {productListData.map((data) => (
+          <div key={data.id}>
+            {category === "카드" ? (
+              <ProductCard
+                type={1}
+                productImg={data.cardImage}
+                productName={data.name}
+                productBrand={data.corpName}
+                benefits={data.tags.slice(0, 2)}
+                reviewCount={data.boardCount}
+                link={`${data.id}`}
+              />
+            ) : (
+              <ProductCard
+                type={2}
+                productImg={data.corpImage}
+                productName={data.name}
+                productBrand={data.corpName}
+                benefits={data.tags.slice(0, 2)}
+                reviewCount={data.boardCount}
+                link={`${data.id}`}
+              />
+            )}
+          </div>
+        ))}
 
         <img className="fixed bottom-[8vh] right-[4vw] z-5" src={writeButton} />
       </div>

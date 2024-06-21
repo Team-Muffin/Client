@@ -122,7 +122,7 @@ export default function HomePage() {
         <Slider {...settings}>
           <ProductCard
             cardName="신한카드 Mr.Life"
-            cardBrand="신한카드"
+            productBrand="신한카드"
             benefits={["#연회비 지원", "#관리비"]}
             reviewCount={530}
             link="/productDetail"
@@ -130,14 +130,14 @@ export default function HomePage() {
 
           <ProductCard
             cardName="신한카드 Mr.Life"
-            cardBrand="신한카드"
+            productBrand="신한카드"
             benefits={["#연회비 지원", "#관리비"]}
             reviewCount={530}
             link="/productDetail"
           />
           <ProductCard
             cardName="신한카드 Mr.Life"
-            cardBrand="신한카드"
+            productBrand="신한카드"
             benefits={["#연회비 지원", "#관리비"]}
             reviewCount={530}
             link="/productDetail"
