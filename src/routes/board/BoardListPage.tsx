@@ -9,6 +9,7 @@ import { fetchBoardList } from "../../libs/apis/board";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import useIntersectionObserver from "../../hooks/useIntersectionObserver"; // Adjust the import path accordingly
 import { useParams, useNavigate } from "react-router-dom";
+import SyncLoader from "react-spinners/SyncLoader";
 
 export default function BoardListPage() {
   const [userCategory, setUserCategory] = useState("정보");
@@ -224,7 +225,7 @@ export default function BoardListPage() {
       ))}
       {hasMore && (
         <div ref={elementRef} style={{ textAlign: "center" }}>
-          {isLoading ? <LoadingSpinner /> : ""}
+          {isLoading ? <SyncLoader /> : ""}
         </div>
       )}
 
