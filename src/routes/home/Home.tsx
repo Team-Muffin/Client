@@ -120,28 +120,34 @@ export default function HomePage() {
 
       <div className="slider-container pb-[4vh] w-[85vw] m-auto 0">
         <Slider {...settings}>
-          <ProductCard
-            cardName="신한카드 Mr.Life"
-            cardBrand="신한카드"
-            benefits={["#연회비 지원", "#관리비"]}
-            reviewCount={530}
-            link="/productDetail"
-          />
+          {/* <ProductCard
+                type={1}
+                productImg="{data.cardImage}"
+                productName="{data.cardImage}"
+                productBrand="{data.cardImage}"
+                benefits=[]
+                reviewCount=3
+                link={`${data.id}`}
+              />
 
+<ProductCard
+                type={1}
+                productImg={data.cardImage}
+                productName={data.name}
+                productBrand={data.corpName}
+                benefits={data.tags.slice(0, 2)}
+                reviewCount={data.boardCount}
+                link={`${data.id}`}
+              />
           <ProductCard
-            cardName="신한카드 Mr.Life"
-            cardBrand="신한카드"
-            benefits={["#연회비 지원", "#관리비"]}
-            reviewCount={530}
-            link="/productDetail"
-          />
-          <ProductCard
-            cardName="신한카드 Mr.Life"
-            cardBrand="신한카드"
-            benefits={["#연회비 지원", "#관리비"]}
-            reviewCount={530}
-            link="/productDetail"
-          />
+                type={1}
+                productImg={data.cardImage}
+                productName={data.name}
+                productBrand={data.corpName}
+                benefits={data.tags.slice(0, 2)}
+                reviewCount={data.boardCount}
+                link={`${data.id}`}
+              /> */}
         </Slider>
       </div>
       <hr />

@@ -12,7 +12,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import SyncLoader from "react-spinners/SyncLoader";
 
 export default function BoardListPage() {
-  const [userCategory, setUserCategory] = useState("정보");
+  const [categoryName, setCategoryName] = useState("정보");
   const categories = ["정보", "재미", "투자", "기업", "고급"];
   const [pageNo, setPageNo] = useState(0);
   const [size, setSize] = useState(10);
@@ -46,7 +46,7 @@ export default function BoardListPage() {
   const [boardData, setBoardData] = useState<BoardData[]>([]);
 
   const handleUserCategoryClick = (selection: string) => {
-    setUserCategory(selection);
+    setCategoryName(selection);
     switch (selection) {
       case "정보":
         setCategory("1");
@@ -190,7 +190,7 @@ export default function BoardListPage() {
           <p
             key={cat}
             className={`${
-              userCategory === cat ? selectedCategoryCss : defaultCategoryCss
+              categoryName === cat ? selectedCategoryCss : defaultCategoryCss
             } cursor-pointer`}
             onClick={() => handleUserCategoryClick(cat)}
           >

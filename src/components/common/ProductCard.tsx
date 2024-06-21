@@ -1,42 +1,81 @@
-import React from "react";
-import KBCard from "../../assets/card-kb.svg";
-import Star from "../../assets/star-filled.svg";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface ProductCardProps {
-  cardName: string;
-  cardBrand: string;
+  type: string;
+  productImg: string;
+  productName: string;
+  productBrand: string;
   benefits: string[];
   reviewCount: number;
   link: string;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
-  cardName,
-  cardBrand,
+  type,
+  productImg: cardImg,
+  productName,
+  productBrand: cardBrand,
   benefits,
   reviewCount,
   link,
 }) => {
+  const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
+  const navigate = useNavigate();
+
+  const handleProductCardClick = (link: string) => {
+    navigate(`/product/${link}`, {
+      state: { productType: type },
+    });
+  };
+
+  const handleImageLoad = (
+    e: React.SyntheticEvent<HTMLImageElement, Event>
+  ) => {
+    setImageSize({
+      width: e.currentTarget.width,
+      height: e.currentTarget.height,
+    });
+  };
   return (
-    <Link to={`${link}`}>
-      <div className="shadow-productCard rounded-[0.5rem] mt-[1.5vh] mb-[0.5vh]">
+    <div>
+      <div
+        className="shadow-productCard rounded-[0.5rem] mt-[1.5vh] mb-[0.5vh]"
+        onClick={() => handleProductCardClick(link)}
+      >
         <div className="flex justify-around p-[1vh] items-center">
-          <img className="pr-[5vw] h-[12vh]" src={KBCard} alt="Card Image" />
-          <div className="">
-            <span className="mt-[0.5vh] font-semibold text-[1rem]">
-              {cardName}
-            </span>
-            <span className="p-[1vw] pb-[0] text-[0.8rem] text-C333333 rounded-[0.25rem] ml-[1.5vw]">
+          <div className="w-[40%] flex items-center justify-center">
+            {type === "카드" ? (
+              <img
+                className={`${
+                  imageSize.height > imageSize.width ? "h-[12vh]" : "w-[12vh]"
+                } `}
+                src={cardImg}
+                onLoad={handleImageLoad}
+              />
+            ) : (
+              <img
+                className={"h-[8vh]"}
+                src={cardImg}
+                onLoad={handleImageLoad}
+              />
+            )}
+          </div>
+          <div className="w-[60%] pl-[1vw]">
+            <p className=" p-[1vw] pl-0 pb-[0] text-[0.8rem]  text-C333333 rounded-[0.25rem]">
               {cardBrand}
-            </span>
+            </p>
+            <p className="  mt-[0.5vh] font-semibold text-[1rem]">
+              {productName}
+            </p>
+
             <div className="my-[0.25vh]">
               {benefits.map((benefit, index) => (
                 <span
                   key={index}
                   className="text-[0.75rem] mr-[1vw] p-[1vw] bg-CECF0FF rounded-[0.25rem]"
                 >
-                  {benefit}
+                  #{benefit}
                 </span>
               ))}
             </div>
@@ -49,7 +88,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 
