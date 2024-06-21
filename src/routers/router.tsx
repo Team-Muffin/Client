@@ -24,7 +24,6 @@ import SignUpSuccessPage from "../routes/signup/SignUpSuccessPage";
 import ProfilePage from "../routes/profile/ProfilePage";
 import EditProfilePage from "../routes/profile/EditProfilePage";
 import StampBoard from "../routes/challenge/StampBoard";
-import Dogs from "../routes/Dogs";
 
 export const mainRouter = [
   {

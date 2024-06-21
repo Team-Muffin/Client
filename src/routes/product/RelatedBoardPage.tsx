@@ -31,7 +31,6 @@ export default function RelatedBoardPage() {
           heartCount={7}
           replyCount={3}
           imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
-          link="boardDetail"
         />
         <BoardCard
           title="⭐️내가 들었던 펀드 추천 글⭐️"
@@ -41,7 +40,6 @@ export default function RelatedBoardPage() {
           heartCount={7}
           replyCount={3}
           imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
-          link=""
         />
         <BoardCard
           title="⭐️내가 들었던 펀드 추천 글⭐️"
@@ -51,7 +49,6 @@ export default function RelatedBoardPage() {
           heartCount={7}
           replyCount={3}
           imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
-          link=""
         />
       </div>
 
