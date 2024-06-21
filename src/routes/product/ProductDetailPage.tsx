@@ -1,50 +1,200 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../../components/common/Header";
 import BoardCard from "../../components/common/BoardCard";
 import Navbar from "../../components/common/Navbar";
-import SHCard from "../../assets/card-sh.svg";
-import SHLogo from "../../assets/logo-sh.svg";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
-import Star from "../../assets/star-filled.svg";
 import Happy from "../../assets/happy.svg";
 import Sad from "../../assets/disappointed.svg";
-import StarRate from "../../components/StarRate";
-import Character from "../../assets/character1-small.svg";
+
+import {
+  fetchProductBasic,
+  ProductBasic,
+  CardProductSummary,
+  fetchCardProductSummary,
+  SavingProductSummary,
+  fetchSavingProductSummary,
+  FundProductSummary,
+  fetchFundProductSummary,
+  fetchLoanProductSummary,
+  LoanProductSummary,
+} from "../../libs/apis/product";
+import { useParams, useLocation } from "react-router-dom";
+import ProductSummary from "../../components/product/ProductSummary";
 
 export default function ProductListPage() {
-  const benefits = ["연회비지원", "관리비", "주유", "통신", "대형마트"];
+  const [benefits, setBenefits] = useState<
+    { title: string; content: string | number }[]
+  >([]);
+  const [cardBenefits, setCardBenefits] = useState<CardProductSummary | null>(
+    null
+  );
+  const [savingBenefits, setSavingBenefits] =
+    useState<SavingProductSummary | null>(null);
+  const [fundBenefits, setFundBenefits] = useState<FundProductSummary | null>(
+    null
+  );
+  const [loanBenefits, setLoanBenefits] = useState<LoanProductSummary | null>(
+    null
+  );
+
   const [showDetail, setShowDetail] = useState(false);
-  const [rating, setRating] = useState(4.26);
-  const fullStars = Math.floor(rating);
-  const hasHalfStar = rating - fullStars >= 0.5;
+  const params = useParams();
+  const productId = params.productId ?? "";
+  const [productBasic, setProductBasic] = useState<ProductBasic | null>(null);
+  const [productType, setProductType] = useState("");
+
+  const location = useLocation();
+  const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
+  const handleImageLoad = (
+    e: React.SyntheticEvent<HTMLImageElement, Event>
+  ) => {
+    setImageSize({
+      width: e.currentTarget.width,
+      height: e.currentTarget.height,
+    });
+  };
 
   const toggleShowDetail = () => {
     setShowDetail((prevState) => !prevState);
   };
 
+  const callProductDetail = async (type: string) => {
+    try {
+      const response = await fetchProductBasic(productId);
+      if (response.data) {
+        console.log(response.data);
+        setProductBasic(response.data);
+      } else {
+        console.error("상품 베이직 데이터가 없습니다.");
+      }
+
+      if (type === "카드") {
+        const cardSummaryResponse = await fetchCardProductSummary(productId);
+        if (cardSummaryResponse.data) {
+          console.log(cardSummaryResponse.data);
+          setCardBenefits(cardSummaryResponse.data);
+        } else {
+          console.error("상품 카드 데이터가 없습니다.");
+        }
+      } else if (type === "예적금") {
+        const savingSummaryResponse = await fetchSavingProductSummary(
+          productId
+        );
+        if (savingSummaryResponse.data) {
+          console.log(savingSummaryResponse.data);
+          setSavingBenefits(savingSummaryResponse.data);
+        } else {
+          console.error("상품 예적금 데이터가 없습니다.");
+        }
+      } else if (type === "펀드") {
+        const fundSummaryResponse = await fetchFundProductSummary(productId);
+        if (fundSummaryResponse.data) {
+          console.log(fundSummaryResponse.data);
+          setFundBenefits(fundSummaryResponse.data);
+        } else {
+          console.error("상품 펀드 데이터가 없습니다.");
+        }
+      } else if (type === "대출") {
+        const loanSummaryResponse = await fetchLoanProductSummary(productId);
+        if (loanSummaryResponse.data) {
+          console.log(loanSummaryResponse.data);
+          setLoanBenefits(loanSummaryResponse.data);
+        } else {
+          console.error("상품 대출 데이터가 없습니다.");
+        }
+      }
+    } catch (error) {
+      console.error("상품 베이직 데이터 호출 중 에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    const productTypeFromState = location.state.productType;
+    setProductType(productTypeFromState);
+    callProductDetail(productTypeFromState);
+  }, [location.state.productType]);
+
+  useEffect(() => {
+    const benefitsArray = [];
+
+    if (cardBenefits) {
+      benefitsArray.push(
+        { title: "연회비", content: cardBenefits.annualFee },
+        { title: "기본실적", content: cardBenefits.baseRecord },
+        { title: "주요혜택", content: cardBenefits.mainBenefit },
+        { title: "알림", content: cardBenefits.notice },
+        { title: "부가혜택", content: cardBenefits.subBenefit }
+      );
+    } else if (savingBenefits) {
+      benefitsArray.push(
+        { title: "기본", content: `연 ${savingBenefits.interestRate}%` },
+        { title: "최고", content: `연 ${savingBenefits.primeInterestRate}%` },
+        { title: "기간", content: `${savingBenefits.savingTerm}개월` },
+        { title: "특판요약", content: savingBenefits.specialOfferSummary },
+        { title: "특판기한", content: savingBenefits.specialOfferPeriod }
+      );
+    } else if (fundBenefits) {
+      benefitsArray.push(
+        { title: "펀드번호", content: fundBenefits.fundCode },
+        { title: "기준가(원)", content: fundBenefits.stdPrice },
+        { title: "기준가대비", content: fundBenefits.diffPrice },
+        { title: "운용규모(억)", content: fundBenefits.drvNav },
+        { title: "수익률(%,3개월)", content: fundBenefits.rt3m },
+        { title: "총보수(%)", content: fundBenefits.ter }
+      );
+    } else if (loanBenefits) {
+      benefitsArray.push(
+        { title: "예상최소금리", content: `${loanBenefits.minInterestRate}%` },
+        { title: "예상최대금리", content: `${loanBenefits.maxInterestRate}%` },
+        { title: "최대한도", content: loanBenefits.maxLoanAmount }
+      );
+    }
+
+    setBenefits(benefitsArray);
+  }, [cardBenefits, savingBenefits, loanBenefits, fundBenefits]);
+
+  useEffect(() => {
+    if (benefits.length === 0 && productType) {
+      callProductDetail(productType);
+      console.log(productType);
+    }
+  }, [benefits, productType]);
+
   return (
     <>
       <div className="py-[2vh] px-[4.5vw] pb-[1vh]">
-        <Header text="Mr.Life" type="backLeftTextCenter" />
+        <Header text={productType} type="backLeftTextCenter" />
         <div className="mt-[4vh]" />
-
-        <div className="flex justify-center p-[2vh]">
-          <img className="" src={SHCard} />
-        </div>
+        {productType === "카드" ? (
+          <div className="flex justify-center p-[2vh]">
+            <img
+              className={`${
+                imageSize.height > imageSize.width ? "h-[20vh]" : "w-[20vh]"
+              } `}
+              src={productBasic?.cardImage}
+              onLoad={handleImageLoad}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
 
         <div>
           <div className="flex items-align">
-            <img className="w-[3.5vh] inline mr-[0.6vw]" src={SHLogo} />
+            <img
+              className="w-[3.5vh] inline mr-[0.6vw]"
+              src={productBasic?.corpImage}
+            />
             <span className="text-[0.85rem] text-C333333 mt-[0.1rem]">
-              신한카드
+              {productBasic?.corpName}
             </span>
           </div>
           <div>
             <p className="font-semibold text-[1.4rem] ml-[1.5vw] mb-[0.6vh]">
-              신한카드 Mr.Life
+              {productBasic?.name}
             </p>
             <div className="mb-[1vh]">
-              {benefits.map((benefit, index) => (
+              {productBasic?.tags.map((benefit, index) => (
                 <span
                   key={index}
                   className="ml-[1.5vw] text-[0.75rem] mr-[1vw] p-[1vw] bg-CECF0FF rounded-[0.25rem]"
@@ -53,33 +203,7 @@ export default function ProductListPage() {
                 </span>
               ))}
             </div>
-            {/* <div className="flex ml-[1.5vw] items-center my-[1.2vh]">
-              <img src={Star} className="h-[1.8vh]" />
-              <span className="ml-[0.25vh] text-[0.9rem]">4.26 (20,239)</span>
-            </div> */}
-
-            <div className="flex mt-[2.5vh] bg-[#F4F3F8] rounded-[1rem] p-[0.5vh]">
-              <table className="  m-[1.5vw]  text-[0.85rem]">
-                <tr>
-                  <td className="mr-[3vw] w-[20vw] text-[#80848B] p-[2vw]">
-                    연회비지원
-                  </td>
-                  <td className="p-[2vw]">신규 고객 연회비 100% 캐시백!</td>
-                </tr>
-                <tr>
-                  <td className="mr-[3vw] w-[20vw] text-[#80848B] p-[2vw] pt-0">
-                    관리비
-                  </td>
-                  <td className="p-[2vw] pt-0">전기·도시가스 10% 할인!</td>
-                </tr>
-                <tr>
-                  <td className="mr-[3vw] w-[20vw] text-[#80848B] p-[2vw] pt-0">
-                    주유
-                  </td>
-                  <td className="p-[2vw] pt-0">4대 주유소 리터당 60원 할인!</td>
-                </tr>
-              </table>
-            </div>
+            <ProductSummary benefits={benefits} />
 
             {showDetail ? (
               <>
@@ -125,71 +249,6 @@ export default function ProductListPage() {
         </div>
       </div>
 
-      <div className="h-[1.5vh] bg-[#F4F3F8]" />
-      <div className="py-[2vh] px-[4.5vw] pb-[1vh]">
-        <p className="font-semibold text-[1.15rem] ml-[1.5vw]">리뷰 통계</p>
-        <div className="flex justify-center p-[5vw]">
-          <div className="flex mr-[7vw]">
-            <img src={Happy}></img>
-            <span className=" ml-[1vw] font-medium text-[#738BFF]">
-              유용해요 (18,630)
-            </span>
-          </div>
-          <div className="flex">
-            <img src={Sad}></img>
-            <span className="ml-[1vw] font-medium text-[#666666]">
-              아쉬워요 (180)
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* <div className="h-[1.5vh] bg-[#F4F3F8]" /> */}
-      {/* <div className="py-[2vh] px-[4.5vw] pb-[1vh]"> */}
-      {/* <div className="flex justify-between items-center">
-          <div className="inline">
-            <span className="font-semibold text-[1.15rem] ml-[1.5vw]">
-              리뷰
-            </span>
-            <span className="font-semibold text-[1.15rem] ml-[1.5vw] text-[#738BFF]">
-              20,239
-            </span>
-          </div>
-          <span className="text-[0.75rem] text-C333333">더보기 {">"}</span>
-        </div>
-
-        <p className="text-center font-semibold text-[1.2rem] mt-[1vh]">4.26</p>
-        <StarRate rate={4.26} w={20} h={20} />
-        <hr className="mt-[2vh]" /> */}
-
-      {/* 리뷰 컴포넌트 */}
-      {/* <div className="flex ml-[3vw] items-start my-[2vh]">
-          <img className="relative t-0 w-[10vw]" src={Character} />
-          <div className="ml-[2.5vw]">
-            <div>
-              <span className="font-semibold text-[1rem] text-C333333">
-                권모술수
-              </span>
-              <span className="text-[0.85rem] text-[#9B9B9B] ml-[1vw]">
-                40대/회사원
-              </span>
-            </div>
-            <div className="flex items-center mt-[0.1vh]">
-              <StarRate rate={4.5} w={15} h={15} />
-              <span className="text-[0.85rem] text-[#9B9B9B] ml-[1vw]">
-                2024.06.02
-              </span>
-            </div>
-            <div className=" mt-[1vh]  text-[1rem]">좋네요 추천합니다</div>
-          </div>
-        </div>
-
-        <hr /> */}
-      {/* 여기까지 */}
-      {/* 리뷰 컴포넌트 */}
-
-      {/* <hr className="mt-[2vh]" />
-      </div> */}
       <div className="h-[1.5vh] bg-[#F4F3F8]" />
       <div className="py-[2vh] px-[4.5vw] pb-[1vh]">
         <div className="flex justify-between items-center">

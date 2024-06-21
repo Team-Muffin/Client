@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import KBCard from "../../assets/card-kb.svg";
-import Star from "../../assets/star-filled.svg";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface ProductCardProps {
-  type: number;
+  type: string;
   productImg: string;
   productName: string;
   productBrand: string;
@@ -23,6 +21,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
   link,
 }) => {
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
+  const navigate = useNavigate();
+
+  const handleProductCardClick = (link: string) => {
+    navigate(`/product/${link}`, {
+      state: { productType: type },
+    });
+  };
 
   const handleImageLoad = (
     e: React.SyntheticEvent<HTMLImageElement, Event>
@@ -33,11 +38,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
     });
   };
   return (
-    <Link to={`${link}`}>
-      <div className="shadow-productCard rounded-[0.5rem] mt-[1.5vh] mb-[0.5vh]">
+    <div>
+      <div
+        className="shadow-productCard rounded-[0.5rem] mt-[1.5vh] mb-[0.5vh]"
+        onClick={() => handleProductCardClick(link)}
+      >
         <div className="flex justify-around p-[1vh] items-center">
           <div className="w-[40%] flex items-center justify-center">
-            {type === 1 ? (
+            {type === "카드" ? (
               <img
                 className={`${
                   imageSize.height > imageSize.width ? "h-[12vh]" : "w-[12vh]"
@@ -80,7 +88,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

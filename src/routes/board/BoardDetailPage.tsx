@@ -321,7 +321,7 @@ export default function BoardDetailPage() {
                       <div className="flex justify-between ">
                         <div className="flex items-center">
                           <img
-                            className="pr-[2vw] w-[13vw]"
+                            className="pr-[2vw] h-[4.5vh]"
                             src={character1_small}
                           />
                           <div>
@@ -363,7 +363,7 @@ export default function BoardDetailPage() {
                           <div className="flex justify-between">
                             <div className="flex items-center">
                               <img
-                                className="pr-[2vw] w-[13vw]"
+                                className="pr-[2vw] h-[4.5vh]"
                                 src={character1_small}
                               />
                               <div>

@@ -134,27 +134,15 @@ export default function ProductListPage() {
 
         {productListData.map((data) => (
           <div key={data.id}>
-            {category === "카드" ? (
-              <ProductCard
-                type={1}
-                productImg={data.cardImage}
-                productName={data.name}
-                productBrand={data.corpName}
-                benefits={data.tags.slice(0, 2)}
-                reviewCount={data.boardCount}
-                link={`${data.id}`}
-              />
-            ) : (
-              <ProductCard
-                type={2}
-                productImg={data.corpImage}
-                productName={data.name}
-                productBrand={data.corpName}
-                benefits={data.tags.slice(0, 2)}
-                reviewCount={data.boardCount}
-                link={`${data.id}`}
-              />
-            )}
+            <ProductCard
+              type={category === "투자" ? "펀드" : category}
+              productImg={category === "카드" ? data.cardImage : data.corpImage}
+              productName={data.name}
+              productBrand={data.corpName}
+              benefits={data.tags.slice(0, 2)}
+              reviewCount={data.boardCount}
+              link={`${data.id}`}
+            />
           </div>
         ))}
 

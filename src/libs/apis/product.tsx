@@ -35,77 +35,138 @@ interface ProductListResponse {
   data: ProductListData;
 }
 
-// 각 게시글 조회
-// export async function fetchBoardDetail(
-//   boardId: string
-// ): Promise<{ data: BoardResponse }> {
-//   const response = await instance.get<BoardResponse>(
-//     `/board-service/boards/${boardId}`
-//   );
-//   return { data: response.data };
-// }
+// 상품 기본 정보 조회
+export async function fetchProductBasic(productId: string): Promise<{
+  data: ProductBasic;
+}> {
+  const response = await instance.get<ProductBasicResponse>(
+    `/product-service/products/${productId}`
+  );
+  return { data: response.data.data["product basic"] };
+}
 
-// export interface BoardResponse {
-//   success: boolean;
-//   message: string;
-//   data: {
-//     title: string;
-//     content: string;
-//     category: {
-//       id: number;
-//       name: string;
-//     };
-//     likeCount: number;
-//     commentCount: number;
-//     comments: {
-//       id: number;
-//       content: string;
-//       authorId: number;
-//       authorName: string;
-//       authorProfile: string;
-//       replies: {
-//         id: number;
-//         content: string;
-//         authorId: number;
-//         authorName: string;
-//         authorProfile: string;
-//         createdTime: string;
-//       }[];
-//       createdTime: string;
-//     }[];
-//     createdTime: string;
-//     authorId: number;
-//     authorNickname: string;
-//     authorProfile: string;
-//   };
-// }
+export interface ProductBasic {
+  id: number;
+  name: string;
+  corpName: string;
+  corpImage: string;
+  cardImage: string;
+  tags: string[];
+  boardCount: number;
+  createdTime: string;
+}
 
-// export interface CommentResponse {
-//   success: boolean;
-//   message: string;
-//   data: {
-//     id: number;
-//     content: string;
-//     authorId: number;
-//     authorName: string;
-//     authorProfile: string;
-//     replies: {
-//       id: number;
-//       content: string;
-//       authorId: number;
-//       authorName: string;
-//       authorProfile: string;
-//       createdTime: string;
-//     }[];
-//     createdTime: string;
-//   }[];
-// }
+interface ProductBasicResponse {
+  success: boolean;
+  message: string;
+  data: {
+    "product basic": ProductBasic;
+  };
+}
 
-// export async function fetchComment(
-//   boardId: string
-// ): Promise<{ data: CommentResponse }> {
-//   const response = await instance.get<CommentResponse>(
-//     `/board-service/boards/${boardId}/comments`
-//   );
-//   return { data: response.data };
-// }
+// 상품 요약 정보 조회
+export async function fetchCardProductSummary(productId: string): Promise<{
+  data: CardProductSummary;
+}> {
+  const response = await instance.get<CardProductSummaryResponse>(
+    `/product-service/products/${productId}/summary?category=카드&sort=최신순`
+  );
+  return { data: response.data.data["card product summary"] };
+}
+
+export interface CardProductSummary {
+  productId: number;
+  notice: string;
+  annualFee: string;
+  rewards: null | string;
+  baseRecord: string;
+  mainBenefit: string;
+  subBenefit: string;
+}
+
+interface CardProductSummaryResponse {
+  success: boolean;
+  message: string;
+  data: {
+    "card product summary": CardProductSummary;
+  };
+}
+
+export async function fetchSavingProductSummary(productId: string): Promise<{
+  data: SavingProductSummary;
+}> {
+  const response = await instance.get<SavingProductSummaryResponse>(
+    `/product-service/products/${productId}/summary?category=예적금&sort=최신순`
+  );
+  return { data: response.data.data["saving product summary"] };
+}
+
+export interface SavingProductSummary {
+  productId: number;
+  interestRate: number;
+  primeInterestRate: number;
+  savingTerm: string;
+  specialOfferSummary: string;
+  specialOfferPeriod: string;
+}
+
+interface SavingProductSummaryResponse {
+  success: boolean;
+  message: string;
+  data: {
+    "saving product summary": SavingProductSummary;
+  };
+}
+
+export async function fetchFundProductSummary(productId: string): Promise<{
+  data: FundProductSummary;
+}> {
+  const response = await instance.get<FundProductSummaryResponse>(
+    `/product-service/products/${productId}/summary?category=펀드&sort=최신순`
+  );
+  return { data: response.data.data["fund product summary"] };
+}
+
+export interface FundProductSummary {
+  productId: number;
+  fundCode: string;
+  stdPrice: number;
+  diffPrice: number;
+  drvNav: number;
+  rt3m: number;
+  ter: number;
+}
+
+interface FundProductSummaryResponse {
+  success: boolean;
+  message: string;
+  data: {
+    "fund product summary": FundProductSummary;
+  };
+}
+
+export async function fetchLoanProductSummary(productId: string): Promise<{
+  data: LoanProductSummary;
+}> {
+  const response = await instance.get<LoanProductSummaryResponse>(
+    `/product-service/products/${productId}/summary?category=대출&sort=최신순`
+  );
+  return { data: response.data.data["loan product summary"] };
+}
+
+export interface LoanProductSummary {
+  productId: number;
+  minInterestRate: number;
+  maxInterestRate: number;
+  maxLoanAmount: string;
+}
+
+interface LoanProductSummaryResponse {
+  success: boolean;
+  message: string;
+  data: {
+    "loan product summary": LoanProductSummary;
+  };
+}
+
+// 상품 상세 정보 조회
