@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import TimeAgo from "../../utils/TimeAgo";
+import TimeAgo from "../../utils/timeAgo";
 import RedHeart from "../../assets/heart-filled.svg";
 import Heart from "../../assets/heart-empty.svg";
 import Reply from "../../assets/reply.svg";
