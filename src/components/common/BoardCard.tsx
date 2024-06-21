@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import TimeAgo from "../../utils/timeAgo";
+import timeAgo from "../../utils/timeAgo";
 import Heart from "../../assets/heart-empty.svg";
 import Reply from "../../assets/reply.svg";
 
-interface PostCardProps {
+interface BoardCardProps {
   title: string;
   description: string;
   author: string;
@@ -15,7 +15,7 @@ interface PostCardProps {
   authorImageUrl?: string;
 }
 
-const BoardCard: React.FC<PostCardProps> = ({
+const BoardCard: React.FC<BoardCardProps> = ({
   title,
   description,
   author,
@@ -36,7 +36,7 @@ const BoardCard: React.FC<PostCardProps> = ({
           <div className="flex">
             <img src={authorImageUrl} className="w-[4.5vw] mr-[1vw]" />
             <p className="text-[0.85rem] text-C333333">
-              {author} | {TimeAgo({ createdTime: time })}
+              {author} | {timeAgo({ createdTime: time })}
             </p>
           </div>
           <div className="flex mt-[0.2vh]">
