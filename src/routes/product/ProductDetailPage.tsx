@@ -17,9 +17,17 @@ import {
   fetchFundProductSummary,
   fetchLoanProductSummary,
   LoanProductSummary,
+  fetchLoanProductDetail,
+  LoanProductDetail,
+  fetchSavingProductDetail,
+  SavingProductDetail,
+  fetchFundProductDetail,
+  FundProductDetail,
 } from "../../libs/apis/product";
 import { useParams, useLocation } from "react-router-dom";
 import ProductSummary from "../../components/product/ProductSummary";
+import SavingDetail from "../../components/product/SavingDetail";
+import FundDetail from "../../components/product/FundDetail";
 
 export default function ProductListPage() {
   const [benefits, setBenefits] = useState<
@@ -28,6 +36,7 @@ export default function ProductListPage() {
   const [cardBenefits, setCardBenefits] = useState<CardProductSummary | null>(
     null
   );
+  let loanDetailJsonArray;
   const [savingBenefits, setSavingBenefits] =
     useState<SavingProductSummary | null>(null);
   const [fundBenefits, setFundBenefits] = useState<FundProductSummary | null>(
@@ -36,6 +45,11 @@ export default function ProductListPage() {
   const [loanBenefits, setLoanBenefits] = useState<LoanProductSummary | null>(
     null
   );
+  const [loanDetail, setLoanDetail] = useState<LoanProductDetail | null>(null);
+  const [savingDetail, setSavingDetail] = useState<SavingProductDetail | null>(
+    null
+  );
+  const [fundDetail, setFundDetail] = useState<FundProductDetail | null>(null);
 
   const [showDetail, setShowDetail] = useState(false);
   const params = useParams();
@@ -62,7 +76,7 @@ export default function ProductListPage() {
     try {
       const response = await fetchProductBasic(productId);
       if (response.data) {
-        console.log(response.data);
+        // console.log(response.data);
         setProductBasic(response.data);
       } else {
         console.error("상품 베이직 데이터가 없습니다.");
@@ -71,7 +85,7 @@ export default function ProductListPage() {
       if (type === "카드") {
         const cardSummaryResponse = await fetchCardProductSummary(productId);
         if (cardSummaryResponse.data) {
-          console.log(cardSummaryResponse.data);
+          // console.log(cardSummaryResponse.data);
           setCardBenefits(cardSummaryResponse.data);
         } else {
           console.error("상품 카드 데이터가 없습니다.");
@@ -81,26 +95,47 @@ export default function ProductListPage() {
           productId
         );
         if (savingSummaryResponse.data) {
-          console.log(savingSummaryResponse.data);
+          // console.log(savingSummaryResponse.data);
           setSavingBenefits(savingSummaryResponse.data);
         } else {
           console.error("상품 예적금 데이터가 없습니다.");
         }
+
+        const savingDetailResponse = await fetchSavingProductDetail(productId);
+        if (savingDetailResponse.data) {
+          setSavingDetail(savingDetailResponse.data);
+        } else {
+          console.error("상품 예적금 detail 데이터가 없습니다.");
+        }
       } else if (type === "펀드") {
         const fundSummaryResponse = await fetchFundProductSummary(productId);
         if (fundSummaryResponse.data) {
-          console.log(fundSummaryResponse.data);
+          // console.log(fundSummaryResponse.data);
           setFundBenefits(fundSummaryResponse.data);
         } else {
           console.error("상품 펀드 데이터가 없습니다.");
         }
+        const fundDetailResponse = await fetchFundProductDetail(productId);
+        if (fundDetailResponse.data) {
+          setFundDetail(fundDetailResponse.data);
+        } else {
+          console.error("상품 펀드 detail 데이터가 없습니다.");
+        }
       } else if (type === "대출") {
         const loanSummaryResponse = await fetchLoanProductSummary(productId);
         if (loanSummaryResponse.data) {
-          console.log(loanSummaryResponse.data);
+          // console.log(loanSummaryResponse.data);
           setLoanBenefits(loanSummaryResponse.data);
         } else {
           console.error("상품 대출 데이터가 없습니다.");
+        }
+
+        const loanDetailResponse = await fetchLoanProductDetail(productId);
+        if (loanDetailResponse.data) {
+          console.log(loanDetailResponse.data);
+          setLoanDetail(loanDetailResponse.data);
+        } else {
+          console.error("상품 대출 디테일 데이터가 없습니다.");
         }
       }
     } catch (error) {
@@ -219,18 +254,10 @@ export default function ProductListPage() {
                     aria-hidden="true"
                   />
                 </div>
-                <p className="text-xs mt-[2vh] px-[2vh]">
-                  · 필요 이상의 신용카드를 발급받을 경우 신용등급이나 이용한도에
-                  영향을 미칠 수 있습니다. <br />· 계약을 체결전, 반드시
-                  금융상품설명서 및 약관을 확인하시기 바랍니다.
-                  <br /> · 금융소비자는 금융소비자보호법 제19조 제1항에 따라
-                  해당 금융상품 또는 서비스에 대하여 설명받을 권리가 있습니다.
-                  <br /> · 연체이자율은 "회원별, 이용상품별 약정금리+최대 연3%,
-                  법정 최고금리(연20%)이내"에서 적용됩니다.
-                  <br /> 단,연체 발생 시점에 약정금리가 없는 경우 약정금리는
-                  아래와 같이 적용함
-                  <br /> - 일시불 거래 연체 시 : 거래 발생 시점의
-                  최소기간(2개월) 유이자 할부 금리 <br />
+                <p className="text-xs mt-[2vh] px-[2vh] border py-[2vh]">
+                  {loanDetailJsonArray ? <></> : <></>}
+                  <SavingDetail savingDetail={savingDetail} />
+                  <FundDetail fundDetail={fundDetail} />
                 </p>
               </>
             ) : (

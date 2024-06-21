@@ -170,3 +170,99 @@ interface LoanProductSummaryResponse {
 }
 
 // 상품 상세 정보 조회
+export async function fetchLoanProductDetail(productId: string): Promise<{
+  data: LoanProductDetail;
+}> {
+  const response = await instance.get<LoanProductDetailResponse>(
+    `/product-service/products/${productId}/details?category=대출&sort=최신순`
+  );
+  return { data: response.data.data["loan product detail"] };
+}
+
+interface LoanProductDetailResponse {
+  success: boolean;
+  message: string;
+  data: {
+    "loan product detail": LoanProductDetail;
+  };
+}
+
+export interface LoanProductDetail {
+  productId: number;
+  description: LoanFeature[];
+}
+
+interface LoanFeature {
+  title: string;
+  content: string;
+  order: number;
+}
+
+export async function fetchSavingProductDetail(productId: string): Promise<{
+  data: SavingProductDetail;
+}> {
+  const response = await instance.get<SavingProductDetailResponse>(
+    `/product-service/products/${productId}/details?category=예적금&sort=최신순`
+  );
+  return { data: response.data.data["saving product detail"] };
+}
+
+interface SavingProductDetailResponse {
+  success: boolean;
+  message: string;
+  data: {
+    "saving product detail": SavingProductDetail;
+  };
+}
+
+export interface SavingProductDetail {
+  productId: number;
+  joinPeriod: string;
+  joinAmount: string;
+  joinTarget: string;
+  specialConditions: string;
+  channel: string;
+  interestPaymentCycle: string;
+  note: string;
+  depositorProtection: string;
+}
+
+export async function fetchFundProductDetail(productId: string): Promise<{
+  data: FundProductDetail;
+}> {
+  const response = await instance.get<FundProductDetailResponse>(
+    `/product-service/products/${productId}/details?category=펀드&sort=최신순`
+  );
+  return { data: response.data.data["fund product detail"] };
+}
+
+interface FundProductDetailResponse {
+  success: boolean;
+  message: string;
+  data: {
+    "fund product detail": FundProductDetail;
+  };
+}
+
+export interface FundProductDetail {
+  productId: number;
+  rt1m: number;
+  rt3m: number;
+  rt6m: number;
+  rtYtd: number;
+  rt1y: number;
+  rt3y: number;
+  rt5y: number;
+  riskGrade: number;
+  riskGradeText: string;
+  feeGb: string;
+  category1: string;
+  category2: string;
+  infoObject: string;
+  infoStrategy: string;
+  region: string;
+  amtGb: string;
+  exceBm: string;
+  riskGb: string;
+  rtGb: string;
+}

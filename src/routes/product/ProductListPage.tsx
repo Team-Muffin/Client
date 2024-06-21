@@ -145,8 +145,6 @@ export default function ProductListPage() {
             />
           </div>
         ))}
-
-        <img className="fixed bottom-[8vh] right-[4vw] z-5" src={writeButton} />
       </div>
       <div className="pb-[8.5vh]" />
       <Navbar />
