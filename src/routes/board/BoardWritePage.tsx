@@ -11,7 +11,8 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 export default function BoardWritePage() {
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState("정보");
+  const [categoryId, setCategoryId] = useState("정보");
   const filterList = ["정보", "재미", "투자", "기업", "고급"];
   const navigate = useNavigate();
   const handleBackButtonClick = () => {
@@ -20,8 +21,12 @@ export default function BoardWritePage() {
   const location = useLocation();
   const params = useParams();
   const boardId = params.boardId;
-  const categoryId = location.state.category;
-  console.log(categoryId);
+
+  useEffect(() => {
+    if (boardId) setCategoryId(location.state.category);
+  }, [boardId]);
+
+  // console.log(categoryId);
 
   useEffect(() => {
     if (boardId) {
