@@ -40,7 +40,7 @@ instance.interceptors.response.use(
       } else if (!success && !canRefresh) {
         // 리프레시 토큰 갱신 불가 시 로그아웃 처리
         logout();
-        window.location.href = '/login'; // 로그인 페이지로 리다이렉트
+         // 로그인 페이지로 리다이렉트
       }
     }
     

@@ -15,29 +15,24 @@ const LoginPage: React.FC = () => {
   const [id, setId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const { login: storeLogin } = useAuthStore((state: AuthState) => ({
+  const { login } = useAuthStore((state: AuthState) => ({
     login: state.login,
   })); // Zustand에서 login 액션 가져오기
 
   const handleLogin = async () => {
+    const userData = {
+      tofinId: id,
+      userInfo: password,
+    };
     try {
       // 실제 로그인 API 호출 예시
-      const userData: SignInData = {
-        tofinId: id,
-        userInfo: password,
-      };
-      const res = await signIn(userData); // login API 호출
+       const res = await signIn(userData);
+       login(id, password, "", res.data.accessToken, res.data.refreshToken)
+      } catch(error){
+        console.error("로그인 에러", error);
+      }
 
-      // Zustand의 login 액션 호출하여 로그인 상태 관리
-      storeLogin(res.data.accessToken, res.data.refreshToken);
-
-      // 로그인 후 리다이렉트할 페이지로 이동
-      // 예시로는 "/challenge" 페이지로 이동하도록 하였습니다.
-      // history.push("/challenge");
-    } catch (error) {
-      console.error("로그인 중 오류 발생:", error);
-      alert("로그인에 실패했습니다.");
-    }
+      
   };
 
   return (
