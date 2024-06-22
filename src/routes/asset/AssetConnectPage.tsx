@@ -4,7 +4,7 @@ import MiniCircle from "../../assets/minicircle.svg";
 import Essential from "../../assets/required.svg";
 import Checked from "../../assets/checked.svg";
 import PurpleBtn from "../../components/common/PurpleBtn";
-import { useAuthStore } from "../../store/useAuthStore"; // Import the Zustand store
+import useAuthStore from "../../store/useAuthStore";
 import { CheckUserContactAvailability } from "../../libs/apis/user";
 
 const AssetConnectPage = () => {
@@ -73,7 +73,7 @@ const AssetConnectPage = () => {
         <p className="text-2xl font-medium mb-[2.5vh]">자산을 연결해주세요 </p>
         <p className="text-base mb-[4vh]">
           나의 자산을 연결할 수 있어요 <br />
-          자산 공개 여부는 설정에서 바꿀 수 있어요
+          주민등록번호는 뒷자리만 입력해주세요 :)
         </p>
 
         {/* Agreement dropdown */}

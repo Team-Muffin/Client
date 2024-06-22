@@ -33,7 +33,7 @@ const SignUpPage = () => {
       return;
     }
 
-    login(userId, userInfo, "", "", ""); // Call Zustand's login function
+    login(userId, userInfo,"", "",""); // Call Zustand's login function
     navigate("/signup/profile");
   };
 

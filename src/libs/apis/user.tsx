@@ -12,7 +12,7 @@ interface SignUpRequest {
 
 export async function signUp(userData: SignUpRequest) {
   try {
-    const response = await instance.post("/user-service/sign-up", userData);
+    const response = await instance.post(`/user-service/sign-up`, userData);
     return response.data;
   } catch (error) {
     console.error("회원가입 중 오류 발생:", error);
@@ -122,9 +122,20 @@ export async function CheckUserContactAvailability(
   }
 }
 
+
 //자산 연결
 interface AssetRequest {
   socialName: string;
   backSocialId: string;
   contact: string;
+}
+
+export async function connectAsset(data: AssetRequest){
+  try{
+    const response = await instance.post(`/user-service/users/assets`)
+    return response.data;
+  } catch (error) {
+    console.error("자산 연결 중 오류 발생:", error);
+    throw error;
+  }
 }
