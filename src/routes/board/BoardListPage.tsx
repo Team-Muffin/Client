@@ -7,9 +7,8 @@ import Navbar from "../../components/common/Navbar";
 import { Link } from "react-router-dom";
 import { fetchBoardList } from "../../libs/apis/board";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
-import useIntersectionObserver from "../../hooks/useIntersectionObserver"; // Adjust the import path accordingly
+import useIntersectionObserver from "../../hooks/useIntersectionObserver";
 import { useParams, useNavigate } from "react-router-dom";
-import SyncLoader from "react-spinners/SyncLoader";
 
 export default function BoardListPage() {
   const [categoryName, setCategoryName] = useState("정보");
@@ -26,6 +25,12 @@ export default function BoardListPage() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [isScrollRestored, setIsScrollRestored] = useState<boolean>(false);
+
+  const handleSearchBtnClick = () => {
+    navigate(`/search`, {
+      state: { domain: "board" },
+    });
+  };
 
   const selectedCategoryCss =
     "text-base text-C748BFF bg-CECF0FF py-[0.3vh] px-[4.5vw] rounded-[0.5rem] shadow text-[1.1rem]";
@@ -182,7 +187,11 @@ export default function BoardListPage() {
 
   return (
     <div className="py-[2vh] px-[4.5vw]">
-      <Header text="핀" type="textCenterSearchRight" />
+      <Header
+        text="핀"
+        type="textCenterSearchRight"
+        searchBtn={handleSearchBtnClick}
+      />
       <div className="mt-[4vh]"></div>
 
       <div className="flex justify-between text-sm">
@@ -225,7 +234,7 @@ export default function BoardListPage() {
       ))}
       {hasMore && (
         <div ref={elementRef} style={{ textAlign: "center" }}>
-          {isLoading ? <SyncLoader /> : ""}
+          {isLoading ? <LoadingSpinner /> : ""}
         </div>
       )}
 

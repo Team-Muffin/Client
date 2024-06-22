@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import Header from "../../components/common/Header";
 import Navbar from "../../components/common/Navbar";
@@ -7,6 +8,7 @@ import ChallengeCard from "../../components/home/ChallengeCard";
 import BoardCardVertical from "../../components/home/BoardCardVertical";
 
 export default function HomePage() {
+  const navigate = useNavigate();
   const settings = {
     dots: true,
     infinite: true,
@@ -63,11 +65,20 @@ export default function HomePage() {
     },
   ];
 
+  const handleSearchBtnClick = () => {
+    navigate(`/search`, {
+      state: { domain: "home" },
+    });
+  };
+
   return (
     <>
       <div className="pt-[2vh] px-[4.5vw]">
         {/* 헤더랑 */}
-        <Header type="logoLeftSearchAndAlarmRight" />
+        <Header
+          type="logoLeftSearchAndAlarmRight"
+          searchBtn={handleSearchBtnClick}
+        />
         <div className="mt-[5.5vh]"></div>
         {/* 세트로 들고 다녀야 됨 */}
         <div className="flex justify-between items-center mb-[1.5vh]">

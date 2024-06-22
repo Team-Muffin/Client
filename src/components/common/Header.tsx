@@ -16,9 +16,10 @@ type HeaderProps = {
   text?: string;
   type: string;
   to?: number | string;
+  searchBtn?: () => void;
 };
 
-const Header: React.FC<HeaderProps> = ({ text, type, to = -1 }) => {
+const Header: React.FC<HeaderProps> = ({ text, type, to = -1, searchBtn }) => {
   const navigate = useNavigate();
   const handleBackButtonClick = () => {
     if (typeof to === "string") {
@@ -43,7 +44,12 @@ const Header: React.FC<HeaderProps> = ({ text, type, to = -1 }) => {
             <div className="flex-1 text-center font-semibold text-lg">
               {text}
             </div>
-            <img src={SearchBtn} alt="Search" className="absolute right-4" />
+            <img
+              src={SearchBtn}
+              alt="Search"
+              className="absolute right-4"
+              onClick={searchBtn}
+            />
           </>
         )}
         {type === "backLeftTextCenter" && (
@@ -128,8 +134,7 @@ const Header: React.FC<HeaderProps> = ({ text, type, to = -1 }) => {
             <img
               src={SearchBtn}
               className="absolute right-[14vw] h-[2.8vh]"
-
-              // onClick={handleBackButtonClick}
+              onClick={searchBtn}
             />
             <img
               src={AlarmBtn}

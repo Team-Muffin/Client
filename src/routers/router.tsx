@@ -9,7 +9,7 @@ import ProductDetailPage from "../routes/product/ProductDetailPage";
 import ReviewPage from "../routes/product/ReviewPage";
 import RelatedBoardPage from "../routes/product/RelatedBoardPage";
 import ReviewWritePage from "../routes/product/ReviewWritePage";
-import HomePage from "../routes/home/Home";
+import HomePage from "../routes/home/HomePage";
 import ChallengePage from "../routes/challenge/ChallengePage";
 import ChallengeDetailPage from "../routes/challenge/ChallengeDetailPage";
 import ChallengeCAL from "../routes/challenge/ChallengeCAL";
@@ -25,6 +25,9 @@ import ProfilePage from "../routes/profile/ProfilePage";
 import EditProfilePage from "../routes/profile/EditProfilePage";
 import StampBoard from "../routes/challenge/StampBoard";
 
+import SearchPage from "../routes/search/SearchPage";
+import SearchResultPage from "../routes/search/SearchResultPage";
+
 export const mainRouter = [
   {
     path: "/",
@@ -35,6 +38,11 @@ export const mainRouter = [
         index: true,
         element: <HomePage />,
       },
+      {
+        path: "search",
+        element: <SearchPage />,
+      },
+      { path: "searchResult", element: <SearchResultPage /> },
       {
         path: "signin",
         element: <LoginPage />,
@@ -117,6 +125,10 @@ export const mainRouter = [
             path: ":boardId/edit",
             element: <BoardWritePage />,
           },
+          {
+            path: "searchResult",
+            element: <SearchResultPage />,
+          },
         ],
       },
       {
@@ -129,6 +141,10 @@ export const mainRouter = [
           {
             path: ":productId",
             element: <ProductDetailPage />,
+          },
+          {
+            path: "searchResult",
+            element: <SearchResultPage />,
           },
         ],
       },
