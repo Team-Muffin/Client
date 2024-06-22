@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import MainLogoImg from "../../assets/main-logo.svg";
 import PurpleBtn from "../../components/common/PurpleBtn";
 import { Link } from "react-router-dom";
-import { useAuthStore } from "../../store/useAuthStore"; // Zustand에서 useAuthStore 가져오기
+import useAuthStore, { AuthState } from "../../store/useAuthStore"; // Zustand에서 useAuthStore 가져오기
 import { signIn } from "../../libs/apis/user"; // login API 호출 함수 가져오기
 
 // 인터페이스 정의
@@ -11,21 +11,10 @@ interface SignInData {
   userInfo: string;
 }
 
-interface AuthState {
-  userId: string;
-  userInfo: string;
-  login: (
-    id: string,
-    userInfo: string,
-    nickname: string,
-    profileImg: string,
-    birth: string
-  ) => void;
-}
-
 const LoginPage: React.FC = () => {
   const [id, setId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
   const { login: storeLogin } = useAuthStore((state: AuthState) => ({
     login: state.login,
   })); // Zustand에서 login 액션 가져오기
@@ -37,13 +26,14 @@ const LoginPage: React.FC = () => {
         tofinId: id,
         userInfo: password,
       };
-      await signIn(userData); // login API 호출
+      const res = await signIn(userData); // login API 호출
 
       // Zustand의 login 액션 호출하여 로그인 상태 관리
-      storeLogin(id, password, "", "", "");
+      storeLogin(res.data.accessToken, res.data.refreshToken);
 
       // 로그인 후 리다이렉트할 페이지로 이동
       // 예시로는 "/challenge" 페이지로 이동하도록 하였습니다.
+      // history.push("/challenge");
     } catch (error) {
       console.error("로그인 중 오류 발생:", error);
       alert("로그인에 실패했습니다.");
@@ -74,7 +64,7 @@ const LoginPage: React.FC = () => {
 
         <p className="text-lg font-semibold my-[2vh]">비밀번호</p>
         <input
-          type="text"
+          type="password"
           id="PW"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="Password"
@@ -87,7 +77,7 @@ const LoginPage: React.FC = () => {
           <PurpleBtn
             onClick={handleLogin}
             label="ToFin 시작하기 !"
-            to="/home"
+            to="/"
           />
         </div>
         <div className="flex justify-center mt-[2vh]">
