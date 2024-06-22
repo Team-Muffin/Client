@@ -111,7 +111,7 @@ const ConnectedAssetPage = () => {
           />
           <img src={MiniCircleImg} className="w-3 h-3" alt="Mini Circle" />
         </div>
-        <PurpleBtn to="/signup/tendency" label="나의 자산 연결하기" />
+        <PurpleBtn to="/asset/tendency" label="나의 자산 연결하기" />
       </div>
     </>
   );

@@ -139,3 +139,22 @@ export async function connectAsset(infodata: AssetRequest){
     throw error;
   }
 }
+
+//투자 성향 설정
+interface tendencyRequest {
+  account : boolean;
+  card: boolean;
+  loan: boolean;
+  invest: boolean;
+  purpose: string;
+}
+
+export async function setTendency(tendata: tendencyRequest){
+  try{
+    const response = await instance.post(`/user-service/users/tendency`,tendata)
+    return response.data;
+  }catch (error){
+    console.error("성향 설정 중 오류 발생", error);
+    throw error;
+  }
+}

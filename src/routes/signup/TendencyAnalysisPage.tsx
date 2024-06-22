@@ -8,6 +8,7 @@ import InfoImg from "../../assets/info.svg"; // Import SVG file
 import ReviewImg from "../../assets/review.svg"; // Import SVG file
 import RocketImg from "../../assets/rocket.svg"; // Import SVG file
 import PurpleBtn from "../../components/common/PurpleBtn";
+import { setTendency } from "../../libs/apis/user";
 
 const TendencyAnalysisPage = () => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
@@ -26,11 +27,31 @@ const TendencyAnalysisPage = () => {
 
   const handlePurposeClick = (purpose: string) => {
     console.log("Clicked purpose:", purpose);
-    setSelectedPurpose(purpose);
+    setSelectedPurpose(purpose); // 변경된 부분: purpose 값이 직접 들어가도록 수정
   };
 
   const isSelected = (item: string) => selectedItems.includes(item);
   const isPurposeSelected = (purpose: string) => selectedPurpose === purpose;
+
+  const handleCompleteAnalysis = async () => {
+    try {
+      const tendencyData = {
+        account: isSelected("deposit"),
+        card: isSelected("card"),
+        loan: isSelected("loan"),
+        invest: isSelected("invest"),
+        purpose: selectedPurpose, // 선택된 purpose 값을 직접 넣어줌
+      };
+
+      const response = await setTendency(tendencyData);
+      console.log("성향 설정 API 응답:", response);
+
+      // Navigate to success page or handle success scenario
+    } catch (error) {
+      console.error("성향 설정 중 오류 발생:", error);
+      // Handle error scenario
+    }
+  };
 
   return (
     <>
@@ -104,27 +125,27 @@ const TendencyAnalysisPage = () => {
         <div className="flex justify-around mt-[2vh]">
           <div
             className={`flex flex-col items-center cursor-pointer rounded-lg ${
-              isPurposeSelected("info") && "bg-[#ECF0FF]"
+              isPurposeSelected("SHARE") && "bg-[#ECF0FF]"
             }`}
-            onClick={() => handlePurposeClick("info")}
+            onClick={() => handlePurposeClick("SHARE")}
           >
             <img src={InfoImg} alt="Info" className="w-[20vw] h-[8vh]" />
             <p className="text-sm font-semibold">정보</p>
           </div>
           <div
             className={`flex flex-col items-center cursor-pointer rounded-lg ${
-              isPurposeSelected("review") && "bg-[#ECF0FF]"
+              isPurposeSelected("REVIEW") && "bg-[#ECF0FF]"
             }`}
-            onClick={() => handlePurposeClick("review")}
+            onClick={() => handlePurposeClick("REVIEW")}
           >
             <img src={ReviewImg} alt="Review" className="w-[20vw] h-[8vh]" />
             <p className="text-sm font-semibold">리뷰</p>
           </div>
           <div
             className={`flex flex-col items-center cursor-pointer rounded-lg ${
-              isPurposeSelected("fun") && "bg-[#ECF0FF]"
+              isPurposeSelected("FUN") && "bg-[#ECF0FF]"
             }`}
-            onClick={() => handlePurposeClick("fun")}
+            onClick={() => handlePurposeClick("FUN")}
           >
             <img src={RocketImg} alt="Rocket" className="w-[20vw] h-[8vh]" />
             <p className="text-sm font-semibold">재미</p>
@@ -147,7 +168,11 @@ const TendencyAnalysisPage = () => {
             }}
           />
         </div>
-        <PurpleBtn to="/signup/success" label="성향 분석 완료하기" />
+        <PurpleBtn
+          to="/signup/success"
+          label="성향 분석 완료하기"
+          onClick={handleCompleteAnalysis} // 클릭 시 성향 분석 완료 처리
+        />
       </div>
     </>
   );
