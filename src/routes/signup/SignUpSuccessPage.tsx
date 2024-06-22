@@ -20,7 +20,7 @@ const SignUpSuccessPage = () => {
 
       <Confetti />
       <div className="absolute w-full px-[8vw] pb-[3vh] bottom-[3vh]">
-        <PurpleBtn to="/home" label="입장하기" />
+        <PurpleBtn to="/" label="입장하기" />
       </div>
     </>
   );
