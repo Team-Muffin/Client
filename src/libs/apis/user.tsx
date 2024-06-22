@@ -130,9 +130,9 @@ interface AssetRequest {
   contact: string;
 }
 
-export async function connectAsset(data: AssetRequest){
+export async function connectAsset(infodata: AssetRequest){
   try{
-    const response = await instance.post(`/user-service/users/assets`)
+    const response = await instance.post(`/user-service/users/assets`, infodata)
     return response.data;
   } catch (error) {
     console.error("자산 연결 중 오류 발생:", error);
