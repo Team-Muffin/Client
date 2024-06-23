@@ -6,6 +6,8 @@ import Reply from "../../assets/reply.svg";
 import FilledScrap from "../../assets/scrap-filled.svg";
 import Scrap from "../../assets/scrap.svg";
 import { createBookmark, createLike } from "../../libs/apis/board";
+import BoardEditor from "../../routes/board/BoardEditor";
+import BoardViewer from "../../routes/board/BoardViewer";
 
 interface BoardContentProps {
   authorNickname: string;
@@ -85,7 +87,7 @@ const BoardSection: React.FC<BoardContentProps> = ({
 
       <p className="py-[1vh] text-[1.25rem] font-medium">{title}</p>
       <p className="text-[0.95rem]">
-        {content}
+        <BoardViewer strData={content} />
         <br />
       </p>
 
