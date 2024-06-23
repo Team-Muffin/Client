@@ -12,7 +12,7 @@ interface SignUpRequest {
 
 export async function signUp(userData: SignUpRequest) {
   try {
-    const response = await instance.post("/user-service/sign-up", userData);
+    const response = await instance.post(`/user-service/sign-up`, userData);
     return response.data;
   } catch (error) {
     console.error("회원가입 중 오류 발생:", error);
@@ -122,9 +122,65 @@ export async function CheckUserContactAvailability(
   }
 }
 
+
 //자산 연결
 interface AssetRequest {
   socialName: string;
   backSocialId: string;
   contact: string;
+}
+
+export async function connectAsset(infodata: AssetRequest){
+  try{
+    const response = await instance.post(`/user-service/users/assets`, infodata)
+    return response.data;
+  } catch (error) {
+    console.error("자산 연결 중 오류 발생:", error);
+    throw error;
+  }
+}
+
+//투자 성향 설정
+interface TendencyRequest {
+  account : boolean;
+  card: boolean;
+  loan: boolean;
+  invest: boolean;
+  purpose: string;
+}
+
+export async function setTendency(tendata: TendencyRequest){
+  try{
+    const response = await instance.post(`/user-service/users/tendency`,tendata)
+    return response.data;
+  }catch (error){
+    console.error("성향 설정 중 오류 발생", error);
+    throw error;
+  }
+}
+
+//회원 정보 변경
+export interface EditProfileRequest {
+  nickname?: string;
+  job?: string
+}
+
+export async function EditProfile(profileData: EditProfileRequest, imageFile: File | undefined) {
+  try {
+    const formData = new FormData();
+    if (imageFile) {
+      formData.append('image', imageFile); // 이미지 파일 추가
+    }
+    formData.append('request', JSON.stringify(profileData)); // JSON 데이터 추가
+    const response = await instance.put(`/user-service/users/profile`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    console.log("프로필 변경 API 호출 성공:", response.data); // 성공 로그 출력
+    return response.data;
+  } catch (error) {
+    console.error("프로필 변경 중 오류 발생", error);
+    throw error;
+  }
 }

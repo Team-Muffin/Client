@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "../../components/common/Header";
 import BoardCard from "../../components/common/BoardCard";
 import Navbar from "../../components/common/Navbar";
+import writeButton from "../../assets/write-button.svg";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import {
   fetchProductBasic,
@@ -21,12 +22,15 @@ import {
   SavingProductDetail,
   fetchFundProductDetail,
   FundProductDetail,
+  fetchCardProductDetail,
+  CardProductDetail,
 } from "../../libs/apis/product";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 import ProductSummary from "../../components/product/ProductSummary";
 import SavingDetail from "../../components/product/SavingDetail";
 import FundDetail from "../../components/product/FundDetail";
 import LoanDetail from "../../components/product/LoanDetail";
+import CardDetail from "../../components/product/CardDetail";
 
 export default function ProductListPage() {
   const [benefits, setBenefits] = useState<
@@ -49,6 +53,7 @@ export default function ProductListPage() {
     null
   );
   const [fundDetail, setFundDetail] = useState<FundProductDetail | null>(null);
+  const [cardDetail, setCardDetail] = useState<CardProductDetail | null>(null);
 
   const [showDetail, setShowDetail] = useState(false);
   const params = useParams();
@@ -89,6 +94,12 @@ export default function ProductListPage() {
           setCardBenefits(cardSummaryResponse.data);
         } else {
           console.error("상품 카드 데이터가 없습니다.");
+        }
+        const cardDetailResponse = await fetchCardProductDetail(productId);
+        if (cardDetailResponse.data) {
+          setCardDetail(cardDetailResponse.data);
+        } else {
+          console.error("상품 card detail 데이터가 없습니다.");
         }
       } else if (type === "예적금") {
         const savingSummaryResponse = await fetchSavingProductSummary(
@@ -149,30 +160,31 @@ export default function ProductListPage() {
     }
   };
   useEffect(() => {
-    console.log("aa");
-    const fetchData = async () => {
-      try {
-        const loanDetailResponse = await fetchLoanProductDetail(productId);
-        if (loanDetailResponse.data) {
-          setLoanDetail(loanDetailResponse.data);
-          let jsonString = loanDetailResponse.data?.description.replace(
-            /'/g,
-            '"'
-          );
-          if (jsonString) {
-            const jsonArray = JSON.parse(jsonString);
-            setLoanDetailArray(jsonArray);
+    if (productType === "대출") {
+      const fetchData = async () => {
+        try {
+          const loanDetailResponse = await fetchLoanProductDetail(productId);
+          if (loanDetailResponse.data) {
+            setLoanDetail(loanDetailResponse.data);
+            let jsonString = loanDetailResponse.data?.description.replace(
+              /'/g,
+              '"'
+            );
+            if (jsonString) {
+              const jsonArray = JSON.parse(jsonString);
+              setLoanDetailArray(jsonArray);
 
-            setIsLoanDetailLoaded(true);
+              setIsLoanDetailLoaded(true);
+            }
+          } else {
+            console.error("상품 대출 디테일 데이터가 없습니다.");
           }
-        } else {
-          console.error("상품 대출 디테일 데이터가 없습니다.");
+        } catch (error) {
+          console.error("대출 디테일 데이터 불러오는데서 오류:", error);
         }
-      } catch (error) {
-        console.error("대출 디테일 데이터 불러오는데서 오류:", error);
-      }
-    };
-    fetchData();
+      };
+      fetchData();
+    }
   }, [productId]);
 
   useEffect(() => {
@@ -206,7 +218,7 @@ export default function ProductListPage() {
         { title: "기준가(원)", content: fundBenefits.stdPrice },
         { title: "기준가대비", content: fundBenefits.diffPrice },
         { title: "운용규모(억)", content: fundBenefits.drvNav },
-        { title: "수익률(%,3개월)", content: fundBenefits.rt3m },
+        { title: "수익률(3개월)", content: fundBenefits.rt3m + "%" },
         { title: "총보수(%)", content: fundBenefits.ter }
       );
     } else if (loanBenefits) {
@@ -293,6 +305,7 @@ export default function ProductListPage() {
                     loanDetailArray={loanDetailArray}
                     isLoanDetailLoaded={isLoanDetailLoaded}
                   />
+                  <CardDetail cardDetail={cardDetail} />
                 </p>
               </>
             ) : (
@@ -344,6 +357,10 @@ export default function ProductListPage() {
           imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
         />
       </div>
+
+      <Link to={`/board/write?productId=${productId}`}>
+        <img className="fixed bottom-[8vh] right-[4vw] z-5" src={writeButton} />
+      </Link>
 
       <div className="pb-[8.5vh]" />
       <Navbar />

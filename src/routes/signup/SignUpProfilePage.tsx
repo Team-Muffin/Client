@@ -10,7 +10,7 @@ import UserIcon3 from "../../assets/user-icon3.svg";
 import UserIcon4 from "../../assets/user-icon4.svg";
 import PurpleBtn from "../../components/common/PurpleBtn";
 import { signUp } from "../../libs/apis/user";
-import { useAuthStore } from "../../store/useAuthStore";
+import useAuthStore from "../../store/useAuthStore";
 import { fetchJobs, JobResp } from "../../libs/apis/user"; // API 호출 함수와 인터페이스 가져오기
 import {
   Listbox,
@@ -31,6 +31,8 @@ const SignUpProfilePage = () => {
   const [nickname, setNickname] = useState<string>("");
   const [birthdate, setBirthdate] = useState<string>("");
   const [selectedIcon, setSelectedIcon] = useState<string>("http://naver.com"); // 기본 아이콘 설정
+  const [accessToken, setAccessToken] = useState<String>("");
+  const [refreshToken, setRefreshToken] = useState<String>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [jobs, setJobs] = useState<string[]>([]); // 직업 리스트 상태
   const [selectedJob, setSelectedJob] = useState<string>(""); // State to hold selected job
@@ -80,9 +82,9 @@ const SignUpProfilePage = () => {
     };
 
     try {
-      await signUp(userData);
+      const res = await signUp(userData);
       // Zustand 상태 업데이트
-      login(userId, userInfo, nickname, selectedIcon, birthdate);
+      login(res.data.id, userId, userInfo, birthdate, res.data.accessToken, res.data.refreshToken)
       alert("회원가입이 완료되었습니다.");
       navigate("/asset");
     } catch (error) {
@@ -211,7 +213,6 @@ const SignUpProfilePage = () => {
         <PurpleBtn
           onClick={handleSignUp}
           label="자산 연결하러 가기"
-          to={"/asset"}
         />
       </div>
 

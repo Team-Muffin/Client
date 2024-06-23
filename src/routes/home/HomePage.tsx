@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import Header from "../../components/common/Header";
 import Navbar from "../../components/common/Navbar";
 import ProductCard from "../../components/common/ProductCard";
 import ChallengeCard from "../../components/home/ChallengeCard";
 import BoardCardVertical from "../../components/home/BoardCardVertical";
+import { fetchChallengeList, ChallengeList } from "../../libs/apis/home";
 
 export default function HomePage() {
+  const navigate = useNavigate();
   const settings = {
     dots: true,
     infinite: true,
@@ -14,6 +17,37 @@ export default function HomePage() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+  const bgColor = [
+    "#F9D1E3",
+    "#8DBDFF",
+    "#F8D560",
+    "#B6E785",
+    "#AF9FF3",
+    "#F9D1E3",
+    "#8DBDFF",
+    "#F8D560",
+    "#B6E785",
+    "#AF9FF3",
+  ];
+
+  const [challengeListData, setChallengeListData] = useState<ChallengeList[]>(
+    []
+  );
+
+  const callChallengeData = async () => {
+    try {
+      const { data } = await fetchChallengeList();
+      setChallengeListData(data);
+    } catch (error) {
+      console.error("홈 챌린지 리스트 데이터 호출 중 에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    callChallengeData();
+    console.log(challengeListData);
+  }, []);
+
   const data = [
     {
       id: 1,
@@ -39,52 +73,51 @@ export default function HomePage() {
     },
   ];
 
-  const challenges = [
-    {
-      bgColor: "#F9D1E3",
-      title: "금융 도서 추천",
-      description: "금융 도서를 타 유저에게 추천하세요",
-      participants: 751,
-      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-J0LYyB-YOa6R7T1D_SAo64qrJgWs_zhHUQ&s",
-    },
-    {
-      bgColor: "#8DBDFF",
-      title: "금융 도서 추천",
-      description: "금융 도서를 타 유저에게 추천하세요",
-      participants: 751,
-      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-J0LYyB-YOa6R7T1D_SAo64qrJgWs_zhHUQ&s",
-    },
-    {
-      bgColor: "#F8D560",
-      title: "금융 도서 추천",
-      description: "금융 도서를 타 유저에게 추천하세요",
-      participants: 751,
-      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-J0LYyB-YOa6R7T1D_SAo64qrJgWs_zhHUQ&s",
-    },
-  ];
+  const handleSearchBtnClick = () => {
+    navigate(`/search`, {
+      state: { domain: "home" },
+    });
+  };
+
+  const handleNotificationBtnClick = () => {
+    navigate("/notification");
+  };
+
+  const handleChallengeMoreBtnClick = () => {
+    navigate("/challenge");
+  };
 
   return (
     <>
       <div className="pt-[2vh] px-[4.5vw]">
         {/* 헤더랑 */}
-        <Header type="logoLeftSearchAndAlarmRight" />
+        <Header
+          type="logoLeftSearchAndAlarmRight"
+          searchBtn={handleSearchBtnClick}
+          notiBtn={handleNotificationBtnClick}
+        />
         <div className="mt-[5.5vh]"></div>
         {/* 세트로 들고 다녀야 됨 */}
         <div className="flex justify-between items-center mb-[1.5vh]">
           <span className="font-semibold text-[1.2rem]">요즘 뜨는 챌린지 </span>{" "}
-          <p className="text-[0.75rem] text-C333333 ">더보기 {">"}</p>
+          <p
+            className="text-[0.75rem] text-C333333 "
+            onClick={handleChallengeMoreBtnClick}
+          >
+            더보기 {">"}
+          </p>
         </div>
 
         {/* 챌린지 카드 컴포넌트 */}
         <div className="whitespace-nowrap overflow-x-auto flex scrollbar-hide">
-          {challenges.map((challenge) => (
+          {challengeListData.map((challenge, index) => (
             <>
               <ChallengeCard
-                title={challenge.title}
+                title={challenge.name}
                 description={challenge.description}
-                participants={challenge.participants}
-                bgColor={challenge.bgColor}
-                ChallengeLogo={challenge.logo}
+                participants={challenge.participation}
+                bgColor={bgColor[index]}
+                ChallengeLogo={challenge.logoUrl}
               />
             </>
           ))}

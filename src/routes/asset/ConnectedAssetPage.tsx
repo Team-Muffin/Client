@@ -12,7 +12,7 @@ const ConnectedAssetPage = () => {
         <p className="text-2xl font-medium mb-[2.5vh]">자산을 연결해주세요 </p>
         <p className="text-base mb-[4vh]">
           나의 자산을 연결할 수 있어요 <br />
-          자산 공개 여부는 설정에서 바꿀 수 있어요
+          다른 유저의 자산도 확인해 보세요 :)
         </p>
         <div className="flex justify-between mb-[0.5vh]">
           <p className="text-xl font-semibold">연결된 자산</p>
@@ -41,7 +41,7 @@ const ConnectedAssetPage = () => {
           </li>
           {/* Repeat the above structure for each connected asset */}
         </ul>
-        <div className="flex justify-between mt-[4vh] mb-[0.5vh]">
+        {/* <div className="flex justify-between mt-[4vh] mb-[0.5vh]">
           <p className="text-xl font-semibold">자산 공개 여부</p>
           <div className="text-right">
             <p className="text-xs font-normal">
@@ -49,9 +49,9 @@ const ConnectedAssetPage = () => {
               인증된 유저로 활동해보세요:)
             </p>
           </div>
-        </div>
+        </div> */}
         <div className="bg-[#CDCACA] w-full h-[0.2vh]"></div>
-        <ul className="max-w-md divide-y divide-gray-200">
+        {/* <ul className="max-w-md divide-y divide-gray-200">
           <li className="p-[1vh]">
             <div className="flex justify-between items-center">
               <div className="flex min-w-0 items-center space-x-4 rtl:space-x-reverse">
@@ -94,7 +94,7 @@ const ConnectedAssetPage = () => {
               </div>
             </div>
           </li>
-        </ul>
+        </ul> */}
       </div>
       <div className="fixed w-full px-[8vw] bottom-[3vh]">
         <div className="flex justify-center mb-[3vh]">
@@ -111,7 +111,7 @@ const ConnectedAssetPage = () => {
           />
           <img src={MiniCircleImg} className="w-3 h-3" alt="Mini Circle" />
         </div>
-        <PurpleBtn to="/signup/tendency" label="나의 자산 연결하기" />
+        <PurpleBtn to="/asset/tendency" label="나의 자산 연결하기" />
       </div>
     </>
   );

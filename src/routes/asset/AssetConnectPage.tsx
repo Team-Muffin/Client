@@ -1,19 +1,23 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import MiniCircle from "../../assets/minicircle.svg";
 import Essential from "../../assets/required.svg";
 import Checked from "../../assets/checked.svg";
 import PurpleBtn from "../../components/common/PurpleBtn";
-import { useAuthStore } from "../../store/useAuthStore"; // Import the Zustand store
-import { CheckUserContactAvailability } from "../../libs/apis/user";
+import useAuthStore from "../../store/useAuthStore";
+import { connectAsset, CheckUserContactAvailability } from "../../libs/apis/user";
 
 const AssetConnectPage = () => {
-  const { birthdate } = useAuthStore((state) => ({
+  const navigate = useNavigate();
+  const { birthdate, setAssetData } = useAuthStore((state) => ({
     birthdate: state.birthdate,
+    setAssetData: state.setAssetData,
   }));
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isAgreed, setIsAgreed] = useState(false);
+  const [name, setName] = useState("");
   const [rrnPart1, setRrnPart1] = useState("");
   const [rrnPart2, setRrnPart2] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -65,6 +69,30 @@ const AssetConnectPage = () => {
     }
   };
 
+  const handleConnectAsset = async () => {
+    if (!isUserContactAvailable) {
+      alert(userContactCheckReason || "사용할 수 없는 전화번호입니다. 다른 전화번호를 입력해주세요.");
+      return;
+    }
+
+    const assetInfo = {
+      socialName: name,
+      backSocialId: rrnPart2,
+      contact: phoneNumber,
+    };
+    try {
+      const res = await connectAsset(assetInfo);
+      setAssetData(res.data);
+      console.log(res.data);
+      alert("자산 연결 성공");
+      navigate("/asset/connect");
+    } catch (error) {
+      console.error("자산 연결 중 오류 발생: ", error);
+      alert("자산 연결 중 오류가 발생했습니다.");
+      navigate("/asset");
+    }
+  };
+
   // JSX return statement for rendering UI
   return (
     <>
@@ -73,7 +101,7 @@ const AssetConnectPage = () => {
         <p className="text-2xl font-medium mb-[2.5vh]">자산을 연결해주세요 </p>
         <p className="text-base mb-[4vh]">
           나의 자산을 연결할 수 있어요 <br />
-          자산 공개 여부는 설정에서 바꿀 수 있어요
+          주민등록번호는 뒷자리만 입력해주세요 :)
         </p>
 
         {/* Agreement dropdown */}
@@ -149,6 +177,8 @@ const AssetConnectPage = () => {
         <input
           type="text"
           id="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="Name"
           required
@@ -222,7 +252,7 @@ const AssetConnectPage = () => {
           />
           <img src={MiniCircle} alt="Mini Circle" className="w-3 h-3" />
         </div>
-        <PurpleBtn to="/signup/assetconnect" label="나의 자산 연결하기" />
+        <PurpleBtn label="나의 자산 연결하기" onClick={handleConnectAsset} />
         <div className="flex justify-center">
           <Link
             to="/signup/success"

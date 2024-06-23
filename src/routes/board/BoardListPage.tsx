@@ -7,9 +7,10 @@ import Navbar from "../../components/common/Navbar";
 import { Link } from "react-router-dom";
 import { fetchBoardList } from "../../libs/apis/board";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
-import useIntersectionObserver from "../../hooks/useIntersectionObserver"; // Adjust the import path accordingly
+import useIntersectionObserver from "../../hooks/useIntersectionObserver";
 import { useParams, useNavigate } from "react-router-dom";
-import SyncLoader from "react-spinners/SyncLoader";
+import useAuthStore from "../../store/useAuthStore";
+import useCategoryFilterStore from "../../store/useCategoryFilterStore";
 
 export default function BoardListPage() {
   const [categoryName, setCategoryName] = useState("정보");
@@ -19,13 +20,28 @@ export default function BoardListPage() {
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [category, setCategory] = useState("1");
-  const [userId, setUserId] = useState(1);
+  const [userId, setUSerId] = useState(1);
   const [selectedFilter, setSelectedFilter] = useState("최신순");
   const elementRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [isScrollRestored, setIsScrollRestored] = useState<boolean>(false);
+  // const { userId } = useAuthStore((state) => ({
+  //   userId: state.userId,
+  // }));
+
+  const { refreshTokens, logout } = useAuthStore.getState();
+
+  const setCategoryAndFilters = useCategoryFilterStore(
+    (state) => state.setCategoryAndFilters
+  );
+
+  const handleSearchBtnClick = () => {
+    navigate(`/search`, {
+      state: { domain: "board" },
+    });
+  };
 
   const selectedCategoryCss =
     "text-base text-C748BFF bg-CECF0FF py-[0.3vh] px-[4.5vw] rounded-[0.5rem] shadow text-[1.1rem]";
@@ -50,18 +66,23 @@ export default function BoardListPage() {
     switch (selection) {
       case "정보":
         setCategory("1");
+        setSelectedFilter("최신순");
         break;
       case "재미":
         setCategory("2");
+        setSelectedFilter("최신순");
         break;
       case "투자":
         setCategory("3");
+        setSelectedFilter("최신순");
         break;
       case "기업":
         setCategory("4");
+        setSelectedFilter("최신순");
         break;
       case "고급":
         setCategory("5");
+        setSelectedFilter("최신순");
         break;
     }
     setPageNo(0);
@@ -124,8 +145,13 @@ export default function BoardListPage() {
 
   // 뒤로갔을 때 스크롤 유지 : TODO FIX
   const handleBoardCardClick = async (link: string) => {
-    navigate(link);
+    if (categoryName && selectedFilter) {
+      setCategoryAndFilters(categoryName, selectedFilter);
+    } else if (categoryName) {
+      setCategoryAndFilters(categoryName, null);
+    }
     await setScrollDataInStorage();
+    navigate(link);
   };
 
   const setScrollDataInStorage = async () => {
@@ -182,7 +208,11 @@ export default function BoardListPage() {
 
   return (
     <div className="py-[2vh] px-[4.5vw]">
-      <Header text="핀" type="textCenterSearchRight" />
+      <Header
+        text="핀"
+        type="textCenterSearchRight"
+        searchBtn={handleSearchBtnClick}
+      />
       <div className="mt-[4vh]"></div>
 
       <div className="flex justify-between text-sm">
@@ -203,6 +233,7 @@ export default function BoardListPage() {
         defaultFilter="최신순"
         filterList={["최신순", "인기순"]}
         onFilterChange={handleFilterChange}
+        newFilter={selectedFilter}
       />
 
       <hr className="border-CD9D9D9 mt-[1vh]" />
@@ -225,7 +256,7 @@ export default function BoardListPage() {
       ))}
       {hasMore && (
         <div ref={elementRef} style={{ textAlign: "center" }}>
-          {isLoading ? <SyncLoader /> : ""}
+          {isLoading ? <LoadingSpinner /> : ""}
         </div>
       )}
 

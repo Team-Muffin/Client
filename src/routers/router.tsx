@@ -9,7 +9,7 @@ import ProductDetailPage from "../routes/product/ProductDetailPage";
 import ReviewPage from "../routes/product/ReviewPage";
 import RelatedBoardPage from "../routes/product/RelatedBoardPage";
 import ReviewWritePage from "../routes/product/ReviewWritePage";
-import HomePage from "../routes/home/Home";
+import HomePage from "../routes/home/HomePage";
 import ChallengePage from "../routes/challenge/ChallengePage";
 import ChallengeDetailPage from "../routes/challenge/ChallengeDetailPage";
 import ChallengeCAL from "../routes/challenge/ChallengeCAL";
@@ -24,6 +24,9 @@ import SignUpSuccessPage from "../routes/signup/SignUpSuccessPage";
 import ProfilePage from "../routes/profile/ProfilePage";
 import EditProfilePage from "../routes/profile/EditProfilePage";
 import StampBoard from "../routes/challenge/StampBoard";
+import Notification from "../routes/notification/NotificationPage";
+import SearchPage from "../routes/search/SearchPage";
+import SearchResultPage from "../routes/search/SearchResultPage";
 
 export const mainRouter = [
   {
@@ -35,6 +38,12 @@ export const mainRouter = [
         index: true,
         element: <HomePage />,
       },
+      {
+        path: "search",
+        element: <SearchPage />,
+      },
+      { path: "searchResult", element: <SearchResultPage /> },
+      { path: "notification", element: <Notification /> },
       {
         path: "signin",
         element: <LoginPage />,
@@ -112,10 +121,16 @@ export const mainRouter = [
           {
             path: "write",
             element: <BoardWritePage />,
+            index: true,
           },
+
           {
             path: ":boardId/edit",
             element: <BoardWritePage />,
+          },
+          {
+            path: "searchResult",
+            element: <SearchResultPage />,
           },
         ],
       },
@@ -130,12 +145,17 @@ export const mainRouter = [
             path: ":productId",
             element: <ProductDetailPage />,
           },
+          {
+            path: "searchResult",
+            element: <SearchResultPage />,
+          },
         ],
       },
 
       {
-        path: "mypage",
+        path: "userProfile",
         element: <ProfilePage />,
+        index: true,
       },
       {
         path: "editprofile",

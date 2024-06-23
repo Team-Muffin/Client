@@ -19,13 +19,23 @@ const SignUpPage = () => {
 
   const login = useAuthStore((state) => state.login);
 
+  const validatePassword = (password: string) => {
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,30}$/;
+    return passwordRegex.test(password);
+  };
+
   const handleNext = () => {
     if (userInfo !== userInfoCheck) {
       alert("비밀번호가 일치하지 않습니다.");
       return;
     }
 
-    if (isUserIdAvailable === false) {
+    if (!validatePassword(userInfo)) {
+      alert("비밀번호는 영문과 숫자를 조합하여 8자 이상 30자 이하여야 합니다.");
+      return;
+    }
+
+    if (isUserIdAvailable === false || isUserIdAvailable === null) {
       alert(
         userIdCheckReason ||
           "이미 사용중인 아이디입니다. 다른 아이디를 입력해주세요."
@@ -33,7 +43,7 @@ const SignUpPage = () => {
       return;
     }
 
-    login(userId, userInfo, "", "", ""); // Call Zustand's login function
+    login("", userId, userInfo, "", "", ""); // Call Zustand's login function
     navigate("/signup/profile");
   };
 
@@ -154,7 +164,6 @@ block w-full p-2.5"
         <PurpleBtn
           label="로그인 정보 작성하기"
           onClick={handleNext}
-          to="/signup/profile"
         />
       </div>
     </>
