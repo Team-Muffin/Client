@@ -24,7 +24,7 @@ import SignUpSuccessPage from "../routes/signup/SignUpSuccessPage";
 import ProfilePage from "../routes/profile/ProfilePage";
 import EditProfilePage from "../routes/profile/EditProfilePage";
 import StampBoard from "../routes/challenge/StampBoard";
-
+import Notification from "../routes/notification/NotificationPage";
 import SearchPage from "../routes/search/SearchPage";
 import SearchResultPage from "../routes/search/SearchResultPage";
 
@@ -43,6 +43,7 @@ export const mainRouter = [
         element: <SearchPage />,
       },
       { path: "searchResult", element: <SearchResultPage /> },
+      { path: "notification", element: <Notification /> },
       {
         path: "signin",
         element: <LoginPage />,
