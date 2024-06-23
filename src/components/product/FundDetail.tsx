@@ -28,11 +28,6 @@ const FundDetail: React.FC<FundDetailProps> = ({ fundDetail }) => {
 
   return (
     <>
-      <p>
-        #{fundDetail.category1} #{fundDetail.category2} #{fundDetail.region}
-      </p>
-      <br />
-
       <p>{fundDetail.infoObject}</p>
       <br />
       <p>{fundDetail.infoStrategy}</p>

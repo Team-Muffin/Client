@@ -149,30 +149,31 @@ export default function ProductListPage() {
     }
   };
   useEffect(() => {
-    console.log("aa");
-    const fetchData = async () => {
-      try {
-        const loanDetailResponse = await fetchLoanProductDetail(productId);
-        if (loanDetailResponse.data) {
-          setLoanDetail(loanDetailResponse.data);
-          let jsonString = loanDetailResponse.data?.description.replace(
-            /'/g,
-            '"'
-          );
-          if (jsonString) {
-            const jsonArray = JSON.parse(jsonString);
-            setLoanDetailArray(jsonArray);
+    if (productType === "대출") {
+      const fetchData = async () => {
+        try {
+          const loanDetailResponse = await fetchLoanProductDetail(productId);
+          if (loanDetailResponse.data) {
+            setLoanDetail(loanDetailResponse.data);
+            let jsonString = loanDetailResponse.data?.description.replace(
+              /'/g,
+              '"'
+            );
+            if (jsonString) {
+              const jsonArray = JSON.parse(jsonString);
+              setLoanDetailArray(jsonArray);
 
-            setIsLoanDetailLoaded(true);
+              setIsLoanDetailLoaded(true);
+            }
+          } else {
+            console.error("상품 대출 디테일 데이터가 없습니다.");
           }
-        } else {
-          console.error("상품 대출 디테일 데이터가 없습니다.");
+        } catch (error) {
+          console.error("대출 디테일 데이터 불러오는데서 오류:", error);
         }
-      } catch (error) {
-        console.error("대출 디테일 데이터 불러오는데서 오류:", error);
-      }
-    };
-    fetchData();
+      };
+      fetchData();
+    }
   }, [productId]);
 
   useEffect(() => {
@@ -206,7 +207,7 @@ export default function ProductListPage() {
         { title: "기준가(원)", content: fundBenefits.stdPrice },
         { title: "기준가대비", content: fundBenefits.diffPrice },
         { title: "운용규모(억)", content: fundBenefits.drvNav },
-        { title: "수익률(%,3개월)", content: fundBenefits.rt3m },
+        { title: "수익률(3개월)", content: fundBenefits.rt3m + "%" },
         { title: "총보수(%)", content: fundBenefits.ter }
       );
     } else if (loanBenefits) {

@@ -3,7 +3,7 @@ import Header from "../../components/common/Header";
 import Navbar from "../../components/common/Navbar";
 import UserStats from "../../components/profile/UserStats";
 import UserProfile from "../../components/profile/UserProfile";
-import CategoryTabs from "../../components/profile/CategoryTabs";
+import CategoryTabs from "../../components/common/CategoryTabs";
 import Portfolio from "../../components/profile/Portfolio";
 import Credit from "../../components/profile/Credit";
 
