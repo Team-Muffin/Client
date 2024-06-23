@@ -121,7 +121,9 @@ export const mainRouter = [
           {
             path: "write",
             element: <BoardWritePage />,
+            index: true,
           },
+
           {
             path: ":boardId/edit",
             element: <BoardWritePage />,
@@ -151,8 +153,9 @@ export const mainRouter = [
       },
 
       {
-        path: "mypage",
+        path: "userProfile",
         element: <ProfilePage />,
+        index: true,
       },
       {
         path: "editprofile",

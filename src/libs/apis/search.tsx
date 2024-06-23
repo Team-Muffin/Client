@@ -37,3 +37,89 @@ interface BoardListResponse {
   message: string;
   data: BoardData[];
 }
+
+//챌린지 검색
+interface challengeListResponse {
+  success: boolean;
+  message: string;
+  data: ChallengeData[];
+}
+
+export interface ChallengeData {
+  id: number;
+  challengeType: number;
+  name: string;
+  description: string;
+  logoUrl: string;
+  endAt: string;
+  challengeUrl: string;
+  corpName: string;
+  term: number;
+  reward: number;
+  participation: number;
+}
+
+export async function fetchSearchedChallengeList(
+  name: string
+): Promise<{ data: ChallengeData[] }> {
+  const response = await instance.get<challengeListResponse>(
+    `/challenge-service/challenges/search?name=${name}`
+  );
+  return { data: response.data.data };
+}
+
+//상품 검색
+
+export async function fetchSearchedProductList(
+  name: string,
+  pageNo?: number,
+  size?: number,
+  category?: string,
+  sort?: string
+): Promise<{ data: ProductListResponse }> {
+  const params = new URLSearchParams({
+    name,
+  });
+
+  // pageNo, size, category, sort가 정의된 경우에만 추가
+  if (pageNo !== undefined) {
+    params.append("pageNo", pageNo.toString());
+  }
+  if (size !== undefined) {
+    params.append("size", size.toString());
+  }
+  if (category) {
+    params.append("category", category);
+  }
+  if (sort) {
+    params.append("sort", sort);
+  }
+  const queryString = params.toString();
+  const response = await instance.get<ProductListResponse>(
+    `/product-service/products/search?${queryString}`
+  );
+
+  return { data: response.data };
+}
+
+export interface ProductList {
+  id: number;
+  name: string;
+  corpName: string;
+  corpImage: string | null;
+  cardImage: string | null;
+  tags: string[];
+  boardCount: number;
+  createdTime: string;
+}
+
+interface ProductListData {
+  "searched products": ProductList[];
+}
+interface ProductListResponse {
+  success: boolean;
+  message: string;
+  data: ProductListData;
+}
+
+//유저 검색

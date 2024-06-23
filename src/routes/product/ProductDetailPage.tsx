@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "../../components/common/Header";
 import BoardCard from "../../components/common/BoardCard";
 import Navbar from "../../components/common/Navbar";
+import writeButton from "../../assets/write-button.svg";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import {
   fetchProductBasic,
@@ -24,7 +25,7 @@ import {
   fetchCardProductDetail,
   CardProductDetail,
 } from "../../libs/apis/product";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 import ProductSummary from "../../components/product/ProductSummary";
 import SavingDetail from "../../components/product/SavingDetail";
 import FundDetail from "../../components/product/FundDetail";
@@ -356,6 +357,10 @@ export default function ProductListPage() {
           imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
         />
       </div>
+
+      <Link to={`/board/write?productId=${productId}`}>
+        <img className="fixed bottom-[8vh] right-[4vw] z-5" src={writeButton} />
+      </Link>
 
       <div className="pb-[8.5vh]" />
       <Navbar />
