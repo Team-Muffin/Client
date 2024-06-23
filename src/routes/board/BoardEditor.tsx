@@ -23,6 +23,7 @@ const BoardEditor: React.FC<BoardEditorProps> = ({ setData, data, setTitle, titl
 
   const handleEditorInit = useCallback((instance: any) => {
     editorCore.current = instance;
+    console.log(instance);
   }, []);
 
   const handleEditorChange = useCallback(async () => {
@@ -52,7 +53,7 @@ const BoardEditor: React.FC<BoardEditorProps> = ({ setData, data, setTitle, titl
       <ReactEditorJS onInitialize={handleEditorInit}
         tools={EDITOR_JS_TOOLS}
         onChange={handleEditorChange}
-        defaultValue={data} />
+      />
     </div>
   )
 };
