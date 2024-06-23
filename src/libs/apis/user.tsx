@@ -184,3 +184,5 @@ export async function EditProfile(profileData: EditProfileRequest, imageFile: Fi
     throw error;
   }
 }
+
+//유저 상세 조회
