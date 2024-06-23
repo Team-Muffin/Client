@@ -1,4 +1,5 @@
 import instance from "./base";
+import { OutputData } from "@editorjs/editorjs";
 
 // 게시글 리스트 조회
 export async function fetchBoardList(options: {
@@ -163,4 +164,23 @@ export async function deleteComment(commentId: number) {
       },
     }
   );
+}
+
+export interface CreateBoardRequest {
+  title: String;
+  content: OutputData | Object;
+  categoryId: String
+
+}
+export async function createBoard(requestBody: CreateBoardRequest) {
+  try {
+    const response = await instance.post(
+      `/board-service/boards`,
+      requestBody
+    );
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 }

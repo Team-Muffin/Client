@@ -9,10 +9,15 @@ import {
   Transition,
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { OutputData } from "@editorjs/editorjs";
+import BoardEditor from "./BoardEditor";
+import { createBoard, CreateBoardRequest } from "../../libs/apis/board";
 
 export default function BoardWritePage() {
   const [selected, setSelected] = useState("정보");
   const [categoryId, setCategoryId] = useState("정보");
+  const [boardData, setBoardData] = useState<OutputData | Object>({});
+  const [title, setTitle] = useState<String>("");
   const filterList = ["정보", "재미", "투자", "기업", "고급"];
   const navigate = useNavigate();
   const handleBackButtonClick = () => {
@@ -54,6 +59,16 @@ export default function BoardWritePage() {
     setSelected(text);
   };
 
+  const handleRegister = async () => {
+    const requestBody: CreateBoardRequest = {
+      title: title,
+      content: boardData,
+      categoryId: "1"
+    }
+    const response = await createBoard(requestBody);
+    console.log(response.data.boardId);
+  }
+
   return (
     <>
       <div className="py-[2vh] px-[4.5vw]">
@@ -93,9 +108,8 @@ export default function BoardWritePage() {
                           {({ active }) => (
                             <a
                               href="#"
-                              className={`${
-                                active ? "bg-gray-100" : ""
-                              }text-black block px-4 py-2 text-[1rem]`}
+                              className={`${active ? "bg-gray-100" : ""
+                                }text-black block px-4 py-2 text-[1rem]`}
                             >
                               {text}
                             </a>
@@ -108,7 +122,7 @@ export default function BoardWritePage() {
               </Transition>
             </Menu>
 
-            <div className="absolute right-4 font-medium text-lg">
+            <div className="absolute right-4 font-medium text-lg" onClick={handleRegister}>
               {" "}
               {boardId ? "수정" : "작성"}
             </div>
@@ -118,6 +132,7 @@ export default function BoardWritePage() {
         <div className="mt-[4vh]"></div>
 
         {/* 민우 TODO: 여기부터 Editor 관련 */}
+        <BoardEditor setData={setBoardData} data={boardData} setTitle={setTitle} title={title} />
       </div>
     </>
   );
