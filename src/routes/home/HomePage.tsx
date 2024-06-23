@@ -71,6 +71,10 @@ export default function HomePage() {
     });
   };
 
+  const handleChallengeMoreBtnClick = () => {
+    navigate("/challenge");
+  };
+
   return (
     <>
       <div className="pt-[2vh] px-[4.5vw]">
@@ -83,7 +87,12 @@ export default function HomePage() {
         {/* 세트로 들고 다녀야 됨 */}
         <div className="flex justify-between items-center mb-[1.5vh]">
           <span className="font-semibold text-[1.2rem]">요즘 뜨는 챌린지 </span>{" "}
-          <p className="text-[0.75rem] text-C333333 ">더보기 {">"}</p>
+          <p
+            className="text-[0.75rem] text-C333333 "
+            onClick={handleChallengeMoreBtnClick}
+          >
+            더보기 {">"}
+          </p>
         </div>
 
         {/* 챌린지 카드 컴포넌트 */}
