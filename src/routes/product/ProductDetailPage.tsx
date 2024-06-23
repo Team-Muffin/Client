@@ -21,12 +21,15 @@ import {
   SavingProductDetail,
   fetchFundProductDetail,
   FundProductDetail,
+  fetchCardProductDetail,
+  CardProductDetail,
 } from "../../libs/apis/product";
 import { useParams, useLocation } from "react-router-dom";
 import ProductSummary from "../../components/product/ProductSummary";
 import SavingDetail from "../../components/product/SavingDetail";
 import FundDetail from "../../components/product/FundDetail";
 import LoanDetail from "../../components/product/LoanDetail";
+import CardDetail from "../../components/product/CardDetail";
 
 export default function ProductListPage() {
   const [benefits, setBenefits] = useState<
@@ -49,6 +52,7 @@ export default function ProductListPage() {
     null
   );
   const [fundDetail, setFundDetail] = useState<FundProductDetail | null>(null);
+  const [cardDetail, setCardDetail] = useState<CardProductDetail | null>(null);
 
   const [showDetail, setShowDetail] = useState(false);
   const params = useParams();
@@ -89,6 +93,12 @@ export default function ProductListPage() {
           setCardBenefits(cardSummaryResponse.data);
         } else {
           console.error("상품 카드 데이터가 없습니다.");
+        }
+        const cardDetailResponse = await fetchCardProductDetail(productId);
+        if (cardDetailResponse.data) {
+          setCardDetail(cardDetailResponse.data);
+        } else {
+          console.error("상품 card detail 데이터가 없습니다.");
         }
       } else if (type === "예적금") {
         const savingSummaryResponse = await fetchSavingProductSummary(
@@ -294,6 +304,7 @@ export default function ProductListPage() {
                     loanDetailArray={loanDetailArray}
                     isLoanDetailLoaded={isLoanDetailLoaded}
                   />
+                  <CardDetail cardDetail={cardDetail} />
                 </p>
               </>
             ) : (
