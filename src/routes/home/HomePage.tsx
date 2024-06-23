@@ -34,17 +34,17 @@ export default function HomePage() {
     []
   );
 
-  const callChallengeData = async () => {
-    try {
-      const { data } = await fetchChallengeList();
-      setChallengeListData(data);
-    } catch (error) {
-      console.error("홈 챌린지 리스트 데이터 호출 중 에러:", error);
-    }
-  };
+  // const callChallengeData = async () => {
+  //   try {
+  //     // const { data } = await fetchChallengeList();
+  //     //  setChallengeListData(data);
+  //   } catch (error) {
+  //     console.error("홈 챌린지 리스트 데이터 호출 중 에러:", error);
+  //   }
+  // };
 
   useEffect(() => {
-    callChallengeData();
+    // callChallengeData();
     console.log(challengeListData);
   }, []);
 

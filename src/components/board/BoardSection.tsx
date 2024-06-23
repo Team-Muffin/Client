@@ -8,6 +8,8 @@ import Scrap from "../../assets/scrap.svg";
 import { createBookmark, createLike } from "../../libs/apis/board";
 
 interface BoardContentProps {
+  authorId?: number;
+  authorClick?: (authorId: number) => void;
   authorNickname: string;
   authorImage: string;
   createdTime: string;
@@ -22,6 +24,8 @@ interface BoardContentProps {
 }
 
 const BoardSection: React.FC<BoardContentProps> = ({
+  authorId,
+  authorClick,
   authorNickname,
   authorImage,
   createdTime,
@@ -76,9 +80,13 @@ const BoardSection: React.FC<BoardContentProps> = ({
             className="pr-[3vw] h-[5vh]"
             src={authorImage}
             alt="author image"
+            onClick={() => authorClick && authorId && authorClick(authorId)}
           />
           <div>
-            <p className="text-[1.2rem] text-C333333 font-medium">
+            <p
+              className="text-[1.2rem] text-C333333 font-medium"
+              onClick={() => authorClick && authorId && authorClick(authorId)}
+            >
               {authorNickname}
             </p>
             <p className="text-[0.8rem] text-C333333">
