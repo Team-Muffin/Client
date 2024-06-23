@@ -15,8 +15,8 @@ import { createBoard, CreateBoardRequest } from "../../libs/apis/board";
 
 export default function BoardWritePage() {
   const [selected, setSelected] = useState("정보");
-  const [categoryId, setCategoryId] = useState("정보");
-  const [boardData, setBoardData] = useState<OutputData | Object>({});
+  const [categoryId, setCategoryId] = useState<string>(1 + "");
+  const [boardData, setBoardData] = useState<OutputData | undefined>();
   const [title, setTitle] = useState<String>("");
   const filterList = ["정보", "재미", "투자", "기업", "고급"];
   const navigate = useNavigate();
@@ -60,13 +60,24 @@ export default function BoardWritePage() {
   };
 
   const handleRegister = async () => {
+    if (!boardData) {
+      window.alert("게시글 내용을 입력해주세요");
+      return;
+    }
+
     const requestBody: CreateBoardRequest = {
       title: title,
       content: boardData,
-      categoryId: "1"
+      categoryId: categoryId
     }
     const response = await createBoard(requestBody);
     console.log(response.data.boardId);
+
+    if (response.success == true) {
+      navigate(`/board/${response.data.boardId}`);
+    } else {
+      window.alert("게시글 작성에 실패했습니다.");
+    }
   }
 
   return (
@@ -132,7 +143,8 @@ export default function BoardWritePage() {
         <div className="mt-[4vh]"></div>
 
         {/* 민우 TODO: 여기부터 Editor 관련 */}
-        <BoardEditor setData={setBoardData} data={boardData} setTitle={setTitle} title={title} />
+        <BoardEditor setData={setBoardData} data={boardData}
+          setTitle={setTitle} title={title} />
       </div>
     </>
   );

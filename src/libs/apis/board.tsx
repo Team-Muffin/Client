@@ -168,7 +168,7 @@ export async function deleteComment(commentId: number) {
 
 export interface CreateBoardRequest {
   title: String;
-  content: OutputData | Object;
+  content: OutputData;
   categoryId: String
 
 }
@@ -176,7 +176,12 @@ export async function createBoard(requestBody: CreateBoardRequest) {
   try {
     const response = await instance.post(
       `/board-service/boards`,
-      requestBody
+      requestBody,
+      {
+        headers: {
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwibmlja25hbWUiOiLrj5nsm5DssLjsuZgiLCJyb2xlIjoiTk9STUFMIiwiam9iIjoi64yA7ZWZ7IOdIiwiYmlydGgiOiIyMDAwLTAxLTAzIiwicHJvZmlsZUltYWdlIjoiaHR0cDovL-ydtOuvuOyngOyjvOyGjCIsImlhdCI6MTcxODc2MzA2NCwiZXhwIjoxOTE4NzYzOTY0fQ.2PUWMjCoPHrPxAqCV4O3fmZnZlpSQyIfdQGaWhsMiBg`, // 인증 토큰을 헤더에 추가
+        }
+      }
     );
 
     return response.data;

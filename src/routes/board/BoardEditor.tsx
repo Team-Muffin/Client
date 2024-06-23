@@ -10,10 +10,10 @@ type BoardEditorProps = {
    * time: Number,
    * version: String
    */
-  setData: React.Dispatch<SetStateAction<OutputData>>,
-  data: any,
+  setData: React.Dispatch<SetStateAction<OutputData | undefined>>,
+  data: OutputData | undefined,
   setTitle: React.Dispatch<SetStateAction<String>>,
-  title: any,
+  title: String,
 }
 
 const BoardEditor: React.FC<BoardEditorProps> = ({ setData, data, setTitle, title }) => {
@@ -46,6 +46,7 @@ const BoardEditor: React.FC<BoardEditorProps> = ({ setData, data, setTitle, titl
         style={{ borderWidth: "0 0 1px", width: "100%" }}
         placeholder={"제목을 입력해 주세요"}
         onChange={handleTitleChange}
+        autoFocus
       >
       </input>
       <ReactEditorJS onInitialize={handleEditorInit}
