@@ -12,7 +12,7 @@ interface AssetData {
 
 export interface AuthState {
   isAuthenticated: boolean;
-  id: string;
+  id: number;
   userId: string;
   userInfo: string;
   birthdate: string;
@@ -20,7 +20,7 @@ export interface AuthState {
   refreshToken: string;
   assetData: AssetData[];
   login: (
-    id: string,
+    id: number,
     userId: string,
     userInfo: string,
     birthdate: string,
@@ -34,7 +34,7 @@ export interface AuthState {
 
 const authSlice: StateCreator<AuthState, [['zustand/persist', unknown]]> = (set, get) => ({
   isAuthenticated: false,
-  id: '',
+  id: 0,
   userId: '',
   userInfo: '',
   birthdate: '',
@@ -55,7 +55,7 @@ const authSlice: StateCreator<AuthState, [['zustand/persist', unknown]]> = (set,
   logout: () => {
     set({
       isAuthenticated: false,
-      id: '',
+      id: 0,
       userId: '',
       userInfo: '',
       birthdate: '',

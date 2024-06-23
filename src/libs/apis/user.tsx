@@ -184,3 +184,32 @@ export async function EditProfile(profileData: EditProfileRequest, imageFile: Fi
     throw error;
   }
 }
+
+// 유저 상세 조회
+export interface UserDetailsResponse {
+  success: boolean;
+  message: string;
+  data: {
+    id: number;
+    nickname: string;
+    profileImage: string;
+    tofinId: string;
+    role: string;
+    job: string;
+    ageRange: number;
+    followers: number;
+    followings: number;
+    isFollow: boolean;
+  };
+}
+
+export async function getUserDetails(id: number): Promise<UserDetailsResponse> {
+  try {
+    const response = await instance.get(`/user-service/users/${id}`);
+    console.log("유저 상세 정보 조회 API 호출 성공:", response.data); // 성공 로그 출력
+    return response.data;
+  } catch (error) {
+    console.error("유저 상세 정보 조회 중 오류 발생", error);
+    throw error;
+  }
+}
