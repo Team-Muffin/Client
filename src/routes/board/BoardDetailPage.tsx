@@ -18,6 +18,9 @@ import {
   createComment,
   deleteComment,
   fetchComment,
+  fetchFollowStatus,
+  followStatusResponse,
+  followUser,
 } from "../../libs/apis/board";
 import TimeAgo from "../../utils/timeAgo";
 import BackBtn from "../../assets/back.svg";
@@ -33,8 +36,9 @@ export default function BoardDetailPage() {
   const commentInput = useRef<HTMLInputElement>(null);
   const createCommentBtn = useRef<HTMLInputElement>(null);
   const commentInputArea = useRef<HTMLInputElement>(null);
-  const { userId } = useAuthStore((state) => ({
+  const { userId, id } = useAuthStore((state) => ({
     userId: state.userId,
+    id: state.id,
   }));
 
   const navigate = useNavigate();
@@ -251,49 +255,51 @@ export default function BoardDetailPage() {
                     })()}
                   </div>
                   <div className="absolute right-4">
-                    <Menu as="div">
-                      <MenuButton>
-                        <img src={More} className="cursor-pointer" />
-                      </MenuButton>
+                    {Number(id) == boardData.authorId && (
+                      <Menu as="div">
+                        <MenuButton>
+                          <img src={More} className="cursor-pointer" />
+                        </MenuButton>
 
-                      <Transition
-                        enter="transition ease-out duration-100"
-                        enterFrom="transform opacity-0 scale-95"
-                        enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
-                        leaveFrom="transform opacity-100 scale-100"
-                        leaveTo="transform opacity-0 scale-95"
-                      >
-                        <Menu.Items
-                          static
-                          className="p-[0.5vh] right-[0.5vh] absolute z-10 mt-[0.5vh] w-[18vw] origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                        <Transition
+                          enter="transition ease-out duration-100"
+                          enterFrom="transform opacity-0 scale-95"
+                          enterTo="transform opacity-100 scale-100"
+                          leave="transition ease-in duration-75"
+                          leaveFrom="transform opacity-100 scale-100"
+                          leaveTo="transform opacity-0 scale-95"
                         >
-                          <div className="py-1">
-                            <Menu.Item>
-                              {() => (
-                                <div
-                                  className="text-center p-[1vw]"
-                                  onClick={handleEditButtonClick}
-                                >
-                                  수정
-                                </div>
-                              )}
-                            </Menu.Item>
+                          <Menu.Items
+                            static
+                            className="p-[0.5vh] right-[0.5vh] absolute z-10 mt-[0.5vh] w-[18vw] origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                          >
+                            <div className="py-1">
+                              <Menu.Item>
+                                {() => (
+                                  <div
+                                    className="text-center p-[1vw]"
+                                    onClick={handleEditButtonClick}
+                                  >
+                                    수정
+                                  </div>
+                                )}
+                              </Menu.Item>
 
-                            <Menu.Item>
-                              {() => (
-                                <div
-                                  className="text-center p-[1vw]"
-                                  onClick={handleBoardDelete}
-                                >
-                                  삭제
-                                </div>
-                              )}
-                            </Menu.Item>
-                          </div>
-                        </Menu.Items>
-                      </Transition>
-                    </Menu>
+                              <Menu.Item>
+                                {() => (
+                                  <div
+                                    className="text-center p-[1vw]"
+                                    onClick={handleBoardDelete}
+                                  >
+                                    삭제
+                                  </div>
+                                )}
+                              </Menu.Item>
+                            </div>
+                          </Menu.Items>
+                        </Transition>
+                      </Menu>
+                    )}
                   </div>
                 </div>
               </div>
@@ -319,7 +325,7 @@ export default function BoardDetailPage() {
                 commentCount={boardData.commentCount}
                 liked={boardData.liked}
                 bookmarked={boardData.bookmarked}
-                userId={userId}
+                userIdPk={Number(id)}
               />
             </div>
             <hr className="border-CD9D9D9 my-[1vh]" />
@@ -357,12 +363,16 @@ export default function BoardDetailPage() {
                           >
                             답글
                           </span>
-                          <span
-                            className="text-[0.8rem] pl-[1vw] text-C333333"
-                            onClick={() => handleDeleteCommentClick(comment.id)}
-                          >
-                            삭제
-                          </span>
+                          {comment.authorId === Number(id) && (
+                            <span
+                              className="text-[0.8rem] pl-[1vw] text-C333333"
+                              onClick={() =>
+                                handleDeleteCommentClick(comment.id)
+                              }
+                            >
+                              삭제
+                            </span>
+                          )}
                         </div>
                       </div>
 
@@ -392,14 +402,16 @@ export default function BoardDetailPage() {
                               </div>
                             </div>
                             <div>
-                              <span
-                                className="text-[0.8rem] pl-[1vw] text-C333333"
-                                onClick={() =>
-                                  handleDeleteCommentClick(reply.id)
-                                }
-                              >
-                                삭제
-                              </span>
+                              {reply.authorId === Number(id) && (
+                                <span
+                                  className="text-[0.8rem] pl-[1vw] text-C333333"
+                                  onClick={() =>
+                                    handleDeleteCommentClick(reply.id)
+                                  }
+                                >
+                                  삭제
+                                </span>
+                              )}
                             </div>
                           </div>
                           <p className="text-[0.95rem] mt-[1vh] ml-[1vw] text-C333333">

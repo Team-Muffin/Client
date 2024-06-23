@@ -146,23 +146,41 @@ export async function deleteComment(commentId: number) {
 export interface CreateBoardRequest {
   title: String;
   content: OutputData;
-  categoryId: String
-
+  categoryId: String;
 }
 export async function createBoard(requestBody: CreateBoardRequest) {
   try {
-    const response = await instance.post(
-      `/board-service/boards`,
-      requestBody,
-      {
-        headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwibmlja25hbWUiOiLrj5nsm5DssLjsuZgiLCJyb2xlIjoiTk9STUFMIiwiam9iIjoi64yA7ZWZ7IOdIiwiYmlydGgiOiIyMDAwLTAxLTAzIiwicHJvZmlsZUltYWdlIjoiaHR0cDovL-ydtOuvuOyngOyjvOyGjCIsImlhdCI6MTcxODc2MzA2NCwiZXhwIjoxOTE4NzYzOTY0fQ.2PUWMjCoPHrPxAqCV4O3fmZnZlpSQyIfdQGaWhsMiBg`, // 인증 토큰을 헤더에 추가
-        }
-      }
-    );
+    const response = await instance.post(`/board-service/boards`, requestBody);
 
     return response.data;
   } catch (error) {
     console.log(error);
   }
+}
+
+//팔로우 토글
+export async function followUser(userId: number) {
+  console.log("팔로우");
+  await instance.post(`/user-service/users/${userId}/follow`);
+}
+
+//팔로잉 상태 확인
+export async function fetchFollowStatus(
+  userId: number
+): Promise<{ data: followStatusResponse }> {
+  const response = await instance.get<followStatusResponse>(
+    `user-service/users/${userId}/follow`
+  );
+  console.log(response.data);
+  return { data: response.data };
+}
+
+export interface followStatusResponse {
+  success: boolean;
+  message: string;
+  data: {
+    followers: number;
+    followings: number;
+    isFollow: boolean;
+  };
 }

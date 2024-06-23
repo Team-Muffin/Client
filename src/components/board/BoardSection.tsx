@@ -6,8 +6,11 @@ import Reply from "../../assets/reply.svg";
 import FilledScrap from "../../assets/scrap-filled.svg";
 import Scrap from "../../assets/scrap.svg";
 import { createBookmark, createLike } from "../../libs/apis/board";
-import BoardEditor from "../../routes/board/BoardEditor";
-import BoardViewer from "../../routes/board/BoardViewer";
+import {
+  fetchFollowStatus,
+  followStatusResponse,
+  followUser,
+} from "../../libs/apis/board";
 
 interface BoardContentProps {
   authorId?: number;
@@ -22,7 +25,7 @@ interface BoardContentProps {
   commentCount: number;
   liked: boolean;
   bookmarked: boolean;
-  userId: string;
+  userIdPk?: number;
 }
 
 const BoardSection: React.FC<BoardContentProps> = ({
@@ -38,21 +41,57 @@ const BoardSection: React.FC<BoardContentProps> = ({
   commentCount,
   liked,
   bookmarked,
-  userId,
+  userIdPk,
 }) => {
   const [heartClicked, setHeartClicked] = useState(false);
   const [scrapClicked, setScrapClicked] = useState(false);
   const [likeCnt, setLikeCnt] = useState(0);
+  const [followStatus, setFollowStatus] = useState(false);
+
+  const callFollowData = async () => {
+    try {
+      if (userIdPk) {
+        const response = await fetchFollowStatus(userIdPk);
+        if (response.data) {
+          console.log(response.data.data.isFollow);
+          setFollowStatus(response.data.data.isFollow);
+        } else {
+          console.log("팔로우 데이터가 없습니다.");
+        }
+      }
+    } catch (error) {
+      console.error("팔로우 데이터 호출 중 에러:", error);
+    }
+  };
 
   useEffect(() => {
     setHeartClicked(liked);
     setScrapClicked(bookmarked);
     if (likeCnt !== likeCount) {
       setLikeCnt(likeCount);
-      // console.log(boardData.likeCount); // 콘솔에 직접 출력
     }
+    // 비동기 함수 호출할 때 await 사용
+    (async () => {
+      await callFollowData();
+    })();
   }, []);
 
+  useEffect(() => {
+    // followStatus가 변할 때마다 로그 출력
+    console.log("ㅁㅇ" + followStatus);
+  }, [followStatus]);
+
+  const handleFollowBtnClicked = async () => {
+    try {
+      if (authorId) {
+        console.log("aa");
+        await followUser(authorId);
+        await callFollowData();
+      }
+    } catch (error) {
+      console.error("팔로우하다가 에러", error);
+    }
+  };
   const handleHeartClicked = async (selection: boolean) => {
     try {
       await createLike(boardId);
@@ -74,6 +113,8 @@ const BoardSection: React.FC<BoardContentProps> = ({
       console.error("핀하기 중 오류 발생: ", error);
     }
   };
+  console.log(authorId);
+  console.log(userIdPk);
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -96,14 +137,32 @@ const BoardSection: React.FC<BoardContentProps> = ({
             </p>
           </div>
         </div>
-        <div className="bg-[#EDF0FF] text-[#748BFF] py-[1.5vw] px-[3.75vw] rounded-[0.8rem]">
-          팔로잉
-        </div>
+        {authorId === userIdPk ? (
+          <></>
+        ) : (
+          <>
+            {followStatus === true ? (
+              <div
+                className="bg-[#EDF0FF] text-[#748BFF] py-[1.5vw] px-[3.75vw] rounded-[0.8rem]"
+                onClick={handleFollowBtnClicked}
+              >
+                팔로잉
+              </div>
+            ) : (
+              <div
+                className="bg-[#748BFF] text-[#ffffff] py-[1.5vw] px-[3.75vw] rounded-[0.8rem]"
+                onClick={handleFollowBtnClicked}
+              >
+                팔로우
+              </div>
+            )}
+          </>
+        )}
       </div>
 
       <p className="py-[1vh] text-[1.25rem] font-medium">{title}</p>
-      <p className="text-[0.95rem]">
-        <BoardViewer strData={content} />
+      <p className="text-[0.95rem] break-words">
+        {content}
         <br />
       </p>
 
