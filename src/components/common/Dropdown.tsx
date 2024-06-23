@@ -12,7 +12,7 @@ type DropdownProps = {
   defaultFilter: string;
   filterList: string[];
   onFilterChange: (newFilter: string) => void;
-  newFilter: string;
+  newFilter?: string;
 };
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -31,7 +31,9 @@ const Dropdown: React.FC<DropdownProps> = ({
   };
 
   useEffect(() => {
-    setSelected(newFilter);
+    if (newFilter) {
+      setSelected(newFilter);
+    }
   }, [newFilter]);
 
   return (
