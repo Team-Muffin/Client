@@ -11,7 +11,7 @@ interface BoardCardProps {
   time: string;
   heartCount: number;
   replyCount: number;
-  imageUrl: string;
+  imageUrl?: string;
   authorImageUrl?: string;
 }
 
@@ -46,11 +46,13 @@ const BoardCard: React.FC<BoardCardProps> = ({
             <p className="text-[0.85rem] mr-[1vw] text-C333333">{replyCount}</p>
           </div>
         </div>
-        <img
-          className="w-[22vw] h-[22vw] rounded-[0.75rem]"
-          src={imageUrl}
-          alt="Post Thumbnail"
-        />
+        {imageUrl && (
+          <img
+            className="w-[22vw] h-[22vw] rounded-[0.75rem]"
+            src={imageUrl}
+            alt="Post Thumbnail"
+          />
+        )}
       </div>
       <hr className="border-CD9D9D9" />
     </>
