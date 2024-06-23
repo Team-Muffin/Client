@@ -12,22 +12,23 @@ interface SignInData {
 }
 
 const LoginPage: React.FC = () => {
-  const [id, setId] = useState<string>("");
+  const [userId, setId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const { login } = useAuthStore((state: AuthState) => ({
+  const { id, login } = useAuthStore((state: AuthState) => ({
+    id: state.id,
     login: state.login,
   })); // Zustand에서 login 액션 가져오기
 
   const handleLogin = async () => {
     const userData = {
-      tofinId: id,
+      tofinId: userId,
       userInfo: password,
     };
     try {
       // 실제 로그인 API 호출 예시
        const res = await signIn(userData);
-       login(id, password, "", res.data.accessToken, res.data.refreshToken)
+       login(id, userId, password, "", res.data.accessToken, res.data.refreshToken)
       } catch(error){
         console.error("로그인 에러", error);
       }
