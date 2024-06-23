@@ -30,6 +30,7 @@ export default function ProductListPage() {
 
   const handleCategoryClick = (selection: string) => {
     setCategory(selection);
+    setSelectedFilter("최신순");
   };
 
   const handleFilterChange = (newFilter: string) => {
@@ -95,6 +96,7 @@ export default function ProductListPage() {
             defaultFilter="최신순"
             filterList={["최신순", "인기순"]}
             onFilterChange={handleFilterChange}
+            newFilter={selectedFilter}
           />
 
           {productListData.map((data) => (

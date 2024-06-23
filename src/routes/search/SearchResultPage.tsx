@@ -30,7 +30,7 @@ export default function SearchResultPage() {
     console.log(domain);
     setSearchKeyword(location.state.searchKeyword);
     setSearchContent(location.state.searchKeyword);
-  });
+  }, []);
 
   const handleSearchClick = () => {
     if (searchContent == "") {

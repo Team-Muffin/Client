@@ -78,6 +78,8 @@ export interface BoardResponse {
     authorId: number;
     authorNickname: string;
     authorProfile: string;
+    liked: boolean;
+    bookmarked: boolean;
   };
 }
 
@@ -112,27 +114,15 @@ export async function fetchComment(
 }
 
 export async function createBookmark(boardId: string) {
-  await instance.post(`/board-service/boards/${boardId}/bookmark`, null, {
-    headers: {
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwibmlja25hbWUiOiLrj5nsm5DssLjsuZgiLCJyb2xlIjoiTk9STUFMIiwiam9iIjoi64yA7ZWZ7IOdIiwiYmlydGgiOiIyMDAwLTAxLTAzIiwicHJvZmlsZUltYWdlIjoiaHR0cDovL-ydtOuvuOyngOyjvOyGjCIsImlhdCI6MTcxODc2MzA2NCwiZXhwIjoxOTE4NzYzOTY0fQ.2PUWMjCoPHrPxAqCV4O3fmZnZlpSQyIfdQGaWhsMiBg`, // 인증 토큰을 헤더에 추가
-    },
-  });
+  await instance.post(`/board-service/boards/${boardId}/bookmark`, null, {});
 }
 
 export async function createLike(boardId: string) {
-  await instance.post(`/board-service/boards/${boardId}/like`, null, {
-    headers: {
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwibmlja25hbWUiOiLrj5nsm5DssLjsuZgiLCJyb2xlIjoiTk9STUFMIiwiam9iIjoi64yA7ZWZ7IOdIiwiYmlydGgiOiIyMDAwLTAxLTAzIiwicHJvZmlsZUltYWdlIjoiaHR0cDovL-ydtOuvuOyngOyjvOyGjCIsImlhdCI6MTcxODc2MzA2NCwiZXhwIjoxOTE4NzYzOTY0fQ.2PUWMjCoPHrPxAqCV4O3fmZnZlpSQyIfdQGaWhsMiBg`, // 인증 토큰을 헤더에 추가
-    },
-  });
+  await instance.post(`/board-service/boards/${boardId}/like`, null, {});
 }
 
 export async function deleteBoard(boardId: string) {
-  await instance.delete(`/board-service/boards/${boardId}`, {
-    headers: {
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwibmlja25hbWUiOiLrj5nsm5DssLjsuZgiLCJyb2xlIjoiTk9STUFMIiwiam9iIjoi64yA7ZWZ7IOdIiwiYmlydGgiOiIyMDAwLTAxLTAzIiwicHJvZmlsZUltYWdlIjoiaHR0cDovL-ydtOuvuOyngOyjvOyGjCIsImlhdCI6MTcxODc2MzA2NCwiZXhwIjoxOTE4NzYzOTY0fQ.2PUWMjCoPHrPxAqCV4O3fmZnZlpSQyIfdQGaWhsMiBg`,
-    },
-  });
+  await instance.delete(`/board-service/boards/${boardId}`, {});
 }
 
 //댓글
@@ -143,24 +133,11 @@ type commentData = {
 };
 
 export async function createComment(boardId: string, commentData: commentData) {
-  await instance.post(
-    `/board-service/boards/${boardId}/comments`,
-    commentData,
-    {
-      headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwibmlja25hbWUiOiLrj5nsm5DssLjsuZgiLCJyb2xlIjoiTk9STUFMIiwiam9iIjoi64yA7ZWZ7IOdIiwiYmlydGgiOiIyMDAwLTAxLTAzIiwicHJvZmlsZUltYWdlIjoiaHR0cDovL-ydtOuvuOyngOyjvOyGjCIsImlhdCI6MTcxODc2MzA2NCwiZXhwIjoxOTE4NzYzOTY0fQ.2PUWMjCoPHrPxAqCV4O3fmZnZlpSQyIfdQGaWhsMiBg`, // 인증 토큰을 헤더에 추가
-      },
-    }
-  );
+  await instance.post(`/board-service/boards/${boardId}/comments`, commentData);
 }
 
 export async function deleteComment(commentId: number) {
   await instance.delete(
-    `/board-service/boards/{boardId}/comments/${commentId}`,
-    {
-      headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwibmlja25hbWUiOiLrj5nsm5DssLjsuZgiLCJyb2xlIjoiTk9STUFMIiwiam9iIjoi64yA7ZWZ7IOdIiwiYmlydGgiOiIyMDAwLTAxLTAzIiwicHJvZmlsZUltYWdlIjoiaHR0cDovL-ydtOuvuOyngOyjvOyGjCIsImlhdCI6MTcxODc2MzA2NCwiZXhwIjoxOTE4NzYzOTY0fQ.2PUWMjCoPHrPxAqCV4O3fmZnZlpSQyIfdQGaWhsMiBg`, // 인증 토큰을 헤더에 추가
-      },
-    }
+    `/board-service/boards/{boardId}/comments/${commentId}`
   );
 }

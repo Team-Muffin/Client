@@ -16,6 +16,9 @@ interface BoardContentProps {
   boardId: string;
   likeCount: number;
   commentCount: number;
+  liked: boolean;
+  bookmarked: boolean;
+  userId: string;
 }
 
 const BoardSection: React.FC<BoardContentProps> = ({
@@ -27,12 +30,17 @@ const BoardSection: React.FC<BoardContentProps> = ({
   boardId,
   likeCount,
   commentCount,
+  liked,
+  bookmarked,
+  userId,
 }) => {
   const [heartClicked, setHeartClicked] = useState(false);
   const [scrapClicked, setScrapClicked] = useState(false);
   const [likeCnt, setLikeCnt] = useState(0);
 
   useEffect(() => {
+    setHeartClicked(liked);
+    setScrapClicked(bookmarked);
     if (likeCnt !== likeCount) {
       setLikeCnt(likeCount);
       // console.log(boardData.likeCount); // 콘솔에 직접 출력
@@ -67,7 +75,7 @@ const BoardSection: React.FC<BoardContentProps> = ({
           <img
             className="pr-[3vw] h-[5vh]"
             src={authorImage}
-            alt="Author Avatar"
+            alt="author image"
           />
           <div>
             <p className="text-[1.2rem] text-C333333 font-medium">
@@ -84,7 +92,7 @@ const BoardSection: React.FC<BoardContentProps> = ({
       </div>
 
       <p className="py-[1vh] text-[1.25rem] font-medium">{title}</p>
-      <p className="text-[0.95rem]">
+      <p className="text-[0.95rem] break-words">
         {content}
         <br />
       </p>

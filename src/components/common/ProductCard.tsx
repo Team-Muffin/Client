@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useCategoryFilterStore from "../../store/useCategoryFilterStore";
 
 interface ProductCardProps {
-  type: string;
+  category?: string;
+  filter?: string;
+  type?: string;
   productImg: string;
   productName: string;
   productBrand: string;
@@ -12,6 +15,8 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
+  category,
+  filter,
   type,
   productImg: cardImg,
   productName,
@@ -22,8 +27,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
   const navigate = useNavigate();
+  const setCategoryAndFilters = useCategoryFilterStore(
+    (state) => state.setCategoryAndFilters
+  );
 
   const handleProductCardClick = (link: string) => {
+    if (category && filter) {
+      setCategoryAndFilters(category, filter);
+    } else if (category) {
+      setCategoryAndFilters(category, null);
+    }
     navigate(`/product/${link}`, {
       state: { productType: type },
     });

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Menu,
   MenuButton,
@@ -12,12 +12,14 @@ type DropdownProps = {
   defaultFilter: string;
   filterList: string[];
   onFilterChange: (newFilter: string) => void;
+  newFilter: string;
 };
 
 const Dropdown: React.FC<DropdownProps> = ({
   defaultFilter,
   filterList,
   onFilterChange,
+  newFilter,
 }) => {
   const [selected, setSelected] = useState<string>(defaultFilter);
 
@@ -27,6 +29,10 @@ const Dropdown: React.FC<DropdownProps> = ({
 
     onFilterChange(newFilter);
   };
+
+  useEffect(() => {
+    setSelected(newFilter);
+  }, [newFilter]);
 
   return (
     <Menu
