@@ -65,6 +65,7 @@ interface ProductBasicResponse {
 }
 
 // 상품 요약 정보 조회
+
 export async function fetchCardProductSummary(productId: string): Promise<{
   data: CardProductSummary;
 }> {
@@ -170,6 +171,30 @@ interface LoanProductSummaryResponse {
 }
 
 // 상품 상세 정보 조회
+
+export async function fetchCardProductDetail(productId: string): Promise<{
+  data: CardProductDetail;
+}> {
+  const response = await instance.get<CardProductDetailResponse>(
+    `/product-service/products/${productId}/details?category=카드&sort=최신순`
+  );
+  return { data: response.data.data["card product detail"] };
+}
+
+interface CardProductDetailResponse {
+  success: boolean;
+  message: string;
+  data: {
+    "card product detail": CardProductDetail;
+  };
+}
+
+export interface CardProductDetail {
+  productId: number;
+  description: string;
+  terms: string[];
+}
+
 export async function fetchLoanProductDetail(productId: string): Promise<{
   data: LoanProductDetail;
 }> {
