@@ -84,7 +84,7 @@ const SignUpProfilePage = () => {
     try {
       const res = await signUp(userData);
       // Zustand 상태 업데이트
-      login(userId, userInfo, birthdate, res.data.accessToken, res.data.refreshToken)
+      login(res.data.id, userId, userInfo, birthdate, res.data.accessToken, res.data.refreshToken)
       alert("회원가입이 완료되었습니다.");
       navigate("/asset");
     } catch (error) {
@@ -213,7 +213,6 @@ const SignUpProfilePage = () => {
         <PurpleBtn
           onClick={handleSignUp}
           label="자산 연결하러 가기"
-          to={"/asset"}
         />
       </div>
 
