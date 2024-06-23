@@ -17,9 +17,18 @@ type HeaderProps = {
   type: string;
   to?: number | string;
   searchBtn?: () => void;
+  notiBtn?: () => void;
+  alert?: boolean;
 };
 
-const Header: React.FC<HeaderProps> = ({ text, type, to = -1, searchBtn }) => {
+const Header: React.FC<HeaderProps> = ({
+  text,
+  type,
+  to = -1,
+  searchBtn,
+  notiBtn,
+  alert,
+}) => {
   const navigate = useNavigate();
   const handleBackButtonClick = () => {
     if (typeof to === "string") {
@@ -136,11 +145,13 @@ const Header: React.FC<HeaderProps> = ({ text, type, to = -1, searchBtn }) => {
               className="absolute right-[14vw] h-[2.8vh]"
               onClick={searchBtn}
             />
-            <img
-              src={AlarmBtn}
-              className="absolute right-[4vw] h-[2.8vh]"
-              // onClick={handleBackButtonClick}
-            />
+
+            <div className="absolute right-[4vw] h-[2.8vh]" onClick={notiBtn}>
+              <img src={AlarmBtn} className="h-full" />
+              {alert && (
+                <div className="absolute top-0 right-0 bg-red-500 rounded-full w-2 h-2 transform translate-x-1/2 -translate-y-1/2"></div>
+              )}{" "}
+            </div>
           </>
         )}
       </div>
