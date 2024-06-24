@@ -41,7 +41,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
       state: { productType: type },
     });
   };
-  console.log(type);
 
   const handleImageLoad = (
     e: React.SyntheticEvent<HTMLImageElement, Event>

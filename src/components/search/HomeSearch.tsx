@@ -45,7 +45,9 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
 
   const callBoardData = async () => {
     try {
-      const { data } = await fetchSearchedBoardList(keyword);
+      const { data } = await fetchSearchedBoardList({
+        keyword,
+      });
       console.log(data);
       setBoardData(data);
     } catch (error) {

@@ -7,7 +7,7 @@ export async function fetchChallengeList(): Promise<{
   const response = await instance.get<ChallengeListResponse>(
     "/challenge-service/challenges"
   );
-  console.log(response);
+  // console.log(response);
   return { data: response.data.data };
 }
 

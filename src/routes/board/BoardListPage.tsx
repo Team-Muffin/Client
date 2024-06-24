@@ -13,13 +13,13 @@ import useAuthStore from "../../store/useAuthStore";
 import useCategoryFilterStore from "../../store/useCategoryFilterStore";
 
 export default function BoardListPage() {
-  const [categoryName, setCategoryName] = useState("정보");
+  const [category, setCategory] = useState("정보");
   const categories = ["정보", "재미", "투자", "기업", "고급"];
   const [pageNo, setPageNo] = useState(0);
   const [size, setSize] = useState(10);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [category, setCategory] = useState("1");
+
   const [userId, setUSerId] = useState(1);
   const [selectedFilter, setSelectedFilter] = useState("최신순");
   const elementRef = useRef<HTMLDivElement | null>(null);
@@ -62,29 +62,8 @@ export default function BoardListPage() {
   const [boardData, setBoardData] = useState<BoardData[]>([]);
 
   const handleUserCategoryClick = (selection: string) => {
-    setCategoryName(selection);
-    switch (selection) {
-      case "정보":
-        setCategory("1");
-        setSelectedFilter("최신순");
-        break;
-      case "재미":
-        setCategory("2");
-        setSelectedFilter("최신순");
-        break;
-      case "투자":
-        setCategory("3");
-        setSelectedFilter("최신순");
-        break;
-      case "기업":
-        setCategory("4");
-        setSelectedFilter("최신순");
-        break;
-      case "고급":
-        setCategory("5");
-        setSelectedFilter("최신순");
-        break;
-    }
+    setCategory(selection);
+    setSelectedFilter("최신순");
     setPageNo(0);
     setBoardData([]);
     setHasMore(true);
@@ -145,10 +124,10 @@ export default function BoardListPage() {
 
   // 뒤로갔을 때 스크롤 유지 : TODO FIX
   const handleBoardCardClick = async (link: string) => {
-    if (categoryName && selectedFilter) {
-      setCategoryAndFilters(categoryName, selectedFilter);
-    } else if (categoryName) {
-      setCategoryAndFilters(categoryName, null);
+    if (category && selectedFilter) {
+      setCategoryAndFilters(category, selectedFilter);
+    } else if (category) {
+      setCategoryAndFilters(category, null);
     }
     await setScrollDataInStorage();
     navigate(link);
@@ -220,7 +199,7 @@ export default function BoardListPage() {
           <p
             key={cat}
             className={`${
-              categoryName === cat ? selectedCategoryCss : defaultCategoryCss
+              category === cat ? selectedCategoryCss : defaultCategoryCss
             } cursor-pointer`}
             onClick={() => handleUserCategoryClick(cat)}
           >

@@ -1,12 +1,19 @@
 import instance from "./base";
 
+interface FetchSearchedBoardListParams {
+  keyword: string;
+  pageNo?: number;
+  size?: number;
+  category?: string;
+}
+
 // 게시글 리스트 검색
-export async function fetchSearchedBoardList(
-  keyword: string,
-  pageNo?: number,
-  size?: number,
-  category?: string
-): Promise<{ data: BoardData[] }> {
+export async function fetchSearchedBoardList({
+  keyword,
+  pageNo,
+  size,
+  category,
+}: FetchSearchedBoardListParams): Promise<{ data: BoardData[] }> {
   const params = new URLSearchParams();
 
   params.append("keyword", keyword);

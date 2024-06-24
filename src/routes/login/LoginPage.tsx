@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MainLogoImg from "../../assets/main-logo.svg";
 import PurpleBtn from "../../components/common/PurpleBtn";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuthStore, { AuthState } from "../../store/useAuthStore"; // Zustand에서 useAuthStore 가져오기
 import { signIn } from "../../libs/apis/user"; // login API 호출 함수 가져오기
 
@@ -12,6 +12,7 @@ interface SignInData {
 }
 
 const LoginPage: React.FC = () => {
+  const navigate = useNavigate();
   const [userId, setId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -28,13 +29,21 @@ const LoginPage: React.FC = () => {
     };
     try {
       // 실제 로그인 API 호출 예시
-       const res = await signIn(userData);
-       login(res.data.id, userId, password, res.data.nickname, birthdate, res.data.accessToken, res.data.refreshToken)
-      } catch(error){
-        console.error("로그인 에러", error);
-      }
-
-      
+      const res = await signIn(userData);
+      login(
+        res.data.id,
+        userId,
+        password,
+        res.data.nickname,
+        birthdate,
+        res.data.accessToken,
+        res.data.refreshToken
+      );
+      navigate("/");
+    } catch (error) {
+      alert("아이디 및 비밀번호를 다시 확인하세요!");
+      console.error("로그인 에러", error);
+    }
   };
 
   return (
@@ -71,11 +80,7 @@ const LoginPage: React.FC = () => {
         />
 
         <div className="flex mt-[5vh]">
-          <PurpleBtn
-            onClick={handleLogin}
-            label="ToFin 시작하기 !"
-            to="/"
-          />
+          <PurpleBtn onClick={handleLogin} label="ToFin 시작하기 !" />
         </div>
         <div className="flex justify-center mt-[2vh]">
           <Link to="/home" className="text-xs text-gray mr-[2vw]">
