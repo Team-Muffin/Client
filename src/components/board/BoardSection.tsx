@@ -125,7 +125,7 @@ const BoardSection: React.FC<BoardContentProps> = ({
             <div className="flex justify-between items-center">
               <div className="flex items-center">
                 <img
-                  className="pr-[3vw] h-[5vh]"
+                  className="mr-[3vw] h-[5vh] w-[5vh] rounded-[0.8rem]"
                   src={authorImage}
                   alt="author image"
                   onClick={() =>

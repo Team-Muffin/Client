@@ -11,7 +11,7 @@ interface BoardCardProps {
   time: string;
   heartCount: number;
   replyCount: number;
-  imageUrl?: string;
+  imageUrl: string | null;
   authorImageUrl?: string;
 }
 
@@ -34,7 +34,10 @@ const BoardCard: React.FC<BoardCardProps> = ({
             {description}
           </p>
           <div className="flex">
-            <img src={authorImageUrl} className="w-[4.5vw] mr-[1vw]" />
+            <img
+              src={authorImageUrl}
+              className="w-[2.25vh] h-[2.25vh] mr-[1vw]"
+            />
             <p className="text-[0.85rem] text-C333333">
               {author} | {timeAgo({ createdTime: time })}
             </p>

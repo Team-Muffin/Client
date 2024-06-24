@@ -123,3 +123,44 @@ interface ProductListResponse {
 }
 
 //유저 검색
+export interface User {
+  userId: number;
+  nickname: string;
+  profileImage: string;
+  tofinId: string;
+  role: string;
+}
+
+interface UserData {
+  totalCount: number;
+  lastIndex: number;
+  users: User[];
+  last: boolean;
+}
+
+interface UserListResponse {
+  success: boolean;
+  message: string;
+  data: UserData;
+}
+
+export async function fetchSearchedUserList(
+  keyword: string,
+  limit: number,
+  last?: number | null
+): Promise<{ data: UserListResponse }> {
+  const params = new URLSearchParams();
+  params.append("nickname", keyword);
+  params.append("limit", limit.toString());
+
+  if (last) {
+    params.append("last", last.toString());
+  }
+
+  const queryString = params.toString();
+  const response = await instance.get<UserListResponse>(
+    `/user-service/users/search?${queryString}`
+  );
+
+  return { data: response.data };
+}

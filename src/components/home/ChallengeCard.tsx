@@ -15,6 +15,7 @@ const ChallengeCard: React.FC<Challenge> = ({
   bgColor,
   ChallengeLogo,
 }) => {
+  const trimmedTitle = title.replace(" 챌린지", "");
   return (
     <div
       className="min-w-[37vw] p-[2vh] rounded-[1.5rem] mr-[4vw]"
@@ -23,7 +24,7 @@ const ChallengeCard: React.FC<Challenge> = ({
       <div className="flex justify-center pb-[2vh] pt-[0.5vh]">
         <img src={ChallengeLogo} className="h-[10vh]" alt="Challenge Logo" />
       </div>
-      <p className="text-[1rem] font-medium">{title}</p>
+      <p className="text-[1rem] font-medium">{trimmedTitle}</p>
       <p className="mt-[0.5vh] text-C333333 text-[0.8rem] whitespace-normal leading-tight">
         {description}
       </p>

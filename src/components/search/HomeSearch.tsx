@@ -9,9 +9,12 @@ import {
   ChallengeData,
   fetchSearchedProductList,
   ProductList,
+  fetchSearchedUserList,
+  User,
 } from "../../libs/apis/search";
 import { useParams, useNavigate } from "react-router-dom";
 import ProductCard from "../common/ProductCard";
+import ChallengeCardHorizontal from "../common/ChallengeCardHorizontal";
 
 interface HomeSearchProps {
   keyword: string;
@@ -24,6 +27,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
   const [boardData, setBoardData] = useState<BoardData[]>([]);
   const [challengeData, setChallengeData] = useState<ChallengeData[]>([]);
   const [productData, setProductData] = useState<ProductList[]>([]);
+  const [userData, setUserData] = useState<User[]>([]);
 
   const [finPageNo, setFinPageNo] = useState(0);
   const [productPageNo, setProductPageNo] = useState(0);
@@ -31,6 +35,8 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
 
   const [pageNo, setPageNo] = useState(0);
   const [size, setSize] = useState(10);
+  const [userLimit, setUserLimit] = useState(10);
+  const [userLast, setUserLast] = useState(null);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState(1);
@@ -60,6 +66,20 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
     }
   };
 
+  const callUserData = async () => {
+    try {
+      const { data } = await fetchSearchedUserList(
+        keyword,
+        userLimit,
+        userLast
+      );
+      console.log(data);
+      setUserData(data.data.users);
+    } catch (error) {
+      console.log("유저 검색 리스트 불러오는 중 오류", error);
+    }
+  };
+
   useEffect(() => {
     // console.log(category);
     // console.log(keyword);
@@ -67,6 +87,8 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
       callChallengeData();
     } else if (category === "상품") {
       callProductData();
+    } else if (category === "유저") {
+      callUserData();
     }
   }, [keyword, category]);
 
@@ -143,24 +165,34 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
         )}
         {category === "챌린지" && (
           <>
-            <hr />
             {challengeData.length === 0 && (
               <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.85rem]">
                 "{keyword}" 검색 결과가 없습니다.
               </div>
             )}
-            {challengeData.map((data, index) => (
-              <>{console.log(data)}</>
+            {challengeData.map((challenge, index) => (
+              <div>
+                <ChallengeCardHorizontal
+                  title={challenge.name}
+                  description={challenge.description}
+                  participants={challenge.participation}
+                  bgColor={"#ffffff"}
+                  ChallengeLogo={challenge.logoUrl}
+                  reward={challenge.reward}
+                />
+              </div>
             ))}
           </>
         )}
         {category === "상품" && (
           <>
-            <hr />
             {productData.length === 0 && (
-              <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.85rem]">
-                "{keyword}" 검색 결과가 없습니다.
-              </div>
+              <>
+                <hr />
+                <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.85rem]">
+                  "{keyword}" 검색 결과가 없습니다.
+                </div>
+              </>
             )}
             {productData &&
               productData.map((data, index) => (
@@ -174,6 +206,46 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
                     reviewCount={data.boardCount}
                     link={`${data.id}`}
                   />
+                </div>
+              ))}
+          </>
+        )}
+        {category === "유저" && (
+          <>
+            {userData.length === 0 && (
+              <>
+                <hr />
+                <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.85rem]">
+                  "{keyword}" 검색 결과가 없습니다.
+                </div>
+              </>
+            )}
+            {userData &&
+              userData.map((data, index) => (
+                <div key={data.userId}>
+                  <div>
+                    <div
+                      className="shadow-productCard rounded-[0.5rem] mt-[1.5vh] mb-[0.5vh]"
+                      // onClick={() => handleProductCardClick(link)}
+                    >
+                      <div className="flex  p-[1vh] items-center">
+                        <div className=" flex items-center justify-center">
+                          <img
+                            className={"h-[6vh] w-[6vh] rounded-[0.8rem]"}
+                            src={data.profileImage}
+                          />
+                        </div>
+                        <div className=" pl-[1vh]">
+                          <p className="text-C333333 text-[0.98rem]">
+                            {data.nickname}
+                          </p>
+                          <p className="text-C333333 text-[0.8rem]">
+                            {data.tofinId}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               ))}
           </>

@@ -122,7 +122,6 @@ export default function ProductListPage() {
       } else if (type === "펀드") {
         const fundSummaryResponse = await fetchFundProductSummary(productId);
         if (fundSummaryResponse.data) {
-          // console.log(fundSummaryResponse.data);
           setFundBenefits(fundSummaryResponse.data);
         } else {
           console.error("상품 펀드 데이터가 없습니다.");
@@ -136,7 +135,6 @@ export default function ProductListPage() {
       } else if (type === "대출") {
         const loanSummaryResponse = await fetchLoanProductSummary(productId);
         if (loanSummaryResponse.data) {
-          // console.log(loanSummaryResponse.data);
           setLoanBenefits(loanSummaryResponse.data);
         } else {
           console.error("상품 대출 데이터가 없습니다.");
@@ -144,8 +142,8 @@ export default function ProductListPage() {
 
         const loanDetailResponse = await fetchLoanProductDetail(productId);
         if (loanDetailResponse.data) {
-          // console.log(loanDetailResponse.data);
           setLoanDetail(loanDetailResponse.data);
+
           let jsonString = loanDetail?.description.replace(/'/g, '"');
           if (jsonString) {
             const jsonArray = JSON.parse(jsonString);
@@ -169,14 +167,15 @@ export default function ProductListPage() {
           const loanDetailResponse = await fetchLoanProductDetail(productId);
           if (loanDetailResponse.data) {
             setLoanDetail(loanDetailResponse.data);
+
             let jsonString = loanDetailResponse.data?.description.replace(
               /'/g,
               '"'
             );
+
             if (jsonString) {
               const jsonArray = JSON.parse(jsonString);
               setLoanDetailArray(jsonArray);
-
               setIsLoanDetailLoaded(true);
             }
           } else {
@@ -189,6 +188,17 @@ export default function ProductListPage() {
       fetchData();
     }
   }, [productId]);
+
+  useEffect(() => {
+    if (loanDetail) {
+      let jsonString = loanDetail?.description.replace(/'/g, '"');
+      if (jsonString) {
+        const jsonArray = JSON.parse(jsonString);
+        setLoanDetailArray(jsonArray);
+        setIsLoanDetailLoaded(true);
+      }
+    }
+  }, [loanDetail]);
 
   useEffect(() => {
     const productTypeFromState = location.state.productType;
@@ -238,7 +248,6 @@ export default function ProductListPage() {
   useEffect(() => {
     if (benefits.length === 0 && productType) {
       callProductDetail(productType);
-      console.log(productType);
     }
   }, [benefits, productType]);
 
