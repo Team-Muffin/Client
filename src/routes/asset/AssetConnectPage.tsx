@@ -5,16 +5,13 @@ import MiniCircle from "../../assets/minicircle.svg";
 import Essential from "../../assets/required.svg";
 import Checked from "../../assets/checked.svg";
 import PurpleBtn from "../../components/common/PurpleBtn";
-import useAuthStore from "../../store/useAuthStore";
-import { connectAsset, CheckUserContactAvailability } from "../../libs/apis/user";
+import { CheckUserContactAvailability } from "../../libs/apis/user";
+import useSignUpStore from "../../store/useSignUpStore";
 
 const AssetConnectPage = () => {
   const navigate = useNavigate();
-  const { birthdate} = useAuthStore((state) => ({
-    birthdate: state.birthdate
-  }));
 
-  const { setAssetData } = useAuthStore(); 
+  const { birthdate, connectAsset } = useSignUpStore();
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isAgreed, setIsAgreed] = useState(false);
@@ -72,7 +69,10 @@ const AssetConnectPage = () => {
 
   const handleConnectAsset = async () => {
     if (!isUserContactAvailable) {
-      alert(userContactCheckReason || "사용할 수 없는 전화번호입니다. 다른 전화번호를 입력해주세요.");
+      alert(
+        userContactCheckReason ||
+          "사용할 수 없는 전화번호입니다. 다른 전화번호를 입력해주세요."
+      );
       return;
     }
 
@@ -81,14 +81,12 @@ const AssetConnectPage = () => {
       backSocialId: rrnPart2,
       contact: phoneNumber,
     };
-    try {
-      const res = await connectAsset(assetInfo);
-      console.log(res.data);
-      setAssetData(res.data) // store asset info
+    const res = await connectAsset(name, rrnPart2, phoneNumber);
+
+    if (res) {
       alert("자산 연결 성공");
       navigate("/asset/connect");
-    } catch (error) {
-      console.error("자산 연결 중 오류 발생: ", error);
+    } else {
       alert("자산 연결 중 오류가 발생했습니다.");
       navigate("/asset");
     }

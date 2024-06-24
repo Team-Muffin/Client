@@ -5,8 +5,6 @@ import ProfileCircle from "../../assets/profile-circle.svg";
 import Camera from "../../assets/camera.svg";
 import Essential from "../../assets/required.svg";
 import PurpleBtn from "../../components/common/PurpleBtn";
-import { signUp } from "../../libs/apis/user";
-import useAuthStore from "../../store/useAuthStore";
 import { fetchJobs, JobResp } from "../../libs/apis/user";
 import {
   Listbox,
@@ -15,20 +13,23 @@ import {
   ListboxOptions,
 } from "@headlessui/react";
 import { Dialog } from "./Dialog";
+import useSignUpStore from "../../store/useSignUpStore";
+import useAuth2Store from "../../store/useAuth2Store";
 
 const SignUpProfilePage = () => {
   const navigate = useNavigate();
-  const { userId, userInfo, login } = useAuthStore((state) => ({
-    userId: state.userId,
-    userInfo: state.userInfo,
-    login: state.login,
+
+  const { tofinId, userInfo, clearLoginInfo, setBirth } = useSignUpStore();
+
+  const { signUp } = useAuth2Store((state) => ({
+    signUp: state.signUp,
   }));
 
   const [nickname, setNickname] = useState<string>("");
   const [birthdate, setBirthdate] = useState<string>("");
-  const [profileImg, setProfileImg] = useState<string>(""); // State to hold profile image URL
-  const [accessToken, setAccessToken] = useState<string>("");
-  const [refreshToken, setRefreshToken] = useState<string>("");
+  const [profileImg, setProfileImg] = useState<string>(
+    "https://tofin-bucket.s3.ap-northeast-2.amazonaws.com/users/profile/default/user-icon1.svg"
+  ); // State to hold profile image URL
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [jobs, setJobs] = useState<string[]>([]); // State for job list
   const [selectedJob, setSelectedJob] = useState<string>(""); // State to hold selected job
@@ -69,36 +70,25 @@ const SignUpProfilePage = () => {
   };
 
   const handleSignUp = async () => {
-    if (!userId || !userInfo) {
+    if (!tofinId || !userInfo) {
       console.error("userId or userInfo does not exist.");
       return;
     }
 
-    const userData = {
-      tofinId: userId,
+    const result = await signUp(
+      tofinId,
       userInfo,
-      profileImg, // Selected icon URL stored
       nickname,
-      birth: birthdate,
-      job: selectedJob,
-    };
-
-    try {
-      const res = await signUp(userData); // API call to sign up
-      // Update Zustand state
-      login(
-        res.data.id,
-        userId,
-        userInfo,
-        nickname,
-        birthdate,
-        res.data.accessToken,
-        res.data.refreshToken
-      );
+      profileImg,
+      birthdate,
+      selectedJob
+    );
+    setBirth(birthdate);
+    if (result) {
+      clearLoginInfo();
       alert("Signed up successfully.");
       navigate("/asset"); // Redirect to asset page
-    } catch (error) {
-      console.error("Error signing up:", error);
+    } else {
       alert("Failed to sign up.");
     }
   };
