@@ -446,7 +446,7 @@ export default function BoardDetailPage() {
           </div>
         </>
       ) : (
-        <LoadingSpinner />
+        <> </>
       )}
     </>
   );

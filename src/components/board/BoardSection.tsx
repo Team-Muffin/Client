@@ -6,11 +6,7 @@ import Reply from "../../assets/reply.svg";
 import FilledScrap from "../../assets/scrap-filled.svg";
 import Scrap from "../../assets/scrap.svg";
 import { createBookmark, createLike } from "../../libs/apis/board";
-import {
-  fetchFollowStatus,
-  followStatusResponse,
-  followUser,
-} from "../../libs/apis/board";
+import { fetchFollowStatus, followUser } from "../../libs/apis/board";
 
 interface BoardContentProps {
   authorId?: number;
@@ -47,46 +43,50 @@ const BoardSection: React.FC<BoardContentProps> = ({
   const [scrapClicked, setScrapClicked] = useState(false);
   const [likeCnt, setLikeCnt] = useState(0);
   const [followStatus, setFollowStatus] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const callFollowData = async () => {
     try {
-      if (userIdPk) {
-        const response = await fetchFollowStatus(userIdPk);
+      if (authorId) {
+        const response = await fetchFollowStatus(authorId);
         if (response.data) {
           console.log(response.data.data.isFollow);
           setFollowStatus(response.data.data.isFollow);
+          setIsLoading(false);
         } else {
           console.log("팔로우 데이터가 없습니다.");
         }
       }
     } catch (error) {
       console.error("팔로우 데이터 호출 중 에러:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    setHeartClicked(liked);
-    setScrapClicked(bookmarked);
-    if (likeCnt !== likeCount) {
-      setLikeCnt(likeCount);
-    }
-    // 비동기 함수 호출할 때 await 사용
     (async () => {
       await callFollowData();
     })();
+    // setFollowStatus(followStatus);
+    setHeartClicked(liked);
+    setScrapClicked(bookmarked);
+
+    if (likeCnt !== likeCount) {
+      setLikeCnt(likeCount);
+    }
   }, []);
 
   useEffect(() => {
     // followStatus가 변할 때마다 로그 출력
-    console.log("ㅁㅇ" + followStatus);
   }, [followStatus]);
 
-  const handleFollowBtnClicked = async () => {
+  const handleFollowBtnClicked = async (selection: boolean) => {
     try {
       if (authorId) {
         console.log("aa");
         await followUser(authorId);
-        await callFollowData();
+        setFollowStatus(selection);
       }
     } catch (error) {
       console.error("팔로우하다가 에러", error);
@@ -113,85 +113,95 @@ const BoardSection: React.FC<BoardContentProps> = ({
       console.error("핀하기 중 오류 발생: ", error);
     }
   };
-  console.log(authorId);
-  console.log(userIdPk);
+
   return (
     <div>
-      <div className="flex justify-between items-center">
-        <div className="flex items-center">
-          <img
-            className="pr-[3vw] h-[5vh]"
-            src={authorImage}
-            alt="author image"
-            onClick={() => authorClick && authorId && authorClick(authorId)}
-          />
-          <div>
-            <p
-              className="text-[1.2rem] text-C333333 font-medium"
-              onClick={() => authorClick && authorId && authorClick(authorId)}
-            >
-              {authorNickname}
-            </p>
-            <p className="text-[0.8rem] text-C333333">
-              <TimeAgo createdTime={createdTime} />
-            </p>
-          </div>
-        </div>
-        {authorId === userIdPk ? (
-          <></>
-        ) : (
+      {isLoading ? (
+        <></>
+      ) : (
+        <>
+          {" "}
           <>
-            {followStatus === true ? (
-              <div
-                className="bg-[#EDF0FF] text-[#748BFF] py-[1.5vw] px-[3.75vw] rounded-[0.8rem]"
-                onClick={handleFollowBtnClicked}
-              >
-                팔로잉
+            <div className="flex justify-between items-center">
+              <div className="flex items-center">
+                <img
+                  className="pr-[3vw] h-[5vh]"
+                  src={authorImage}
+                  alt="author image"
+                  onClick={() =>
+                    authorClick && authorId && authorClick(authorId)
+                  }
+                />
+                <div>
+                  <p
+                    className="text-[1.2rem] text-C333333 font-medium"
+                    onClick={() =>
+                      authorClick && authorId && authorClick(authorId)
+                    }
+                  >
+                    {authorNickname}
+                  </p>
+                  <p className="text-[0.8rem] text-C333333">
+                    <TimeAgo createdTime={createdTime} />
+                  </p>
+                </div>
               </div>
-            ) : (
-              <div
-                className="bg-[#748BFF] text-[#ffffff] py-[1.5vw] px-[3.75vw] rounded-[0.8rem]"
-                onClick={handleFollowBtnClicked}
-              >
-                팔로우
+              {authorId === userIdPk ? null : followStatus === true ? (
+                <div
+                  className="bg-[#EDF0FF] text-[#748BFF] py-[1.5vw] px-[3.75vw] rounded-[0.8rem]"
+                  onClick={() => handleFollowBtnClicked(!followStatus)}
+                >
+                  팔로잉
+                </div>
+              ) : (
+                <div
+                  className="bg-[#748BFF] text-[#ffffff] py-[1.5vw] px-[3.75vw] rounded-[0.8rem]"
+                  onClick={() => handleFollowBtnClicked(!followStatus)}
+                >
+                  팔로우
+                </div>
+              )}
+            </div>
+
+            <p className="py-[1vh] text-[1.25rem] font-medium">{title}</p>
+            <p className="text-[0.95rem] break-words">
+              {content}
+              <br />
+            </p>
+
+            <div className="flex justify-between mt-[1.3vh]">
+              <div className="flex items-center">
+                <img
+                  src={heartClicked ? RedHeart : Heart}
+                  className="w-[1.3rem] mr-[1vw] text-C333333"
+                  onClick={() => handleHeartClicked(!heartClicked)}
+                  alt="Heart Icon"
+                />
+                <p className="text-[1rem] mr-[1.75vw] text-C333333">
+                  {likeCnt}
+                </p>
+                <img
+                  src={Reply}
+                  className="w-[1.3rem] mr-[1vw] text-C333333"
+                  alt="Reply Icon"
+                />
+                <p className="text-[1rem] mr-[1vw] text-C333333">
+                  {commentCount}
+                </p>
               </div>
-            )}
+              <div className="flex bg-[#F8F5F5] p-[1.5vw] rounded-[0.5rem]">
+                <img
+                  src={scrapClicked ? FilledScrap : Scrap}
+                  className="w-[1.3rem] mr-[1vw] text-C333333"
+                  onClick={() => handleScrapClicked(!scrapClicked)}
+                  alt="Scrap Icon"
+                />
+                <p className="text-[0.95rem] mr-[1vw] text-C333333">핀하기</p>
+              </div>
+            </div>
           </>
-        )}
-      </div>
-
-      <p className="py-[1vh] text-[1.25rem] font-medium">{title}</p>
-      <p className="text-[0.95rem] break-words">
-        {content}
-        <br />
-      </p>
-
-      <div className="flex justify-between mt-[1.3vh]">
-        <div className="flex items-center">
-          <img
-            src={heartClicked ? RedHeart : Heart}
-            className="w-[1.3rem] mr-[1vw] text-C333333"
-            onClick={() => handleHeartClicked(!heartClicked)}
-            alt="Heart Icon"
-          />
-          <p className="text-[1rem] mr-[1.75vw] text-C333333">{likeCnt}</p>
-          <img
-            src={Reply}
-            className="w-[1.3rem] mr-[1vw] text-C333333"
-            alt="Reply Icon"
-          />
-          <p className="text-[1rem] mr-[1vw] text-C333333">{commentCount}</p>
-        </div>
-        <div className="flex bg-[#F8F5F5] p-[1.5vw] rounded-[0.5rem]">
-          <img
-            src={scrapClicked ? FilledScrap : Scrap}
-            className="w-[1.3rem] mr-[1vw] text-C333333"
-            onClick={() => handleScrapClicked(!scrapClicked)}
-            alt="Scrap Icon"
-          />
-          <p className="text-[0.95rem] mr-[1vw] text-C333333">핀하기</p>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };

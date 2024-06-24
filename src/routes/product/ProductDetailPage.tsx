@@ -61,6 +61,7 @@ export default function ProductListPage() {
   const [productBasic, setProductBasic] = useState<ProductBasic | null>(null);
   const [productType, setProductType] = useState("");
   const [loanDetailArray, setLoanDetailArray] = useState<LoanFeature[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const location = useLocation();
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
@@ -157,6 +158,8 @@ export default function ProductListPage() {
       }
     } catch (error) {
       console.error("상품 베이직 데이터 호출 중 에러:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -241,129 +244,140 @@ export default function ProductListPage() {
 
   return (
     <>
-      <div className="py-[2vh] px-[4.5vw] pb-[1vh]">
-        <Header text={productType} type="backLeftTextCenter" />
-        <div className="mt-[4vh]" />
-        {productType === "카드" ? (
-          <div className="flex justify-center p-[2vh]">
-            <img
-              className={`${
-                imageSize.height > imageSize.width ? "h-[20vh]" : "w-[20vh]"
-              } `}
-              src={productBasic?.cardImage}
-              onLoad={handleImageLoad}
-            />
-          </div>
-        ) : (
-          <></>
-        )}
-
-        <div>
-          <div className="flex items-align">
-            <img
-              className="w-[3.5vh] inline mr-[0.6vw]"
-              src={productBasic?.corpImage}
-            />
-            <span className="text-[0.85rem] text-C333333 mt-[0.1rem]">
-              {productBasic?.corpName}
-            </span>
-          </div>
-          <div>
-            <p className="font-semibold text-[1.4rem] ml-[1.5vw] mb-[0.6vh]">
-              {productBasic?.name}
-            </p>
-            <div className="mb-[1vh]">
-              {productBasic?.tags.map((benefit, index) => (
-                <span
-                  key={index}
-                  className="ml-[1.5vw] text-[0.75rem] mr-[1vw] p-[1vw] bg-CECF0FF rounded-[0.25rem]"
-                >
-                  #{benefit}
-                </span>
-              ))}
-            </div>
-            <ProductSummary benefits={benefits} />
-
-            {showDetail ? (
-              <>
-                <div
-                  className="justify-center flex mt-[1vh] cursor-pointer"
-                  onClick={toggleShowDetail}
-                >
-                  <span className="text-C333333 text-[0.85rem]">
-                    상세정보 보기
-                  </span>
-                  <ChevronUpIcon
-                    className="-mr-1 h-5 w-5 text-C333333"
-                    aria-hidden="true"
-                  />
-                </div>
-                <p className="text-xs mt-[2vh] px-[2vh] border py-[2vh]">
-                  <SavingDetail savingDetail={savingDetail} />
-                  <FundDetail fundDetail={fundDetail} />
-                  <LoanDetail
-                    loanDetailArray={loanDetailArray}
-                    isLoanDetailLoaded={isLoanDetailLoaded}
-                  />
-                  <CardDetail cardDetail={cardDetail} />
-                </p>
-              </>
+      {isLoading ? (
+        <></>
+      ) : (
+        <>
+          {" "}
+          <div className="py-[2vh] px-[4.5vw] pb-[1vh]">
+            {productType === "펀드" ? (
+              <Header text={"투자"} type="backLeftTextCenter" />
             ) : (
-              <div
-                className="justify-center flex mt-[1vh] cursor-pointer"
-                onClick={toggleShowDetail}
-              >
-                <span className="text-C333333 text-sm">상세정보 보기</span>
-                <ChevronDownIcon
-                  className="-mr-1 h-5 w-5 text-C333333"
-                  aria-hidden="true"
+              <Header text={productType} type="backLeftTextCenter" />
+            )}
+            <div className="mt-[4vh]" />
+            {productType === "카드" ? (
+              <div className="flex justify-center p-[2vh]">
+                <img
+                  className={`${
+                    imageSize.height > imageSize.width ? "h-[20vh]" : "w-[20vh]"
+                  } `}
+                  src={productBasic?.cardImage}
+                  onLoad={handleImageLoad}
                 />
               </div>
+            ) : (
+              <></>
             )}
+
+            <div>
+              <div className="flex items-align">
+                <img
+                  className="w-[3.5vh] inline mr-[0.6vw]"
+                  src={productBasic?.corpImage}
+                />
+                <span className="text-[0.85rem] text-C333333 mt-[0.1rem]">
+                  {productBasic?.corpName}
+                </span>
+              </div>
+              <div>
+                <p className="font-semibold text-[1.4rem] ml-[1.5vw] mb-[0.6vh]">
+                  {productBasic?.name}
+                </p>
+                <div className="mb-[1vh]">
+                  {productBasic?.tags.map((benefit, index) => (
+                    <span
+                      key={index}
+                      className="ml-[1.5vw] text-[0.75rem] mr-[1vw] p-[1vw] bg-CECF0FF rounded-[0.25rem]"
+                    >
+                      #{benefit}
+                    </span>
+                  ))}
+                </div>
+                <ProductSummary benefits={benefits} />
+
+                {showDetail ? (
+                  <>
+                    <div
+                      className="justify-center flex mt-[1vh] cursor-pointer"
+                      onClick={toggleShowDetail}
+                    >
+                      <span className="text-C333333 text-[0.85rem]">
+                        상세정보 보기
+                      </span>
+                      <ChevronUpIcon
+                        className="-mr-1 h-5 w-5 text-C333333"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <p className="text-xs mt-[2vh] px-[2vh] border py-[2vh]">
+                      <SavingDetail savingDetail={savingDetail} />
+                      <FundDetail fundDetail={fundDetail} />
+                      <LoanDetail
+                        loanDetailArray={loanDetailArray}
+                        isLoanDetailLoaded={isLoanDetailLoaded}
+                      />
+                      <CardDetail cardDetail={cardDetail} />
+                    </p>
+                  </>
+                ) : (
+                  <div
+                    className="justify-center flex mt-[1vh] cursor-pointer"
+                    onClick={toggleShowDetail}
+                  >
+                    <span className="text-C333333 text-sm">상세정보 보기</span>
+                    <ChevronDownIcon
+                      className="-mr-1 h-5 w-5 text-C333333"
+                      aria-hidden="true"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+          <div className="h-[1.5vh] bg-[#F4F3F8]" />
+          <div className="py-[2vh] px-[4.5vw] pb-[1vh]">
+            <div className="flex justify-between items-center">
+              <div className="inline">
+                <span className="font-semibold text-[1.15rem] ml-[1.5vw]">
+                  관련 핀
+                </span>
+                <span className="font-semibold text-[1.15rem] ml-[1.5vw] text-[#738BFF]">
+                  9
+                </span>
+              </div>
+              <span className="text-[0.75rem] text-C333333">더보기 {">"}</span>
+            </div>
 
-      <div className="h-[1.5vh] bg-[#F4F3F8]" />
-      <div className="py-[2vh] px-[4.5vw] pb-[1vh]">
-        <div className="flex justify-between items-center">
-          <div className="inline">
-            <span className="font-semibold text-[1.15rem] ml-[1.5vw]">
-              관련 핀
-            </span>
-            <span className="font-semibold text-[1.15rem] ml-[1.5vw] text-[#738BFF]">
-              9
-            </span>
+            <BoardCard
+              title="⭐️내가 들었던 펀드 추천 글⭐️"
+              description=" 오늘은 내가 들었던 펀드 중에 가장 좋았던 펀드는 신한은행의"
+              author="이듀미"
+              time="3"
+              heartCount={7}
+              replyCount={3}
+              imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
+            />
+            <BoardCard
+              title="⭐️내가 들었던 펀드 추천 글⭐️"
+              description=" 오늘은 내가 들었던 펀드 중에 가장 좋았던 펀드는 신한은행의"
+              author="이듀미"
+              time="3"
+              heartCount={7}
+              replyCount={3}
+              imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
+            />
           </div>
-          <span className="text-[0.75rem] text-C333333">더보기 {">"}</span>
-        </div>
-
-        <BoardCard
-          title="⭐️내가 들었던 펀드 추천 글⭐️"
-          description=" 오늘은 내가 들었던 펀드 중에 가장 좋았던 펀드는 신한은행의"
-          author="이듀미"
-          time="3"
-          heartCount={7}
-          replyCount={3}
-          imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
-        />
-        <BoardCard
-          title="⭐️내가 들었던 펀드 추천 글⭐️"
-          description=" 오늘은 내가 들었던 펀드 중에 가장 좋았던 펀드는 신한은행의"
-          author="이듀미"
-          time="3"
-          heartCount={7}
-          replyCount={3}
-          imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
-        />
-      </div>
-
-      <Link to={`/board/write?productId=${productId}`}>
-        <img className="fixed bottom-[8vh] right-[4vw] z-5" src={writeButton} />
-      </Link>
-
-      <div className="pb-[8.5vh]" />
-      <Navbar />
+          <Link to={`/board/write?productId=${productId}`}>
+            <img
+              className="fixed bottom-[8vh] right-[4vw] z-5"
+              src={writeButton}
+            />
+          </Link>
+          <div className="pb-[8.5vh]" />
+          <Navbar />
+        </>
+      )}
     </>
   );
 }
