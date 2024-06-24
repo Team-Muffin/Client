@@ -134,8 +134,8 @@ export default function Notification() {
           <div className="cursor-pointer">모두 삭제</div>
         </div>
 
-        {notisEx.map((noti) => (
-          <>
+        {notisEx.map((noti, index) => (
+          <div key={index}>
             <div
               className={`border rounded-[0.8rem] my-[1vh]  ${
                 noti.isViewed ? "bg-white" : "bg-gray-200"
@@ -217,7 +217,7 @@ export default function Notification() {
                 </div>
               </div>
             </div> */}
-          </>
+          </div>
         ))}
       </div>
     </>
