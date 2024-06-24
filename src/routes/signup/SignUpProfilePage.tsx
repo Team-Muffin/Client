@@ -4,14 +4,10 @@ import MiniCircle from "../../assets/minicircle.svg";
 import ProfileCircle from "../../assets/profile-circle.svg";
 import Camera from "../../assets/camera.svg";
 import Essential from "../../assets/required.svg";
-import UserIcon1 from "../../assets/user-icon1.svg";
-import UserIcon2 from "../../assets/user-icon2.svg";
-import UserIcon3 from "../../assets/user-icon3.svg";
-import UserIcon4 from "../../assets/user-icon4.svg";
 import PurpleBtn from "../../components/common/PurpleBtn";
 import { signUp } from "../../libs/apis/user";
 import useAuthStore from "../../store/useAuthStore";
-import { fetchJobs, JobResp } from "../../libs/apis/user"; // API 호출 함수와 인터페이스 가져오기
+import { fetchJobs, JobResp } from "../../libs/apis/user";
 import {
   Listbox,
   ListboxButton,
@@ -30,66 +26,80 @@ const SignUpProfilePage = () => {
 
   const [nickname, setNickname] = useState<string>("");
   const [birthdate, setBirthdate] = useState<string>("");
-  const [selectedIcon, setSelectedIcon] = useState<string>("http://naver.com"); // 기본 아이콘 설정
-  const [accessToken, setAccessToken] = useState<String>("");
-  const [refreshToken, setRefreshToken] = useState<String>("");
+  const [profileImg, setProfileImg] = useState<string>(""); // State to hold profile image URL
+  const [accessToken, setAccessToken] = useState<string>("");
+  const [refreshToken, setRefreshToken] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [jobs, setJobs] = useState<string[]>([]); // 직업 리스트 상태
+  const [jobs, setJobs] = useState<string[]>([]); // State for job list
   const [selectedJob, setSelectedJob] = useState<string>(""); // State to hold selected job
-  const [open, setOpen] = useState(false); // State to manage dropdown open/close
-  const [selected, setSelected] = useState<Date>();
+
+  // Array of icon URLs
+  const iconUrls = [
+    "https://tofin-bucket.s3.ap-northeast-2.amazonaws.com/users/profile/default/user-icon1.svg",
+    "https://tofin-bucket.s3.ap-northeast-2.amazonaws.com/users/profile/default/user-icon2.svg",
+    "https://tofin-bucket.s3.ap-northeast-2.amazonaws.com/users/profile/default/user-icon3.svg",
+    "https://tofin-bucket.s3.ap-northeast-2.amazonaws.com/users/profile/default/user-icon4.svg",
+  ];
 
   useEffect(() => {
-    // 컴포넌트 마운트 시 직업 리스트를 가져오는 함수 호출
+    // Fetch job list function when component mounts
     async function fetchJobList() {
       try {
-        const response: JobResp = await fetchJobs(""); // API 호출
+        const response: JobResp = await fetchJobs(""); // API call
         if (response.success) {
-          setJobs(response.data); // 가져온 직업 리스트 상태 업데이트
+          setJobs(response.data); // Update job list state
         } else {
-          console.error("직업 리스트 조회 실패:", response.message);
+          console.error("Failed to fetch job list:", response.message);
         }
       } catch (error) {
-        console.error("직업 리스트 조회 중 오류 발생:", error);
+        console.error("Error fetching job list:", error);
       }
     }
 
-    fetchJobList(); // 함수 호출
-  }, []); // 빈 배열을 전달하여 한 번만 호출하도록 설정
+    fetchJobList(); // Call fetch job list function
+  }, []); // Empty dependency array to run only once
 
   const handleCameraClick = () => {
-    setIsModalOpen(true);
+    setIsModalOpen(true); // Open modal to select profile icon
   };
 
   const handleIconSelect = (iconUrl: string) => {
-    setSelectedIcon(iconUrl);
-    setIsModalOpen(false);
+    setProfileImg(iconUrl); // Set selected icon URL directly to profileImg state
+    setIsModalOpen(false); // Close modal
   };
 
   const handleSignUp = async () => {
     if (!userId || !userInfo) {
-      console.error("userId 또는 userInfo가 존재하지 않습니다.");
+      console.error("userId or userInfo does not exist.");
       return;
     }
 
     const userData = {
       tofinId: userId,
       userInfo,
-      profileImg: selectedIcon, // 선택한 아이콘 URL 저장
+      profileImg, // Selected icon URL stored
       nickname,
       birth: birthdate,
       job: selectedJob,
     };
 
     try {
-      const res = await signUp(userData);
-      // Zustand 상태 업데이트
-      login(res.data.id, userId, userInfo, birthdate, res.data.accessToken, res.data.refreshToken)
-      alert("회원가입이 완료되었습니다.");
-      navigate("/asset");
+      const res = await signUp(userData); // API call to sign up
+      // Update Zustand state
+      login(
+        res.data.id,
+        userId,
+        userInfo,
+        nickname,
+        birthdate,
+        res.data.accessToken,
+        res.data.refreshToken
+      );
+      alert("Signed up successfully.");
+      navigate("/asset"); // Redirect to asset page
     } catch (error) {
-      console.error("회원가입 중 오류 발생:", error);
-      alert("회원가입에 실패했습니다.");
+      console.error("Error signing up:", error);
+      alert("Failed to sign up.");
     }
   };
 
@@ -111,7 +121,7 @@ const SignUpProfilePage = () => {
           <div className="relative">
             <img src={ProfileCircle} alt="Profile Circle" />
             <img
-              src={selectedIcon}
+              src={profileImg || ProfileCircle} // Display selected profileImg or default
               alt="Selected Icon"
               className="absolute bottom-0 m-auto w-[100%] h-[90%]"
             />
@@ -156,14 +166,14 @@ const SignUpProfilePage = () => {
           <p className="text-lg font-semibold mr-[1vw]">직업</p>
           <img src={Essential} alt="Essential" />
         </div>
-        {/* 직업 선택 dropdown */}
+        {/* Job selection dropdown */}
         <Listbox value={selectedJob} onChange={setSelectedJob}>
           <ListboxButton className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1 text-left">
             {selectedJob ? (
               <span className="block truncate">{selectedJob}</span>
             ) : (
               <span className="block text-gray-500 truncate">
-                직업을 선택하세요
+                Select your job
               </span>
             )}
           </ListboxButton>
@@ -210,33 +220,28 @@ const SignUpProfilePage = () => {
           <img src={MiniCircle} alt="Mini Circle" className="w-3 h-3 mr-5" />
           <img src={MiniCircle} alt="Mini Circle" className="w-3 h-3" />
         </div>
-        <PurpleBtn
-          onClick={handleSignUp}
-          label="자산 연결하러 가기"
-        />
+        <PurpleBtn onClick={handleSignUp} label="Connect Your Assets" />
       </div>
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-4 rounded-lg">
-            <h2 className="text-xl font-semibold mb-4">아이콘 선택</h2>
+            <h2 className="text-xl font-semibold mb-4">Select Icon</h2>
             <div className="grid grid-cols-2 gap-4">
-              {[UserIcon1, UserIcon2, UserIcon3, UserIcon4].map(
-                (iconUrl, index) => (
-                  <div
-                    key={index}
-                    className="relative cursor-pointer"
-                    onClick={() => handleIconSelect(iconUrl)}
-                  >
-                    <img src={ProfileCircle} alt="Profile Circle" />
-                    <img
-                      src={iconUrl}
-                      alt={`User Icon ${index + 1}`}
-                      className="absolute top-0 left-0 w-full h-full"
-                    />
-                  </div>
-                )
-              )}
+              {iconUrls.map((iconUrl, index) => (
+                <div
+                  key={index}
+                  className="relative cursor-pointer"
+                  onClick={() => handleIconSelect(iconUrl)}
+                >
+                  <img src={ProfileCircle} alt="Profile Circle" />
+                  <img
+                    src={iconUrl}
+                    alt={`User Icon ${index + 1}`}
+                    className="absolute top-0 left-0 w-full h-full"
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </div>

@@ -15,6 +15,7 @@ export interface AuthState {
   id: number;
   userId: string;
   userInfo: string;
+  nickname: string;
   birthdate: string;
   accessToken: string;
   refreshToken: string;
@@ -23,6 +24,7 @@ export interface AuthState {
     id: number,
     userId: string,
     userInfo: string,
+    nickname: string,
     birthdate: string,
     accessToken: string,
     refreshToken: string
@@ -37,16 +39,18 @@ const authSlice: StateCreator<AuthState, [['zustand/persist', unknown]]> = (set,
   id: 0,
   userId: '',
   userInfo: '',
+  nickname: '',
   birthdate: '',
   accessToken: '',
   refreshToken: '',
   assetData: [],
-  login: (id, userId, userInfo, birthdate, accessToken, refreshToken) => {
+  login: (id, userId, userInfo, nickname, birthdate, accessToken, refreshToken) => {
     set({
       isAuthenticated: true,
       id,
       userId,
       userInfo,
+      nickname,
       birthdate,
       accessToken,
       refreshToken
@@ -58,6 +62,7 @@ const authSlice: StateCreator<AuthState, [['zustand/persist', unknown]]> = (set,
       id: 0,
       userId: '',
       userInfo: '',
+      nickname: '',
       birthdate: '',
       accessToken: '',
       refreshToken: '',

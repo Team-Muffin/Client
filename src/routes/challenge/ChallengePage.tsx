@@ -1,11 +1,30 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CoinImg from "../../assets/coin30.svg";
 import User1Img from "../../assets/user-icon.svg";
 import EmotionSaveImg from "../../assets/emotion-save.svg";
 import Navbar from "../../components/common/Navbar";
+import useAuthStore from "../../store/useAuthStore";
+import { fetchOurChallenges , Challenge  } from "../../libs/apis/challenge";
+import ChallengeCardHorizontal from "../../components/common/ChallengeCardHorizontal";
 
 const ChallengePage = () => {
   const [category, setCategory] = useState("최신순");
+  const [challenges, setChallenges] = useState<Challenge[]>([]);
+  const [coprChallenges, setCorpChallenges] = useState<Challenge[]>([]);
+  const nickName = useAuthStore((state) => state.nickname); 
+
+  useEffect(() => {
+    const fetchChallenges = async () => {
+      try {
+        const challengeData = await fetchOurChallenges();
+        setChallenges(challengeData); // Set the state with the array of challenges
+      } catch (error) {
+        console.error("챌린지 조회 오류 발생", error);
+      }
+    };
+
+    fetchChallenges();
+  }, []);
 
   const handleCategoryClick = (selection: string) => {
     setCategory(selection);
@@ -16,11 +35,24 @@ const ChallengePage = () => {
   const defaultCategoryCss =
     "text-xs text-[#748BFF] bg-[#ECF0FF] rounded-xl shadow py-[0.5vh] px-[2vw]";
 
+  const bgColor = [
+    "#F9D1E3",
+    "#8DBDFF",
+    "#F8D560",
+    "#B6E785",
+    "#AF9FF3",
+    "#F9D1E3",
+    "#8DBDFF",
+    "#F8D560",
+    "#B6E785",
+    "#AF9FF3",
+  ];
+
   return (
     <>
       <div className="relative py-[3vh] px-[8vw] bg-[#758BFF] w-screen">
         <p className="text-lg font-black text-white">
-          user님이 참여 중인 챌린지
+          {nickName}님이 참여 중인 챌린지
         </p>
         <p className="text-xs pb-8 font-base text-white">
           2개의 챌린지에 참여 중이시네요!
@@ -92,7 +124,7 @@ const ChallengePage = () => {
         </div>
       </div>
 
-      <div className="relative border -mt-10 px-[8vw] py-[3vh] h-[40vh] rounded-[30px] bg-white">
+      <div className="relative border -mt-10 px-[8vw] py-[3vh] rounded-[30px] bg-white">
         <p className="text-base font-bold text-black-900">모집중 챌린지</p>
 
         <div className="flex justify-end mt-[2vh]">
@@ -115,8 +147,23 @@ const ChallengePage = () => {
             마감기한순
           </div>
         </div>
-        <Navbar />
+
+        <div className="mt-[2vh] overflow-y-scroll">
+          {challenges.map((challenge, index) => (
+            <ChallengeCardHorizontal
+              key={challenge.id}
+              title={challenge.name}
+              description={challenge.description}
+              participants={challenge.participation}
+              bgColor={bgColor[index % bgColor.length]}
+              ChallengeLogo={challenge.logoUrl}
+              reward={challenge.reward}
+            />
+          ))}
+        </div>
       </div>
+      <div className="pb-[7vh]" />
+      <Navbar/>
     </>
   );
 };

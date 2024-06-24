@@ -20,16 +20,16 @@ const ChallengeCardHorizontal: React.FC<Challenge> = ({
 }) => {
   return (
     <div
-      className="min-w-[37vw] p-[1vh] rounded-[1.5rem] shadow-productCard"
+      className="min-w-[37vw] p-[1vh] rounded-[1.5rem] shadow-productCard mb-[2vh]"
       style={{ backgroundColor: bgColor }}
     >
       <div className="flex pt-[0.5vh] items-center ml-[1vh]">
         <img
           src={ChallengeLogo}
-          className="h-[10vh] mr-[2vh]"
+          className="h-[10vh] mr-[2vh] w-[15vw]"
           alt="Challenge Logo"
         />
-        <div>
+        <div >
           <div className="flex items-center">
             <img src={Coin} className="h-[2vh] mr-[0.5vh]" />
             <span className="text-[0.8rem] text-C333333">{reward} </span>
