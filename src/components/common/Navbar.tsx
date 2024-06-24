@@ -5,6 +5,9 @@ import StarIcon from "../../assets/star.svg";
 import ProductIcon from "../../assets/box.svg";
 import ProfileIcon from "../../assets/profile.svg";
 import useAuthStore from "../../store/useAuthStore";
+import useBoardCategoryFilterStore from "../../store/useBoardCategoryFilterStore";
+import useCategoryFilterStore from "../../store/useCategoryFilterStore";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const linkClasses =
@@ -29,6 +32,23 @@ const Navbar = () => {
     },
   ];
 
+  const clearCategoryAndFilters = useCategoryFilterStore(
+    (state) => state.clearCategoryAndFilters
+  );
+
+  const clearBoardCategoryAndFilters = useBoardCategoryFilterStore(
+    (state) => state.clearBoardCategoryAndFilters
+  );
+
+  function scrollToTop() {
+    window.scrollTo(0, 0);
+  }
+  const navBtnClick = () => {
+    clearCategoryAndFilters();
+    clearBoardCategoryAndFilters();
+    scrollToTop();
+  };
+
   return (
     <nav className="fixed w-full z-20 bottom-0 left-0 bg-white border-t border-gray-200 h-[7.5vh]">
       <div className="mx-auto flex items-center justify-center">
@@ -36,48 +56,52 @@ const Navbar = () => {
           <ul className="flex justify-center space-x-8 p-2 md:p-0 font-medium border-t md:border-t-0 bg-gray-50">
             {navItems.map((item) => (
               <li key={item.name}>
-                <NavLink
-                  to={item.href}
-                  className={({ isActive }) =>
-                    `${linkClasses} ${defaultClasses} ${hoverClasses} ${
-                      isActive ? activeClasses : ""
-                    }`
-                  }
-                  aria-current={
-                    location.pathname === item.href ||
-                    (!item.exact && location.pathname.startsWith(item.href))
-                      ? "page"
-                      : undefined
-                  }
-                >
-                  <img
-                    src={item.Icon}
-                    alt={item.name}
-                    className="h-7 w-7 filter transition-all duration-300 group-hover:filter-none group-hover:fill-current group-focus:fill-current"
-                    style={{
-                      filter:
-                        location.pathname === item.href ||
-                        (!item.exact && location.pathname.startsWith(item.href))
-                          ? "invert(64%) sepia(69%) saturate(4107%) hue-rotate(206deg) brightness(100%) contrast(102%)"
-                          : "none",
-                      fill:
-                        location.pathname === item.href ||
-                        (!item.exact && location.pathname.startsWith(item.href))
-                          ? "#748BFF"
-                          : "currentColor",
-                    }}
-                  />
-                  <p
-                    className={`text-xs ${
+                <div onClick={navBtnClick}>
+                  <NavLink
+                    to={item.href}
+                    className={({ isActive }) =>
+                      `${linkClasses} ${defaultClasses} ${hoverClasses} ${
+                        isActive ? activeClasses : ""
+                      }`
+                    }
+                    aria-current={
                       location.pathname === item.href ||
                       (!item.exact && location.pathname.startsWith(item.href))
-                        ? activeClasses
-                        : ""
-                    }`}
+                        ? "page"
+                        : undefined
+                    }
                   >
-                    {item.name}
-                  </p>
-                </NavLink>
+                    <img
+                      src={item.Icon}
+                      alt={item.name}
+                      className="h-7 w-7 filter transition-all duration-300 group-hover:filter-none group-hover:fill-current group-focus:fill-current"
+                      style={{
+                        filter:
+                          location.pathname === item.href ||
+                          (!item.exact &&
+                            location.pathname.startsWith(item.href))
+                            ? "invert(64%) sepia(69%) saturate(4107%) hue-rotate(206deg) brightness(100%) contrast(102%)"
+                            : "none",
+                        fill:
+                          location.pathname === item.href ||
+                          (!item.exact &&
+                            location.pathname.startsWith(item.href))
+                            ? "#748BFF"
+                            : "currentColor",
+                      }}
+                    />
+                    <p
+                      className={`text-xs ${
+                        location.pathname === item.href ||
+                        (!item.exact && location.pathname.startsWith(item.href))
+                          ? activeClasses
+                          : ""
+                      }`}
+                    >
+                      {item.name}
+                    </p>
+                  </NavLink>
+                </div>
               </li>
             ))}
           </ul>

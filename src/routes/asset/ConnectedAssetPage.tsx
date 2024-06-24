@@ -1,19 +1,22 @@
 import MiniCircleImg from "../../assets/minicircle.svg";
 import PurpleBtn from "../../components/common/PurpleBtn";
-import useAuthStore from "../../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import useSignUpStore from "../../store/useSignUpStore";
 
 const ConnectedAssetPage = () => {
   const navigate = useNavigate();
-  const { assetData } = useAuthStore();
+  const { assetData, clear } = useSignUpStore();
   const [totalCash, setTotalCash] = useState<number>(0);
+  window.onbeforeunload;
 
   // Calculate total cash when assetData changes
   useEffect(() => {
     if (assetData && Array.isArray(assetData)) {
       const total = assetData
-        .filter(asset => ["SAVING", "DEPOSIT", "CMA"].includes(asset.productType))
+        .filter((asset) =>
+          ["SAVING", "DEPOSIT", "CMA"].includes(asset.productType)
+        )
         .reduce((sum, asset) => sum + (asset.cash || 0), 0);
       setTotalCash(total);
     } else {
@@ -45,27 +48,32 @@ const ConnectedAssetPage = () => {
         <div className="bg-[#CDCACA] w-full h-[0.2vh]"></div>
         {assetData && Array.isArray(assetData) && assetData.length > 0 ? (
           <ul className="max-w-md divide-y divide-gray-200">
-            {assetData.map((asset, index) => (
-              // Render only if productType is "SAVING", "DEPOSIT", or "CMA"
-              (asset.productType === "SAVING" || asset.productType === "DEPOSIT" || asset.productType === "CMA") && (
-                <li key={index} className="p-[0.5vh]">
-                  <div className="flex items-center space-x-4 rtl:space-x-reverse">
-                    <div className="flex-shrink-0">
-                      <img
-                        src={asset.image}
-                        className="h-10 w-10"
-                        alt={asset.name}
-                      />
+            {assetData.map(
+              (asset, index) =>
+                // Render only if productType is "SAVING", "DEPOSIT", or "CMA"
+                (asset.productType === "SAVING" ||
+                  asset.productType === "DEPOSIT" ||
+                  asset.productType === "CMA") && (
+                  <li key={index} className="p-[0.5vh]">
+                    <div className="flex items-center space-x-4 rtl:space-x-reverse">
+                      <div className="flex-shrink-0">
+                        <img
+                          src={asset.image}
+                          className="h-10 w-10"
+                          alt={asset.name}
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-base font-semibold">
+                          {formatNumber(asset.cash || 0)}원
+                        </p>
+                        <p className="text-sm font-normal">{asset.name}</p>
+                      </div>
+                      <div className="inline-flex items-center text-base font-semibold text-gray-900"></div>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-base font-semibold">{formatNumber(asset.cash || 0)}원</p>
-                      <p className="text-sm font-normal">{asset.name}</p>
-                    </div>
-                    <div className="inline-flex items-center text-base font-semibold text-gray-900"></div>
-                  </div>
-                </li>
-              )
-            ))}
+                  </li>
+                )
+            )}
           </ul>
         ) : (
           <p className="text-base">연결된 자산이 없습니다.</p>
@@ -87,7 +95,11 @@ const ConnectedAssetPage = () => {
           />
           <img src={MiniCircleImg} className="w-3 h-3" alt="Mini Circle" />
         </div>
-        <PurpleBtn to="/asset/tendency" label="나의 자산 연결하기" />
+        <PurpleBtn
+          to="/asset/tendency"
+          label="나의 자산 연결하기"
+          onClick={clear}
+        />
       </div>
     </>
   );

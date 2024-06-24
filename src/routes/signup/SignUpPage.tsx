@@ -6,6 +6,7 @@ import PurpleBtn from "../../components/common/PurpleBtn";
 import miniCircle from "../../assets/minicircle.svg";
 import essential from "../../assets/required.svg";
 import checkedIcon from "../../assets/checked.svg";
+import { useSignUpStore } from "../../store/useSignUpStore";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const SignUpPage = () => {
   );
   const [userIdCheckReason, setUserIdCheckReason] = useState<string>("");
 
-  const login = useAuthStore((state) => state.login);
+  const setLoginInfo = useSignUpStore((state) => state.setLoginInfo);
 
   const validatePassword = (password: string) => {
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,30}$/;
@@ -42,8 +43,8 @@ const SignUpPage = () => {
       );
       return;
     }
+    setLoginInfo(userId, userInfo);
 
-    login(0, userId, userInfo, "", "", "", ""); // Call Zustand's login function
     navigate("/signup/profile");
   };
 
@@ -161,10 +162,7 @@ block w-full p-2.5"
           <img src={miniCircle} alt="Mini Circle" className="w-3 h-3 mr-5" />
           <img src={miniCircle} alt="Mini Circle" className="w-3 h-3" />
         </div>
-        <PurpleBtn
-          label="로그인 정보 작성하기"
-          onClick={handleNext}
-        />
+        <PurpleBtn label="로그인 정보 작성하기" onClick={handleNext} />
       </div>
     </>
   );

@@ -16,6 +16,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import ProductCard from "../common/ProductCard";
 import ChallengeCardHorizontal from "../common/ChallengeCardHorizontal";
 import UserCard from "./UserCard";
+import useCategoryFilterStore from "../../store/useCategoryFilterStore";
 
 interface HomeSearchProps {
   keyword: string;

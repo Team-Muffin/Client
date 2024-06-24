@@ -6,7 +6,7 @@ import BoardCard from "../../components/common/BoardCard";
 import Navbar from "../../components/common/Navbar";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import useAuthStore from "../../store/useAuthStore";
-import useBoardCategoryFilterStore from "../../store/useBoardCategoryFilterStore";
+import useCategoryFilterStore from "../../store/useCategoryFilterStore";
 import { useInfiniteQuery } from "react-query";
 import { fetchBoardList } from "../../libs/apis/board";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
@@ -21,16 +21,25 @@ export default function BoardListPage() {
   const { userId } = useAuthStore((state) => ({
     userId: state.id,
   }));
+  const { savedCategory, savedFilter } = useCategoryFilterStore((state) => ({
+    savedCategory: state.savedCategory,
+    savedFilter: state.savedFilter,
+  }));
 
-  const setBoardCategoryAndFilters = useBoardCategoryFilterStore(
-    (state) => state.setBoardCategoryAndFilters
+  useEffect(() => {
+    if (savedCategory) setCategory(savedCategory);
+    if (savedFilter) setSelectedFilter(savedFilter);
+  }, []);
+
+  const setCategoryAndFilters = useCategoryFilterStore(
+    (state) => state.setCategoryAndFilters
   );
 
   const handleBoardCardClick = async (link: string) => {
     if (category && selectedFilter) {
-      setBoardCategoryAndFilters(category, selectedFilter);
+      setCategoryAndFilters(category, selectedFilter);
     } else if (category) {
-      setBoardCategoryAndFilters(category, null);
+      setCategoryAndFilters(category, null);
     }
     navigate(link);
   };
@@ -117,12 +126,10 @@ export default function BoardListPage() {
       <div className="flex justify-between text-sm">
         {categories.map((cat, index) => (
           <p
-
             key={index}
             className={`${
               category === cat ? selectedCategoryCss : defaultCategoryCss
             } cursor-pointer`}
-
             onClick={() => handleUserCategoryClick(cat)}
           >
             {cat}

@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import MainLogoImg from "../../assets/main-logo.svg";
 import PurpleBtn from "../../components/common/PurpleBtn";
 import { Link, useNavigate } from "react-router-dom";
-import useAuthStore, { AuthState } from "../../store/useAuthStore"; // Zustand에서 useAuthStore 가져오기
-import { signIn } from "../../libs/apis/user"; // login API 호출 함수 가져오기
+import useAuth2Store from "../../store/useAuth2Store";
 
 // 인터페이스 정의
 interface SignInData {
@@ -16,33 +15,14 @@ const LoginPage: React.FC = () => {
   const [userId, setId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const { birthdate, nickname, login } = useAuthStore((state: AuthState) => ({
-    birthdate: state.birthdate,
-    nickname: state.nickname,
-    login: state.login,
-  })); // Zustand에서 login 액션 가져오기
+  const { login } = useAuth2Store();
 
   const handleLogin = async () => {
-    const userData = {
-      tofinId: userId,
-      userInfo: password,
-    };
-    try {
-      // 실제 로그인 API 호출 예시
-      const res = await signIn(userData);
-      login(
-        res.data.id,
-        userId,
-        password,
-        res.data.nickname,
-        birthdate,
-        res.data.accessToken,
-        res.data.refreshToken
-      );
+    const res = await login(userId, password);
+    if (res) {
       navigate("/");
-    } catch (error) {
+    } else {
       alert("아이디 및 비밀번호를 다시 확인하세요!");
-      console.error("로그인 에러", error);
     }
   };
 
