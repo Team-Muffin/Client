@@ -57,6 +57,7 @@ export default function BoardWritePage() {
 
   const handleMenuItemClick = (text: string) => {
     setSelected(text);
+    setCategoryId(filterList.indexOf(text) + 1 + "");
   };
 
   const handleRegister = async () => {
@@ -68,8 +69,8 @@ export default function BoardWritePage() {
     const requestBody: CreateBoardRequest = {
       title: title,
       content: boardData,
-      categoryId: categoryId
-    }
+      categoryId: categoryId,
+    };
     const response = await createBoard(requestBody);
     console.log(response.data.boardId);
 
@@ -78,7 +79,7 @@ export default function BoardWritePage() {
     } else {
       window.alert("게시글 작성에 실패했습니다.");
     }
-  }
+  };
 
   return (
     <>
@@ -119,8 +120,9 @@ export default function BoardWritePage() {
                           {({ active }) => (
                             <a
                               href="#"
-                              className={`${active ? "bg-gray-100" : ""
-                                }text-black block px-4 py-2 text-[1rem]`}
+                              className={`${
+                                active ? "bg-gray-100" : ""
+                              }text-black block px-4 py-2 text-[1rem]`}
                             >
                               {text}
                             </a>
@@ -133,7 +135,10 @@ export default function BoardWritePage() {
               </Transition>
             </Menu>
 
-            <div className="absolute right-4 font-medium text-lg" onClick={handleRegister}>
+            <div
+              className="absolute right-4 font-medium text-lg"
+              onClick={handleRegister}
+            >
               {" "}
               {boardId ? "수정" : "작성"}
             </div>
@@ -143,8 +148,12 @@ export default function BoardWritePage() {
         <div className="mt-[4vh]"></div>
 
         {/* 민우 TODO: 여기부터 Editor 관련 */}
-        <BoardEditor setData={setBoardData} data={boardData}
-          setTitle={setTitle} title={title} />
+        <BoardEditor
+          setData={setBoardData}
+          data={boardData}
+          setTitle={setTitle}
+          title={title}
+        />
       </div>
     </>
   );

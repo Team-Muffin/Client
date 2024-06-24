@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { createReactEditorJS } from "react-editor-js";
 import { EDITOR_JS_TOOLS } from "./BoardEditorTool";
 import EditorJS, { OutputData } from "@editorjs/editorjs";
-import "./BoardViewer.css"
+import "./BoardViewer.css";
 
 type BoardViewerProps = {
   /**
@@ -11,8 +11,8 @@ type BoardViewerProps = {
    * time: Number,
    * version: String
    */
-  strData: string,
-}
+  strData: string;
+};
 
 const BoardViewer: React.FC<BoardViewerProps> = ({ strData }) => {
   const [data, setData] = useState<OutputData>();
@@ -35,16 +35,16 @@ const BoardViewer: React.FC<BoardViewerProps> = ({ strData }) => {
   //   }
   // }, [strData, editorCore, editorCore.current]);
 
-
   return (
-    <div>
-      <ReactEditorJS onInitialize={handleEditorInit}
+    <div id="board-view">
+      <ReactEditorJS
+        onInitialize={handleEditorInit}
         tools={EDITOR_JS_TOOLS}
         readOnly={true}
         defaultValue={parseStrData(strData)}
       />
     </div>
-  )
+  );
 };
 
 export default BoardViewer;
