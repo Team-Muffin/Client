@@ -117,10 +117,12 @@ export default function BoardListPage() {
       <div className="flex justify-between text-sm">
         {categories.map((cat, index) => (
           <p
+
             key={index}
             className={`${
               category === cat ? selectedCategoryCss : defaultCategoryCss
             } cursor-pointer`}
+
             onClick={() => handleUserCategoryClick(cat)}
           >
             {cat}
