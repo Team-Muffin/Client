@@ -258,7 +258,7 @@ export default function ProductListPage() {
       ) : (
         <>
           {" "}
-          <div className="py-[2vh] px-[4.5vw] pb-[1vh]">
+          <div className="py-[2vh] px-[4.5vw] pb-[1vh] text-C333333">
             {productType === "펀드" ? (
               <Header text={"투자"} type="backLeftTextCenter" />
             ) : (
