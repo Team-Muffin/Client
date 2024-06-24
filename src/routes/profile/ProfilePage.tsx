@@ -58,9 +58,10 @@ const ProfilePage = () => {
     setUserCategory(selection);
   };
 
-  const handleFollowButtonClick = () => {
-    setIsFollowing((prevState) => !prevState);
+  const handleFollowButtonClick = (newState: boolean) => {
+    setIsFollowing(newState);
   };
+  
 
   const handleCreditTipClick = () => {
     setShowCreditTip((prevState) => !prevState);
