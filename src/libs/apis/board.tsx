@@ -146,7 +146,9 @@ export async function deleteComment(commentId: number) {
 export interface CreateBoardRequest {
   title: String;
   content: OutputData;
-  categoryId: String;
+  category: String;
+  product: String | null;
+  challenge: String | null;
 }
 export async function createBoard(requestBody: CreateBoardRequest) {
   try {
