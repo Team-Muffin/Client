@@ -147,7 +147,11 @@ export default function BoardDetailPage() {
       return;
     }
     navigate(`/board/${boardId}/edit`, {
-      state: { category: `${boardData.category.id}` },
+      state: {
+        category: `${boardData.category.id}`,
+        title: boardData.title,
+        content: boardData.content,
+      },
     });
   };
 
@@ -255,7 +259,8 @@ export default function BoardDetailPage() {
                     })()}
                   </div>
                   <div className="absolute right-4">
-                    {Number(id) == boardData.authorId && (
+                    {/* {Number(id) == boardData.authorId && ( */}
+                    {
                       <Menu as="div">
                         <MenuButton>
                           <img src={More} className="cursor-pointer" />
@@ -299,7 +304,7 @@ export default function BoardDetailPage() {
                           </Menu.Items>
                         </Transition>
                       </Menu>
-                    )}
+                    }
                   </div>
                 </div>
               </div>

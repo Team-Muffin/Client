@@ -7,7 +7,7 @@ import FilledScrap from "../../assets/scrap-filled.svg";
 import Scrap from "../../assets/scrap.svg";
 import { createBookmark, createLike } from "../../libs/apis/board";
 import { fetchFollowStatus, followUser } from "../../libs/apis/board";
-import BoardViewer from "../../routes/board/BoardViewer";
+import BoardViewer from "./BoardViewer";
 
 interface BoardContentProps {
   authorId?: number;

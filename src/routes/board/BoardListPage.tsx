@@ -19,7 +19,7 @@ export default function BoardListPage() {
   const [size, setSize] = useState(10);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [category, setCategory] = useState("1");
+  const [category, setCategory] = useState("정보");
   const [userId, setUSerId] = useState(1);
   const [selectedFilter, setSelectedFilter] = useState("최신순");
   const elementRef = useRef<HTMLDivElement | null>(null);
