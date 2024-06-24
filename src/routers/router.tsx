@@ -94,7 +94,7 @@ export const mainRouter = [
             element: <ChallengePage />,
           },
           {
-            path: "detail",
+            path: ":challengeId",
             element: <ChallengeDetailPage />,
           },
           {

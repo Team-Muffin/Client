@@ -58,7 +58,7 @@ const ChallengeDetailPage = () => {
 
   return (
     <>
-      <Header text="감정 저축 챌린지" type={"textCenterSearchRight"} />
+      <Header text="감정 저축 챌린지" type={"backLeftTextCenter"} />
       <div className="mt-[4.5vh]"></div>
 
       {challenges.map((challenge, index) => (

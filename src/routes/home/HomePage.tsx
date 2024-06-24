@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Slider from "react-slick";
 import Header from "../../components/common/Header";
 import Navbar from "../../components/common/Navbar";
@@ -34,17 +34,17 @@ export default function HomePage() {
     []
   );
 
-  // const callChallengeData = async () => {
-  //   try {
-  //     // const { data } = await fetchChallengeList();
-  //     //  setChallengeListData(data);
-  //   } catch (error) {
-  //     console.error("홈 챌린지 리스트 데이터 호출 중 에러:", error);
-  //   }
-  // };
+  const callChallengeData = async () => {
+    try {
+      const { data } = await fetchChallengeList();
+      setChallengeListData(data);
+    } catch (error) {
+      console.error("홈 챌린지 리스트 데이터 호출 중 에러:", error);
+    }
+  };
 
   useEffect(() => {
-    // callChallengeData();
+    callChallengeData();
     console.log(challengeListData);
   }, []);
 
@@ -79,6 +79,10 @@ export default function HomePage() {
     });
   };
 
+  const handleChallengeCardClick = (id: number) => {
+    navigate(`/challenge/${id}`);
+  };
+
   const handleNotificationBtnClick = () => {
     navigate("/notification");
   };
@@ -86,6 +90,14 @@ export default function HomePage() {
   const handleChallengeMoreBtnClick = () => {
     navigate("/challenge");
   };
+
+  const challengeDescription = [
+    "매일의 감정에 따라 저축해봐요!",
+    "저렴한 재료로 맛있는 요리를 만들어봐요!",
+    "유익한 금융 도서를 추천해 보세요!",
+    "ESG 기업을 소개하고 공유해봐요!",
+    "관심 기업을 분석하고 정보를 나눠요!",
+  ];
 
   return (
     <>
@@ -109,19 +121,21 @@ export default function HomePage() {
         </div>
 
         {/* 챌린지 카드 컴포넌트  */}
-        {/* <div className="whitespace-nowrap overflow-x-auto flex scrollbar-hide">
+        <div className="whitespace-nowrap overflow-x-auto flex scrollbar-hide">
           {challengeListData.map((challenge, index) => (
             <>
-              <ChallengeCard
-                title={challenge.name}
-                description={challenge.description}
-                participants={challenge.participation}
-                bgColor={bgColor[index]}
-                ChallengeLogo={challenge.logoUrl}
-              />
+              <div onClick={() => handleChallengeCardClick(challenge.id)}>
+                <ChallengeCard
+                  title={challenge.name}
+                  description={challengeDescription[index]}
+                  participants={challenge.participation}
+                  bgColor={bgColor[index]}
+                  ChallengeLogo={challenge.logoUrl}
+                />
+              </div>
             </>
           ))}
-        </div> */}
+        </div>
 
         <div className="flex justify-between items-center my-[1.5vh]">
           <span className="font-semibold text-[1.2rem]">맞춤 핀 </span>{" "}

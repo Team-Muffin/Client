@@ -47,10 +47,18 @@ export default function SearchResultPage() {
       navigate("/searchResult", {
         state: { domain: "home", searchKeyword: searchContent },
       });
-    }
-    if (domain === "board") {
-    }
-    if (domain === "product") {
+    } else if (domain === "board") {
+      navigate("/searchResult", {
+        state: { domain: "board", searchKeyword: searchContent },
+      });
+    } else if (domain === "product") {
+      navigate("/searchResult", {
+        state: { domain: "product", searchKeyword: searchContent },
+      });
+    } else if (domain === "user") {
+      navigate("/searchResult", {
+        state: { domain: "user", searchKeyword: searchContent },
+      });
     }
   };
 

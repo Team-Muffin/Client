@@ -1,10 +1,31 @@
 import MiniCircleImg from "../../assets/minicircle.svg";
 import PurpleBtn from "../../components/common/PurpleBtn";
-import ShinhanLogo from "../../assets/shinhan-logo.svg";
-
-// Assuming ShinhanLogo.svg is imported similarly as MiniCircleImg
+import useAuthStore from "../../store/useAuthStore";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const ConnectedAssetPage = () => {
+  const navigate = useNavigate();
+  const { assetData } = useAuthStore();
+  const [totalCash, setTotalCash] = useState<number>(0);
+
+  // Calculate total cash when assetData changes
+  useEffect(() => {
+    if (assetData && Array.isArray(assetData)) {
+      const total = assetData
+        .filter(asset => ["SAVING", "DEPOSIT", "CMA"].includes(asset.productType))
+        .reduce((sum, asset) => sum + (asset.cash || 0), 0);
+      setTotalCash(total);
+    } else {
+      setTotalCash(0); // Reset total cash if assetData is not a valid array
+    }
+  }, [assetData]);
+
+  // Format number with commas
+  const formatNumber = (number: number) => {
+    return new Intl.NumberFormat().format(number);
+  };
+
   return (
     <>
       <div className="px-[8vw] pt-[5vh]">
@@ -17,84 +38,39 @@ const ConnectedAssetPage = () => {
         <div className="flex justify-between mb-[0.5vh]">
           <p className="text-xl font-semibold">연결된 자산</p>
           <p className="text-xl font-semibold">
-            <span className="text-[#748BFF]">11,257,000</span>
+            <span className="text-[#748BFF]">{formatNumber(totalCash)}</span>
             <span> 원</span>
           </p>
         </div>
         <div className="bg-[#CDCACA] w-full h-[0.2vh]"></div>
-        <ul className="max-w-md divide-y divide-gray-200">
-          <li className="p-[0.5vh]">
-            <div className="flex items-center space-x-4 rtl:space-x-reverse">
-              <div className="flex-shrink-0">
-                <img
-                  src={ShinhanLogo}
-                  className="h-10 w-10"
-                  alt="Shinhan Logo"
-                />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-base font-semibold">237,735원</p>
-                <p className="text-sm font-normal">쏠편한 입출금통장</p>
-              </div>
-              <div className="inline-flex items-center text-base font-semibold text-gray-900"></div>
-            </div>
-          </li>
-          {/* Repeat the above structure for each connected asset */}
-        </ul>
-        {/* <div className="flex justify-between mt-[4vh] mb-[0.5vh]">
-          <p className="text-xl font-semibold">자산 공개 여부</p>
-          <div className="text-right">
-            <p className="text-xs font-normal">
-              나의 자산을 공개하고 <br />
-              인증된 유저로 활동해보세요:)
-            </p>
-          </div>
-        </div> */}
+        {assetData && Array.isArray(assetData) && assetData.length > 0 ? (
+          <ul className="max-w-md divide-y divide-gray-200">
+            {assetData.map((asset, index) => (
+              // Render only if productType is "SAVING", "DEPOSIT", or "CMA"
+              (asset.productType === "SAVING" || asset.productType === "DEPOSIT" || asset.productType === "CMA") && (
+                <li key={index} className="p-[0.5vh]">
+                  <div className="flex items-center space-x-4 rtl:space-x-reverse">
+                    <div className="flex-shrink-0">
+                      <img
+                        src={asset.image}
+                        className="h-10 w-10"
+                        alt={asset.name}
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-base font-semibold">{formatNumber(asset.cash || 0)}원</p>
+                      <p className="text-sm font-normal">{asset.name}</p>
+                    </div>
+                    <div className="inline-flex items-center text-base font-semibold text-gray-900"></div>
+                  </div>
+                </li>
+              )
+            ))}
+          </ul>
+        ) : (
+          <p className="text-base">연결된 자산이 없습니다.</p>
+        )}
         <div className="bg-[#CDCACA] w-full h-[0.2vh]"></div>
-        {/* <ul className="max-w-md divide-y divide-gray-200">
-          <li className="p-[1vh]">
-            <div className="flex justify-between items-center">
-              <div className="flex min-w-0 items-center space-x-4 rtl:space-x-reverse">
-                <p className="text-sm font-semibold mr-[3vw]">금액</p>
-                <p className="text-[0.8rem] font-normal items-center mt-[0.2vh]">
-                  나의 자산 금액을 공개합니다
-                </p>
-              </div>
-              <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                <label className="inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    value=""
-                    className="sr-only peer"
-                    defaultChecked
-                  />
-                  <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#748BFF]"></div>
-                </label>
-              </div>
-            </div>
-          </li>
-          <li className="p-[1vh]">
-            <div className="flex justify-between items-center">
-              <div className="flex min-w-0 items-center space-x-4 rtl:space-x-reverse">
-                <p className="text-sm font-semibold">퍼센트</p>
-                <p className="text-[0.8rem] font-normal items-center mt-[0.2vh]">
-                  나의 수익률 및 지분을 %로 공개합니다
-                </p>
-              </div>
-              <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                <label className="inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    value=""
-                    className="sr-only peer"
-                    defaultChecked
-                  />
-                  <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#748BFF]"></div>
-                </label>
-              </div>
-            </div>
-          </li>
-        </ul> */}
       </div>
       <div className="fixed w-full px-[8vw] bottom-[3vh]">
         <div className="flex justify-center mb-[3vh]">

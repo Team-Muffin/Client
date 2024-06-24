@@ -3,15 +3,19 @@ import { useState, useRef, useEffect } from "react";
 import CategoryTabs from "../common/CategoryTabs";
 import BoardCard from "../common/BoardCard";
 import {
-  fetchBoardList,
+  fetchSearchedBoardList,
   BoardData,
   fetchSearchedChallengeList,
   ChallengeData,
   fetchSearchedProductList,
   ProductList,
+  fetchSearchedUserList,
+  User,
 } from "../../libs/apis/search";
 import { useParams, useNavigate } from "react-router-dom";
 import ProductCard from "../common/ProductCard";
+import ChallengeCardHorizontal from "../common/ChallengeCardHorizontal";
+import UserCard from "./UserCard";
 
 interface HomeSearchProps {
   keyword: string;
@@ -20,10 +24,11 @@ interface HomeSearchProps {
 const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
   const navigate = useNavigate();
   const categories = ["핀", "챌린지", "상품", "유저"];
-  const [category, setCategory] = useState("챌린지");
+  const [category, setCategory] = useState("핀");
   const [boardData, setBoardData] = useState<BoardData[]>([]);
   const [challengeData, setChallengeData] = useState<ChallengeData[]>([]);
   const [productData, setProductData] = useState<ProductList[]>([]);
+  const [userData, setUserData] = useState<User[]>([]);
 
   const [finPageNo, setFinPageNo] = useState(0);
   const [productPageNo, setProductPageNo] = useState(0);
@@ -31,10 +36,22 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
 
   const [pageNo, setPageNo] = useState(0);
   const [size, setSize] = useState(10);
+  const [userLimit, setUserLimit] = useState(10);
+  const [userLast, setUserLast] = useState(null);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState(1);
   const [selectedFilter, setSelectedFilter] = useState("최신순");
+
+  const callBoardData = async () => {
+    try {
+      const { data } = await fetchSearchedBoardList(keyword);
+      console.log(data);
+      setBoardData(data);
+    } catch (error) {
+      console.log("게시글 검색 리스트 불러오는 중 오류");
+    }
+  };
 
   const callChallengeData = async () => {
     try {
@@ -60,13 +77,29 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
     }
   };
 
+  const callUserData = async () => {
+    try {
+      const { data } = await fetchSearchedUserList(
+        keyword,
+        userLimit,
+        userLast
+      );
+      console.log(data);
+      setUserData(data.data.users);
+    } catch (error) {
+      console.log("유저 검색 리스트 불러오는 중 오류", error);
+    }
+  };
+
   useEffect(() => {
-    // console.log(category);
-    // console.log(keyword);
     if (category === "챌린지") {
       callChallengeData();
     } else if (category === "상품") {
       callProductData();
+    } else if (category === "유저") {
+      callUserData();
+    } else if (category === "핀") {
+      callBoardData();
     }
   }, [keyword, category]);
 
@@ -100,12 +133,6 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
     setCategory(selection);
   };
 
-  useEffect(() => {
-    if (category === "핀") {
-      //category랑 keyword로 쏘기
-    }
-  }, []);
-
   const handleBoardCardClick = async (link: string) => {
     navigate(link);
   };
@@ -122,6 +149,14 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
         {category === "핀" && (
           <>
             <hr />
+            {boardData.length === 0 && (
+              <>
+                <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.9rem]">
+                  "{keyword}" 검색 결과가 없습니다.
+                </div>
+              </>
+            )}
+
             {boardData.map((data, index) => (
               <React.Fragment key={index}>
                 <div onClick={() => handleBoardCardClick(`/board/${data.id}`)}>
@@ -143,36 +178,75 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
         )}
         {category === "챌린지" && (
           <>
-            <hr />
             {challengeData.length === 0 && (
-              <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.85rem]">
-                "{keyword}" 검색 결과가 없습니다.
-              </div>
+              <>
+                <hr />
+                <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.9rem]">
+                  "{keyword}" 검색 결과가 없습니다.
+                </div>
+              </>
             )}
-            {challengeData.map((data, index) => (
-              <>{console.log(data)}</>
+            {challengeData.map((challenge, index) => (
+              <div>
+                <ChallengeCardHorizontal
+                  title={challenge.name}
+                  description={challenge.description}
+                  participants={challenge.participation}
+                  bgColor={"#ffffff"}
+                  ChallengeLogo={challenge.logoUrl}
+                  reward={challenge.reward}
+                  link={`/challenge/${challenge.id}`}
+                />
+              </div>
             ))}
           </>
         )}
         {category === "상품" && (
           <>
-            <hr />
             {productData.length === 0 && (
-              <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.85rem]">
-                "{keyword}" 검색 결과가 없습니다.
-              </div>
+              <>
+                <hr />
+                <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.9rem]">
+                  "{keyword}" 검색 결과가 없습니다.
+                </div>
+              </>
             )}
             {productData &&
               productData.map((data, index) => (
                 <div key={data.id}>
                   <ProductCard
-                    // type={data.productType}
+                    type={
+                      data.categoryName === "펀드" ? "투자" : data.categoryName
+                    }
                     productImg={data.cardImage || data.corpImage || ""}
                     productName={data.name}
                     productBrand={data.corpName}
                     benefits={data.tags.slice(0, 2)}
                     reviewCount={data.boardCount}
                     link={`${data.id}`}
+                  />
+                </div>
+              ))}
+          </>
+        )}
+        {category === "유저" && (
+          <>
+            {userData.length === 0 && (
+              <>
+                <hr />
+                <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.9rem]">
+                  "{keyword}" 검색 결과가 없습니다.
+                </div>
+              </>
+            )}
+            {userData &&
+              userData.map((data, index) => (
+                <div key={data.userId}>
+                  <UserCard
+                    profileImage={data.profileImage}
+                    nickname={data.nickname}
+                    tofinId={data.tofinId}
+                    userId={data.userId}
                   />
                 </div>
               ))}

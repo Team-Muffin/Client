@@ -247,8 +247,8 @@ export default function BoardListPage() {
               time={data.createdTime}
               heartCount={data.likeCount}
               replyCount={data.commentCount}
-              imageUrl="https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg"
-              // imageUrl={data.thumbnail}
+              // imageUrl="https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg"
+              imageUrl={data.thumbnail}
               authorImageUrl="https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg"
             />
           </div>

@@ -45,7 +45,7 @@ const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-[#ffffff]">
+    <nav className="fixed top-0 left-0 right-0 bg-[#ffffff] z-10">
       <div className="relative flex justify-center items-center h-[6vh]">
         {type === "textCenterSearchRight" && (
           // 가운데 텍스트, 우측 검색

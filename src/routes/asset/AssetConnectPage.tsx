@@ -10,10 +10,11 @@ import { connectAsset, CheckUserContactAvailability } from "../../libs/apis/user
 
 const AssetConnectPage = () => {
   const navigate = useNavigate();
-  const { birthdate, setAssetData } = useAuthStore((state) => ({
-    birthdate: state.birthdate,
-    setAssetData: state.setAssetData,
+  const { birthdate} = useAuthStore((state) => ({
+    birthdate: state.birthdate
   }));
+
+  const { setAssetData } = useAuthStore(); 
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isAgreed, setIsAgreed] = useState(false);
@@ -82,8 +83,8 @@ const AssetConnectPage = () => {
     };
     try {
       const res = await connectAsset(assetInfo);
-      setAssetData(res.data);
       console.log(res.data);
+      setAssetData(res.data) // store asset info
       alert("자산 연결 성공");
       navigate("/asset/connect");
     } catch (error) {

@@ -7,7 +7,9 @@ import UserProfile from "../../components/profile/UserProfile";
 import CategoryTabs from "../../components/common/CategoryTabs";
 import Portfolio from "../../components/profile/Portfolio";
 import Credit from "../../components/profile/Credit";
-import { getUserDetails, UserDetailsResponse } from "../../libs/apis/user";
+import PurpleBtn from "../../components/common/PurpleBtn"; // Assuming PurpleBtn for modal close
+import Modal from "../../components/common/Modal";
+import { getUserDetails, UserDetailsResponse, getFollowers, FollowersReq } from "../../libs/apis/user";
 
 const ProfilePage = () => {
   const [userCategory, setUserCategory] = useState<string>("게시물");
@@ -17,6 +19,10 @@ const ProfilePage = () => {
   const [searchParams] = useSearchParams();
   const userId = searchParams.get("id");
 
+  // State for managing modal and followers
+  const [selectedFollowerId, setSelectedFollowerId] = useState<number | null>(null);
+  const [followers, setFollowers] = useState<FollowersReq[]>([]);
+
   useEffect(() => {
     if (userId) {
       getUserDetails(parseInt(userId)).then((response) => {
@@ -24,6 +30,9 @@ const ProfilePage = () => {
       }).catch((error) => {
         console.error("유저 상세 정보 조회 중 오류 발생", error);
       });
+
+      // Fetch initial followers
+      fetchFollowers(parseInt(userId));
     }
   }, [userId]);
 
@@ -49,12 +58,37 @@ const ProfilePage = () => {
     setUserCategory(selection);
   };
 
-  const handleFollowButtonClick = () => {
-    setIsFollowing((prevState) => !prevState);
+  const handleFollowButtonClick = (newState: boolean) => {
+    setIsFollowing(newState);
   };
+  
 
   const handleCreditTipClick = () => {
     setShowCreditTip((prevState) => !prevState);
+  };
+
+  // Function to fetch followers
+  const fetchFollowers = async (userId: number) => {
+    try {
+      const response = await getFollowers(userId);
+      if (response.success) {
+        setFollowers(response.data);
+      } else {
+        console.error("팔로워 조회 실패:", response.message);
+      }
+    } catch (error) {
+      console.error("팔로워 조회 중 오류 발생", error);
+    }
+  };
+
+  // Function to open modal for selected follower
+  const openFollowerModal = (followerId: number) => {
+    setSelectedFollowerId(followerId);
+  };
+
+  // Function to close modal
+  const closeFollowerModal = () => {
+    setSelectedFollowerId(null);
   };
 
   return (
@@ -96,6 +130,25 @@ const ProfilePage = () => {
         />
       )}
       <Navbar />
+
+      {/* Modal for selected follower */}
+      {selectedFollowerId !== null && (
+        <Modal onClose={closeFollowerModal}>
+          <div className="p-4">
+            <p className="text-lg font-semibold">
+              Details of Follower ID: {selectedFollowerId}
+            </p>
+            {/* Replace with actual follower details rendering */}
+            {followers.map((follower) => (
+              <div key={follower.id} className="mb-4">
+                <p>{follower.nickname}</p>
+                <img src={follower.profileImage} alt={follower.nickname} className="w-16 h-16 rounded-full" />
+              </div>
+            ))}
+            <PurpleBtn label="Close" onClick={closeFollowerModal} />
+          </div>
+        </Modal>
+      )}
     </>
   );
 };
