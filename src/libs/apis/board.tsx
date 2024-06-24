@@ -102,6 +102,7 @@ export interface CommentResponse {
       createdTime: string;
     }[];
     createdTime: string;
+    deleted: boolean;
   }[];
 }
 

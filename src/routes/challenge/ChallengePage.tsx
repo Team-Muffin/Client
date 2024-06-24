@@ -4,20 +4,28 @@ import User1Img from "../../assets/user-icon.svg";
 import EmotionSaveImg from "../../assets/emotion-save.svg";
 import Navbar from "../../components/common/Navbar";
 import useAuthStore from "../../store/useAuthStore";
-import { fetchOurChallenges , Challenge  } from "../../libs/apis/challenge";
+import {
+  fetchOurChallenges,
+  fetchCorpChallenges,
+  Challenge,
+} from "../../libs/apis/challenge";
 import ChallengeCardHorizontal from "../../components/common/ChallengeCardHorizontal";
+import { getChallengeBgColor } from "../../utils/challengeColorUtil";
+import CorpChallengeCardHorizontal from "../../components/common/CorpChallengeCardHorizontal";
 
 const ChallengePage = () => {
   const [category, setCategory] = useState("최신순");
   const [challenges, setChallenges] = useState<Challenge[]>([]);
-  const [coprChallenges, setCorpChallenges] = useState<Challenge[]>([]);
-  const nickName = useAuthStore((state) => state.nickname); 
+  const [corpChallenges, setCorpChallenges] = useState<Challenge[]>([]);
+  const nickName = useAuthStore((state) => state.nickname);
 
   useEffect(() => {
     const fetchChallenges = async () => {
       try {
         const challengeData = await fetchOurChallenges();
         setChallenges(challengeData); // Set the state with the array of challenges
+        const corpChallenges = await fetchCorpChallenges(0);
+        setCorpChallenges(corpChallenges);
       } catch (error) {
         console.error("챌린지 조회 오류 발생", error);
       }
@@ -26,27 +34,25 @@ const ChallengePage = () => {
     fetchChallenges();
   }, []);
 
+  const handleCorpChallenges = async (sort: number) => {
+    const corpChallenges = await fetchCorpChallenges(sort);
+    setCorpChallenges(corpChallenges);
+  };
+
   const handleCategoryClick = (selection: string) => {
     setCategory(selection);
+    console.log(selection);
+    if (selection === "최신순") {
+      handleCorpChallenges(0);
+    } else {
+      handleCorpChallenges(1);
+    }
   };
 
   const selectedCategoryCss =
     "text-xs text-white bg-[#748BFF] rounded-xl shadow py-[0.5vh] px-[2vw]";
   const defaultCategoryCss =
     "text-xs text-[#748BFF] bg-[#ECF0FF] rounded-xl shadow py-[0.5vh] px-[2vw]";
-
-  const bgColor = [
-    "#F9D1E3",
-    "#8DBDFF",
-    "#F8D560",
-    "#B6E785",
-    "#AF9FF3",
-    "#F9D1E3",
-    "#8DBDFF",
-    "#F8D560",
-    "#B6E785",
-    "#AF9FF3",
-  ];
 
   return (
     <>
@@ -125,27 +131,8 @@ const ChallengePage = () => {
       </div>
 
       <div className="relative border -mt-10 px-[8vw] py-[3vh] rounded-[30px] bg-white">
-        <p className="text-base font-bold text-black-900">모집중 챌린지</p>
-
-        <div className="flex justify-end mt-[2vh]">
-          <div
-            className={`${
-              category === "최신순" ? selectedCategoryCss : defaultCategoryCss
-            } cursor-pointer mr-[2vw]`}
-            onClick={() => handleCategoryClick("최신순")}
-          >
-            최신순
-          </div>
-          <div
-            className={`${
-              category === "마감기한순"
-                ? selectedCategoryCss
-                : defaultCategoryCss
-            } cursor-pointer`}
-            onClick={() => handleCategoryClick("마감기한순")}
-          >
-            마감기한순
-          </div>
+        <div className="flex justify-between">
+          <p className="text-base font-bold text-black-900">자체 챌린지</p>
         </div>
 
         <div className="mt-[2vh] overflow-y-scroll">
@@ -155,15 +142,56 @@ const ChallengePage = () => {
               title={challenge.name}
               description={challenge.description}
               participants={challenge.participation}
-              bgColor={bgColor[index % bgColor.length]}
+              bgColor={getChallengeBgColor(challenge.id)}
               ChallengeLogo={challenge.logoUrl}
               reward={challenge.reward}
             />
           ))}
         </div>
+
+        <div className="pb-[7vh]" />
+
+        <div className="flex justify-between">
+          <p className="text-base font-bold text-black-900">기업 챌린지</p>
+          <div className="flex">
+            <div
+              className={`${
+                category === "최신순" ? selectedCategoryCss : defaultCategoryCss
+              } cursor-pointer mr-[2vw]`}
+              onClick={() => handleCategoryClick("최신순")}
+            >
+              최신순
+            </div>
+            <div
+              className={`${
+                category === "마감기한순"
+                  ? selectedCategoryCss
+                  : defaultCategoryCss
+              } cursor-pointer`}
+              onClick={() => handleCategoryClick("마감기한순")}
+            >
+              마감기한순
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-[2vh] overflow-y-scroll">
+          {corpChallenges.map((challenge, index) => (
+            <CorpChallengeCardHorizontal
+              key={challenge.id}
+              title={challenge.name}
+              logo={challenge.logoUrl}
+              description={challenge.description}
+              corpName={challenge.corpName}
+              challengeUrl={challenge.challengeUrl}
+              endAt={challenge.endAt}
+            />
+          ))}
+        </div>
       </div>
+
       <div className="pb-[7vh]" />
-      <Navbar/>
+      <Navbar />
     </>
   );
 };
