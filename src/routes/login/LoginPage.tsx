@@ -15,7 +15,9 @@ const LoginPage: React.FC = () => {
   const [userId, setId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const { login } = useAuthStore((state: AuthState) => ({
+  const { birthdate, nickname, login } = useAuthStore((state: AuthState) => ({
+    birthdate: state.birthdate,
+    nickname: state.nickname,
     login: state.login,
   })); // Zustand에서 login 액션 가져오기
 
@@ -27,7 +29,7 @@ const LoginPage: React.FC = () => {
     try {
       // 실제 로그인 API 호출 예시
        const res = await signIn(userData);
-       login(res.data.id, userId, password, "", res.data.accessToken, res.data.refreshToken)
+       login(res.data.id, userId, password, res.data.nickname, birthdate, res.data.accessToken, res.data.refreshToken)
       } catch(error){
         console.error("로그인 에러", error);
       }
