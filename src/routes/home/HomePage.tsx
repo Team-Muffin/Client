@@ -34,17 +34,17 @@ export default function HomePage() {
     []
   );
 
-  // const callChallengeData = async () => {
-  //   try {
-  //     // const { data } = await fetchChallengeList();
-  //     //  setChallengeListData(data);
-  //   } catch (error) {
-  //     console.error("홈 챌린지 리스트 데이터 호출 중 에러:", error);
-  //   }
-  // };
+  const callChallengeData = async () => {
+    try {
+      const { data } = await fetchChallengeList();
+      setChallengeListData(data);
+    } catch (error) {
+      console.error("홈 챌린지 리스트 데이터 호출 중 에러:", error);
+    }
+  };
 
   useEffect(() => {
-    // callChallengeData();
+    callChallengeData();
     console.log(challengeListData);
   }, []);
 
@@ -109,7 +109,7 @@ export default function HomePage() {
         </div>
 
         {/* 챌린지 카드 컴포넌트  */}
-        {/* <div className="whitespace-nowrap overflow-x-auto flex scrollbar-hide">
+        <div className="whitespace-nowrap overflow-x-auto flex scrollbar-hide">
           {challengeListData.map((challenge, index) => (
             <>
               <ChallengeCard
@@ -121,7 +121,7 @@ export default function HomePage() {
               />
             </>
           ))}
-        </div> */}
+        </div>
 
         <div className="flex justify-between items-center my-[1.5vh]">
           <span className="font-semibold text-[1.2rem]">맞춤 핀 </span>{" "}
