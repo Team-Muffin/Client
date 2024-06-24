@@ -1,9 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import Navbar from "../../components/common/Navbar";
 import Search from "../../assets/search-gray.svg";
 import ToFinLogo from "../../assets/main-logo.svg";
-import { fetchProductList, ProductList } from "../../libs/apis/product";
 
 export default function SearchPage() {
   const navigate = useNavigate();
