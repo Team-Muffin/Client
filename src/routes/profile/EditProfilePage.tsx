@@ -6,14 +6,17 @@ import PurpleBtn from "../../components/common/PurpleBtn";
 import Header from "../../components/common/Header";
 import { EditProfile, EditProfileRequest } from "../../libs/apis/user";
 import useAuthStore from "../../store/useAuthStore";
+import { useNavigate } from "react-router-dom";
+import { IdentificationIcon } from "@heroicons/react/24/solid";
 
 export default function EditProfilePage() {
+  const navigate = useNavigate();
   const [selectedIcon, setSelectedIcon] = useState(ProfileCircleImg); // State to store selected image URL, default to ProfileCircleImg
   const [selectedFile, setSelectedFile] = useState<File | null>(null); // State to store selected file
   const [nickname, setNickname] = useState(""); // State for nickname input value
   const [job, setJob] = useState(""); // State for job input value
   const [isButtonEnabled, setIsButtonEnabled] = useState(false); // State to enable/disable button
-  const {id, login} = useAuthStore((state) => ({
+  const { id, login } = useAuthStore((state) => ({
     id: state.id,
     login: state.login,
   }));
@@ -43,18 +46,19 @@ export default function EditProfilePage() {
 
   // Function to handle completion of profile editing
   const handleProfileEdit = async () => {
-  try {
-    const profileData: EditProfileRequest = {};
-    if (nickname) profileData.nickname = nickname;
-    if (job) profileData.job = job;
+    try {
+      const profileData: EditProfileRequest = {};
+      if (nickname) profileData.nickname = nickname;
+      if (job) profileData.job = job;
 
-    const res = await EditProfile(profileData, selectedFile || undefined); // EditProfile 함수 호출
-    login(id, "", "", "", res.data.accessToken, res.data.refreshToken);
-    console.log("프로필 수정 완료!");
-  } catch (error) {
-    console.error("프로필 변경 중 오류 발생", error);
-  }
-};
+      const res = await EditProfile(profileData, selectedFile || undefined); // EditProfile 함수 호출
+      login(id, "", "", "", res.data.accessToken, res.data.refreshToken);
+      console.log("프로필 수정 완료!");
+      navigate(`/userProfile?id=${id}`);
+    } catch (error) {
+      console.error("프로필 변경 중 오류 발생", error);
+    }
+  };
 
   return (
     <>
@@ -110,10 +114,7 @@ export default function EditProfilePage() {
         />
       </div>
       <div className="fixed w-full px-[8vw] bottom-[3vh]">
-        <PurpleBtn
-          label="변경 완료"
-          onClick={handleProfileEdit}
-        />
+        <PurpleBtn label="변경 완료" onClick={handleProfileEdit} />
       </div>
     </>
   );
