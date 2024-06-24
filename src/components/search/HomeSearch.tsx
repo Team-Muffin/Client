@@ -166,9 +166,12 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
         {category === "챌린지" && (
           <>
             {challengeData.length === 0 && (
-              <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.85rem]">
-                "{keyword}" 검색 결과가 없습니다.
-              </div>
+              <>
+                <hr />
+                <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.85rem]">
+                  "{keyword}" 검색 결과가 없습니다.
+                </div>
+              </>
             )}
             {challengeData.map((challenge, index) => (
               <div>

@@ -87,6 +87,14 @@ export default function HomePage() {
     navigate("/challenge");
   };
 
+  const challengeDescription = [
+    "매일의 감정에 따라 저축해봐요!",
+    "저렴한 재료로 맛있는 요리를 만들어봐요!",
+    "유익한 금융 도서를 추천해 보세요!",
+    "ESG 기업을 소개하고 공유해봐요!",
+    "기업을 분석하고 정보를 나눠요!",
+  ];
+
   return (
     <>
       <div className="pt-[2vh] px-[4.5vw]">
@@ -114,7 +122,7 @@ export default function HomePage() {
             <>
               <ChallengeCard
                 title={challenge.name}
-                description={challenge.description}
+                description={challengeDescription[index]}
                 participants={challenge.participation}
                 bgColor={bgColor[index]}
                 ChallengeLogo={challenge.logoUrl}
