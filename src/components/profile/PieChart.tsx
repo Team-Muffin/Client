@@ -1,10 +1,11 @@
+import React, { FC } from "react";
 import { ResponsivePie } from "@nivo/pie";
-import { FC } from "react";
 
-// Define the type for the data prop
 interface PieData {
   id: string;
+  label: string;
   value: number;
+  color: string;
 }
 
 interface MyResponsivePieProps {
@@ -14,7 +15,7 @@ interface MyResponsivePieProps {
 const MyResponsivePie: FC<MyResponsivePieProps> = ({ data }) => (
   <ResponsivePie
     data={data}
-    margin={{ top: 50, right: 60, bottom: 60, left: 60 }}
+    margin={{ top: 20, right: 5, bottom: 100, left: 120 }}
     innerRadius={0.5}
     padAngle={0.7}
     cornerRadius={3}
@@ -27,6 +28,7 @@ const MyResponsivePie: FC<MyResponsivePieProps> = ({ data }) => (
     arcLinkLabelsSkipAngle={10}
     arcLinkLabelsTextColor="#333333"
     arcLinkLabelsThickness={2}
+    enableArcLinkLabels={false}
     arcLinkLabelsColor={{ from: "color" }}
     arcLabelsSkipAngle={10}
     arcLabelsTextColor={{
@@ -103,31 +105,44 @@ const MyResponsivePie: FC<MyResponsivePieProps> = ({ data }) => (
         id: "lines",
       },
     ]}
-    // legends={[
-    //   {
-    //     anchor: "bottom",
-    //     direction: "row",
-    //     justify: false,
-    //     translateX: 0,
-    //     translateY: 56,
-    //     itemsSpacing: 0,
-    //     itemWidth: 90,
-    //     itemHeight: 18,
-    //     itemTextColor: "#999",
-    //     itemDirection: "left-to-right",
-    //     itemOpacity: 1,
-    //     symbolSize: 18,
-    //     symbolShape: "circle",
-    //     effects: [
-    //       {
-    //         on: "hover",
-    //         style: {
-    //           itemTextColor: "#000",
-    //         },
-    //       },
-    //     ],
-    //   },
-    // ]}
+    tooltip={({ datum: { id, value, color } }) => (
+      <div
+        style={{
+          padding: 12,
+          color,
+          background: "#222222",
+        }}
+      >
+        <span>
+          {id}: {value}
+        </span>
+      </div>
+    )}
+    legends={[
+      {
+        anchor: "bottom-left",
+        direction: "column",
+        justify: false,
+        translateX: -100,
+        translateY: 70,
+        itemsSpacing: 3,
+        itemWidth: 10,
+        itemHeight: 18,
+        itemTextColor: "black",
+        itemDirection: "left-to-right",
+        itemOpacity: 1,
+        symbolSize: 18,
+        symbolShape: "circle",
+        effects: [
+          {
+            on: "hover",
+            style: {
+              itemTextColor: "#000",
+            },
+          },
+        ],
+      },
+    ]}
   />
 );
 

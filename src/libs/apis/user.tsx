@@ -238,13 +238,51 @@ export async function getFollowers(
       params.last = last;
     }
 
-    const response = await instance.get(`/users/${id}/followers`, {
+    const response = await instance.get(`/user-service/users/${id}/followers`, {
       params,
     });
     console.log("팔로워 조회 API 호출 성공:", response.data); // 성공 로그 출력
     return response.data;
   } catch (error) {
     console.error("팔로워 조회 중 오류 발생", error);
+    throw error;
+  }
+}
+
+//포트폴리오 조회
+export interface PortfolioDetails {
+  totalAmount: number;
+  savingRate: number;
+  savingAmount: number;
+  depositRate: number;
+  depositAmount: number;
+  cmaRate: number;
+  cmaAmount: number;
+  investRate: number;
+  investAmount: number;
+  returnRate: number;
+  domesticRatio: number;
+  foreignRatio: number;
+  domesticStocks: { code: string; name: string; rate: number }[];
+  foreignStocks: { code: string; name: string; rate: number }[];
+}
+
+export interface PortfolioResponse {
+  success: boolean;
+  message: string;
+  data: {
+    details: PortfolioDetails;
+    abstracts: PortfolioDetails;
+  };
+}
+
+export async function getPortfolio(id: number): Promise<PortfolioResponse> {
+  try {
+    const response = await instance.get(`/user-service/users/${id}/portfolios`);
+    console.log(" 조회 API 호출 성공:", response.data); // 성공 로그 출력
+    return response.data;
+  } catch (error) {
+    console.error("포트폴리오 조회 중 오류 발생", error);
     throw error;
   }
 }

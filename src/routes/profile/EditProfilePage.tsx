@@ -49,7 +49,7 @@ export default function EditProfilePage() {
     if (job) profileData.job = job;
 
     const res = await EditProfile(profileData, selectedFile || undefined); // EditProfile 함수 호출
-    login(id, "", "", "", res.data.accessToken, res.data.refreshToken);
+    login(id, "", "",nickname, "", res.data.accessToken, res.data.refreshToken);
     console.log("프로필 수정 완료!");
   } catch (error) {
     console.error("프로필 변경 중 오류 발생", error);
