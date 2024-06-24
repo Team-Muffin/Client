@@ -37,6 +37,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     } else if (category) {
       setCategoryAndFilters(category, null);
     }
+
     navigate(`/product/${link}`, {
       state: { productType: type },
     });
@@ -56,12 +57,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
         className="shadow-productCard rounded-[0.5rem] mt-[1.5vh] mb-[0.5vh]"
         onClick={() => handleProductCardClick(link)}
       >
-        <div className="flex justify-around p-[1vh] items-center">
-          <div className="w-[40%] flex items-center justify-center">
+        <div className="flex justify-between p-[1vh] py-[2vh] items-center">
+          <div className="w-[35%] flex items-center justify-center">
             {type === "카드" ? (
               <img
                 className={`${
-                  imageSize.height > imageSize.width ? "h-[12vh]" : "w-[12vh]"
+                  imageSize.height > imageSize.width
+                    ? "h-[11.5vh]"
+                    : "w-[11.5vh]"
                 } `}
                 src={cardImg}
                 onLoad={handleImageLoad}
@@ -74,7 +77,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               />
             )}
           </div>
-          <div className="w-[60%] pl-[1vw]">
+          <div className="w-[65%] pl-[1vw]">
             <p className=" p-[1vw] pl-0 pb-[0] text-[0.8rem]  text-C333333 rounded-[0.25rem]">
               {cardBrand}
             </p>

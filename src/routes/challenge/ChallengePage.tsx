@@ -137,15 +137,17 @@ const ChallengePage = () => {
 
         <div className="mt-[2vh] overflow-y-scroll">
           {challenges.map((challenge, index) => (
-            <ChallengeCardHorizontal
-              key={challenge.id}
-              title={challenge.name}
-              description={challenge.description}
-              participants={challenge.participation}
-              bgColor={getChallengeBgColor(challenge.id)}
-              ChallengeLogo={challenge.logoUrl}
-              reward={challenge.reward}
-            />
+            <div key={index}>
+              <ChallengeCardHorizontal
+                key={challenge.id}
+                title={challenge.name}
+                description={challenge.description}
+                participants={challenge.participation}
+                bgColor={getChallengeBgColor(challenge.id)}
+                ChallengeLogo={challenge.logoUrl}
+                reward={challenge.reward}
+              />
+            </div>
           ))}
         </div>
 
@@ -177,15 +179,17 @@ const ChallengePage = () => {
 
         <div className="mt-[2vh] overflow-y-scroll">
           {corpChallenges.map((challenge, index) => (
-            <CorpChallengeCardHorizontal
-              key={challenge.id}
-              title={challenge.name}
-              logo={challenge.logoUrl}
-              description={challenge.description}
-              corpName={challenge.corpName}
-              challengeUrl={challenge.challengeUrl}
-              endAt={challenge.endAt}
-            />
+            <div key={index}>
+              <CorpChallengeCardHorizontal
+                key={challenge.id}
+                title={challenge.name}
+                logo={challenge.logoUrl}
+                description={challenge.description}
+                corpName={challenge.corpName}
+                challengeUrl={challenge.challengeUrl}
+                endAt={challenge.endAt}
+              />
+            </div>
           ))}
         </div>
       </div>

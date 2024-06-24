@@ -189,7 +189,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
               </>
             )}
             {challengeData.map((challenge, index) => (
-              <div>
+              <div key={index}>
                 <ChallengeCardHorizontal
                   title={challenge.name}
                   description={challenge.description}
@@ -215,7 +215,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
             )}
             {productData &&
               productData.map((data, index) => (
-                <div key={data.id}>
+                <div key={index}>
                   <ProductCard
                     type={
                       data.categoryName === "펀드" ? "투자" : data.categoryName
@@ -243,7 +243,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
             )}
             {userData &&
               userData.map((data, index) => (
-                <div key={data.userId}>
+                <div key={index}>
                   <UserCard
                     profileImage={data.profileImage}
                     nickname={data.nickname}

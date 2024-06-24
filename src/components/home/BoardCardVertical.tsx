@@ -2,12 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Heart from "../../assets/heart-empty.svg";
 import Reply from "../../assets/reply.svg";
+import timeAgo from "../../utils/timeAgo";
 
 interface BoardCardProps {
   title: string;
   description: string;
   author: string;
-  time: number;
+  time: string;
   heartCount: number;
   replyCount: number;
   imageUrl: string;
@@ -34,31 +35,31 @@ const BoardCardVertical: React.FC<BoardCardProps> = ({
         <Link to={link}>
           <div className="my-[1.75vh]">
             <img
-              className="rounded-t-lg w-full h-[20vh]"
+              className="rounded-t-lg w-full h-[20vh] border"
               src={imageUrl}
               alt=""
             />
 
-            <div className="flex justify-between items-center ">
+            <div>
               <div className="px-[2.5vw] mr-[0.8vw] mt-[1.5vh] ">
                 <p className="text-[1.1rem] text-C333333 font-medium">
                   {title}
                 </p>
-                <p className="leading-tight text-[0.9rem] text-C333333 line-clamp-1 mt-[0.25vh]">
+                <div className="leading-tight text-[0.9rem] text-C333333 line-clamp-1 mt-[0.25vh]">
                   {description}
-                </p>
+                </div>
                 <div className="flex items-center mt-[0.5vh] mb-[1.5vh] justify-between">
-                  <div className="flex">
+                  <div className="flex justify-start mb-[1.5vh]">
                     <img
                       src={authorImageUrl}
-                      className="w-[4.5vw] mr-[1vw]"
+                      className="w-[2.5vh] h-[2.5vh] mr-[1vw] rounded-[0.2rem]"
                       alt=""
                     />
                     <p className="text-[0.85rem] text-C333333">
-                      {author} | {time}
+                      {author} | {timeAgo({ createdTime: time })}
                     </p>
                   </div>
-                  <div className="flex ">
+                  <div className="flex justify-end mb-[1.5vh]">
                     <img
                       src={Heart}
                       className="w-[1.5vh] mr-[0.5vw] text-C333333"

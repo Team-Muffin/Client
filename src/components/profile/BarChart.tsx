@@ -1,9 +1,11 @@
 import { ResponsiveBar, BarDatum } from "@nivo/bar";
+import React from "react";
 
 interface AssetData extends BarDatum {
   id: string;
   입출금: number;
   저축: number;
+  CMA: number;
   투자: number;
 }
 
@@ -14,9 +16,9 @@ interface MyResponsiveBarProps {
 const MyResponsiveBar: React.FC<MyResponsiveBarProps> = ({ data }) => (
   <ResponsiveBar
     data={data}
-    keys={["입출금", "저축", "투자"]}
-    margin={{ top: 50, right: 100, bottom: 50, left: 30 }}
-    padding={0.3}
+    keys={["입출금", "저축", "CMA", "투자"]}
+    margin={{ top: 30, right: 20, bottom: 100, left: 10 }}
+    padding={0.2}
     layout="horizontal"
     valueScale={{ type: "linear" }}
     indexScale={{ type: "band", round: true }}
@@ -26,6 +28,8 @@ const MyResponsiveBar: React.FC<MyResponsiveBarProps> = ({ data }) => (
           return "#8DBDFF";
         case "저축":
           return "#748BFF";
+        case "CMA":
+          return "#F3C96B";
         case "투자":
           return "#AF9FF3";
         default:
@@ -41,6 +45,8 @@ const MyResponsiveBar: React.FC<MyResponsiveBarProps> = ({ data }) => (
     axisRight={null}
     axisLeft={null}
     axisBottom={null}
+    label={(d) => `${d.value}%`} 
+    enableLabel={false}
     labelSkipWidth={12}
     labelSkipHeight={12}
     labelTextColor={{
@@ -50,11 +56,11 @@ const MyResponsiveBar: React.FC<MyResponsiveBarProps> = ({ data }) => (
     legends={[
       {
         dataFrom: "keys",
-        anchor: "bottom-right",
+        anchor: "bottom-left",
         direction: "column",
         justify: false,
-        translateX: 120,
-        translateY: 0,
+        translateX: 5,
+        translateY: 90,
         itemsSpacing: 2,
         itemWidth: 100,
         itemHeight: 20,
@@ -69,13 +75,29 @@ const MyResponsiveBar: React.FC<MyResponsiveBarProps> = ({ data }) => (
             },
           },
         ],
+        
       },
     ]}
+    
     role="application"
     ariaLabel="Nivo bar chart demo"
     barAriaLabel={(e) =>
-      e.id + ": " + e.formattedValue + " in category: " + e.indexValue
+      e.id + ": " + e.formattedValue + "%" + " in category: " + e.indexValue
     }
+    tooltip={({ id, value, color }) => (
+      <div
+        style={{
+          padding: 12,
+          color,
+          background: "#222222",
+        }}
+      >
+        <span>
+          {id}: {value}%
+        </span>
+      </div>
+      
+    )}
   />
 );
 
