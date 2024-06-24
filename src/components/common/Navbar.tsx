@@ -4,6 +4,7 @@ import PostIcon from "../../assets/post.svg";
 import StarIcon from "../../assets/star.svg";
 import ProductIcon from "../../assets/box.svg";
 import ProfileIcon from "../../assets/profile.svg";
+import useAuthStore from "../../store/useAuthStore";
 
 const Navbar = () => {
   const linkClasses =
@@ -13,13 +14,14 @@ const Navbar = () => {
   const activeClasses = "text-[#748BFF]"; // Active class for text color
 
   const location = useLocation();
+  const Id = useAuthStore((state) => state.id); 
 
   const navItems = [
     { name: "홈", href: "/", Icon: HomeIcon, exact: true },
     { name: "핀", href: "/board", Icon: PostIcon, exact: false },
     { name: "챌린지", href: "/challenge", Icon: StarIcon, exact: false },
     { name: "상품", href: "/product", Icon: ProductIcon, exact: false },
-    { name: "프로필", href: "/mypage", Icon: ProfileIcon, exact: false },
+    { name: "프로필", href: `/userProfile?id=${Id}`, Icon: ProfileIcon, exact: false },
   ];
 
   return (

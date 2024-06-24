@@ -185,4 +185,66 @@ export async function EditProfile(profileData: EditProfileRequest, imageFile: Fi
   }
 }
 
-//유저 상세 조회
+// 유저 상세 조회
+export interface UserDetailsResponse {
+  success: boolean;
+  message: string;
+  data: {
+    id: number;
+    nickname: string;
+    profileImage: string;
+    tofinId: string;
+    role: string;
+    job: string;
+    ageRange: number;
+    followers: number;
+    followings: number;
+    isFollow: boolean;
+  };
+}
+
+export async function getUserDetails(id: number): Promise<UserDetailsResponse> {
+  try {
+    const response = await instance.get(`/user-service/users/${id}`);
+    console.log("유저 상세 정보 조회 API 호출 성공:", response.data); // 성공 로그 출력
+    return response.data;
+  } catch (error) {
+    console.error("유저 상세 정보 조회 중 오류 발생", error);
+    throw error;
+  }
+}
+
+//팔로워 조회
+export interface FollowersReq {
+  id: number;
+  nickname: string;
+  profileImage: string;
+}
+
+export interface GetFollowersResponse {
+  success: boolean;
+  message: string;
+  data: FollowersReq[];
+}
+
+export async function getFollowers(
+  id: number,
+  limit: number = 20,
+  last?: number
+): Promise<GetFollowersResponse> {
+  try {
+    const params: Record<string, number> = { limit };
+    if (last) {
+      params.last = last;
+    }
+
+    const response = await instance.get(`/users/${id}/followers`, {
+      params,
+    });
+    console.log("팔로워 조회 API 호출 성공:", response.data); // 성공 로그 출력
+    return response.data;
+  } catch (error) {
+    console.error("팔로워 조회 중 오류 발생", error);
+    throw error;
+  }
+}
