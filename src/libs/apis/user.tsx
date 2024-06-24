@@ -213,3 +213,38 @@ export async function getUserDetails(id: number): Promise<UserDetailsResponse> {
     throw error;
   }
 }
+
+//팔로워 조회
+export interface FollowersReq {
+  id: number;
+  nickname: string;
+  profileImage: string;
+}
+
+export interface GetFollowersResponse {
+  success: boolean;
+  message: string;
+  data: FollowersReq[];
+}
+
+export async function getFollowers(
+  id: number,
+  limit: number = 20,
+  last?: number
+): Promise<GetFollowersResponse> {
+  try {
+    const params: Record<string, number> = { limit };
+    if (last) {
+      params.last = last;
+    }
+
+    const response = await instance.get(`/users/${id}/followers`, {
+      params,
+    });
+    console.log("팔로워 조회 API 호출 성공:", response.data); // 성공 로그 출력
+    return response.data;
+  } catch (error) {
+    console.error("팔로워 조회 중 오류 발생", error);
+    throw error;
+  }
+}
