@@ -144,6 +144,11 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
         {category === "챌린지" && (
           <>
             <hr />
+            {challengeData.length === 0 && (
+              <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.85rem]">
+                "{keyword}" 검색 결과가 없습니다.
+              </div>
+            )}
             {challengeData.map((data, index) => (
               <>{console.log(data)}</>
             ))}
@@ -152,6 +157,11 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
         {category === "상품" && (
           <>
             <hr />
+            {productData.length === 0 && (
+              <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.85rem]">
+                "{keyword}" 검색 결과가 없습니다.
+              </div>
+            )}
             {productData &&
               productData.map((data, index) => (
                 <div key={data.id}>

@@ -32,12 +32,21 @@ export default function SearchResultPage() {
     setSearchContent(location.state.searchKeyword);
   }, []);
 
+  useEffect(() => {
+    setDomain(location.state.domain);
+    setSearchKeyword(location.state.searchKeyword);
+    setSearchContent(location.state.searchKeyword);
+  }, [location.state]);
+
   const handleSearchClick = () => {
     if (searchContent == "") {
       alert("검색할 키워드를 입력해주세요!");
       return;
     }
     if (domain === "home") {
+      navigate("/searchResult", {
+        state: { domain: "home", searchKeyword: searchContent },
+      });
     }
     if (domain === "board") {
     }

@@ -108,7 +108,7 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* 챌린지 카드 컴포넌트 */}
+        {/* 챌린지 카드 컴포넌트  */}
         {/* <div className="whitespace-nowrap overflow-x-auto flex scrollbar-hide">
           {challengeListData.map((challenge, index) => (
             <>
@@ -128,8 +128,8 @@ export default function HomePage() {
         </div>
 
         <div>
-          {data.map((data) => (
-            <>
+          {data.map((data, index) => (
+            <div key={index}>
               <BoardCardVertical
                 title={data.title}
                 description={data.summary}
@@ -142,7 +142,7 @@ export default function HomePage() {
                 authorImageUrl="https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg"
                 link={`board/${data.id}`}
               />
-            </>
+            </div>
           ))}
         </div>
         <hr />
