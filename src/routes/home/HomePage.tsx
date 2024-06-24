@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Slider from "react-slick";
 import Header from "../../components/common/Header";
 import Navbar from "../../components/common/Navbar";
@@ -79,6 +79,10 @@ export default function HomePage() {
     });
   };
 
+  const handleChallengeCardClick = (id: number) => {
+    navigate(`/challenge/${id}`);
+  };
+
   const handleNotificationBtnClick = () => {
     navigate("/notification");
   };
@@ -92,7 +96,7 @@ export default function HomePage() {
     "저렴한 재료로 맛있는 요리를 만들어봐요!",
     "유익한 금융 도서를 추천해 보세요!",
     "ESG 기업을 소개하고 공유해봐요!",
-    "기업을 분석하고 정보를 나눠요!",
+    "관심 기업을 분석하고 정보를 나눠요!",
   ];
 
   return (
@@ -120,13 +124,15 @@ export default function HomePage() {
         <div className="whitespace-nowrap overflow-x-auto flex scrollbar-hide">
           {challengeListData.map((challenge, index) => (
             <>
-              <ChallengeCard
-                title={challenge.name}
-                description={challengeDescription[index]}
-                participants={challenge.participation}
-                bgColor={bgColor[index]}
-                ChallengeLogo={challenge.logoUrl}
-              />
+              <div onClick={() => handleChallengeCardClick(challenge.id)}>
+                <ChallengeCard
+                  title={challenge.name}
+                  description={challengeDescription[index]}
+                  participants={challenge.participation}
+                  bgColor={bgColor[index]}
+                  ChallengeLogo={challenge.logoUrl}
+                />
+              </div>
             </>
           ))}
         </div>
