@@ -123,7 +123,7 @@ export default function HomePage() {
         {/* 챌린지 카드 컴포넌트  */}
         <div className="whitespace-nowrap overflow-x-auto flex scrollbar-hide">
           {challengeListData.map((challenge, index) => (
-            <>
+            <div key={index}>
               <div onClick={() => handleChallengeCardClick(challenge.id)}>
                 <ChallengeCard
                   title={challenge.name}
@@ -133,7 +133,7 @@ export default function HomePage() {
                   ChallengeLogo={challenge.logoUrl}
                 />
               </div>
-            </>
+            </div>
           ))}
         </div>
 

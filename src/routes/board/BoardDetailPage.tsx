@@ -27,6 +27,7 @@ import BackBtn from "../../assets/back.svg";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import BoardSection from "../../components/board/BoardSection";
 import useAuthStore from "../../store/useAuthStore";
+import DeletedProfile from "../../assets/profile-gray.png";
 
 export default function BoardDetailPage() {
   const [boardData, setBoardData] = useState<BoardData | null>(null);
@@ -74,6 +75,7 @@ export default function BoardDetailPage() {
       createdTime: string;
     }[];
     createdTime: string;
+    deleted: boolean;
   }
   [];
 
@@ -237,22 +239,7 @@ export default function BoardDetailPage() {
                     onClick={handleBackButtonClick}
                   />
                   <div className="flex-1 text-center font-semibold text-lg">
-                    {(() => {
-                      switch (boardData.category.id) {
-                        case 1:
-                          return "정보";
-                        case 2:
-                          return "재미";
-                        case 3:
-                          return "투자";
-                        case 4:
-                          return "기업";
-                        case 5:
-                          return "고급";
-                        default:
-                          return "";
-                      }
-                    })()}
+                    {boardData.category.name}
                   </div>
                   <div className="absolute right-4">
                     {Number(id) == boardData.authorId && (
@@ -340,41 +327,63 @@ export default function BoardDetailPage() {
                         clickedCommentId === comment.id ? "bg-[#ECF0FF]" : ""
                       } p-[2.75vw] shadow rounded-[0.5rem]`}
                     >
-                      <div className="flex justify-between ">
-                        <div className="flex items-center">
-                          <img
-                            className="mr-[2vw] h-[4.5vh] w-[4.5vh] rounded-[0.7rem]"
-                            src={comment.authorProfile}
-                          />
-                          <div>
-                            <p className="text-[0.9rem] font-medium text-C333333">
-                              {comment.authorName}
-                            </p>
-                            <p className="text-[0.8rem] text-C333333">
-                              {TimeAgo({ createdTime: comment.createdTime })}
-                            </p>
+                      {comment.deleted ? (
+                        <>
+                          <div className="flex items-center">
+                            <img
+                              className="mr-[2vw] h-[4.5vh] w-[4.5vh] rounded-[0.7rem]"
+                              src={DeletedProfile}
+                            />
+                            <div>
+                              <p className="text-[0.9rem] font-medium text-C333333">
+                                (삭제됨)
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                        <div>
-                          <span
-                            className="text-[0.8rem] text-C333333"
-                            onClick={() => handleCreateReplyClick(comment.id)}
-                            ref={createCommentBtn}
-                          >
-                            답글
-                          </span>
-                          {comment.authorId === Number(id) && (
-                            <span
-                              className="text-[0.8rem] pl-[1vw] text-C333333"
-                              onClick={() =>
-                                handleDeleteCommentClick(comment.id)
-                              }
-                            >
-                              삭제
-                            </span>
-                          )}
-                        </div>
-                      </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="flex justify-between ">
+                            <div className="flex items-center">
+                              <img
+                                className="mr-[2vw] h-[4.5vh] w-[4.5vh] rounded-[0.7rem]"
+                                src={comment.authorProfile}
+                              />
+                              <div>
+                                <p className="text-[0.9rem] font-medium text-C333333">
+                                  {comment.authorName}
+                                </p>
+                                <p className="text-[0.8rem] text-C333333">
+                                  {TimeAgo({
+                                    createdTime: comment.createdTime,
+                                  })}
+                                </p>
+                              </div>
+                            </div>
+                            <div>
+                              <span
+                                className="text-[0.8rem] text-C333333"
+                                onClick={() =>
+                                  handleCreateReplyClick(comment.id)
+                                }
+                                ref={createCommentBtn}
+                              >
+                                답글
+                              </span>
+                              {comment.authorId === Number(id) && (
+                                <span
+                                  className="text-[0.8rem] pl-[1vw] text-C333333"
+                                  onClick={() =>
+                                    handleDeleteCommentClick(comment.id)
+                                  }
+                                >
+                                  삭제
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </>
+                      )}
 
                       <p className="text-[0.95rem] mt-[1vh] ml-[1vw] text-C333333">
                         {comment.content}
