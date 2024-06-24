@@ -1,23 +1,29 @@
 import instance from "./base";
 
-// 게시글 리스트 조회
-export async function fetchBoardList(options: {
-  pageNo?: number;
-  size?: number;
-  category?: string; //1: 정보, 2: 재미, 3: 투자, 4: 기업, 5: 고급
-  sort?: string; //최신순, 인기순
-  userId?: number;
-}): Promise<{ data: BoardData[] }> {
-  const {
-    pageNo = 0,
-    size = 10,
-    category = "1",
-    sort = "최신순",
-    userId = 1,
-  } = options;
+// 게시글 리스트 검색
+export async function fetchSearchedBoardList(
+  keyword: string,
+  pageNo?: number,
+  size?: number,
+  category?: string
+): Promise<{ data: BoardData[] }> {
+  const params = new URLSearchParams();
+
+  params.append("keyword", keyword);
+  if (pageNo !== undefined) {
+    params.append("pageNo", pageNo.toString());
+  }
+  if (size !== undefined) {
+    params.append("size", size.toString());
+  }
+  if (category !== undefined) {
+    params.append("category", category);
+  }
+  const queryString = params.toString();
   const response = await instance.get<BoardListResponse>(
-    `/board-service/boards?pageNo=${pageNo}&size=${size}&category=${category}&sort=${sort}&userId=${userId}`
+    `/board-service/boards?${queryString}`
   );
+
   return { data: response.data.data };
 }
 
@@ -105,6 +111,7 @@ export async function fetchSearchedProductList(
 export interface ProductList {
   id: number;
   name: string;
+  categoryName: string;
   corpName: string;
   corpImage: string | null;
   cardImage: string | null;

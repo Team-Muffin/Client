@@ -1,5 +1,6 @@
 import React from "react";
 import Coin from "../../assets/coin.svg";
+import { useNavigate } from "react-router-dom";
 
 interface Challenge {
   title: string;
@@ -8,6 +9,7 @@ interface Challenge {
   bgColor: string;
   ChallengeLogo: string;
   reward: number;
+  link?: string;
 }
 
 const ChallengeCardHorizontal: React.FC<Challenge> = ({
@@ -17,11 +19,18 @@ const ChallengeCardHorizontal: React.FC<Challenge> = ({
   bgColor,
   ChallengeLogo,
   reward,
+  link,
 }) => {
+  const navigate = useNavigate();
+
+  const clickChallengeCard = () => {
+    if (link) navigate(link);
+  };
   return (
     <div
       className="min-w-[37vw] p-[1vh] rounded-[1.5rem] shadow-productCard mb-[2vh]"
       style={{ backgroundColor: bgColor }}
+      onClick={clickChallengeCard}
     >
       <div className="flex pt-[0.5vh] items-center ml-[1vh]">
         <img

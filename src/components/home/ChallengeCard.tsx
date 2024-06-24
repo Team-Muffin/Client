@@ -27,7 +27,7 @@ const ChallengeCard: React.FC<Challenge> = ({
       <p className="text-[1.1rem] font-semibold">{trimmedTitle}</p>
       <p
         style={{ wordBreak: "keep-all" }}
-        className="h-[20%] mt-[0.5vh] text-C333333 text-[0.8rem] whitespace-normal leading-tight"
+        className="h-[4vh] mt-[0.5vh] text-C333333 text-[0.8rem] whitespace-normal leading-tight"
       >
         {description}
       </p>

@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import CategoryTabs from "../common/CategoryTabs";
 import BoardCard from "../common/BoardCard";
 import {
-  fetchBoardList,
+  fetchSearchedBoardList,
   BoardData,
   fetchSearchedChallengeList,
   ChallengeData,
@@ -15,6 +15,7 @@ import {
 import { useParams, useNavigate } from "react-router-dom";
 import ProductCard from "../common/ProductCard";
 import ChallengeCardHorizontal from "../common/ChallengeCardHorizontal";
+import UserCard from "./UserCard";
 
 interface HomeSearchProps {
   keyword: string;
@@ -23,7 +24,7 @@ interface HomeSearchProps {
 const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
   const navigate = useNavigate();
   const categories = ["핀", "챌린지", "상품", "유저"];
-  const [category, setCategory] = useState("챌린지");
+  const [category, setCategory] = useState("핀");
   const [boardData, setBoardData] = useState<BoardData[]>([]);
   const [challengeData, setChallengeData] = useState<ChallengeData[]>([]);
   const [productData, setProductData] = useState<ProductList[]>([]);
@@ -41,6 +42,16 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState(1);
   const [selectedFilter, setSelectedFilter] = useState("최신순");
+
+  const callBoardData = async () => {
+    try {
+      const { data } = await fetchSearchedBoardList(keyword);
+      console.log(data);
+      setBoardData(data);
+    } catch (error) {
+      console.log("게시글 검색 리스트 불러오는 중 오류");
+    }
+  };
 
   const callChallengeData = async () => {
     try {
@@ -81,14 +92,14 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
   };
 
   useEffect(() => {
-    // console.log(category);
-    // console.log(keyword);
     if (category === "챌린지") {
       callChallengeData();
     } else if (category === "상품") {
       callProductData();
     } else if (category === "유저") {
       callUserData();
+    } else if (category === "핀") {
+      callBoardData();
     }
   }, [keyword, category]);
 
@@ -122,12 +133,6 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
     setCategory(selection);
   };
 
-  useEffect(() => {
-    if (category === "핀") {
-      //category랑 keyword로 쏘기
-    }
-  }, []);
-
   const handleBoardCardClick = async (link: string) => {
     navigate(link);
   };
@@ -144,6 +149,14 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
         {category === "핀" && (
           <>
             <hr />
+            {boardData.length === 0 && (
+              <>
+                <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.9rem]">
+                  "{keyword}" 검색 결과가 없습니다.
+                </div>
+              </>
+            )}
+
             {boardData.map((data, index) => (
               <React.Fragment key={index}>
                 <div onClick={() => handleBoardCardClick(`/board/${data.id}`)}>
@@ -168,7 +181,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
             {challengeData.length === 0 && (
               <>
                 <hr />
-                <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.85rem]">
+                <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.9rem]">
                   "{keyword}" 검색 결과가 없습니다.
                 </div>
               </>
@@ -182,6 +195,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
                   bgColor={"#ffffff"}
                   ChallengeLogo={challenge.logoUrl}
                   reward={challenge.reward}
+                  link={`/challenge/${challenge.id}`}
                 />
               </div>
             ))}
@@ -192,7 +206,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
             {productData.length === 0 && (
               <>
                 <hr />
-                <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.85rem]">
+                <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.9rem]">
                   "{keyword}" 검색 결과가 없습니다.
                 </div>
               </>
@@ -201,7 +215,9 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
               productData.map((data, index) => (
                 <div key={data.id}>
                   <ProductCard
-                    // type={data.productType}
+                    type={
+                      data.categoryName === "펀드" ? "투자" : data.categoryName
+                    }
                     productImg={data.cardImage || data.corpImage || ""}
                     productName={data.name}
                     productBrand={data.corpName}
@@ -218,7 +234,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
             {userData.length === 0 && (
               <>
                 <hr />
-                <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.85rem]">
+                <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.9rem]">
                   "{keyword}" 검색 결과가 없습니다.
                 </div>
               </>
@@ -226,29 +242,12 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
             {userData &&
               userData.map((data, index) => (
                 <div key={data.userId}>
-                  <div>
-                    <div
-                      className="shadow-productCard rounded-[0.5rem] mt-[1.5vh] mb-[0.5vh]"
-                      // onClick={() => handleProductCardClick(link)}
-                    >
-                      <div className="flex  p-[1vh] items-center">
-                        <div className=" flex items-center justify-center">
-                          <img
-                            className={"h-[6vh] w-[6vh] rounded-[0.8rem]"}
-                            src={data.profileImage}
-                          />
-                        </div>
-                        <div className=" pl-[1vh]">
-                          <p className="text-C333333 text-[0.98rem]">
-                            {data.nickname}
-                          </p>
-                          <p className="text-C333333 text-[0.8rem]">
-                            {data.tofinId}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <UserCard
+                    profileImage={data.profileImage}
+                    nickname={data.nickname}
+                    tofinId={data.tofinId}
+                    userId={data.userId}
+                  />
                 </div>
               ))}
           </>
