@@ -429,12 +429,12 @@ export default function BoardDetailPage() {
               className="fixed bg-white bottom-[7.5vh] left-0 right-0 h-[8vh] py-[1.5vh]"
               ref={commentInputArea}
             >
-              <div className="w-[93vw] mx-auto flex justify-between items-center text-C333333 text-[1rem] bg-[#F4F3FA] py-[1.25vh] px-[4vw] rounded-[0.9rem] z-20">
+              <div className=" w-[93vw] mx-auto flex justify-between items-center text-C333333 text-[1rem] bg-[#F4F3FA] py-[1.25vh] px-[4vw] rounded-[0.9rem] z-1000">
                 <input
                   ref={commentInput}
                   type="text"
                   id="small-input"
-                  className="block w-full text-[0.95rem] border-none bg-[#F4F3FA] p-[0] m-[0]"
+                  className="z-1000 block w-full text-[0.95rem] border-none bg-[#F4F3FA] p-[0] m-[0]"
                   placeholder="댓글을 작성해보세요!"
                   value={commentContent}
                   onChange={(e) => setCommentContent(e.target.value)}
