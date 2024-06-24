@@ -27,6 +27,7 @@ import BackBtn from "../../assets/back.svg";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import BoardSection from "../../components/board/BoardSection";
 import useAuthStore from "../../store/useAuthStore";
+import DeletedProfile from "../../assets/profile-gray.png";
 
 export default function BoardDetailPage() {
   const [boardData, setBoardData] = useState<BoardData | null>(null);
@@ -74,6 +75,7 @@ export default function BoardDetailPage() {
       createdTime: string;
     }[];
     createdTime: string;
+    deleted: boolean;
   }
   [];
 
@@ -147,7 +149,11 @@ export default function BoardDetailPage() {
       return;
     }
     navigate(`/board/${boardId}/edit`, {
-      state: { category: `${boardData.category.id}` },
+      state: {
+        category: `${boardData.category.id}`,
+        title: boardData.title,
+        content: boardData.content,
+      },
     });
   };
 
@@ -237,25 +243,11 @@ export default function BoardDetailPage() {
                     onClick={handleBackButtonClick}
                   />
                   <div className="flex-1 text-center font-semibold text-lg">
-                    {(() => {
-                      switch (boardData.category.id) {
-                        case 1:
-                          return "정보";
-                        case 2:
-                          return "재미";
-                        case 3:
-                          return "투자";
-                        case 4:
-                          return "기업";
-                        case 5:
-                          return "고급";
-                        default:
-                          return "";
-                      }
-                    })()}
+                    {boardData.category.name}
                   </div>
                   <div className="absolute right-4">
-                    {Number(id) == boardData.authorId && (
+                    {/* {Number(id) == boardData.authorId && ( */}
+                    {
                       <Menu as="div">
                         <MenuButton>
                           <img src={More} className="cursor-pointer" />
@@ -299,7 +291,7 @@ export default function BoardDetailPage() {
                           </Menu.Items>
                         </Transition>
                       </Menu>
-                    )}
+                    }
                   </div>
                 </div>
               </div>
@@ -340,41 +332,63 @@ export default function BoardDetailPage() {
                         clickedCommentId === comment.id ? "bg-[#ECF0FF]" : ""
                       } p-[2.75vw] shadow rounded-[0.5rem]`}
                     >
-                      <div className="flex justify-between ">
-                        <div className="flex items-center">
-                          <img
-                            className="mr-[2vw] h-[4.5vh] w-[4.5vh] rounded-[0.7rem]"
-                            src={comment.authorProfile}
-                          />
-                          <div>
-                            <p className="text-[0.9rem] font-medium text-C333333">
-                              {comment.authorName}
-                            </p>
-                            <p className="text-[0.8rem] text-C333333">
-                              {TimeAgo({ createdTime: comment.createdTime })}
-                            </p>
+                      {comment.deleted ? (
+                        <>
+                          <div className="flex items-center">
+                            <img
+                              className="mr-[2vw] h-[4.5vh] w-[4.5vh] rounded-[0.7rem]"
+                              src={DeletedProfile}
+                            />
+                            <div>
+                              <p className="text-[0.9rem] font-medium text-C333333">
+                                (삭제됨)
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                        <div>
-                          <span
-                            className="text-[0.8rem] text-C333333"
-                            onClick={() => handleCreateReplyClick(comment.id)}
-                            ref={createCommentBtn}
-                          >
-                            답글
-                          </span>
-                          {comment.authorId === Number(id) && (
-                            <span
-                              className="text-[0.8rem] pl-[1vw] text-C333333"
-                              onClick={() =>
-                                handleDeleteCommentClick(comment.id)
-                              }
-                            >
-                              삭제
-                            </span>
-                          )}
-                        </div>
-                      </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="flex justify-between ">
+                            <div className="flex items-center">
+                              <img
+                                className="mr-[2vw] h-[4.5vh] w-[4.5vh] rounded-[0.7rem]"
+                                src={comment.authorProfile}
+                              />
+                              <div>
+                                <p className="text-[0.9rem] font-medium text-C333333">
+                                  {comment.authorName}
+                                </p>
+                                <p className="text-[0.8rem] text-C333333">
+                                  {TimeAgo({
+                                    createdTime: comment.createdTime,
+                                  })}
+                                </p>
+                              </div>
+                            </div>
+                            <div>
+                              <span
+                                className="text-[0.8rem] text-C333333"
+                                onClick={() =>
+                                  handleCreateReplyClick(comment.id)
+                                }
+                                ref={createCommentBtn}
+                              >
+                                답글
+                              </span>
+                              {comment.authorId === Number(id) && (
+                                <span
+                                  className="text-[0.8rem] pl-[1vw] text-C333333"
+                                  onClick={() =>
+                                    handleDeleteCommentClick(comment.id)
+                                  }
+                                >
+                                  삭제
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </>
+                      )}
 
                       <p className="text-[0.95rem] mt-[1vh] ml-[1vw] text-C333333">
                         {comment.content}
@@ -429,12 +443,12 @@ export default function BoardDetailPage() {
               className="fixed bg-white bottom-[7.5vh] left-0 right-0 h-[8vh] py-[1.5vh]"
               ref={commentInputArea}
             >
-              <div className="w-[93vw] mx-auto flex justify-between items-center text-C333333 text-[1rem] bg-[#F4F3FA] py-[1.25vh] px-[4vw] rounded-[0.9rem] z-20">
+              <div className=" w-[93vw] mx-auto flex justify-between items-center text-C333333 text-[1rem] bg-[#F4F3FA] py-[1.25vh] px-[4vw] rounded-[0.9rem] z-1000">
                 <input
                   ref={commentInput}
                   type="text"
                   id="small-input"
-                  className="block w-full text-[0.95rem] border-none bg-[#F4F3FA] p-[0] m-[0]"
+                  className="z-1000 block w-full text-[0.95rem] border-none bg-[#F4F3FA] p-[0] m-[0]"
                   placeholder="댓글을 작성해보세요!"
                   value={commentContent}
                   onChange={(e) => setCommentContent(e.target.value)}

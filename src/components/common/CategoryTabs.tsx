@@ -18,9 +18,9 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
 
   return (
     <div className="flex justify-around text-sm">
-      {categories.map((cat) => (
+      {categories.map((cat, index) => (
         <p
-          key={cat}
+          key={index}
           className={`${
             userCategory === cat
               ? selectedUserCategoryCss

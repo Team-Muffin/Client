@@ -36,7 +36,7 @@ const BoardCard: React.FC<BoardCardProps> = ({
           <div className="flex">
             <img
               src={authorImageUrl}
-              className="w-[2.25vh] h-[2.25vh] mr-[1vw]"
+              className="w-[2.25vh] h-[2.25vh] mr-[1vw] rounded-[0.25rem]"
             />
             <p className="text-[0.85rem] text-C333333">
               {author} | {timeAgo({ createdTime: time })}

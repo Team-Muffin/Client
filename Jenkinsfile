@@ -71,7 +71,7 @@ def publishOverSSH(serverName) {
           sshTransfer(
             cleanRemote: true, // clean remote dir
             excludes: '',
-            execCommand: "/bin/bash /home/ubuntu/depl/deploy.sh tofin-client",
+            execCommand: "sudo /bin/bash /home/ubuntu/depl/deploy.sh tofin-client",
             execTimeout: 120000,
             makeEmptyDirs: true,
             noDefaultExcludes: false,

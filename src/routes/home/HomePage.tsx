@@ -1,15 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useCallback, useRef } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import Slider from "react-slick";
 import Header from "../../components/common/Header";
 import Navbar from "../../components/common/Navbar";
 import ProductCard from "../../components/common/ProductCard";
 import ChallengeCard from "../../components/home/ChallengeCard";
 import BoardCardVertical from "../../components/home/BoardCardVertical";
-import { fetchChallengeList, ChallengeList } from "../../libs/apis/home";
+import {
+  fetchChallengeList,
+  ChallengeList,
+  fetchRandomProductList,
+  ProductList,
+} from "../../libs/apis/home";
+import { useInfiniteQuery } from "react-query";
+import { fetchBoardList } from "../../libs/apis/board";
+import LoadingSpinner from "../../components/common/LoadingSpinner";
+import Logo from "../../assets/main-logo.svg";
+
+import { getChallengeBgColor } from "../../utils/challengeColorUtil";
 
 export default function HomePage() {
+  const [productListData, setProductListData] = useState<ProductList[]>([]);
   const navigate = useNavigate();
+  const [productLimit, setProductLimit] = useState(3);
   const settings = {
     dots: true,
     infinite: true,
@@ -17,19 +30,7 @@ export default function HomePage() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-  const bgColor = [
-    "#F9D1E3",
-    "#8DBDFF",
-    "#F8D560",
-    "#B6E785",
-    "#AF9FF3",
-    "#F9D1E3",
-    "#8DBDFF",
-    "#F8D560",
-    "#B6E785",
-    "#AF9FF3",
-  ];
-
+  const observerRef = useRef<HTMLDivElement | null>(null);
   const [challengeListData, setChallengeListData] = useState<ChallengeList[]>(
     []
   );
@@ -43,40 +44,89 @@ export default function HomePage() {
     }
   };
 
+  const callProductListData = async () => {
+    try {
+      const response = await fetchRandomProductList(productLimit);
+
+      if (response.data) {
+        setProductListData(response.data.data["randomProducts"]);
+      } else {
+        console.error("상품 렌담 리스트 데이터가 없습니다.");
+      }
+    } catch (error) {
+      console.error("상품 랜덤 리스트 데이터 호출 중 에러:", error);
+    }
+  };
+
   useEffect(() => {
     callChallengeData();
-    console.log(challengeListData);
+    callProductListData();
   }, []);
 
-  const data = [
-    {
-      id: 1,
-      imageUrl:
-        "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202107/29/0a0a379f-05c8-4777-a071-b29abcf9f542.jpg",
-      title: "⭐️️ 내가 들었던 펀드 추천 글 ⭐",
-      summary: "오늘은 내가 들었던 펀드 중에 제일 좋았던 신한은행의 @@@ 펀드야",
-      authorNickname: "이듀미",
-      createdTime: 3,
-      likeCount: 3,
-      commentCount: 5,
+  const fetchCombinedData = async (pageParam: number) => {
+    const boardResponse = await fetchBoardList({
+      pageNo: pageParam,
+      size: 10,
+      category: "정보",
+      sort: "최신순",
+    });
+
+    const productResponse = await fetchRandomProductList(productLimit);
+
+    return {
+      boards: boardResponse.data.data,
+      products: productResponse.data.data["randomProducts"],
+    };
+  };
+
+  const { data, hasNextPage, fetchNextPage, isLoading, isError } =
+    useInfiniteQuery(
+      ["combinedData"], // useInfiniteQuery의 key로 사용될 배열
+      ({ pageParam = 0 }) => fetchCombinedData(pageParam),
+      {
+        getNextPageParam: (lastPage, allPages) => {
+          return lastPage.boards.length === 10 && lastPage.products.length === 3
+            ? allPages.length
+            : undefined;
+        },
+        select: (data) => ({
+          pages: data.pages.flatMap((page) => page),
+          pageParams: data.pageParams,
+        }),
+      }
+    );
+
+  const handleObserver = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      const [entry] = entries;
+      if (entry.isIntersecting && hasNextPage) {
+        fetchNextPage();
+      }
     },
-    {
-      id: 1,
-      imageUrl:
-        "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202107/29/0a0a379f-05c8-4777-a071-b29abcf9f542.jpg",
-      title: "⭐️️ 내가 들었던 펀드 추천 글 ⭐",
-      summary: "오늘은 내가 들었던 펀드 중에 제일 좋았던 신한은행의 @@@ 펀드야",
-      authorNickname: "이듀미",
-      createdTime: 3,
-      likeCount: 3,
-      commentCount: 5,
-    },
-  ];
+    [fetchNextPage, hasNextPage]
+  );
+
+  useEffect(() => {
+    const element = observerRef.current;
+    const observer = new IntersectionObserver(handleObserver, {
+      threshold: 1.0,
+    });
+
+    if (element) observer.observe(element);
+
+    return () => {
+      if (element) observer.unobserve(element);
+    };
+  }, [handleObserver]);
 
   const handleSearchBtnClick = () => {
     navigate(`/search`, {
       state: { domain: "home" },
     });
+  };
+
+  const handleChallengeCardClick = (id: number) => {
+    navigate(`/challenge/${id}`);
   };
 
   const handleNotificationBtnClick = () => {
@@ -92,20 +142,19 @@ export default function HomePage() {
     "저렴한 재료로 맛있는 요리를 만들어봐요!",
     "유익한 금융 도서를 추천해 보세요!",
     "ESG 기업을 소개하고 공유해봐요!",
-    "기업을 분석하고 정보를 나눠요!",
+    "관심 기업을 분석하고 정보를 나눠요!",
   ];
 
   return (
     <>
       <div className="pt-[2vh] px-[4.5vw]">
-        {/* 헤더랑 */}
         <Header
           type="logoLeftSearchAndAlarmRight"
           searchBtn={handleSearchBtnClick}
           notiBtn={handleNotificationBtnClick}
         />
         <div className="mt-[5.5vh]"></div>
-        {/* 세트로 들고 다녀야 됨 */}
+
         <div className="flex justify-between items-center mb-[1.5vh]">
           <span className="font-semibold text-[1.2rem]">요즘 뜨는 챌린지 </span>{" "}
           <p
@@ -116,18 +165,19 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* 챌린지 카드 컴포넌트  */}
         <div className="whitespace-nowrap overflow-x-auto flex scrollbar-hide">
           {challengeListData.map((challenge, index) => (
-            <>
-              <ChallengeCard
-                title={challenge.name}
-                description={challengeDescription[index]}
-                participants={challenge.participation}
-                bgColor={bgColor[index]}
-                ChallengeLogo={challenge.logoUrl}
-              />
-            </>
+            <div key={index}>
+              <div onClick={() => handleChallengeCardClick(challenge.id)}>
+                <ChallengeCard
+                  title={challenge.name}
+                  description={challengeDescription[index]}
+                  participants={challenge.participation}
+                  bgColor={getChallengeBgColor(challenge.id)}
+                  ChallengeLogo={challenge.logoUrl}
+                />
+              </div>
+            </div>
           ))}
         </div>
 
@@ -135,63 +185,57 @@ export default function HomePage() {
           <span className="font-semibold text-[1.2rem]">맞춤 핀 </span>{" "}
         </div>
 
-        <div>
-          {data.map((data, index) => (
-            <div key={index}>
-              <BoardCardVertical
-                title={data.title}
-                description={data.summary}
-                author={data.authorNickname}
-                time={data.createdTime}
-                heartCount={data.likeCount}
-                replyCount={data.commentCount}
-                imageUrl="https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg"
-                // imageUrl={data.thumbnail}
-                authorImageUrl="https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg"
-                link={`board/${data.id}`}
-              />
-            </div>
+        {data &&
+          data.pages.map((page, pageIndex) => (
+            <React.Fragment key={pageIndex}>
+              {page.boards.map((board, boardIndex) => (
+                <BoardCardVertical
+                  key={`board-${pageIndex}-${boardIndex}`}
+                  title={board.title}
+                  description={board.summary}
+                  author={board.authorNickname}
+                  time={board.createdTime}
+                  heartCount={board.likeCount}
+                  replyCount={board.commentCount}
+                  imageUrl={board.thumbnail || Logo}
+                  authorImageUrl={board.authorProfile}
+                  link={`board/${board.id}`}
+                />
+              ))}
+              <hr />
+              <div className="flex justify-between items-center mt-[1.5vh]">
+                <span className="font-medium text-[1rem]">
+                  이런 상품은 어때요?
+                </span>{" "}
+              </div>
+              <div className="slider-container pb-[4vh] w-[85vw] m-auto 0">
+                <Slider {...settings}>
+                  {page.products.map((product, productIndex) => (
+                    <ProductCard
+                      key={`product-${pageIndex}-${productIndex}`}
+                      type={
+                        product.categoryName === "펀드"
+                          ? "투자"
+                          : product.categoryName
+                      }
+                      productImg={product.cardImage || product.corpImage || ""}
+                      productName={product.name}
+                      productBrand={product.corpName}
+                      benefits={product.tags.slice(0, 2)}
+                      reviewCount={product.boardCount}
+                      link={`${product.id}`}
+                    />
+                  ))}{" "}
+                </Slider>
+              </div>
+            </React.Fragment>
           ))}
-        </div>
         <hr />
-        <div className="flex justify-between items-center mt-[1.5vh]">
-          <span className="font-medium text-[1rem]">이런 상품은 어때요?</span>{" "}
-        </div>
+        <div ref={observerRef} />
       </div>
 
-      <div className="slider-container pb-[4vh] w-[85vw] m-auto 0">
-        <Slider {...settings}>
-          {/* <ProductCard
-                type={1}
-                productImg="{data.cardImage}"
-                productName="{data.cardImage}"
-                productBrand="{data.cardImage}"
-                benefits=[]
-                reviewCount=3
-                link={`${data.id}`}
-              />
-
-<ProductCard
-                type={1}
-                productImg={data.cardImage}
-                productName={data.name}
-                productBrand={data.corpName}
-                benefits={data.tags.slice(0, 2)}
-                reviewCount={data.boardCount}
-                link={`${data.id}`}
-              />
-          <ProductCard
-                type={1}
-                productImg={data.cardImage}
-                productName={data.name}
-                productBrand={data.corpName}
-                benefits={data.tags.slice(0, 2)}
-                reviewCount={data.boardCount}
-                link={`${data.id}`}
-              /> */}
-        </Slider>
-      </div>
-      <hr />
+      {isLoading && <LoadingSpinner />}
+      {isError && <p>Error loading data...</p>}
 
       <div className="pb-[7.5vh]" />
       <Navbar />

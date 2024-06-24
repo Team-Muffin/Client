@@ -18,14 +18,14 @@ const LoanDetail: React.FC<LoanDetailProps> = ({
     <>
       {isLoanDetailLoaded && (
         <>
-          {loanDetailArray.map((item) => (
-            <>
+          {loanDetailArray.map((item, index) => (
+            <div key={index}>
               <p key={item.title}>
                 - <span dangerouslySetInnerHTML={{ __html: item.title }} />:{" "}
                 <span dangerouslySetInnerHTML={{ __html: item.content }} />
               </p>
               <br />
-            </>
+            </div>
           ))}
         </>
       )}

@@ -9,6 +9,7 @@ import Portfolio from "../../components/profile/Portfolio";
 import Credit from "../../components/profile/Credit";
 import PurpleBtn from "../../components/common/PurpleBtn";
 import Modal from "../../components/common/Modal";
+
 import { getUserDetails, UserDetailsResponse, getFollowers, FollowersReq } from "../../libs/apis/user";
 import { getPortfolio, PortfolioResponse } from "../../libs/apis/user";
 
@@ -16,22 +17,27 @@ const ProfilePage: React.FC = () => {
   const [userCategory, setUserCategory] = useState<string>("게시물");
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const [showCreditTip, setShowCreditTip] = useState<boolean>(false);
-  const [userData, setUserData] = useState<UserDetailsResponse["data"] | null>(null);
+  const [userData, setUserData] = useState<UserDetailsResponse["data"] | null>(
+    null
+  );
   const [searchParams] = useSearchParams();
   const userId = searchParams.get("id");
   const otherId = parseInt(searchParams.get("id") || "", 10);
 
   const [selectedFollowerId, setSelectedFollowerId] = useState<number | null>(null);
+
   const [followers, setFollowers] = useState<FollowersReq[]>([]);
   const [portfolioDetails, setPortfolioDetails] = useState<PortfolioResponse["data"]["details"] | null>(null);
 
   useEffect(() => {
     if (userId) {
-      getUserDetails(parseInt(userId)).then((response) => {
-        setUserData(response.data);
-      }).catch((error) => {
-        console.error("유저 상세 정보 조회 중 오류 발생", error);
-      });
+      getUserDetails(parseInt(userId))
+        .then((response) => {
+          setUserData(response.data);
+        })
+        .catch((error) => {
+          console.error("유저 상세 정보 조회 중 오류 발생", error);
+        });
 
       fetchFollowers(parseInt(userId));
       fetchPortfolioData(otherId);
@@ -140,10 +146,16 @@ const ProfilePage: React.FC = () => {
             <p className="text-lg font-semibold">
               Details of Follower ID: {selectedFollowerId}
             </p>
-            {followers.map((follower) => (
-              <div key={follower.id} className="mb-4">
+
+            {/* Replace with actual follower details rendering */}
+            {followers.map((follower, index) => (
+              <div key={index} className="mb-4">
                 <p>{follower.nickname}</p>
-                <img src={follower.profileImage} alt={follower.nickname} className="w-16 h-16 rounded-full" />
+                <img
+                  src={follower.profileImage}
+                  alt={follower.nickname}
+                  className="w-16 h-16 rounded-full"
+                />
               </div>
             ))}
             <PurpleBtn label="Close" onClick={closeFollowerModal} />

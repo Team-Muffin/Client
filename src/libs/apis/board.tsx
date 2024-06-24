@@ -8,7 +8,7 @@ export async function fetchBoardList(options: {
   category?: string; //1: 정보, 2: 재미, 3: 투자, 4: 기업, 5: 고급
   sort?: string; //최신순, 인기순
   userId?: number;
-}): Promise<{ data: BoardListResponse["data"] }> {
+}): Promise<{ data: BoardListResponse }> {
   const {
     pageNo = 0,
     size = 10,
@@ -19,7 +19,7 @@ export async function fetchBoardList(options: {
   const response = await instance.get<BoardListResponse>(
     `/board-service/boards?pageNo=${pageNo}&size=${size}&category=${category}&sort=${sort}&userId=${userId}`
   );
-  return { data: response.data.data };
+  return { data: response.data };
 }
 
 interface BoardListResponse {
@@ -34,6 +34,7 @@ interface BoardListResponse {
     likeCount: number;
     commentCount: number;
     authorNickname: string;
+    authorProfile: string;
   }[];
 }
 
@@ -102,6 +103,7 @@ export interface CommentResponse {
       createdTime: string;
     }[];
     createdTime: string;
+    deleted: boolean;
   }[];
 }
 
@@ -146,7 +148,9 @@ export async function deleteComment(commentId: number) {
 export interface CreateBoardRequest {
   title: String;
   content: OutputData;
-  categoryId: String;
+  category: String;
+  product: String | null;
+  challenge: String | null;
 }
 export async function createBoard(requestBody: CreateBoardRequest) {
   try {
