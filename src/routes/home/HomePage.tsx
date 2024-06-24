@@ -7,6 +7,7 @@ import ProductCard from "../../components/common/ProductCard";
 import ChallengeCard from "../../components/home/ChallengeCard";
 import BoardCardVertical from "../../components/home/BoardCardVertical";
 import { fetchChallengeList, ChallengeList } from "../../libs/apis/home";
+import { getChallengeBgColor } from "../../utils/challengeColorUtil";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -17,18 +18,6 @@ export default function HomePage() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-  const bgColor = [
-    "#F9D1E3",
-    "#8DBDFF",
-    "#F8D560",
-    "#B6E785",
-    "#AF9FF3",
-    "#F9D1E3",
-    "#8DBDFF",
-    "#F8D560",
-    "#B6E785",
-    "#AF9FF3",
-  ];
 
   const [challengeListData, setChallengeListData] = useState<ChallengeList[]>(
     []
@@ -123,6 +112,7 @@ export default function HomePage() {
         {/* 챌린지 카드 컴포넌트  */}
         <div className="whitespace-nowrap overflow-x-auto flex scrollbar-hide">
           {challengeListData.map((challenge, index) => (
+
             <div key={index}>
               <div onClick={() => handleChallengeCardClick(challenge.id)}>
                 <ChallengeCard
@@ -134,6 +124,7 @@ export default function HomePage() {
                 />
               </div>
             </div>
+
           ))}
         </div>
 
