@@ -7,16 +7,13 @@ import UserProfile from "../../components/profile/UserProfile";
 import CategoryTabs from "../../components/common/CategoryTabs";
 import Portfolio from "../../components/profile/Portfolio";
 import Credit from "../../components/profile/Credit";
-import PurpleBtn from "../../components/common/PurpleBtn"; // Assuming PurpleBtn for modal close
+import PurpleBtn from "../../components/common/PurpleBtn";
 import Modal from "../../components/common/Modal";
-import {
-  getUserDetails,
-  UserDetailsResponse,
-  getFollowers,
-  FollowersReq,
-} from "../../libs/apis/user";
 
-const ProfilePage = () => {
+import { getUserDetails, UserDetailsResponse, getFollowers, FollowersReq } from "../../libs/apis/user";
+import { getPortfolio, PortfolioResponse } from "../../libs/apis/user";
+
+const ProfilePage: React.FC = () => {
   const [userCategory, setUserCategory] = useState<string>("게시물");
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const [showCreditTip, setShowCreditTip] = useState<boolean>(false);
@@ -25,12 +22,12 @@ const ProfilePage = () => {
   );
   const [searchParams] = useSearchParams();
   const userId = searchParams.get("id");
+  const otherId = parseInt(searchParams.get("id") || "", 10);
 
-  // State for managing modal and followers
-  const [selectedFollowerId, setSelectedFollowerId] = useState<number | null>(
-    null
-  );
+  const [selectedFollowerId, setSelectedFollowerId] = useState<number | null>(null);
+
   const [followers, setFollowers] = useState<FollowersReq[]>([]);
+  const [portfolioDetails, setPortfolioDetails] = useState<PortfolioResponse["data"]["details"] | null>(null);
 
   useEffect(() => {
     if (userId) {
@@ -42,10 +39,10 @@ const ProfilePage = () => {
           console.error("유저 상세 정보 조회 중 오류 발생", error);
         });
 
-      // Fetch initial followers
       fetchFollowers(parseInt(userId));
+      fetchPortfolioData(otherId);
     }
-  }, [userId]);
+  }, [userId, otherId]);
 
   const categories: string[] = [
     "게시물",
@@ -54,16 +51,6 @@ const ProfilePage = () => {
     "보유상품",
     "크레딧",
   ];
-
-  const pieChartData = [
-    { id: "stylus", label: "stylus", value: 276, color: "hsl(219, 70%, 50%)" },
-    { id: "sass", label: "sass", value: 85, color: "hsl(243, 70%, 50%)" },
-    { id: "c", label: "c", value: 430, color: "hsl(164, 70%, 50%)" },
-    { id: "ruby", label: "ruby", value: 98, color: "hsl(103, 70%, 50%)" },
-    { id: "php", label: "php", value: 29, color: "hsl(314, 70%, 50%)" },
-  ];
-
-  const barChartData = [{ id: "networth", 입출금: 10, 저축: 37, 투자: 53 }];
 
   const handleUserCategoryClick = (selection: string) => {
     setUserCategory(selection);
@@ -77,7 +64,6 @@ const ProfilePage = () => {
     setShowCreditTip((prevState) => !prevState);
   };
 
-  // Function to fetch followers
   const fetchFollowers = async (userId: number) => {
     try {
       const response = await getFollowers(userId);
@@ -91,12 +77,23 @@ const ProfilePage = () => {
     }
   };
 
-  // Function to open modal for selected follower
+  const fetchPortfolioData = async (otherId:number) => {
+    try {
+      const response = await getPortfolio(otherId);
+      if (response.success) {
+        setPortfolioDetails(response.data.details);
+      } else {
+        console.error("포트폴리오 데이터 조회 실패:", response.message);
+      }
+    } catch (error) {
+      console.error("포트폴리오 데이터 조회 중 오류 발생", error);
+    }
+  };
+
   const openFollowerModal = (followerId: number) => {
     setSelectedFollowerId(followerId);
   };
 
-  // Function to close modal
   const closeFollowerModal = () => {
     setSelectedFollowerId(null);
   };
@@ -131,7 +128,7 @@ const ProfilePage = () => {
         handleUserCategoryClick={handleUserCategoryClick}
       />
       {userCategory === "포트폴리오" && (
-        <Portfolio barChartData={barChartData} pieChartData={pieChartData} />
+        <Portfolio portfolioDetails={portfolioDetails} />
       )}
       {userCategory === "크레딧" && (
         <Credit
@@ -139,15 +136,17 @@ const ProfilePage = () => {
           handleCreditTipClick={handleCreditTipClick}
         />
       )}
+      
       <Navbar />
 
-      {/* Modal for selected follower */}
+
       {selectedFollowerId !== null && (
         <Modal onClose={closeFollowerModal}>
           <div className="p-4">
             <p className="text-lg font-semibold">
               Details of Follower ID: {selectedFollowerId}
             </p>
+
             {/* Replace with actual follower details rendering */}
             {followers.map((follower, index) => (
               <div key={index} className="mb-4">
@@ -163,6 +162,7 @@ const ProfilePage = () => {
           </div>
         </Modal>
       )}
+      <div className="pb-[6vh]" />
     </>
   );
 };
