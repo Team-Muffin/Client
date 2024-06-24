@@ -19,7 +19,6 @@ export default function BoardListPage() {
   const [size, setSize] = useState(10);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-
   const [userId, setUSerId] = useState(1);
   const [selectedFilter, setSelectedFilter] = useState("최신순");
   const elementRef = useRef<HTMLDivElement | null>(null);
@@ -198,9 +197,8 @@ export default function BoardListPage() {
         {categories.map((cat) => (
           <p
             key={cat}
-            className={`${
-              category === cat ? selectedCategoryCss : defaultCategoryCss
-            } cursor-pointer`}
+            className={`${category === cat ? selectedCategoryCss : defaultCategoryCss
+              } cursor-pointer`}
             onClick={() => handleUserCategoryClick(cat)}
           >
             {cat}

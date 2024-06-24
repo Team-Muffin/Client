@@ -10,7 +10,7 @@ import {
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { OutputData } from "@editorjs/editorjs";
-import BoardEditor from "./BoardEditor";
+import BoardEditor from "../../components/board/BoardEditor";
 import { createBoard, CreateBoardRequest } from "../../libs/apis/board";
 
 export default function BoardWritePage() {
@@ -18,6 +18,9 @@ export default function BoardWritePage() {
   const [categoryId, setCategoryId] = useState<string>(1 + "");
   const [boardData, setBoardData] = useState<OutputData | undefined>();
   const [title, setTitle] = useState<String>("");
+  const [productId, setProductId] = useState<String | null>(null);
+  const [challengeId, setChallengeId] = useState<String | null>(null);
+
   const filterList = ["정보", "재미", "투자", "기업", "고급"];
   const navigate = useNavigate();
   const handleBackButtonClick = () => {
@@ -28,7 +31,21 @@ export default function BoardWritePage() {
   const boardId = params.boardId;
 
   useEffect(() => {
-    if (boardId) setCategoryId(location.state.category);
+    if (location) {
+      const searchParams = new URLSearchParams(location.search);
+      setProductId(searchParams.get("productId"));
+      setChallengeId(searchParams.get("challengeId"));
+    }
+  }, [location]);
+
+  useEffect(() => {
+    if (boardId) {
+      console.log("entered to edit page");
+      console.log(location.state);
+      setCategoryId(location.state.category);
+      setTitle(location.state.title);
+      setBoardData(location.state.content);
+    }
   }, [boardId]);
 
   // console.log(categoryId);
@@ -69,7 +86,9 @@ export default function BoardWritePage() {
     const requestBody: CreateBoardRequest = {
       title: title,
       content: boardData,
-      categoryId: categoryId,
+      category: selected,
+      product: productId,
+      challenge: challengeId,
     };
     const response = await createBoard(requestBody);
     console.log(response.data.boardId);
