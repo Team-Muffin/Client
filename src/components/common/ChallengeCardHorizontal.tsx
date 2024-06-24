@@ -29,12 +29,15 @@ const ChallengeCardHorizontal: React.FC<Challenge> = ({
           className="h-[10vh] mr-[2vh] w-[15vw]"
           alt="Challenge Logo"
         />
-        <div >
-          <div className="flex items-center">
-            <img src={Coin} className="h-[2vh] mr-[0.5vh]" />
-            <span className="text-[0.8rem] text-C333333">{reward} </span>
+        <div className="w-full mr-[2vh]">
+          <div className="flex justify-between">
+            <p className="text-[1rem] font-medium mt-[0.2vh]">{title}</p>
+            <div className="flex items-center">
+              <img src={Coin} className="h-[2vh] mr-[0.5vh]" />
+              <span className="text-[0.8rem] text-C333333">{reward} </span>
+            </div>
           </div>
-          <p className="text-[1rem] font-medium mt-[0.2vh]">{title}</p>
+
           <p className="mt-[0.2vh] text-C333333 text-[0.8rem] whitespace-normal leading-tight">
             {description}
           </p>
