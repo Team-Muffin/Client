@@ -51,7 +51,6 @@ export default function ProductListPage() {
       });
 
       if (response.data) {
-        console.log(response.data);
         setProductListData(response.data.data.products);
       } else {
         console.error("상품 리스트 데이터가 없습니다.");
