@@ -7,6 +7,7 @@ import FilledScrap from "../../assets/scrap-filled.svg";
 import Scrap from "../../assets/scrap.svg";
 import { createBookmark, createLike } from "../../libs/apis/board";
 import { fetchFollowStatus, followUser } from "../../libs/apis/board";
+import BoardViewer from "../../routes/board/BoardViewer";
 
 interface BoardContentProps {
   authorId?: number;
@@ -165,7 +166,7 @@ const BoardSection: React.FC<BoardContentProps> = ({
 
             <p className="py-[1vh] text-[1.25rem] font-medium">{title}</p>
             <p className="text-[0.95rem] break-words">
-              {content}
+              <BoardViewer strData={content} />
               <br />
             </p>
 
