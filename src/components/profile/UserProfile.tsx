@@ -67,7 +67,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
   return (
     <div className="flex flex-col items-center">
       <div className="flex justify-center gap-[8vw] items-center">
-        <Link to="/challenge/detail/stampboard">
+        <Link to="/challenge/detail/badgeboard">
           <img
             src={MyChallengeImg}
             alt="My Challenge"
