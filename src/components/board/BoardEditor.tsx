@@ -12,8 +12,8 @@ type BoardEditorProps = {
    */
   setData: React.Dispatch<SetStateAction<OutputData | undefined>>;
   data: OutputData | undefined;
-  setTitle: React.Dispatch<SetStateAction<String>>;
-  title: String;
+  setTitle: React.Dispatch<SetStateAction<string>>;
+  title: string;
 };
 
 const BoardEditor: React.FC<BoardEditorProps> = ({
@@ -44,8 +44,7 @@ const BoardEditor: React.FC<BoardEditorProps> = ({
     []
   );
 
-  console.log(data);
-
+  // console.log(data);
   return (
     <div>
       <input

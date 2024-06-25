@@ -210,7 +210,7 @@ const SignUpProfilePage = () => {
           <img src={MiniCircle} alt="Mini Circle" className="w-3 h-3 mr-5" />
           <img src={MiniCircle} alt="Mini Circle" className="w-3 h-3" />
         </div>
-        <PurpleBtn onClick={handleSignUp} label="Connect Your Assets" />
+        <PurpleBtn onClick={handleSignUp} label="자산 연결하러 가기" />
       </div>
 
       {isModalOpen && (
