@@ -151,6 +151,7 @@ export async function fetchSuccessBadges(userId: string): Promise<Badge[]> {
     throw error;
   }
 }
+
 export async function getMyChallenges(isDone: number, userId: number) {
   try {
     const res = await instance.get(`challenge-service/my-challenges`, {
@@ -161,6 +162,29 @@ export async function getMyChallenges(isDone: number, userId: number) {
     });
 
     return res.data.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function getEmoChallengeLog() {
+  try {
+    const res = await instance.get("challenge-service/my-emoChallenges/log");
+
+    return res.data.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function postEmoChallenge(emojiId: number): Promise<void> {
+  try {
+    const response = await instance.post(
+      "challenge-service/my-emoChallenges/emoji",
+      {
+        emojiId: emojiId,
+      }
+    );
   } catch (err) {
     throw err;
   }
