@@ -34,7 +34,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
     id: stock.name,
     label: stock.name,
     value: parseFloat(formatPercentage(stock.rate)),
-    color: `hsl(${Math.random() * 360}, 70%, 50%)`,
+    color:  `hsl(${Math.random() * 360}, 80%, 40%)`,
   })) || [];
 
   const foreignStocksData = portfolioDetails?.foreignStocks.map((stock) => ({
@@ -49,7 +49,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
       id: "국내 주식",
       label: "국내 주식",
       value: parseFloat(formatPercentage(portfolioDetails?.domesticRatio || 0)),
-      color: `hsl(${Math.random() * 360}, 70%, 50%)`,
+      color: `hsl(${Math.random() * 360}, 80%, 40%)`,
     },
     {
       id: "해외 주식",
@@ -70,6 +70,8 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
       depositAmount: portfolioDetails?.depositAmount || 0,
     },
   ];
+
+  const returnRate = formatPercentage(portfolioDetails?.returnRate || 0)
 
   return (
     <div className="flex flex-col px-[4.5vw] py-[2vh]">
@@ -98,21 +100,24 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
         </div> */}
       </div>
 
-      <div className="flex flex-col items-center mt-[2vh] ">
+      <div className="flex flex-col mt-[2vh] ">
         <div style={{ height: "30vh", width: "80vw" }}>
-          <p className="text-center font-semibold mb-[2vh]">투자 구성</p>
+          <div className="flex">
+          <p className="font-semibold text-lg mb-[2vh] ml-[3vw]">투자 구성  </p>
+          <p className="font-semibold text-lg ml-[1vw] text-[red]" > (수익률 {returnRate}%)</p>
+          </div>
           <MyResponsivePie data={investData} />
         </div>
         <div style={{ height: "30vh", width: "80vw" }}>
-          <p className="text-center font-semibold mb-[2vh] mt-[3vh]">국내주식</p>
+          <p className="font-semibold text-lg mb-[2vh] mt-[5vh] ml-[3vw]">국내주식</p>
           <MyResponsivePie data={domesticStocksData} />
         </div>
         <div style={{ height: "30vh", width: "80vw", marginTop: "5vh" }}>
-          <p className="text-center font-semibold mb-[2vh] mt-[3vh]">해외주식</p>
+          <p className="font-semibold text-lg mb-[2vh] mt-[5vh] ml-[3vw]">해외주식</p>
           <MyResponsivePie data={foreignStocksData} />
         </div>
       </div>
-      <div className="pb-[5vh]"/>
+      <div className="pb-[7vh]"/>
     </div>
   );
 };

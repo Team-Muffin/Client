@@ -286,3 +286,22 @@ export async function getPortfolio(id: number): Promise<PortfolioResponse> {
     throw error;
   }
 }
+
+export interface SubPortfolioResponse {
+  success: boolean;
+  message: string;
+  data: {
+  };
+}
+
+//포트폴리오 구독
+export async function subscribePortfolio(id: number): Promise<PortfolioResponse> {
+  try {
+    const response = await instance.post(`/user-service/users/${id}/portfolios`);
+    console.log(" 조회 API 호출 성공:", response.data); // 성공 로그 출력
+    return response.data;
+  } catch (error) {
+    console.error("포트폴리오 조회 중 오류 발생", error);
+    throw error;
+  }
+}
