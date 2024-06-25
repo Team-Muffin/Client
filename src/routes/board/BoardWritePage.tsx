@@ -11,7 +11,7 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { OutputData } from "@editorjs/editorjs";
 import BoardEditor from "../../components/board/BoardEditor";
-import { createBoard, CreateBoardRequest } from "../../libs/apis/board";
+import { BoardRequest, createBoard, CreateBoardRequest, updateBoard, UpdateBoardRequest } from "../../libs/apis/board";
 import BoardModifier from "../../components/board/BoardModifier";
 
 export default function BoardWritePage() {
@@ -83,18 +83,32 @@ export default function BoardWritePage() {
       window.alert("게시글 내용을 입력해주세요");
       return;
     }
-    const requestBody: CreateBoardRequest = {
+
+    const boardRequest: BoardRequest = {
       title: title,
-      content: boardData,
-      category: selected,
-      product: productId,
-      challenge: challengeId,
-    };
-    // TODO update board
-    const response = boardId ? await createBoard(requestBody) : await createBoard(requestBody);
+      content: boardData 
+    }
+
+    const requestBody: CreateBoardRequest | UpdateBoardRequest = boardId ? 
+      {
+        ...boardRequest,
+        boardId: boardId
+      }
+      :
+      {
+        ...boardRequest,
+        category: selected,
+        product: productId,
+        challenge: challengeId
+      };
+    
+    const response = ("boardId" in requestBody) ?
+      await updateBoard(requestBody.boardId, requestBody)
+      : await createBoard(requestBody);
+    
 
     if (response.success == true) {
-      navigate(`/board/${response.data.boardId}`);
+      navigate(`/board/${boardId ? boardId : response.data.boardId}`);
     } else {
       window.alert("게시글 작성에 실패했습니다.");
     }
@@ -135,7 +149,7 @@ export default function BoardWritePage() {
                   <div className="py-1">
                     {filterList.map((text, index) => (
                       <div onClick={() => handleMenuItemClick(text)}>
-                        <MenuItem key={index}>
+                        <MenuItem key={text}>
                           {({ active }) => (
                             <a
                               href="#"
