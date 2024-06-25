@@ -15,8 +15,6 @@ export default function ProductListPage() {
   const navigate = useNavigate();
   const [category, setCategory] = useState("카드");
   const categories = ["카드", "예적금", "투자", "대출"];
-  const [userInfo, setUserInfo] = useState("20대 여성");
-  const [productInfo, setProductInfo] = useState("체크카드");
   const [selectedFilter, setSelectedFilter] = useState("최신순");
   const observerRef = useRef<HTMLDivElement | null>(null);
   const [size, setSize] = useState(10);
@@ -89,7 +87,7 @@ export default function ProductListPage() {
   useEffect(() => {
     const element = observerRef.current;
     const observer = new IntersectionObserver(handleObserver, {
-      threshold: 1.0,
+      threshold: 0,
     });
 
     if (element) observer.observe(element);

@@ -16,10 +16,7 @@ export default function EditProfilePage() {
   const [nickname, setNickname] = useState(""); // State for nickname input value
   const [job, setJob] = useState(""); // State for job input value
   const [isButtonEnabled, setIsButtonEnabled] = useState(false); // State to enable/disable button
-  const { id, login } = useAuth2Store((state) => ({
-    id: state.id,
-    login: state.login,
-  }));
+  const { id, setTokenInfo } = useAuth2Store();
 
   // Handle image selection from file input
   const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +49,12 @@ export default function EditProfilePage() {
       if (job) profileData.job = job;
 
       const res = await EditProfile(profileData, selectedFile || undefined); // EditProfile 함수 호출
-      login(id, "", "", "", "", res.data.accessToken, res.data.refreshToken);
+      setTokenInfo(
+        res.data.id,
+        res.data.nickname,
+        res.data.accessToken,
+        res.data.refreshToken
+      );
       console.log("프로필 수정 완료!");
       console.log("id", id);
       navigate(`/userProfile?id=${id}`);

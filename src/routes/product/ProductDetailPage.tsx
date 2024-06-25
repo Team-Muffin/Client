@@ -24,8 +24,10 @@ import {
   FundProductDetail,
   fetchCardProductDetail,
   CardProductDetail,
+  fetchBoardList,
+  BoardData,
 } from "../../libs/apis/product";
-import { useParams, useLocation, Link } from "react-router-dom";
+import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 import ProductSummary from "../../components/product/ProductSummary";
 import SavingDetail from "../../components/product/SavingDetail";
 import FundDetail from "../../components/product/FundDetail";
@@ -33,6 +35,7 @@ import LoanDetail from "../../components/product/LoanDetail";
 import CardDetail from "../../components/product/CardDetail";
 
 export default function ProductListPage() {
+  const navigate = useNavigate();
   const [benefits, setBenefits] = useState<
     { title: string; content: string | number }[]
   >([]);
@@ -54,7 +57,7 @@ export default function ProductListPage() {
   );
   const [fundDetail, setFundDetail] = useState<FundProductDetail | null>(null);
   const [cardDetail, setCardDetail] = useState<CardProductDetail | null>(null);
-
+  const [boardData, setBoardData] = useState<BoardData[]>([]);
   const [showDetail, setShowDetail] = useState(false);
   const params = useParams();
   const productId = params.productId ?? "";
@@ -64,6 +67,7 @@ export default function ProductListPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   const location = useLocation();
+
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
   const handleImageLoad = (
     e: React.SyntheticEvent<HTMLImageElement, Event>
@@ -71,6 +75,33 @@ export default function ProductListPage() {
     setImageSize({
       width: e.currentTarget.width,
       height: e.currentTarget.height,
+    });
+  };
+
+  const callBoardData = async () => {
+    try {
+      const { data } = await fetchBoardList({
+        pageNo: 0,
+        size: 3,
+        productId: Number(productId),
+      });
+      setBoardData(data);
+      console.log(data);
+    } catch (error) {
+      console.error("보드 데이터 호출 중 에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    callBoardData();
+  }, []);
+
+  const relatedBoardClick = () => {
+    navigate(`/product/${productId}/related`, {
+      state: {
+        relatedCnt: productBasic?.boardCount,
+        productType: productType,
+      },
     });
   };
 
@@ -257,7 +288,6 @@ export default function ProductListPage() {
         <></>
       ) : (
         <>
-          {" "}
           <div className="py-[2vh] px-[4.5vw] pb-[1vh] text-C333333">
             {productType === "펀드" ? (
               <Header text={"투자"} type="backLeftTextCenter" />
@@ -265,7 +295,7 @@ export default function ProductListPage() {
               <Header text={productType} type="backLeftTextCenter" />
             )}
             <div className="mt-[4vh]" />
-            {productType === "카드" ? (
+            {productType === "카드" && (
               <div className="flex justify-center p-[2vh]">
                 <img
                   className={`${
@@ -275,8 +305,6 @@ export default function ProductListPage() {
                   onLoad={handleImageLoad}
                 />
               </div>
-            ) : (
-              <></>
             )}
 
             <div>
@@ -352,39 +380,51 @@ export default function ProductListPage() {
                   관련 핀
                 </span>
                 <span className="font-semibold text-[1.15rem] ml-[1.5vw] text-[#738BFF]">
-                  9
+                  {productBasic?.boardCount}
                 </span>
               </div>
-              <span className="text-[0.75rem] text-C333333">더보기 {">"}</span>
+              {boardData.length === 0 ? (
+                <></>
+              ) : (
+                <span
+                  className="text-[0.75rem] text-C333333"
+                  onClick={relatedBoardClick}
+                >
+                  더보기 {">"}
+                </span>
+              )}
             </div>
 
-            <BoardCard
-              title="⭐️내가 들었던 펀드 추천 글⭐️"
-              description=" 오늘은 내가 들었던 펀드 중에 가장 좋았던 펀드는 신한은행의"
-              author="이듀미"
-              time="3"
-              heartCount={7}
-              replyCount={3}
-              imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
-            />
-            <BoardCard
-              title="⭐️내가 들었던 펀드 추천 글⭐️"
-              description=" 오늘은 내가 들었던 펀드 중에 가장 좋았던 펀드는 신한은행의"
-              author="이듀미"
-              time="3"
-              heartCount={7}
-              replyCount={3}
-              imageUrl="https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/25/holapet/20210525044423699dwdp.jpg"
-            />
+            <div>
+              {boardData.length == 0 && (
+                <div className="text-center rounded-[1rem] w-full h-[10vh] mt-[1.5vh] shadow-productCard flex text-C333333 items-center justify-center">
+                  관련 핀이 없습니다.
+                </div>
+              )}
+              {boardData.map((item, index) => (
+                <div key={index}>
+                  <BoardCard
+                    title={item.title}
+                    description={item.summary}
+                    author={item.authorNickname}
+                    time={item.createdTime}
+                    heartCount={item.likeCount}
+                    replyCount={item.commentCount}
+                    imageUrl={item.thumbnail}
+                    authorImageUrl={item.authorProfile}
+                  />
+                </div>
+              ))}
+            </div>
+            <Link to={`/board/write?productId=${productId}`}>
+              <img
+                className="fixed bottom-[8vh] right-[4vw] z-5"
+                src={writeButton}
+              />
+            </Link>
+            <div className="pb-[8.5vh]" />
+            <Navbar />
           </div>
-          <Link to={`/board/write?productId=${productId}`}>
-            <img
-              className="fixed bottom-[8vh] right-[4vw] z-5"
-              src={writeButton}
-            />
-          </Link>
-          <div className="pb-[8.5vh]" />
-          <Navbar />
         </>
       )}
     </>
