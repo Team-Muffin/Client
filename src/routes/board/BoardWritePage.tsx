@@ -21,7 +21,6 @@ export default function BoardWritePage() {
   const [title, setTitle] = useState<string>("");
   const [productId, setProductId] = useState<String | null>(null);
   const [challengeId, setChallengeId] = useState<String | null>(null);
-  const [locked, setLocked] = useState<boolean>(false);
 
   const filterList = ["정보", "재미", "투자", "기업", "고급"];
   const navigate = useNavigate();
@@ -85,8 +84,9 @@ export default function BoardWritePage() {
       return;
     }
 
+    let locked: boolean = false;
     if (selected === "고급" && window.confirm("비밀 게시글로 등록할까요?"))
-      setLocked(true);
+      locked = true;
 
     const boardRequest: BoardRequest = {
       title: title,
