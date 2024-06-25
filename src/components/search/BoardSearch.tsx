@@ -1,9 +1,11 @@
-import React from "react";
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import CategoryTabs from "../common/CategoryTabs";
 import { BoardData, fetchSearchedBoardList } from "../../libs/apis/search";
 import { useNavigate } from "react-router-dom";
 import BoardCard from "../common/BoardCard";
+import useCategoryFilterStore from "../../store/useCategoryFilterStore";
+import LoadingSpinner from "../common/LoadingSpinner";
+import { useInfiniteQuery } from "react-query";
 
 interface BoardSearchProps {
   keyword: string;
@@ -13,31 +15,82 @@ const BoardSearch: React.FC<BoardSearchProps> = ({ keyword }) => {
   const navigate = useNavigate();
   const categories = ["정보", "재미", "투자", "기업", "고급"];
   const [category, setCategory] = useState("정보");
-  const [boardData, setBoardData] = useState<BoardData[]>([]);
+  const [size, setSize] = useState(10);
+
   const handleCategoryClick = (selection: string) => {
     setCategory(selection);
   };
+
   const handleBoardCardClick = async (link: string) => {
     navigate(link);
   };
 
-  const callBoardData = async () => {
+  const observerRef = useRef<HTMLDivElement | null>(null);
+
+  const setCategoryAndFilters = useCategoryFilterStore(
+    (state) => state.setCategoryAndFilters
+  );
+
+  useEffect(() => {
+    if (category) {
+      setCategoryAndFilters(category, null);
+    }
+  }, [category]);
+
+  const fetchSearchedBoardListData = async (
+    pageParam: number,
+    category: string
+  ) => {
     try {
-      const { data } = await fetchSearchedBoardList({
+      const response = await fetchSearchedBoardList({
+        pageNo: pageParam,
+        size: size,
         keyword,
-        category: category,
+        category,
       });
-      console.log(data);
-      setBoardData(data);
+      return response.data;
     } catch (error) {
-      console.log("게시글 검색 리스트 불러오는 중 오류");
+      throw new Error("게시글 검색 리스트 불러오는 중 오류");
     }
   };
 
+  const { data, hasNextPage, fetchNextPage, isLoading, isError } =
+    useInfiniteQuery(
+      ["board-search", category], // useInfiniteQuery의 key로 사용될 배열
+      ({ pageParam = 0 }) => fetchSearchedBoardListData(pageParam, category),
+      {
+        getNextPageParam: (lastPage, allPages) => {
+          return lastPage.length === size ? allPages.length : undefined;
+        },
+        select: (data) => ({
+          pages: data.pages.flatMap((page) => page),
+          pageParams: data.pageParams,
+        }),
+      }
+    );
+
+  const handleObserver = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      const [entry] = entries;
+      if (entry.isIntersecting && hasNextPage) {
+        fetchNextPage();
+      }
+    },
+    [fetchNextPage, hasNextPage]
+  );
+
   useEffect(() => {
-    callBoardData();
-    console.log(boardData);
-  }, [keyword, category]);
+    const element = observerRef.current;
+    const observer = new IntersectionObserver(handleObserver, {
+      threshold: 1.0,
+    });
+
+    if (element) observer.observe(element);
+
+    return () => {
+      if (element) observer.unobserve(element);
+    };
+  }, [handleObserver]);
 
   return (
     <>
@@ -49,32 +102,33 @@ const BoardSearch: React.FC<BoardSearchProps> = ({ keyword }) => {
       />
       <div className="py-[2vh] px-[4.5vw]">
         <hr />
-        {boardData.length === 0 && (
-          <>
-            <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.9rem]">
-              "{keyword}" 검색 결과가 없습니다.
-            </div>
-          </>
+        {data?.pages.length === 0 && (
+          <div className="text-C333333 py-[2vh] px-[1.5vh] text-[0.9rem]">
+            "{keyword}" 검색 결과가 없습니다.
+          </div>
         )}
 
-        {boardData.map((data, index) => (
-          <React.Fragment key={index}>
-            <div onClick={() => handleBoardCardClick(`/board/${data.id}`)}>
-              <BoardCard
-                title={data.title}
-                description={data.summary}
-                author={data.authorNickname}
-                time={data.createdTime}
-                heartCount={data.likeCount}
-                replyCount={data.commentCount}
-                imageUrl="https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg"
-                // imageUrl={data.thumbnail}
-                authorImageUrl="https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg"
-              />
-            </div>
-          </React.Fragment>
-        ))}
+        {data &&
+          data.pages.map((item, index) => (
+            <React.Fragment key={index}>
+              <div onClick={() => handleBoardCardClick(`/board/${item.id}`)}>
+                <BoardCard
+                  title={item.title}
+                  description={item.summary}
+                  author={item.authorNickname}
+                  time={item.createdTime}
+                  heartCount={item.likeCount}
+                  replyCount={item.commentCount}
+                  imageUrl={item.thumbnail}
+                  authorImageUrl={item.authorProfile}
+                />
+              </div>
+            </React.Fragment>
+          ))}
       </div>
+      <div ref={observerRef} />
+      {isLoading && <LoadingSpinner />}
+      {isError && <p>Error loading data...</p>}
     </>
   );
 };
