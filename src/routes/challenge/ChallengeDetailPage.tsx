@@ -33,6 +33,7 @@ const ChallengeDetailPage = () => {
         description={challenge?.description!}
         dateRange={`${challenge?.startAt} ~ ${challenge?.endAt}`}
         participants={challenge?.participation!}
+        challengeType={challenge?.challengeType!}
         image={challenge?.logoUrl!}
         detailDescription={challenge?.detailDescription!}
         reward={challenge?.reward!}

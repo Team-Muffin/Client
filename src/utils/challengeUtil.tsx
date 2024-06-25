@@ -13,3 +13,12 @@ const bgDict: BgDictType = {
 export function getChallengeBgColor(id: number) {
   return bgDict[(id - 1) % Object.keys(bgDict).length];
 }
+
+export function getLinkByChallengeType(cType: number) {
+  if (cType === 0) return "CORP";
+  if (cType === 1) {
+    return `/challenge/calendar`;
+  }
+
+  return "BOARD";
+}

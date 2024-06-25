@@ -1,9 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SmallLogoImg from "../../assets/small-profile.svg";
 import DateImg from "../../assets/date.svg";
 import CheckImg from "../../assets/check.svg";
 import Coin from "../../assets/coin.svg";
+import { getLinkByChallengeType } from "../../utils/challengeUtil";
 
 interface ChallengeProps {
   id: number;
@@ -11,6 +12,7 @@ interface ChallengeProps {
   status: string;
   description: string;
   dateRange: string;
+  challengeType: number;
   participants: number;
   image: string;
   detailDescription: string;
@@ -21,6 +23,7 @@ const Challenge: React.FC<ChallengeProps> = ({
   id,
   title,
   status,
+  challengeType,
   description,
   dateRange,
   participants,
@@ -28,6 +31,17 @@ const Challenge: React.FC<ChallengeProps> = ({
   detailDescription,
   reward,
 }) => {
+  const navigate = useNavigate();
+
+  const handleLink = () => {
+    const confirmed = window.confirm(`${title}에 참여하시겠습니까?`);
+
+    if (confirmed) {
+      const url = getLinkByChallengeType(challengeType) + "/1";
+      navigate(url);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center">
       <div>
@@ -73,15 +87,16 @@ const Challenge: React.FC<ChallengeProps> = ({
       </div>
 
       <div className="flex justify-center mt-[2vh]">
-        <Link
-          to="/challenge/cal"
+        <div
+          onClick={handleLink}
+          data-modal-target="popup-modal"
+          data-modal-toggle="popup-modal"
           className="text-base font-semibold text-[#748BFF] bg-[#ECF0FF] rounded-3xl shadow py-[0.5vh] px-[10vw]"
         >
           참여하기
-        </Link>
+        </div>
       </div>
       <div className="w-full h-[2vh] bg-[#F4F3F8] mt-[2vh] mb-[2vh]"></div>
-
       <div className="flex items-center mb-20">
         <img src={detailDescription} alt="Detail Description" />
       </div>

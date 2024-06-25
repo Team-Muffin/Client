@@ -85,3 +85,16 @@ export async function fetchChallengeById(
     throw error;
   }
 }
+
+export async function joinEmoChallenge(): Promise<number> {
+  try {
+    const res = await instance.post<GlobalResponse<number>>(
+      "/my-emoChallenges",
+      {}
+    );
+
+    return res.data.data;
+  } catch (error) {
+    throw error;
+  }
+}

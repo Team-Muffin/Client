@@ -100,7 +100,7 @@ export const mainRouter = [
             element: <ChallengeDetailPage />,
           },
           {
-            path: "calendar",
+            path: "calendar/:id",
             element: <ChallengeCAL />,
           },
           {
