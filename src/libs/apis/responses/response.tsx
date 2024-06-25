@@ -12,3 +12,19 @@ export type TokenInfoResponse = {
   accessToken: string;
   refreshToken: string;
 };
+
+export type ChallengeResponse = {
+  badgeName: string;
+  challengeType: number;
+  description: string;
+  detailDescription: string;
+  endAt: string;
+  id: number;
+  logoUrl: string;
+  name: string;
+  participation: number;
+  reward: number;
+  startAt: string;
+  status: string;
+  term: string;
+};

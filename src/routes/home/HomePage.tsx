@@ -17,7 +17,7 @@ import { fetchBoardList } from "../../libs/apis/board";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import Logo from "../../assets/main-logo.svg";
 
-import { getChallengeBgColor } from "../../utils/challengeColorUtil";
+import { getChallengeBgColor } from "../../utils/challengeUtil";
 
 export default function HomePage() {
   const [productListData, setProductListData] = useState<ProductList[]>([]);

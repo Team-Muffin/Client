@@ -9,7 +9,7 @@ interface Challenge {
   bgColor: string;
   ChallengeLogo: string;
   reward: number;
-  link?: string;
+  id: number;
 }
 
 const ChallengeCardHorizontal: React.FC<Challenge> = ({
@@ -19,12 +19,12 @@ const ChallengeCardHorizontal: React.FC<Challenge> = ({
   bgColor,
   ChallengeLogo,
   reward,
-  link,
+  id,
 }) => {
   const navigate = useNavigate();
 
   const clickChallengeCard = () => {
-    if (link) navigate(link);
+    navigate(`/challenge/${id}`);
   };
   return (
     <div

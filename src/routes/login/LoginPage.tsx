@@ -63,9 +63,12 @@ const LoginPage: React.FC = () => {
           <PurpleBtn onClick={handleLogin} label="ToFin 시작하기 !" />
         </div>
         <div className="flex justify-center mt-[2vh]">
-          <Link to="/home" className="text-xs text-gray mr-[2vw]">
+          <p
+            className="text-xs text-gray mr-[2vw]"
+            onClick={() => alert("아직 지원되지 않습니다. 로그인해주세요!")}
+          >
             게스트로 입장하기
-          </Link>
+          </p>
           <Link to="/signup" className="text-xs font-medium ml-[3vw]">
             회원가입하기
           </Link>
