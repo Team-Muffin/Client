@@ -44,10 +44,15 @@ instance.interceptors.response.use(
             "/user-service/reissue"
           );
 
-          const authState = { state: res.data.data, version: 0 };
+          const authInfoString = window.localStorage.getItem("auth2-storage");
+          const authInfo = JSON.parse(
+            authInfoString ? authInfoString : "{}"
+          ).state;
+          authInfo.state.accessToken = res.data.data.accessToken;
+          authInfo.state.refreshToken = res.data.data.refreshToken;
           window.localStorage.setItem(
             "auth2-storage",
-            JSON.stringify(authState)
+            JSON.stringify(authInfo)
           );
 
           return instance(originalRequest);
