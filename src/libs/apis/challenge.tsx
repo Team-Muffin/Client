@@ -16,11 +16,24 @@ export interface Challenge {
   participation: number;
 }
 
+// Define the Badge type
+export interface Badge {
+  imgUrl: string;
+  badgeName: string;
+  challengeName: string;
+}
+
 // Define the response type
 interface OurChallengeResp {
   success: boolean;
   message: string;
   data: Challenge[]; // This should be an array of challenges
+}
+
+interface SuccessBadgesResp {
+  success: boolean;
+  message: string;
+  data: Badge[];
 }
 
 // Fetch function
@@ -95,6 +108,23 @@ export async function joinEmoChallenge(): Promise<number> {
 
     return res.data.data;
   } catch (error) {
+    throw error;
+  }
+}
+
+// 성공한 뱃지 조회
+export async function fetchSuccessBadges(userId: string): Promise<Badge[]> {
+  try {
+    const response = await instance.get<SuccessBadgesResp>(
+      `challenge-service/my-challenges/badge`,
+      {
+        params: { userId },
+      }
+    );
+    console.log("Success Badge Response data: ", response.data);
+    return response.data.data;
+  } catch (error) {
+    console.log("성공한 뱃지 조회 오류: ", error);
     throw error;
   }
 }
