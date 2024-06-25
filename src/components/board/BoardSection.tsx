@@ -165,10 +165,10 @@ const BoardSection: React.FC<BoardContentProps> = ({
             </div>
 
             <p className="py-[1vh] text-[1.25rem] font-medium">{title}</p>
-            <p className="text-[0.95rem] break-words">
-              <BoardViewer strData={content} />
+            <BoardViewer strData={content} />
+            {/* <p className="text-[0.95rem] break-words">
               <br />
-            </p>
+            </p> */}
 
             <div className="flex justify-between mt-[1.3vh]">
               <div className="flex items-center">

@@ -98,8 +98,8 @@ export default function BoardWritePage() {
       {
         ...boardRequest,
         category: selected,
-        product: productId,
-        challenge: challengeId
+        productId: productId,
+        challengeId: challengeId
       };
     
     const response = ("boardId" in requestBody) ?
