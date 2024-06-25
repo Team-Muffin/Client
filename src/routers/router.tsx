@@ -158,7 +158,7 @@ export const mainRouter = [
         index: true,
       },
       {
-        path: "editprofile",
+        path: "editProfile",
         element: <EditProfilePage />,
       },
       {

@@ -144,9 +144,8 @@ export default function Notification() {
               <div className="flex justify-between items-center p-[1vh] text-gray-600">
                 <div className="text-sm ">
                   <p className="mb-[0.8vh]"> {noti.content}</p>
-                  <div className="flex justify-between text-xs">
+                  <div className="flex text-xs">
                     <p>{timeAgo({ createdTime: noti.createdTime })}</p>
-                    <p className="">삭제</p>
                   </div>
                 </div>
                 <div>

@@ -4,8 +4,8 @@ import PostIcon from "../../assets/post.svg";
 import StarIcon from "../../assets/star.svg";
 import ProductIcon from "../../assets/box.svg";
 import ProfileIcon from "../../assets/profile.svg";
-import useAuthStore from "../../store/useAuthStore";
-import useBoardCategoryFilterStore from "../../store/useBoardCategoryFilterStore";
+import useAuth2Store from "../../store/useAuth2Store";
+
 import useCategoryFilterStore from "../../store/useCategoryFilterStore";
 import { useEffect } from "react";
 
@@ -17,7 +17,7 @@ const Navbar = () => {
   const activeClasses = "text-[#748BFF]"; // Active class for text color
 
   const location = useLocation();
-  const Id = useAuthStore((state) => state.id);
+  const Id = useAuth2Store((state) => state.id);
 
   const navItems = [
     { name: "홈", href: "/", Icon: HomeIcon, exact: true },
@@ -36,16 +36,12 @@ const Navbar = () => {
     (state) => state.clearCategoryAndFilters
   );
 
-  const clearBoardCategoryAndFilters = useBoardCategoryFilterStore(
-    (state) => state.clearBoardCategoryAndFilters
-  );
-
   function scrollToTop() {
     window.scrollTo(0, 0);
   }
   const navBtnClick = () => {
     clearCategoryAndFilters();
-    clearBoardCategoryAndFilters();
+
     scrollToTop();
   };
 

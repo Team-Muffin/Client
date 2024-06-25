@@ -5,7 +5,7 @@ import writeButton from "../../assets/write-button.svg";
 import BoardCard from "../../components/common/BoardCard";
 import Navbar from "../../components/common/Navbar";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import useAuthStore from "../../store/useAuthStore";
+import useAuth2Store from "../../store/useAuth2Store";
 import useCategoryFilterStore from "../../store/useCategoryFilterStore";
 import { useInfiniteQuery } from "react-query";
 import { fetchBoardList } from "../../libs/apis/board";
@@ -18,7 +18,7 @@ export default function BoardListPage() {
   const observerRef = useRef<HTMLDivElement | null>(null);
   const [selectedFilter, setSelectedFilter] = useState("최신순");
   const navigate = useNavigate();
-  const { userId } = useAuthStore((state) => ({
+  const { userId } = useAuth2Store((state) => ({
     userId: state.id,
   }));
   const { savedCategory, savedFilter } = useCategoryFilterStore((state) => ({
@@ -70,7 +70,6 @@ export default function BoardListPage() {
       size: size,
       category: category,
       sort: selectedFilter,
-      userId,
     });
 
     return response.data.data;

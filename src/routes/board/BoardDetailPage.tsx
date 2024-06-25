@@ -26,7 +26,7 @@ import TimeAgo from "../../utils/timeAgo";
 import BackBtn from "../../assets/back.svg";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import BoardSection from "../../components/board/BoardSection";
-import useAuthStore from "../../store/useAuthStore";
+import useAuth2Store from "../../store/useAuth2Store";
 import DeletedProfile from "../../assets/profile-gray.png";
 
 export default function BoardDetailPage() {
@@ -37,8 +37,7 @@ export default function BoardDetailPage() {
   const commentInput = useRef<HTMLInputElement>(null);
   const createCommentBtn = useRef<HTMLInputElement>(null);
   const commentInputArea = useRef<HTMLInputElement>(null);
-  const { userId, id } = useAuthStore((state) => ({
-    userId: state.userId,
+  const { id } = useAuth2Store((state) => ({
     id: state.id,
   }));
 
@@ -232,8 +231,7 @@ export default function BoardDetailPage() {
         <>
           <div className="py-[2vh] px-[4.5vw]">
             {/* 헤더 */}
-            <nav className="fixed top-0 left-0 right-0 bg-[#ffffff] ">
-              {" "}
+            <nav className="fixed top-0 left-0 right-0 bg-[#ffffff]">
               <div className="relative flex justify-center items-center h-[6vh]">
                 <div className="flex">
                   <img
@@ -246,13 +244,11 @@ export default function BoardDetailPage() {
                     {boardData.category.name}
                   </div>
                   <div className="absolute right-4">
-                    {/* {Number(id) == boardData.authorId && ( */}
-                    {
+                    {Number(id) === boardData.authorId && (
                       <Menu as="div">
                         <MenuButton>
                           <img src={More} className="cursor-pointer" />
                         </MenuButton>
-
                         <Transition
                           enter="transition ease-out duration-100"
                           enterFrom="transform opacity-0 scale-95"
@@ -267,31 +263,26 @@ export default function BoardDetailPage() {
                           >
                             <div className="py-1">
                               <Menu.Item>
-                                {() => (
-                                  <div
-                                    className="text-center p-[1vw]"
-                                    onClick={handleEditButtonClick}
-                                  >
-                                    수정
-                                  </div>
-                                )}
+                                <div
+                                  className="text-center p-[1vw]"
+                                  onClick={handleEditButtonClick}
+                                >
+                                  수정
+                                </div>
                               </Menu.Item>
-
                               <Menu.Item>
-                                {() => (
-                                  <div
-                                    className="text-center p-[1vw]"
-                                    onClick={handleBoardDelete}
-                                  >
-                                    삭제
-                                  </div>
-                                )}
+                                <div
+                                  className="text-center p-[1vw]"
+                                  onClick={handleBoardDelete}
+                                >
+                                  삭제
+                                </div>
                               </Menu.Item>
                             </div>
                           </Menu.Items>
                         </Transition>
                       </Menu>
-                    }
+                    )}
                   </div>
                 </div>
               </div>
