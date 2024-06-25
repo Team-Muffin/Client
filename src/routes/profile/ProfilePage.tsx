@@ -9,7 +9,7 @@ import Portfolio from "../../components/profile/Portfolio";
 import Credit from "../../components/profile/Credit";
 import PurpleBtn from "../../components/common/PurpleBtn";
 import Modal from "../../components/common/Modal";
-
+import useAuth2Store from "../../store/useAuth2Store";
 import {
   getUserDetails,
   UserDetailsResponse,
@@ -121,7 +121,7 @@ const ProfilePage: React.FC = () => {
   return (
     <>
       <div className="py-[2vh] px-[4.5vw]">
-        <Header text="마이페이지" type="backLeftTextCenterSettingRight" />
+        <Header text="프로필" type="backLeftTextCenterSettingRight" />
         <div className="mt-[5.5vh]" />
         {userData && (
           <>
