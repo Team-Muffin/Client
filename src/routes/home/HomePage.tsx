@@ -19,7 +19,7 @@ import Logo from "../../assets/main-logo.svg";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getChallengeBgColor } from "../../utils/challengeColorUtil";
+import { getChallengeBgColor } from "../../utils/challengeUtil";
 import FetchSSE from "../../components/home/FetchSSE";
 
 export default function HomePage() {
