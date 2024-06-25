@@ -20,7 +20,7 @@ import { getPortfolio, PortfolioResponse } from "../../libs/apis/user";
 import { subscribePortfolio } from "../../libs/apis/user"; // 포트폴리오 구독 API import
 
 const ProfilePage: React.FC = () => {
-  const [userCategory, setUserCategory] = useState<string>("게시물");
+  const [userCategory, setUserCategory] = useState<string>("나의 핀");
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const [showCreditTip, setShowCreditTip] = useState<boolean>(false);
   const [userData, setUserData] = useState<UserDetailsResponse["data"] | null>(
@@ -54,7 +54,7 @@ const ProfilePage: React.FC = () => {
     }
   }, [userId, otherId]);
 
-  const categories: string[] = ["게시물", "챌린지", "포트폴리오", "크레딧"];
+  const categories: string[] = ["나의 핀", "챌린지", "포트폴리오", "크레딧"];
 
   const handleUserCategoryClick = (selection: string) => {
     setUserCategory(selection);
