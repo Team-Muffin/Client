@@ -150,10 +150,11 @@ export interface BoardRequest {
   content: OutputData;
 }
 
-export interface CreateBoardRequest extends BoardRequest{
+export interface CreateBoardRequest extends BoardRequest {
   category: String | null;
   productId: String | null;
   challengeId: String | null;
+  locked: boolean | null;
 }
 
 export async function createBoard(requestBody: CreateBoardRequest) {

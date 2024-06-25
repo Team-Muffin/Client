@@ -84,12 +84,16 @@ export default function BoardWritePage() {
       return;
     }
 
+    let locked: boolean = false;
+    if (selected === "고급" && window.confirm("비밀 게시글로 등록할까요?"))
+      locked = true;
+
     const boardRequest: BoardRequest = {
       title: title,
-      content: boardData 
+      content: boardData
     }
 
-    const requestBody: CreateBoardRequest | UpdateBoardRequest = boardId ? 
+    const requestBody: CreateBoardRequest | UpdateBoardRequest = boardId ?
       {
         ...boardRequest,
         boardId: boardId
@@ -99,13 +103,14 @@ export default function BoardWritePage() {
         ...boardRequest,
         category: selected,
         productId: productId,
-        challengeId: challengeId
+        challengeId: challengeId,
+        locked: locked
       };
-    
+
     const response = ("boardId" in requestBody) ?
       await updateBoard(requestBody.boardId, requestBody)
       : await createBoard(requestBody);
-    
+
 
     if (response.success == true) {
       navigate(`/board/${boardId ? boardId : response.data.boardId}`);
