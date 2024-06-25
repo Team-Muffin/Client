@@ -5,8 +5,6 @@ import StarIcon from "../../assets/star.svg";
 import ProductIcon from "../../assets/box.svg";
 import ProfileIcon from "../../assets/profile.svg";
 import useAuth2Store from "../../store/useAuth2Store";
-import useBoardCategoryFilterStore from "../../store/useBoardCategoryFilterStore";
-
 import useCategoryFilterStore from "../../store/useCategoryFilterStore";
 import { useEffect } from "react";
 

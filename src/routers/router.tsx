@@ -28,6 +28,7 @@ import Notification from "../routes/notification/NotificationPage";
 import SearchPage from "../routes/search/SearchPage";
 import SearchResultPage from "../routes/search/SearchResultPage";
 import ProtectedLayout from "../routes/ProtectedLayout";
+import { element } from "prop-types";
 
 export const mainRouter = [
   {
@@ -136,16 +137,22 @@ export const mainRouter = [
           },
         ],
       },
+
       {
         path: "product",
         children: [
           {
             path: "",
+            index: true,
             element: <ProductListPage />,
           },
           {
             path: ":productId",
             element: <ProductDetailPage />,
+          },
+          {
+            path: ":productId/related",
+            element: <RelatedBoardPage />,
           },
           {
             path: "searchResult",

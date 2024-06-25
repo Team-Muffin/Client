@@ -82,7 +82,7 @@ const ProductSearch: React.FC<ProductSearchProps> = ({ keyword }) => {
   useEffect(() => {
     const element = observerRef.current;
     const observer = new IntersectionObserver(handleObserver, {
-      threshold: 1.0,
+      threshold: 0,
     });
 
     if (element) observer.observe(element);
@@ -129,7 +129,7 @@ const ProductSearch: React.FC<ProductSearchProps> = ({ keyword }) => {
                 </React.Fragment>
               ))}
           </div>
-          <div ref={observerRef} className="pb-[8.5vh]" />
+          <div ref={observerRef} className="pb-[1.5vh]" />
           {isLoading && <LoadingSpinner />}
           {isError && <p>Error loading data...</p>}
         </>
