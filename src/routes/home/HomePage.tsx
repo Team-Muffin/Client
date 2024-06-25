@@ -184,9 +184,6 @@ export default function HomePage() {
             </div>
           ))}
         </div>
-        {/* <FetchSSE /> */}
-        <button onClick={notify}>Notify!</button>
-        <ToastContainer />
 
         <div className="flex justify-between items-center my-[1.5vh]">
           <span className="font-semibold text-[1.2rem]">맞춤 핀 </span>{" "}

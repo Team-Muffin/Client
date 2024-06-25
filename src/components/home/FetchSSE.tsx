@@ -36,10 +36,16 @@ const FetchSSE: React.FC = () => {
           eventSource.current.addEventListener("alert", (e) => {
             console.log("notification 이벤트 수신", e);
             const notificationData = JSON.parse(e.data);
-            setRealtimeData(notificationData);
-            toast.info(notificationData.message, {
-              position: "top-right",
+            toast(notificationData.content, {
+              position: "top-center",
               autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              rtl: false,
+              pauseOnFocusLoss: true,
+              draggable: true,
+              pauseOnHover: false,
+              theme: "light",
             });
           });
 
