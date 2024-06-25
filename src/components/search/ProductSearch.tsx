@@ -129,7 +129,7 @@ const ProductSearch: React.FC<ProductSearchProps> = ({ keyword }) => {
                 </React.Fragment>
               ))}
           </div>
-          <div ref={observerRef} />
+          <div ref={observerRef} className="pb-[8.5vh]" />
           {isLoading && <LoadingSpinner />}
           {isError && <p>Error loading data...</p>}
         </>

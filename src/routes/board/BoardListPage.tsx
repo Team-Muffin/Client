@@ -161,7 +161,7 @@ export default function BoardListPage() {
             </div>
           </React.Fragment>
         ))}
-      <div ref={observerRef} />
+      <div ref={observerRef} className="pb-[8.5vh]" />
 
       {isLoading && <LoadingSpinner />}
       {isError && <p>Error loading data...</p>}

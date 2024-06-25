@@ -1,7 +1,8 @@
 import React from "react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import CategoryTabs from "../common/CategoryTabs";
 import BoardCard from "../common/BoardCard";
+import LoadingSpinner from "../common/LoadingSpinner";
 import {
   fetchSearchedBoardList,
   BoardData,
@@ -17,6 +18,7 @@ import ProductCard from "../common/ProductCard";
 import ChallengeCardHorizontal from "../common/ChallengeCardHorizontal";
 import UserCard from "./UserCard";
 import useCategoryFilterStore from "../../store/useCategoryFilterStore";
+import { useInfiniteQuery } from "react-query";
 
 interface HomeSearchProps {
   keyword: string;
@@ -34,15 +36,22 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
   const [finPageNo, setFinPageNo] = useState(0);
   const [productPageNo, setProductPageNo] = useState(0);
   const [userPageNo, setUserPageNo] = useState(0);
-
+  const observerRef = useRef<HTMLDivElement | null>(null);
   const [pageNo, setPageNo] = useState(0);
   const [size, setSize] = useState(10);
   const [userLimit, setUserLimit] = useState(10);
   const [userLast, setUserLast] = useState(null);
-  const [hasMore, setHasMore] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [userId, setUserId] = useState(1);
   const [selectedFilter, setSelectedFilter] = useState("최신순");
+
+  const setCategoryAndFilters = useCategoryFilterStore(
+    (state) => state.setCategoryAndFilters
+  );
+
+  useEffect(() => {
+    if (category) {
+      setCategoryAndFilters(category, null);
+    }
+  }, [category]);
 
   const callBoardData = async () => {
     try {
@@ -106,32 +115,6 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
     }
   }, [keyword, category]);
 
-  // //무한스크롤 관련 코드
-  // const callBoardData = async () => {
-  //   try {
-  //     setIsLoading(true);
-  //     const { data } = await fetchBoardList({
-  //       pageNo,
-  //       size,
-  //       category,
-  //       sort: "최신순",
-  //       userId,
-  //     });
-  //     setBoardData((prevBoardData) =>
-  //       pageNo === 0 ? data : [...prevBoardData, ...data]
-  //     );
-  //     setHasMore(data.length === size);
-  //   } catch (error) {
-  //     console.error("보드 데이터 호출 중 에러:", error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   callBoardData();
-  // }, [pageNo, size, category, selectedFilter, userId]);
-
   const handleCategoryClick = (selection: string) => {
     setCategory(selection);
   };
@@ -139,6 +122,58 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
   const handleBoardCardClick = async (link: string) => {
     navigate(link);
   };
+
+  const fetchSearchedBoardListData = async (pageParam: number) => {
+    try {
+      const response = await fetchSearchedBoardList({
+        pageNo: pageParam,
+        size: size,
+        keyword,
+      });
+      return response.data;
+    } catch (error) {
+      console.error("게시글 검색 리스트 불러오는 중 오류", error);
+      throw new Error("게시글 검색 리스트 불러오는 중 오류");
+    }
+  };
+
+  const { data, hasNextPage, fetchNextPage, isLoading, isError } =
+    useInfiniteQuery(
+      ["home-search", category, selectedFilter], // useInfiniteQuery의 key로 사용될 배열
+      ({ pageParam = 0 }) => fetchSearchedBoardListData(pageParam),
+      {
+        getNextPageParam: (lastPage, allPages) => {
+          return lastPage.length === size ? allPages.length : undefined;
+        },
+        select: (data) => ({
+          pages: data.pages.flatMap((page) => page),
+          pageParams: data.pageParams,
+        }),
+      }
+    );
+
+  const handleObserver = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      const [entry] = entries;
+      if (entry.isIntersecting && hasNextPage) {
+        fetchNextPage();
+      }
+    },
+    [fetchNextPage, hasNextPage]
+  );
+
+  useEffect(() => {
+    const element = observerRef.current;
+    const observer = new IntersectionObserver(handleObserver, {
+      threshold: 1.0,
+    });
+
+    if (element) observer.observe(element);
+
+    return () => {
+      if (element) observer.unobserve(element);
+    };
+  }, [handleObserver]);
 
   return (
     <>
@@ -170,8 +205,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
                     time={data.createdTime}
                     heartCount={data.likeCount}
                     replyCount={data.commentCount}
-                    imageUrl="https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg"
-                    // imageUrl={data.thumbnail}
+                    imageUrl={data.thumbnail}
                     authorImageUrl="https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg"
                   />
                 </div>
@@ -256,6 +290,10 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
           </>
         )}
       </div>
+      <div ref={observerRef} />
+
+      {isLoading && <LoadingSpinner />}
+      {isError && <p>Error loading data...</p>}
     </>
   );
 };

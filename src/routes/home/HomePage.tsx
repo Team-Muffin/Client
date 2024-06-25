@@ -231,7 +231,7 @@ export default function HomePage() {
             </React.Fragment>
           ))}
         <hr />
-        <div ref={observerRef} />
+        <div ref={observerRef} className="pb-[8.5vh]" />
       </div>
 
       {isLoading && <LoadingSpinner />}
