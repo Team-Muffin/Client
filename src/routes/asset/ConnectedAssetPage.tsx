@@ -1,11 +1,15 @@
 import MiniCircleImg from "../../assets/minicircle.svg";
 import PurpleBtn from "../../components/common/PurpleBtn";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useSignUpStore from "../../store/useSignUpStore";
 
 const ConnectedAssetPage = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isNew = searchParams.get("query")
+    ? searchParams.get("query") === "1"
+    : false; // 저번에 안한 자산 연결에 성공
   const { assetData, clear } = useSignUpStore();
   const [totalCash, setTotalCash] = useState<number>(0);
   window.onbeforeunload;
@@ -81,23 +85,35 @@ const ConnectedAssetPage = () => {
         <div className="bg-[#CDCACA] w-full h-[0.2vh]"></div>
       </div>
       <div className="fixed w-full px-[8vw] bottom-[3vh]">
-        <div className="flex justify-center mb-[3vh]">
-          <img src={MiniCircleImg} className="w-3 h-3 mr-5" alt="Mini Circle" />
-          <img src={MiniCircleImg} className="w-3 h-3 mr-5" alt="Mini Circle" />
-          <img
-            src={MiniCircleImg}
-            className="w-3 h-3 mr-5"
-            alt="Mini Circle"
-            style={{
-              filter:
-                "invert(64%) sepia(69%) saturate(4107%) hue-rotate(206deg) brightness(100%) contrast(102%)",
-            }}
-          />
-          <img src={MiniCircleImg} className="w-3 h-3" alt="Mini Circle" />
-        </div>
+        {isNew ? (
+          <></>
+        ) : (
+          <div className="flex justify-center mb-[3vh]">
+            <img
+              src={MiniCircleImg}
+              className="w-3 h-3 mr-5"
+              alt="Mini Circle"
+            />
+            <img
+              src={MiniCircleImg}
+              className="w-3 h-3 mr-5"
+              alt="Mini Circle"
+            />
+            <img
+              src={MiniCircleImg}
+              className="w-3 h-3 mr-5"
+              alt="Mini Circle"
+              style={{
+                filter:
+                  "invert(64%) sepia(69%) saturate(4107%) hue-rotate(206deg) brightness(100%) contrast(102%)",
+              }}
+            />
+            <img src={MiniCircleImg} className="w-3 h-3" alt="Mini Circle" />
+          </div>
+        )}
         <PurpleBtn
-          to="/asset/tendency"
-          label="나의 자산 연결하기"
+          to={isNew ? "/" : "/asset/tendency"}
+          label={isNew ? "홈으로 가기" : "나의 자산 연결하기"}
           onClick={clear}
         />
       </div>
