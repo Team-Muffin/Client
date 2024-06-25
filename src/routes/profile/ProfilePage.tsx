@@ -9,7 +9,7 @@ import Portfolio from "../../components/profile/Portfolio";
 import Credit from "../../components/profile/Credit";
 import PurpleBtn from "../../components/common/PurpleBtn";
 import Modal from "../../components/common/Modal";
-import useAuth2Store from "../../store/useAuth2Store";
+
 import {
   getUserDetails,
   UserDetailsResponse,
@@ -54,7 +54,7 @@ const ProfilePage: React.FC = () => {
     }
   }, [userId, otherId]);
 
-  const categories: string[] = ["나의 핀", "챌린지", "포트폴리오", "크레딧"];
+  const categories: string[] = ["게시물", "챌린지", "포트폴리오", "크레딧"];
 
   const handleUserCategoryClick = (selection: string) => {
     setUserCategory(selection);

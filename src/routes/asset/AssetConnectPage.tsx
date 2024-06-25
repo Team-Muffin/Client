@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import MiniCircle from "../../assets/minicircle.svg";
 import Essential from "../../assets/required.svg";
 import Checked from "../../assets/checked.svg";
 import PurpleBtn from "../../components/common/PurpleBtn";
-import { CheckUserContactAvailability } from "../../libs/apis/user";
+import { CheckUserContactAvailability, getBirth } from "../../libs/apis/user";
 import useSignUpStore from "../../store/useSignUpStore";
 
 const AssetConnectPage = () => {
+  const [searchParams] = useSearchParams();
+  const isNew = searchParams.get("query")
+    ? searchParams.get("query") === "1"
+    : false; // 저번에 안한 자산 연결하기
   const navigate = useNavigate();
-
+  console.log(isNew);
   const { birthdate, connectAsset } = useSignUpStore();
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -25,11 +29,18 @@ const AssetConnectPage = () => {
   const [userContactCheckReason, setUserContactCheckReason] =
     useState<string>("");
 
+  const fetchBirth = async () => {
+    const birth = await getBirth();
+    setRrnPart1(birth.replace(/-/g, "").slice(2, 8));
+  };
+
   // useEffect to format birthdate and update rrnPart1
   useEffect(() => {
     if (birthdate) {
       const formattedBirthdate = birthdate.replace(/-/g, "").slice(2, 8);
       setRrnPart1(formattedBirthdate);
+    } else if (isNew) {
+      fetchBirth();
     }
   }, [birthdate]);
 
@@ -85,10 +96,19 @@ const AssetConnectPage = () => {
 
     if (res) {
       alert("자산 연결 성공");
-      navigate("/asset/connect");
+      if (isNew) {
+        navigate("/asset/connect?query=1");
+        return;
+      } else {
+        navigate("/asset/connect");
+      }
     } else {
       alert("자산 연결 중 오류가 발생했습니다.");
-      navigate("/asset");
+      if (isNew) {
+        navigate("/asset?query=1");
+      } else {
+        navigate("/asset");
+      }
     }
   };
 
@@ -232,29 +252,33 @@ const AssetConnectPage = () => {
 
       {/* Footer section with buttons */}
       <div className="fixed w-full px-[8vw] bottom-[3vh]">
-        <div className="flex justify-center mb-[3vh]">
-          <img
-            src={MiniCircle}
-            alt="Mini Circle"
-            className="w-3 h-3 mr-5"
-            style={{ fill: "#748BFF" }}
-          />
-          <img src={MiniCircle} alt="Mini Circle" className="w-3 h-3 mr-5" />
-          <img
-            src={MiniCircle}
-            alt="Mini Circle"
-            className="w-3 h-3 mr-5"
-            style={{
-              filter:
-                "invert(64%) sepia(69%) saturate(4107%) hue-rotate(206deg) brightness(100%) contrast(102%)",
-            }}
-          />
-          <img src={MiniCircle} alt="Mini Circle" className="w-3 h-3" />
-        </div>
+        {isNew ? (
+          <></>
+        ) : (
+          <div className="flex justify-center mb-[3vh]">
+            <img
+              src={MiniCircle}
+              alt="Mini Circle"
+              className="w-3 h-3 mr-5"
+              style={{ fill: "#748BFF" }}
+            />
+            <img src={MiniCircle} alt="Mini Circle" className="w-3 h-3 mr-5" />
+            <img
+              src={MiniCircle}
+              alt="Mini Circle"
+              className="w-3 h-3 mr-5"
+              style={{
+                filter:
+                  "invert(64%) sepia(69%) saturate(4107%) hue-rotate(206deg) brightness(100%) contrast(102%)",
+              }}
+            />
+            <img src={MiniCircle} alt="Mini Circle" className="w-3 h-3" />
+          </div>
+        )}
         <PurpleBtn label="나의 자산 연결하기" onClick={handleConnectAsset} />
         <div className="flex justify-center">
           <Link
-            to="/signup/success"
+            to={isNew ? "/" : "/signup/success"}
             className="text-xs text-[#748BFF] font-medium mt-[1vh]"
           >
             나중에 하기

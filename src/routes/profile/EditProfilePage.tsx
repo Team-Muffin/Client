@@ -7,7 +7,6 @@ import Header from "../../components/common/Header";
 import { EditProfile, EditProfileRequest } from "../../libs/apis/user";
 import useAuth2Store from "../../store/useAuth2Store";
 import { useNavigate } from "react-router-dom";
-import { IdentificationIcon } from "@heroicons/react/24/solid";
 
 export default function EditProfilePage() {
   const navigate = useNavigate();
@@ -45,6 +44,11 @@ export default function EditProfilePage() {
   const handleProfileEdit = async () => {
     try {
       const profileData: EditProfileRequest = {};
+      if (!profileData.nickname || !profileData.job || !selectedFile) {
+        alert("한 가지 이상은 설정해주세요!");
+        return;
+      }
+
       if (nickname) profileData.nickname = nickname;
       if (job) profileData.job = job;
 
@@ -102,7 +106,6 @@ export default function EditProfilePage() {
           onChange={handleNicknameChange}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="Nickname"
-          required
         />
 
         <p className="text-lg font-semibold mt-[3vh] mb-[1vh]">직업</p>
