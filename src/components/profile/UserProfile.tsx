@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import MyChallengeImg from "../../assets/challenge-count.svg";
 import CheckedImg from "../../assets/checked.svg";
 import { fetchFollowStatus, followUser } from "../../libs/apis/board";
-import useAuthStore from "../../store/useAuthStore";
+import useAuth2Store from "../../store/useAuth2Store";
 import { useSearchParams } from "react-router-dom";
 
 interface UserProfileProps {
@@ -26,7 +26,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
   const [followersCount, setFollowersCount] = useState<number>(0);
   const [followingsCount, setFollowingsCount] = useState<number>(0);
 
-  const Id = useAuthStore((state) => state.id); 
+  const Id = useAuth2Store((state) => state.id);
   const [searchParams] = useSearchParams();
   const otherId = parseInt(searchParams.get("id") || "", 10);
 
@@ -63,13 +63,16 @@ const UserProfile: React.FC<UserProfileProps> = ({
       console.error("팔로우 토글 실패:", error);
     }
   };
-  
 
   return (
     <div className="flex flex-col items-center">
       <div className="flex justify-center gap-[8vw] items-center">
         <Link to="/challenge/detail/stampboard">
-          <img src={MyChallengeImg} alt="My Challenge" style={{ width: "18vw" }} />
+          <img
+            src={MyChallengeImg}
+            alt="My Challenge"
+            style={{ width: "18vw" }}
+          />
         </Link>
         <div className="flex flex-col justify-center items-center">
           <div className="flex items-center">
@@ -77,7 +80,9 @@ const UserProfile: React.FC<UserProfileProps> = ({
             <img src={CheckedImg} alt="Checked" />
           </div>
           <p className="text-sm mr-[1vw] mb-[0.3vh]">@{tofinId}</p>
-          <p className="text-xs text-[#748BFF]">{ageRange}대 {job}</p>
+          <p className="text-xs text-[#748BFF]">
+            {ageRange}대 {job}
+          </p>
         </div>
         <button
           className="text-base font-normal text-[#748BFF] bg-[#ECF0FF] rounded-2xl shadow my-[2vh] px-[2vw]"

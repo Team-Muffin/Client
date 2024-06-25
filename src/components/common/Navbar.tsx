@@ -6,6 +6,7 @@ import ProductIcon from "../../assets/box.svg";
 import ProfileIcon from "../../assets/profile.svg";
 import useAuth2Store from "../../store/useAuth2Store";
 import useBoardCategoryFilterStore from "../../store/useBoardCategoryFilterStore";
+
 import useCategoryFilterStore from "../../store/useCategoryFilterStore";
 import { useEffect } from "react";
 
@@ -36,16 +37,12 @@ const Navbar = () => {
     (state) => state.clearCategoryAndFilters
   );
 
-  const clearBoardCategoryAndFilters = useBoardCategoryFilterStore(
-    (state) => state.clearBoardCategoryAndFilters
-  );
-
   function scrollToTop() {
     window.scrollTo(0, 0);
   }
   const navBtnClick = () => {
     clearCategoryAndFilters();
-    clearBoardCategoryAndFilters();
+
     scrollToTop();
   };
 

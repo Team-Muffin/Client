@@ -43,6 +43,7 @@ export interface BoardData {
   likeCount: number;
   commentCount: number;
   authorNickname: string;
+  authorProfile: string;
 }
 
 interface BoardListResponse {

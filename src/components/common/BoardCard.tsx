@@ -29,7 +29,9 @@ const BoardCard: React.FC<BoardCardProps> = ({
     <>
       <div className="flex justify-between items-center my-[1.75vh] px-[0.5vw] ">
         <div className="pr-[2.5vw] mr-[0.8vw]">
-          <p className="text-[1.05rem] text-C333333 font-medium">{title}</p>
+          <p className="text-[1.05rem] text-C333333 font-medium line-clamp-1">
+            {title}
+          </p>
           <p className="text-[0.9rem] text-C333333 line-clamp-1 mt-[0.25vh]">
             {description}
           </p>

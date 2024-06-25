@@ -5,7 +5,7 @@ import Essential from "../../assets/required.svg?react";
 import PurpleBtn from "../../components/common/PurpleBtn";
 import Header from "../../components/common/Header";
 import { EditProfile, EditProfileRequest } from "../../libs/apis/user";
-import useAuthStore from "../../store/useAuthStore";
+import useAuth2Store from "../../store/useAuth2Store";
 import { useNavigate } from "react-router-dom";
 import { IdentificationIcon } from "@heroicons/react/24/solid";
 
@@ -16,7 +16,7 @@ export default function EditProfilePage() {
   const [nickname, setNickname] = useState(""); // State for nickname input value
   const [job, setJob] = useState(""); // State for job input value
   const [isButtonEnabled, setIsButtonEnabled] = useState(false); // State to enable/disable button
-  const { id, login } = useAuthStore((state) => ({
+  const { id, login } = useAuth2Store((state) => ({
     id: state.id,
     login: state.login,
   }));
@@ -51,10 +51,10 @@ export default function EditProfilePage() {
       if (nickname) profileData.nickname = nickname;
       if (job) profileData.job = job;
 
-
       const res = await EditProfile(profileData, selectedFile || undefined); // EditProfile 함수 호출
       login(id, "", "", "", "", res.data.accessToken, res.data.refreshToken);
       console.log("프로필 수정 완료!");
+      console.log("id", id);
       navigate(`/userProfile?id=${id}`);
     } catch (error) {
       console.error("프로필 변경 중 오류 발생", error);

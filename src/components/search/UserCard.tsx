@@ -33,7 +33,7 @@ const UserCard: React.FC<UserCardProps> = ({
           </div>
           <div className="pl-[1vh]">
             <p className="text-C333333 text-[0.98rem]">{nickname}</p>
-            <p className="text-C333333 text-[0.8rem]">{tofinId}</p>
+            <p className="text-C333333 text-[0.8rem]">@{tofinId}</p>
           </div>
         </div>
       </div>
