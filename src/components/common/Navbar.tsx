@@ -5,7 +5,6 @@ import StarIcon from "../../assets/star.svg";
 import ProductIcon from "../../assets/box.svg";
 import ProfileIcon from "../../assets/profile.svg";
 import useAuth2Store from "../../store/useAuth2Store";
-
 import useCategoryFilterStore from "../../store/useCategoryFilterStore";
 import { useEffect } from "react";
 
@@ -45,6 +44,12 @@ const Navbar = () => {
     scrollToTop();
   };
 
+  const isActive = (path: string) => {
+    const pathname = location.pathname.split('?')[0];
+    const itemPath = path.split('?')[0];
+    return pathname === itemPath;
+  }
+
   return (
     <nav className="fixed w-full z-20 bottom-0 left-0 bg-white border-t border-gray-200 h-[7.5vh]">
       <div className="mx-auto flex items-center justify-center">
@@ -55,16 +60,13 @@ const Navbar = () => {
                 <div onClick={navBtnClick}>
                   <NavLink
                     to={item.href}
-                    className={({ isActive }) =>
+                    className={() =>
                       `${linkClasses} ${defaultClasses} ${hoverClasses} ${
-                        isActive ? activeClasses : ""
+                        isActive(item.href) ? activeClasses : ""
                       }`
                     }
                     aria-current={
-                      location.pathname === item.href ||
-                      (!item.exact && location.pathname.startsWith(item.href))
-                        ? "page"
-                        : undefined
+                      isActive(item.href) ? "page" : undefined
                     }
                   >
                     <img
@@ -73,25 +75,18 @@ const Navbar = () => {
                       className="h-7 w-7 filter transition-all duration-300 group-hover:filter-none group-hover:fill-current group-focus:fill-current"
                       style={{
                         filter:
-                          location.pathname === item.href ||
-                          (!item.exact &&
-                            location.pathname.startsWith(item.href))
+                          isActive(item.href)
                             ? "invert(64%) sepia(69%) saturate(4107%) hue-rotate(206deg) brightness(100%) contrast(102%)"
                             : "none",
                         fill:
-                          location.pathname === item.href ||
-                          (!item.exact &&
-                            location.pathname.startsWith(item.href))
-                            ? "#748BFF"
+                          isActive(item.href)
+                            ? "invert(64%) sepia(69%) saturate(4107%) hue-rotate(206deg) brightness(100%) contrast(102%)"
                             : "currentColor",
                       }}
                     />
                     <p
                       className={`text-xs ${
-                        location.pathname === item.href ||
-                        (!item.exact && location.pathname.startsWith(item.href))
-                          ? activeClasses
-                          : ""
+                        isActive(item.href) ? activeClasses : ""
                       }`}
                     >
                       {item.name}

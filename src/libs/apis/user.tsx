@@ -276,8 +276,8 @@ export interface PortfolioDetails {
   returnRate: number;
   domesticRatio: number;
   foreignRatio: number;
-  domesticStocks: { code: string; name: string; rate: number }[];
-  foreignStocks: { code: string; name: string; rate: number }[];
+  domesticStocks: { code: string; name: string; rate: number; dartCode: string;}[];
+  foreignStocks: { code: string; name: string; rate: number; dartCode: string; }[];
 }
 
 export interface PortfolioResponse {
