@@ -139,7 +139,7 @@ export default function BoardDetailPage() {
   };
 
   const handleBackButtonClick = () => {
-    navigate(-1);
+    navigate("/board");
   };
 
   const handleEditButtonClick = () => {

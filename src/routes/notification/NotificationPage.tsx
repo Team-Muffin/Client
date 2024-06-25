@@ -1,52 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/common/Header";
-// import {
-//   fetchAllNoti,
-//   fetchDelNoti,
-//   fetchReadNoti,
-//   fetchReadAllNoti,
-// } from "../../lib/apis/notification";
-// import Speaker from "../../assets/speakerphone.png";
+import {
+  fetchAlertList,
+  readAlert,
+  deleteAlert,
+  readAllAlert,
+  Alert,
+  AlertUnviewedResponse,
+} from "../../libs/apis/notification";
 import { useNavigate } from "react-router-dom";
 import timeAgo from "../../utils/timeAgo";
-
-interface Notification {
-  notificationKey: string;
-  isViewed: boolean;
-  content: string;
-  createdAt: string;
-  type: number;
-  partyKey: string;
-}
+import useAuth2Store from "../../store/useAuth2Store";
 
 export default function Notification() {
-  const [notis, setNotis] = useState<Notification[]>([]);
   const navigate = useNavigate();
-
-  //   function timeAgo(createdAt: string) {
-  //     const now = new Date();
-  //     const updatedTime = new Date(createdAt);
-
-  //     const secondsPast = (now.getTime() - updatedTime.getTime()) / 1000;
-
-  //     if (secondsPast < 60) {
-  //       return `${parseInt(secondsPast.toString())}초 전`;
-  //     }
-  //     if (secondsPast < 3600) {
-  //       return `${parseInt((secondsPast / 60).toString())}분 전`;
-  //     }
-  //     if (secondsPast <= 86400) {
-  //       return `${parseInt((secondsPast / 3600).toString())}시간 전`;
-  //     }
-  //     if (secondsPast > 86400) {
-  //       const month = (updatedTime.getMonth() + 1).toString().padStart(2, "0");
-  //       const date = updatedTime.getDate().toString().padStart(2, "0");
-  //       const hours = updatedTime.getHours().toString().padStart(2, "0");
-  //       const minutes = updatedTime.getMinutes().toString().padStart(2, "0");
-
-  //       return `${month}/${date} ${hours}:${minutes}`;
-  //     }
-  //   }
 
   const notisEx = [
     {
@@ -78,45 +45,57 @@ export default function Notification() {
       isViewed: true,
     },
   ];
-  //   const AllNoti = async () => {
-  //     try {
-  //       const response = await fetchAllNoti();
-  //       setNotis(response);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
 
-  //   const DelNoti = async (notificationKey: string) => {
-  //     try {
-  //       await fetchDelNoti(notificationKey);
-  //       setNotis(notis.filter((noti) => noti.notificationKey !== notificationKey));
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
+  const [alertListData, setAlertListData] = useState<Alert[]>([]);
+  const [alertData, setAlertData] = useState<Alert>();
+  const Id = useAuth2Store((state) => state.id);
+  const callAlertListData = async () => {
+    try {
+      const { data } = await fetchAlertList();
+      console.log(data);
+      setAlertListData(data);
+    } catch (error) {
+      console.log("알림 리스트 불러오는 중 오류");
+    }
+  };
 
-  //   const ReadNoti = async (notificationKey: string) => {
-  //     try {
-  //       await fetchReadNoti(notificationKey);
-  //       AllNoti();
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
+  const deleteAllAlert = async () => {
+    try {
+      await deleteAlert();
+      window.location.reload();
+    } catch (error) {
+      console.log("알림 리스트 전체 삭제 중 오류");
+    }
+  };
 
-  //   const ReadAllNoti = async () => {
-  //     try {
-  //       await fetchReadAllNoti();
-  //       AllNoti();
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
+  const readEachAlert = async (alertId: number) => {
+    try {
+      const { data } = await readAlert(alertId);
+      console.log(data);
 
-  //   useEffect(() => {
-  //     AllNoti();
-  //   }, []);
+      if (data.messageType === "FIN") {
+        navigate(`/board/${data.targetId}`);
+      } else if (data.messageType === "CREDIT") {
+        navigate(`/userProfile?id=${Id}`);
+      } else if (data.messageType === "FOLLOW") {
+        navigate(`/userProfile?id=${data.targetId}`);
+      }
+    } catch (error) {
+      console.log("알림 읽음 중 오류");
+    }
+  };
+
+  const readAllAlerts = async () => {
+    try {
+      await readAllAlert();
+    } catch (error) {
+      console.log("알림 전체 읽음 중 오류");
+    }
+  };
+
+  useEffect(() => {
+    callAlertListData();
+  }, []);
 
   return (
     <>
@@ -125,33 +104,33 @@ export default function Notification() {
         <div className="mt-[4vh]" />
 
         <div className="flex justify-end text-gray-600 text-sm mb-[1vh]">
-          <div
-            //    onClick={ReadAllNoti}
-            className="cursor-pointer"
-          >
+          <div onClick={readAllAlerts} className="cursor-pointer">
             모두 읽기&ensp;&ensp;
           </div>
-          <div className="cursor-pointer">모두 삭제</div>
+          <div className="cursor-pointer" onClick={deleteAllAlert}>
+            모두 삭제
+          </div>
         </div>
 
-        {notisEx.map((noti, index) => (
+        {alertListData.map((alert, index) => (
           <div key={index}>
             <div
               className={`border rounded-[0.8rem] my-[1vh]  ${
-                noti.isViewed ? "bg-white" : "bg-gray-200"
+                alert.viewed ? "bg-white" : "bg-gray-100"
               }`}
+              onClick={() => readEachAlert(alert.id)}
             >
               <div className="flex justify-between items-center p-[1vh] text-gray-600">
                 <div className="text-sm ">
-                  <p className="mb-[0.8vh]"> {noti.content}</p>
+                  <p className="mb-[0.8vh]"> {alert.content}</p>
                   <div className="flex text-xs">
-                    <p>{timeAgo({ createdTime: noti.createdTime })}</p>
+                    <p>{timeAgo({ createdTime: alert.createdAt })}</p>
                   </div>
                 </div>
                 <div>
                   <img
                     className="w-[7vh] h-[7vh] ml-[0.8vh] rounded-[0.8rem]"
-                    src={noti.img}
+                    src={alert.thumbnail}
                   />
                 </div>
               </div>

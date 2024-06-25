@@ -16,14 +16,10 @@ import { useInfiniteQuery } from "react-query";
 import { fetchBoardList } from "../../libs/apis/board";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import Logo from "../../assets/main-logo.svg";
-
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { getChallengeBgColor } from "../../utils/challengeUtil";
-import FetchSSE from "../../components/home/FetchSSE";
+import { fetchUnviewedAlertCnt } from "../../libs/apis/notification";
 
 export default function HomePage() {
-  const notify = () => toast("Wow so easy!");
   const [productListData, setProductListData] = useState<ProductList[]>([]);
   const navigate = useNavigate();
   const [productLimit, setProductLimit] = useState(3);
@@ -38,6 +34,23 @@ export default function HomePage() {
   const [challengeListData, setChallengeListData] = useState<ChallengeList[]>(
     []
   );
+  const [alert, setAlert] = useState(false);
+
+  const callUnviewedAlertCnt = async () => {
+    try {
+      const { data } = await fetchUnviewedAlertCnt();
+      if (data.data > 0) {
+        setAlert(true);
+      }
+      // console.log(data);
+    } catch (error) {
+      console.error("안 본 알람 개수 데이터 호출 중 에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    callUnviewedAlertCnt();
+  }, []);
 
   const callChallengeData = async () => {
     try {
@@ -156,6 +169,7 @@ export default function HomePage() {
           type="logoLeftSearchAndAlarmRight"
           searchBtn={handleSearchBtnClick}
           notiBtn={handleNotificationBtnClick}
+          alert
         />
         <div className="mt-[5.5vh]"></div>
 
