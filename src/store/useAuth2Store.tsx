@@ -11,6 +11,11 @@ export interface Auth2State {
   nickname: string | null;
   accessToken: string | null;
   refreshToken: string | null;
+  accountTendency: boolean;
+  cardTendency: boolean;
+  loanTendency: boolean;
+  investTendency: boolean;
+  purpose: string | null;
   login: (tofinId: string, userInfo: string) => Promise<boolean>;
   logout: () => void;
   signUp: (
@@ -38,21 +43,28 @@ const auth2Slice: StateCreator<Auth2State, [["zustand/persist", unknown]]> = (
   nickname: null,
   accessToken: null,
   refreshToken: null,
+  accountTendency: false,
+  cardTendency: false,
+  loanTendency: false,
+  investTendency: false,
+  purpose: null,
   login: async (tofinId: string, userInfo: string) => {
     try {
-      const { data } = await instance.post<GlobalResponse<TokenInfoResponse>>(
-        "/user-service/sign-in",
-        {
-          tofinId: tofinId,
-          userInfo: userInfo,
-        }
-      );
+      const { data } = await instance.post("/user-service/sign-in", {
+        tofinId: tofinId,
+        userInfo: userInfo,
+      });
 
       set({
         id: data.data.id,
         nickname: data.data.nickname,
         accessToken: data.data.accessToken,
         refreshToken: data.data.refreshToken,
+        accountTendency: data.data.account,
+        cardTendency: data.data.card,
+        loanTendency: data.data.loan,
+        investTendency: data.data.invest,
+        purpose: data.data.purpose,
       });
       return true;
     } catch (err) {
@@ -65,6 +77,11 @@ const auth2Slice: StateCreator<Auth2State, [["zustand/persist", unknown]]> = (
       nickname: null,
       accessToken: null,
       refreshToken: null,
+      accountTendency: false,
+      cardTendency: false,
+      loanTendency: false,
+      investTendency: false,
+      purpose: null,
     });
   },
   signUp: async (

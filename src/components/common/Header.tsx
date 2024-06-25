@@ -11,6 +11,7 @@ import ScrapBtn from "../../assets/scrap.svg"; // Import Scrap image
 import ReplaceBtn from "../../assets/replace.svg"; // Import Replace image
 import LogoutBtn from "../../assets/logout.svg"; // Import Logout image
 import { Link } from "react-router-dom";
+import useAuth2Store from "../../store/useAuth2Store";
 
 type HeaderProps = {
   text?: string;
@@ -37,6 +38,8 @@ const Header: React.FC<HeaderProps> = ({
       navigate(-1);
     }
   };
+
+  const { logout } = useAuth2Store();
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
@@ -120,7 +123,7 @@ const Header: React.FC<HeaderProps> = ({
                       alt="Logout"
                       className="mr-[1vw] ml-[0.3vw]"
                     />
-                    <span>로그아웃</span>
+                    <span onClick={() => logout()}>로그아웃</span>
                   </li>
                 </ul>
               </div>
