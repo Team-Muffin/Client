@@ -1,4 +1,5 @@
 import instance from "./base";
+import { GlobalResponse } from "./responses/response";
 
 //회원가입
 interface SignUpRequest {
@@ -321,6 +322,18 @@ export async function subscribePortfolio(
   }
 }
 
+export async function isAssetConnected(): Promise<boolean> {
+  try {
+    const res = await instance.get<GlobalResponse<boolean>>(
+      "/user-service/users/assets/status"
+    );
+
+    return res.data.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
 //팔로잉 목록 확인
 export async function getFollowingList(
   id: number,
@@ -405,4 +418,33 @@ interface followerResponse {
     users: UserData[];
     last: boolean;
   };
+}
+export type AccountResponse = {
+  number: string;
+  productType: string;
+  name: string;
+  cash: number;
+  image: string;
+};
+export async function getAccounts(): Promise<AccountResponse[]> {
+  try {
+    const res = await instance.get<GlobalResponse<AccountResponse[]>>(
+      "/user-service/users/accounts"
+    );
+    return res.data.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function getBirth(): Promise<string> {
+  try {
+    const res = await instance.get<GlobalResponse<string>>(
+      "/user-service/users/birth"
+    );
+
+    return res.data.data;
+  } catch (err) {
+    throw err;
+  }
 }

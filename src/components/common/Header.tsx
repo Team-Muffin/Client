@@ -5,13 +5,9 @@ import SettingBtn from "../../assets/settings.svg";
 import AlarmBtn from "../../assets/alarm.svg";
 import Logo from "../../assets/main-logo.svg";
 import { useNavigate } from "react-router-dom";
-import SearchGraybtn from "../../assets/search-gray.svg";
-
-import ScrapBtn from "../../assets/scrap.svg"; // Import Scrap image
-import ReplaceBtn from "../../assets/replace.svg"; // Import Replace image
-import LogoutBtn from "../../assets/logout.svg"; // Import Logout image
 import { Link } from "react-router-dom";
 import useAuth2Store from "../../store/useAuth2Store";
+import { isAssetConnected } from "../../libs/apis/user";
 
 type HeaderProps = {
   text?: string;
@@ -19,7 +15,7 @@ type HeaderProps = {
   to?: number | string;
   searchBtn?: () => void;
   notiBtn?: () => void;
-  alert?: boolean;
+  isAlert?: boolean;
 };
 
 const Header: React.FC<HeaderProps> = ({
@@ -28,7 +24,7 @@ const Header: React.FC<HeaderProps> = ({
   to = -1,
   searchBtn,
   notiBtn,
-  alert,
+  isAlert,
 }) => {
   const navigate = useNavigate();
   const handleBackButtonClick = () => {
@@ -45,6 +41,20 @@ const Header: React.FC<HeaderProps> = ({
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
+  };
+
+  const handleConnectAsset = () => {
+    isAssetConnected()
+      .then((res) => {
+        if (res) {
+          alert("이미 자산 연결이 되어있습니다.");
+        } else {
+          navigate(`/asset?query=1`);
+        }
+      })
+      .catch((err) => {
+        alert("에러 발생");
+      });
   };
 
   return (
@@ -100,29 +110,100 @@ const Header: React.FC<HeaderProps> = ({
               <div className="absolute right-4 top-12 bg-white border border-gray-300 rounded shadow-lg">
                 <ul>
                   <li className="p-2 hover:bg-gray-100 cursor-pointer flex items-center">
-                    <img
-                      src={ScrapBtn}
-                      alt="Scrap"
-                      className="mr-[1vw] w-[5vw]"
-                    />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-5 mr-[1vw]"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
+                      />
+                    </svg>
                     <span>스크랩</span>
                   </li>
                   <Link to={`/editprofile`}>
                     <li className="p-2 hover:bg-gray-100 cursor-pointer flex items-center">
-                      <img
-                        src={ReplaceBtn}
-                        alt="Replace"
-                        className="mr-[1vw]"
-                      />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-5 mr-[1vw]"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+                        />
+                      </svg>
+
                       <span>회원정보변경</span>
                     </li>
                   </Link>
+                  <div
+                    onClick={() => {
+                      handleConnectAsset();
+                    }}
+                  >
+                    <li className="p-2 hover:bg-gray-100 cursor-pointer flex items-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-5 mr-[1vw]"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                        />
+                      </svg>
+
+                      <span>자산연결</span>
+                    </li>
+                  </div>
                   <li className="p-2 hover:bg-gray-100 cursor-pointer flex items-center">
-                    <img
-                      src={LogoutBtn}
-                      alt="Logout"
-                      className="mr-[1vw] ml-[0.3vw]"
-                    />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-5 mr-[1vw]"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z"
+                      />
+                    </svg>
+
+                    <span>성향분석</span>
+                  </li>
+                  <li className="p-2 hover:bg-gray-100 cursor-pointer flex items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-5 mr-[1vw]"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
+                      />
+                    </svg>
+
                     <span onClick={() => logout()}>로그아웃</span>
                   </li>
                 </ul>
@@ -151,7 +232,7 @@ const Header: React.FC<HeaderProps> = ({
 
             <div className="absolute right-[4vw] h-[2.8vh]" onClick={notiBtn}>
               <img src={AlarmBtn} className="h-full" />
-              {alert && (
+              {isAlert && (
                 <div className="absolute top-0 right-0 bg-red-500 rounded-full w-2 h-2 transform translate-x-1/2 -translate-y-1/2"></div>
               )}{" "}
             </div>
