@@ -28,6 +28,8 @@ import Notification from "../routes/notification/NotificationPage";
 import SearchPage from "../routes/search/SearchPage";
 import SearchResultPage from "../routes/search/SearchResultPage";
 import ProtectedLayout from "../routes/ProtectedLayout";
+import FollowingPage from "../routes/profile/FollowingPage";
+import FollowerPage from "../routes/profile/FollowerPage";
 import { element } from "prop-types";
 
 export const mainRouter = [
@@ -163,8 +165,21 @@ export const mainRouter = [
 
       {
         path: "userProfile",
-        element: <ProfilePage />,
-        index: true,
+        children: [
+          {
+            path: "",
+            element: <ProfilePage />,
+          },
+
+          {
+            path: "follower",
+            element: <FollowerPage />,
+          },
+          {
+            path: "following",
+            element: <FollowingPage />,
+          },
+        ],
       },
       {
         path: "editProfile",

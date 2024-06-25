@@ -26,9 +26,9 @@ const UserProfile: React.FC<UserProfileProps> = ({
   const [followersCount, setFollowersCount] = useState<number>(0);
   const [followingsCount, setFollowingsCount] = useState<number>(0);
 
-  const Id = useAuth2Store((state) => state.id);
+  const myId = useAuth2Store((state) => state.id);
   const [searchParams] = useSearchParams();
-  const otherId = parseInt(searchParams.get("id") || "", 10);
+  const profileUserId = parseInt(searchParams.get("id") || "", 10);
 
   useEffect(() => {
     // Fetch initial follow status when component mounts
@@ -37,7 +37,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
 
   const updateFollowStatus = async () => {
     try {
-      const response = await fetchFollowStatus(otherId); // Use otherId here
+      const response = await fetchFollowStatus(profileUserId);
       const { data } = response.data;
       setFollowersCount(data.followers);
       setFollowingsCount(data.followings);
@@ -56,7 +56,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
         handleFollowButtonClick(false); // Toggle the follow state to false
       } else {
         // Follow logic
-        await followUser(otherId); // Use otherId here
+        await followUser(profileUserId); // Use otherId here
         handleFollowButtonClick(true); // Toggle the follow state to true
       }
     } catch (error) {
@@ -84,12 +84,31 @@ const UserProfile: React.FC<UserProfileProps> = ({
             {ageRange}대 {job}
           </p>
         </div>
-        <button
-          className="text-base font-normal text-[#748BFF] bg-[#ECF0FF] rounded-2xl shadow my-[2vh] px-[2vw]"
-          onClick={handleFollowToggle}
-        >
-          {isFollowing ? "팔로잉" : "팔로우"}
-        </button>
+        {/* <div className="text-base font-normal text-[#748BFF] bg-[#ECF0FF] rounded-2xl shadow my-[2vh] px-[2vw]">
+          팔로잉
+        </div> */}
+        {myId !== profileUserId ? (
+          isFollowing ? (
+            <button
+              className="text-base font-normal text-[#748BFF] bg-[#ECF0FF] rounded-2xl shadow my-[2vh] px-[2vw]"
+              onClick={handleFollowToggle}
+            >
+              팔로잉
+            </button>
+          ) : (
+            <button
+              className="text-base font-normal text-white bg-[#748BFF] rounded-2xl shadow my-[2vh] px-[2vw]"
+              onClick={handleFollowToggle}
+            >
+              팔로우
+            </button>
+          )
+        ) : (
+          <button
+            className="text-base font-normal text-[#748BFF] bg-[#ECF0FF] rounded-2xl shadow my-[2vh] px-[8vw]"
+            onClick={handleFollowToggle}
+          ></button>
+        )}
       </div>
     </div>
   );
