@@ -291,3 +291,34 @@ export interface FundProductDetail {
   riskGb: string;
   rtGb: string;
 }
+
+// 관련 게시글 리스트 조회
+export async function fetchBoardList(options: {
+  pageNo?: number;
+  size?: number;
+  productId: number;
+}): Promise<{ data: BoardData[] }> {
+  const { pageNo = 0, size = 10, productId = 1 } = options;
+  const response = await instance.get<BoardListResponse>(
+    `/board-service/boards/boards/tagged?pageNo=${pageNo}&size=${size}&productId=${productId}`
+  );
+  return { data: response.data.data };
+}
+
+interface BoardListResponse {
+  success: boolean;
+  message: string;
+  data: BoardData[];
+}
+
+export interface BoardData {
+  id: number;
+  title: string;
+  summary: string;
+  thumbnail: string | null;
+  createdTime: string;
+  likeCount: number;
+  commentCount: number;
+  authorNickname: string;
+  authorProfile: string;
+}

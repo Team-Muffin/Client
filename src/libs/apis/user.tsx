@@ -1,4 +1,5 @@
 import instance from "./base";
+import { GlobalResponse } from "./responses/response";
 
 //회원가입
 interface SignUpRequest {
@@ -122,7 +123,6 @@ export async function CheckUserContactAvailability(
   }
 }
 
-
 //자산 연결
 interface AssetRequest {
   socialName: string;
@@ -130,9 +130,12 @@ interface AssetRequest {
   contact: string;
 }
 
-export async function connectAsset(infodata: AssetRequest){
-  try{
-    const response = await instance.post(`/user-service/users/assets`, infodata)
+export async function connectAsset(infodata: AssetRequest) {
+  try {
+    const response = await instance.post(
+      `/user-service/users/assets`,
+      infodata
+    );
     return response.data;
   } catch (error) {
     console.error("자산 연결 중 오류 발생:", error);
@@ -142,18 +145,21 @@ export async function connectAsset(infodata: AssetRequest){
 
 //투자 성향 설정
 interface TendencyRequest {
-  account : boolean;
+  account: boolean;
   card: boolean;
   loan: boolean;
   invest: boolean;
   purpose: string;
 }
 
-export async function setTendency(tendata: TendencyRequest){
-  try{
-    const response = await instance.post(`/user-service/users/tendency`,tendata)
+export async function setTendency(tendata: TendencyRequest) {
+  try {
+    const response = await instance.post(
+      `/user-service/users/tendency`,
+      tendata
+    );
     return response.data;
-  }catch (error){
+  } catch (error) {
     console.error("성향 설정 중 오류 발생", error);
     throw error;
   }
@@ -162,21 +168,28 @@ export async function setTendency(tendata: TendencyRequest){
 //회원 정보 변경
 export interface EditProfileRequest {
   nickname?: string;
-  job?: string
+  job?: string;
 }
 
-export async function EditProfile(profileData: EditProfileRequest, imageFile: File | undefined) {
+export async function EditProfile(
+  profileData: EditProfileRequest,
+  imageFile: File | undefined
+) {
   try {
     const formData = new FormData();
     if (imageFile) {
-      formData.append('image', imageFile); // 이미지 파일 추가
+      formData.append("image", imageFile); // 이미지 파일 추가
     }
-    formData.append('request', JSON.stringify(profileData)); // JSON 데이터 추가
-    const response = await instance.put(`/user-service/users/profile`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
+    formData.append("request", JSON.stringify(profileData)); // JSON 데이터 추가
+    const response = await instance.put(
+      `/user-service/users/profile`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }
-    });
+    );
     console.log("프로필 변경 API 호출 성공:", response.data); // 성공 로그 출력
     return response.data;
   } catch (error) {
@@ -206,7 +219,7 @@ export interface UserDetailsResponse {
 export async function getUserDetails(id: number): Promise<UserDetailsResponse> {
   try {
     const response = await instance.get(`/user-service/users/${id}`);
-    console.log("유저 상세 정보 조회 API 호출 성공:", response.data); // 성공 로그 출력
+    // console.log("유저 상세 정보 조회 API 호출 성공:", response.data); // 성공 로그 출력
     return response.data;
   } catch (error) {
     console.error("유저 상세 정보 조회 중 오류 발생", error);
@@ -241,7 +254,7 @@ export async function getFollowers(
     const response = await instance.get(`/user-service/users/${id}/followers`, {
       params,
     });
-    console.log("팔로워 조회 API 호출 성공:", response.data); // 성공 로그 출력
+    // console.log("팔로워 조회 API 호출 성공:", response.data); // 성공 로그 출력
     return response.data;
   } catch (error) {
     console.error("팔로워 조회 중 오류 발생", error);
@@ -279,7 +292,7 @@ export interface PortfolioResponse {
 export async function getPortfolio(id: number): Promise<PortfolioResponse> {
   try {
     const response = await instance.get(`/user-service/users/${id}/portfolios`);
-    console.log(" 조회 API 호출 성공:", response.data); // 성공 로그 출력
+    // console.log(" 조회 API 호출 성공:", response.data); // 성공 로그 출력
     return response.data;
   } catch (error) {
     console.error("포트폴리오 조회 중 오류 발생", error);
@@ -290,18 +303,148 @@ export async function getPortfolio(id: number): Promise<PortfolioResponse> {
 export interface SubPortfolioResponse {
   success: boolean;
   message: string;
-  data: {
-  };
+  data: {};
 }
 
 //포트폴리오 구독
-export async function subscribePortfolio(id: number): Promise<PortfolioResponse> {
+export async function subscribePortfolio(
+  id: number
+): Promise<PortfolioResponse> {
   try {
-    const response = await instance.post(`/user-service/users/${id}/portfolios`);
+    const response = await instance.post(
+      `/user-service/users/${id}/portfolios`
+    );
     console.log(" 조회 API 호출 성공:", response.data); // 성공 로그 출력
     return response.data;
   } catch (error) {
     console.error("포트폴리오 조회 중 오류 발생", error);
     throw error;
+  }
+}
+
+export async function isAssetConnected(): Promise<boolean> {
+  try {
+    const res = await instance.get<GlobalResponse<boolean>>(
+      "/user-service/users/assets/status"
+    );
+
+    return res.data.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+//팔로잉 목록 확인
+export async function getFollowingList(
+  id: number,
+  limit?: number,
+  last?: number | null
+): Promise<followingResponse> {
+  try {
+    const params = new URLSearchParams();
+    params.append("id", id.toString());
+    if (limit !== undefined) {
+      params.append("limit", limit.toString());
+    }
+    if (last !== null && last !== undefined) {
+      params.append("last", last.toString());
+    }
+    const queryString = params.toString();
+    const response = await instance.get(
+      `/user-service/users/${id}/followings?${queryString}`
+    );
+    // console.log("팔로잉 조회 API 호출 성공:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("팔로잉 조회 중 오류 발생", error);
+    throw error;
+  }
+}
+
+interface followingResponse {
+  success: boolean;
+  message: string;
+  data: {
+    totalCount: number;
+    lastIndex: number;
+    users: UserData[];
+    last: boolean;
+  };
+}
+
+export interface UserData {
+  followId: number;
+  userId: number;
+  nickname: string;
+  profileImage: string;
+  tofinId: string;
+  role: string;
+  followStatus: boolean;
+}
+
+//팔로워 목록 확인
+export async function getFollowerList(
+  id: number,
+  limit?: number,
+  last?: number | null
+): Promise<followerResponse> {
+  try {
+    const params = new URLSearchParams();
+    params.append("id", id.toString());
+    if (limit !== undefined) {
+      params.append("limit", limit.toString());
+    }
+    if (last !== null && last !== undefined) {
+      params.append("last", last.toString());
+    }
+    const queryString = params.toString();
+    const response = await instance.get(
+      `/user-service/users/${id}/followers?${queryString}`
+    );
+    // console.log("팔로워 조회 API 호출 성공:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("팔로워 조회 중 오류 발생", error);
+    throw error;
+  }
+}
+
+interface followerResponse {
+  success: boolean;
+  message: string;
+  data: {
+    totalCount: number;
+    lastIndex: number;
+    users: UserData[];
+    last: boolean;
+  };
+}
+export type AccountResponse = {
+  number: string;
+  productType: string;
+  name: string;
+  cash: number;
+  image: string;
+};
+export async function getAccounts(): Promise<AccountResponse[]> {
+  try {
+    const res = await instance.get<GlobalResponse<AccountResponse[]>>(
+      "/user-service/users/accounts"
+    );
+    return res.data.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function getBirth(): Promise<string> {
+  try {
+    const res = await instance.get<GlobalResponse<string>>(
+      "/user-service/users/birth"
+    );
+
+    return res.data.data;
+  } catch (err) {
+    throw err;
   }
 }

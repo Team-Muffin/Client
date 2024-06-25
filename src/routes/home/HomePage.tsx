@@ -17,9 +17,13 @@ import { fetchBoardList } from "../../libs/apis/board";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import Logo from "../../assets/main-logo.svg";
 
-import { getChallengeBgColor } from "../../utils/challengeColorUtil";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { getChallengeBgColor } from "../../utils/challengeUtil";
+import FetchSSE from "../../components/home/FetchSSE";
 
 export default function HomePage() {
+  const notify = () => toast("Wow so easy!");
   const [productListData, setProductListData] = useState<ProductList[]>([]);
   const navigate = useNavigate();
   const [productLimit, setProductLimit] = useState(3);
@@ -109,7 +113,7 @@ export default function HomePage() {
   useEffect(() => {
     const element = observerRef.current;
     const observer = new IntersectionObserver(handleObserver, {
-      threshold: 1.0,
+      threshold: 0,
     });
 
     if (element) observer.observe(element);
@@ -180,6 +184,9 @@ export default function HomePage() {
             </div>
           ))}
         </div>
+        {/* <FetchSSE /> */}
+        <button onClick={notify}>Notify!</button>
+        <ToastContainer />
 
         <div className="flex justify-between items-center my-[1.5vh]">
           <span className="font-semibold text-[1.2rem]">맞춤 핀 </span>{" "}
@@ -203,6 +210,7 @@ export default function HomePage() {
                 />
               ))}
               <hr />
+
               <div className="flex justify-between items-center mt-[1.5vh]">
                 <span className="font-medium text-[1rem]">
                   이런 상품은 어때요?

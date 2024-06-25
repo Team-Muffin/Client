@@ -10,23 +10,35 @@ import Credit from "../../components/profile/Credit";
 import PurpleBtn from "../../components/common/PurpleBtn";
 import Modal from "../../components/common/Modal";
 import useAuth2Store from "../../store/useAuth2Store";
-import { getUserDetails, UserDetailsResponse, getFollowers, FollowersReq } from "../../libs/apis/user";
-import { getPortfolio, PortfolioResponse, subscribePortfolio } from "../../libs/apis/user"; // 포트폴리오 구독 API import
+import {
+  getUserDetails,
+  UserDetailsResponse,
+  getFollowers,
+  FollowersReq,
+} from "../../libs/apis/user";
+import { getPortfolio, PortfolioResponse } from "../../libs/apis/user";
+import { subscribePortfolio } from "../../libs/apis/user"; // 포트폴리오 구독 API import
 
 const ProfilePage: React.FC = () => {
-  const [userCategory, setUserCategory] = useState<string>("게시물");
+  const [userCategory, setUserCategory] = useState<string>("나의 핀");
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const [showCreditTip, setShowCreditTip] = useState<boolean>(false);
-  const [userData, setUserData] = useState<UserDetailsResponse["data"] | null>(null);
+  const [userData, setUserData] = useState<UserDetailsResponse["data"] | null>(
+    null
+  );
   const [searchParams] = useSearchParams();
   const userId = searchParams.get("id");
   const otherId = parseInt(searchParams.get("id") || "", 10);
   const nickname = useAuth2Store((state) => state.nickname);
 
-  const [selectedFollowerId, setSelectedFollowerId] = useState<number | null>(null);
+  const [selectedFollowerId, setSelectedFollowerId] = useState<number | null>(
+    null
+  );
   const [followers, setFollowers] = useState<FollowersReq[]>([]);
+
   const [portfolioDetails, setPortfolioDetails] = useState<PortfolioResponse["data"]["details"] | null>(null);
   const [portfolioAbstracts, setPortfolioAbstracts] = useState<PortfolioResponse["data"]["abstracts"] | null>(null);
+
   const [portfolioError, setPortfolioError] = useState<string | null>(null); // State to track portfolio fetch error
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false); // State to track if the portfolio is subscribed
 
@@ -45,9 +57,11 @@ const ProfilePage: React.FC = () => {
     }
   }, [userId, otherId]);
 
+
   const categories: string[] = userData?.role === "CORP" 
     ? ["게시물", "챌린지"]
     : ["게시물", "챌린지", "포트폴리오", "크레딧"];
+
 
   const handleUserCategoryClick = (selection: string) => {
     setUserCategory(selection);
@@ -119,7 +133,7 @@ const ProfilePage: React.FC = () => {
   return (
     <>
       <div className="py-[2vh] px-[4.5vw]">
-        <Header text="마이페이지" type="backLeftTextCenterSettingRight" />
+        <Header text="프로필" type="backLeftTextCenterSettingRight" />
         <div className="mt-[5.5vh]" />
         {userData && (
           <>
@@ -155,7 +169,13 @@ const ProfilePage: React.FC = () => {
               <p className="text-lg font-semibold mb-[3vh]">
                 포트폴리오를 확인하기 위해 <br /> &nbsp; 크레딧을 사용해보세요!
               </p>
-              <button type="button" className="bg-[#748BFF] text-white p-[3vw] rounded-lg" onClick={handleCreditTipClick}>크레딧 사용해보기</button>
+              <button
+                type="button"
+                className="bg-[#748BFF] text-white p-[3vw] rounded-lg"
+                onClick={handleCreditTipClick}
+              >
+                크레딧 사용해보기
+              </button>
               {showCreditTip && (
                 <Credit
                   showCreditTip={showCreditTip}
@@ -172,7 +192,7 @@ const ProfilePage: React.FC = () => {
           handleCreditTipClick={handleCreditTipClick}
         />
       )}
-      
+
       <Navbar />
 
       {selectedFollowerId !== null && (

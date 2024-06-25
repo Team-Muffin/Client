@@ -7,7 +7,6 @@ import Header from "../../components/common/Header";
 import { EditProfile, EditProfileRequest } from "../../libs/apis/user";
 import useAuth2Store from "../../store/useAuth2Store";
 import { useNavigate } from "react-router-dom";
-import { IdentificationIcon } from "@heroicons/react/24/solid";
 
 export default function EditProfilePage() {
   const navigate = useNavigate();
@@ -16,10 +15,7 @@ export default function EditProfilePage() {
   const [nickname, setNickname] = useState(""); // State for nickname input value
   const [job, setJob] = useState(""); // State for job input value
   const [isButtonEnabled, setIsButtonEnabled] = useState(false); // State to enable/disable button
-  const { id, login } = useAuth2Store((state) => ({
-    id: state.id,
-    login: state.login,
-  }));
+  const { id, setTokenInfo } = useAuth2Store();
 
   // Handle image selection from file input
   const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -48,11 +44,21 @@ export default function EditProfilePage() {
   const handleProfileEdit = async () => {
     try {
       const profileData: EditProfileRequest = {};
+      if (!profileData.nickname || !profileData.job || !selectedFile) {
+        alert("한 가지 이상은 설정해주세요!");
+        return;
+      }
+
       if (nickname) profileData.nickname = nickname;
       if (job) profileData.job = job;
 
       const res = await EditProfile(profileData, selectedFile || undefined); // EditProfile 함수 호출
-      login(id, "", "", "", "", res.data.accessToken, res.data.refreshToken);
+      setTokenInfo(
+        res.data.id,
+        res.data.nickname,
+        res.data.accessToken,
+        res.data.refreshToken
+      );
       console.log("프로필 수정 완료!");
       console.log("id", id);
       navigate(`/userProfile?id=${id}`);
@@ -100,7 +106,6 @@ export default function EditProfilePage() {
           onChange={handleNicknameChange}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="Nickname"
-          required
         />
 
         <p className="text-lg font-semibold mt-[3vh] mb-[1vh]">직업</p>

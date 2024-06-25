@@ -23,11 +23,14 @@ import TendencyAnalysisPage from "../routes/signup/TendencyAnalysisPage";
 import SignUpSuccessPage from "../routes/signup/SignUpSuccessPage";
 import ProfilePage from "../routes/profile/ProfilePage";
 import EditProfilePage from "../routes/profile/EditProfilePage";
-import StampBoard from "../routes/challenge/StampBoard";
+import BadgeBoard from "../routes/challenge/BadgeBoard";
 import Notification from "../routes/notification/NotificationPage";
 import SearchPage from "../routes/search/SearchPage";
 import SearchResultPage from "../routes/search/SearchResultPage";
 import ProtectedLayout from "../routes/ProtectedLayout";
+import FollowingPage from "../routes/profile/FollowingPage";
+import FollowerPage from "../routes/profile/FollowerPage";
+import { element } from "prop-types";
 
 export const mainRouter = [
   {
@@ -100,12 +103,12 @@ export const mainRouter = [
             element: <ChallengeDetailPage />,
           },
           {
-            path: "calendar",
+            path: "calendar/:id",
             element: <ChallengeCAL />,
           },
           {
-            path: "stampboard",
-            element: <StampBoard />,
+            path: "detail/badgeBoard",
+            element: <BadgeBoard />,
           },
         ],
       },
@@ -136,16 +139,22 @@ export const mainRouter = [
           },
         ],
       },
+
       {
         path: "product",
         children: [
           {
             path: "",
+            index: true,
             element: <ProductListPage />,
           },
           {
             path: ":productId",
             element: <ProductDetailPage />,
+          },
+          {
+            path: ":productId/related",
+            element: <RelatedBoardPage />,
           },
           {
             path: "searchResult",
@@ -156,8 +165,21 @@ export const mainRouter = [
 
       {
         path: "userProfile",
-        element: <ProfilePage />,
-        index: true,
+        children: [
+          {
+            path: "",
+            element: <ProfilePage />,
+          },
+
+          {
+            path: "follower",
+            element: <FollowerPage />,
+          },
+          {
+            path: "following",
+            element: <FollowingPage />,
+          },
+        ],
       },
       {
         path: "editProfile",

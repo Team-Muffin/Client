@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import Navbar from "../../components/common/Navbar";
 import Header from "../../components/common/Header";
 import HappyImg from "../../assets/happy-face.svg";
 import SadImg from "../../assets/sad-face.svg";
 import AngryImg from "../../assets/angry-face.svg";
+import {
+  getEmoChallengeLog,
+  postEmoChallenge,
+} from "../../libs/apis/challenge";
 
 type DateObject = {
   currentMonth: boolean;
@@ -69,15 +73,76 @@ const ChallengeCAL: React.FC = () => {
       newDates[todayIndex].emotion = emotion;
       setDates(newDates);
       setShowEmotionRecord(true);
+      postEmoji(emotion);
     }
+  };
+
+  const toEnglish = (emo: string) => {
+    if (emo === "화나요") return "angry";
+    if (emo === "행복해요") return "happy";
+    return "sad";
+  };
+
+  const postEmoji = async (emoji: string) => {
+    if (emoji === "angry") {
+      await postEmoChallenge(1);
+    } else if (emoji === "happy") {
+      await postEmoChallenge(2);
+    } else {
+      await postEmoChallenge(3);
+    }
+  };
+
+  const handleEmotionFetch = (emotion: string, savingAt: string) => {
+    const currentDay = dates.findIndex(
+      (date) => date.date.toDate().toISOString().split("T")[0] === savingAt
+    );
+
+    const newDates = [...dates];
+    newDates[currentDay].emotion = toEnglish(emotion);
+    setDates(newDates);
   };
 
   // Get the current month number
   const currentMonthNumber = dayjs().month() + 1;
 
+  const makeZero = (i: number) => {
+    if (i < 10) return `0${i}`;
+
+    return `${i}`;
+  };
+
+  useEffect(() => {
+    const fetchLog = async () => {
+      const res = await getEmoChallengeLog();
+      const dt = new Date();
+      const stringDate =
+        dt.getFullYear() +
+        "-" +
+        makeZero(dt.getMonth() + 1) +
+        "-" +
+        makeZero(dt.getDate());
+
+      for (let i = 0; i < res.myEmoChallengeLogs.length; i++) {
+        console.log(res.myEmoChallengeLogs[i]);
+        handleEmotionFetch(
+          res.myEmoChallengeLogs[i].emotion,
+          res.myEmoChallengeLogs[i].savingAt
+        );
+        console.log(res.myEmoChallengeLogs[i].savingAt, stringDate);
+        if (res.myEmoChallengeLogs[i].savingAt == stringDate) {
+          console.log("yes");
+          setShowEmotionRecord(true);
+        }
+      }
+    };
+
+    fetchLog();
+  }, []);
+
   return (
     <>
-      <Header text="감정 저축 챌린지" type="textCenterSearchRight" />
+      <Header text="감정 저축 챌린지" type="backLeftTextCenter" />
       <div className="mt-[4.5vh]"></div>
       <div className="relative w-[90vw] mx-auto mt-[10vh] p-[3vh] shadow-xl">
         {/* Add the current month number */}

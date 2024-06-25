@@ -165,7 +165,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
   useEffect(() => {
     const element = observerRef.current;
     const observer = new IntersectionObserver(handleObserver, {
-      threshold: 1.0,
+      threshold: 0,
     });
 
     if (element) observer.observe(element);
@@ -232,7 +232,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
                   bgColor={"#ffffff"}
                   ChallengeLogo={challenge.logoUrl}
                   reward={challenge.reward}
-                  link={`/challenge/${challenge.id}`}
+                  id={challenge.id}
                 />
               </div>
             ))}
