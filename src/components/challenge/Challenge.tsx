@@ -37,7 +37,12 @@ const Challenge: React.FC<ChallengeProps> = ({
     const confirmed = window.confirm(`${title}에 참여하시겠습니까?`);
 
     if (confirmed) {
-      const url = getLinkByChallengeType(challengeType) + "/1";
+      let url;
+      if (id === 1) {
+        url = "/challenge/calendar";
+      } else {
+        url = `/board/write?challengeId=${id}`;
+      }
       navigate(url);
     }
   };
@@ -78,7 +83,10 @@ const Challenge: React.FC<ChallengeProps> = ({
                 height={"20vh"}
                 alt="Small Logo"
               />
-              <p className="text-xs font-semibold text-black-900 dark:text-black mt-[0.5vh]">
+              <p
+                className="text-xs font-semibold text-black-900 dark:text-black mt-[0.5vh]"
+                style={{ wordBreak: "keep-all" }}
+              >
                 {description}
               </p>
             </div>
