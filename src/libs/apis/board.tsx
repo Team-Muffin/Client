@@ -152,8 +152,8 @@ export interface BoardRequest {
 
 export interface CreateBoardRequest extends BoardRequest{
   category: String | null;
-  product: String | null;
-  challenge: String | null;
+  productId: String | null;
+  challengeId: String | null;
 }
 
 export async function createBoard(requestBody: CreateBoardRequest) {
