@@ -8,16 +8,19 @@ import {
   fetchOurChallenges,
   fetchCorpChallenges,
   Challenge,
+  fetchMyChallenge,
 } from "../../libs/apis/challenge";
 import ChallengeCardHorizontal from "../../components/common/ChallengeCardHorizontal";
-import { getChallengeBgColor } from "../../utils/challengeColorUtil";
+import { getChallengeBgColor } from "../../utils/challengeUtil";
 import CorpChallengeCardHorizontal from "../../components/common/CorpChallengeCardHorizontal";
+import useAuth2Store from "../../store/useAuth2Store";
 
 const ChallengePage = () => {
   const [category, setCategory] = useState("최신순");
   const [challenges, setChallenges] = useState<Challenge[]>([]);
+  const [myChallenges, setMyChallenges] = useState([]);
   const [corpChallenges, setCorpChallenges] = useState<Challenge[]>([]);
-  const nickName = useAuthStore((state) => state.nickname);
+  const { nickname, id } = useAuth2Store();
 
   useEffect(() => {
     const fetchChallenges = async () => {
@@ -26,6 +29,10 @@ const ChallengePage = () => {
         setChallenges(challengeData); // Set the state with the array of challenges
         const corpChallenges = await fetchCorpChallenges(0);
         setCorpChallenges(corpChallenges);
+
+        const myChallenges = await fetchMyChallenge(false, id!);
+        console.log(myChallenges);
+        setMyChallenges(myChallenges);
       } catch (error) {
         console.error("챌린지 조회 오류 발생", error);
       }
@@ -58,10 +65,12 @@ const ChallengePage = () => {
     <>
       <div className="relative py-[3vh] px-[8vw] bg-[#758BFF] w-screen">
         <p className="text-lg font-black text-white">
-          {nickName}님이 참여 중인 챌린지
+          {nickname}님이 참여 중인 챌린지
         </p>
         <p className="text-xs pb-8 font-base text-white">
-          2개의 챌린지에 참여 중이시네요!
+          {myChallenges.length > 0
+            ? `${myChallenges.length}개의 챌린지에 참여 중이시네요!`
+            : "아직 참여하는 챌린지가 없습니다."}
         </p>
 
         <a
@@ -146,6 +155,7 @@ const ChallengePage = () => {
                 bgColor={getChallengeBgColor(challenge.id)}
                 ChallengeLogo={challenge.logoUrl}
                 reward={challenge.reward}
+                id={challenge.id}
               />
             </div>
           ))}

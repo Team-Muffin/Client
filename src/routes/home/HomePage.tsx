@@ -16,6 +16,7 @@ import { useInfiniteQuery } from "react-query";
 import { fetchBoardList } from "../../libs/apis/board";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import Logo from "../../assets/main-logo.svg";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getChallengeBgColor } from "../../utils/challengeColorUtil";

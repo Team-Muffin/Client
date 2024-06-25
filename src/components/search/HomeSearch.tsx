@@ -232,7 +232,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
                   bgColor={"#ffffff"}
                   ChallengeLogo={challenge.logoUrl}
                   reward={challenge.reward}
-                  link={`/challenge/${challenge.id}`}
+                  id={challenge.id}
                 />
               </div>
             ))}
