@@ -305,3 +305,52 @@ export async function subscribePortfolio(id: number): Promise<PortfolioResponse>
     throw error;
   }
 }
+
+export interface Challenge {
+  myChallengeId: number;
+  challengeId: number;
+  challengeType: number;
+  name: string;
+  participants: number;
+  description: string;
+  logoUrl: string;
+  challengeUrl: string;
+  corpName: string;
+  endAt: string;
+  status: string;
+  progress: number;
+  term: number;
+}
+
+export interface ChallengeResponse {
+  success: boolean;
+  message: string;
+  data: [Challenge];
+}
+
+//참여중인 챌린지 조회
+export async function getMyChallenge(id:number):Promise<ChallengeResponse>{
+  try {
+    console.log("유저!!!!!!!!!",id);
+    const response = await instance.get(`/challenge-service/my-challenges?isDone=0&userId=${id}`);
+    console.log("참여중인 챌린지 조회 API 호출 성공:", response.data); // 성공 로그 출력
+    return response.data;
+  } catch (error) {
+    console.error("참여중인 챌린지 조회 중 오류 발생", error);
+    throw error;
+  }
+
+}
+
+//참여했던 챌린지 조회
+export async function getMyEndChallenge(id:number):Promise<ChallengeResponse>{
+  try {
+    const response = await instance.get(`/challenge-service/my-challenges?isDone=1&userId=${id}`);
+    console.log("참여중인 챌린지 조회 API 호출 성공:", response.data); // 성공 로그 출력
+    return response.data;
+  } catch (error) {
+    console.error("참여중인 챌린지 조회 중 오류 발생", error);
+    throw error;
+  }
+
+}
