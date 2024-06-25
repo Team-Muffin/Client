@@ -120,6 +120,21 @@ export async function joinEmoChallenge(
   }
 }
 
+export async function getMyChallenges(isDone: number, userId: number) {
+  try {
+    const res = await instance.get(`challenge-service/my-challenges`, {
+      params: {
+        isDone: isDone,
+        userId: userId,
+      },
+    });
+
+    return res.data.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
 // 성공한 뱃지 조회
 export async function fetchSuccessBadges(userId: string): Promise<Badge[]> {
   try {
