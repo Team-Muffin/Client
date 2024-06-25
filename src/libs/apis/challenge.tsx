@@ -152,21 +152,6 @@ export async function fetchSuccessBadges(userId: string): Promise<Badge[]> {
   }
 }
 
-export async function getMyChallenges(isDone: number, userId: number) {
-  try {
-    const res = await instance.get(`challenge-service/my-challenges`, {
-      params: {
-        isDone: isDone,
-        userId: userId,
-      },
-    });
-
-    return res.data.data;
-  } catch (err) {
-    throw err;
-  }
-}
-
 export async function getEmoChallengeLog() {
   try {
     const res = await instance.get("challenge-service/my-emoChallenges/log");
