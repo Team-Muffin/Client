@@ -16,7 +16,7 @@ type BoardEditorProps = {
   title: string;
 };
 
-const BoardEditor: React.FC<BoardEditorProps> = ({
+const BoardModifier: React.FC<BoardEditorProps> = ({
   setData,
   data,
   setTitle,
@@ -54,14 +54,20 @@ const BoardEditor: React.FC<BoardEditorProps> = ({
         placeholder={"제목을 입력해 주세요"}
         onChange={handleTitleChange}
         autoFocus
+        defaultValue={title ? title : ""}
       ></input>
-      <ReactEditorJS
-        onInitialize={handleEditorInit}
-        tools={EDITOR_JS_TOOLS}
-        onChange={handleEditorChange}
-      />
+
+      {
+        data &&
+        <ReactEditorJS
+          defaultValue={data}
+          onInitialize={handleEditorInit}
+          tools={EDITOR_JS_TOOLS}
+          onChange={handleEditorChange}
+        />
+      }
     </div>
   );
 };
 
-export default BoardEditor;
+export default BoardModifier;
