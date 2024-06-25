@@ -145,13 +145,17 @@ export async function deleteComment(commentId: number) {
   );
 }
 
-export interface CreateBoardRequest {
+export interface BoardRequest {
   title: String;
   content: OutputData;
-  category: String;
-  product: String | null;
-  challenge: String | null;
 }
+
+export interface CreateBoardRequest extends BoardRequest{
+  category: String | null;
+  productId: String | null;
+  challengeId: String | null;
+}
+
 export async function createBoard(requestBody: CreateBoardRequest) {
   try {
     const response = await instance.post(`/board-service/boards`, requestBody);
@@ -161,6 +165,17 @@ export async function createBoard(requestBody: CreateBoardRequest) {
     console.log(error);
   }
 }
+
+export interface UpdateBoardRequest extends BoardRequest {
+  boardId: string;
+}
+
+export async function updateBoard(boardId: string, requestBody: UpdateBoardRequest) {
+  const response = await instance.put(`board-service/boards/${boardId}`, requestBody);
+
+  return response.data;
+}
+
 
 //팔로우 토글
 export async function followUser(userId: number) {

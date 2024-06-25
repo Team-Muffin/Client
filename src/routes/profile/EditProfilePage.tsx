@@ -52,7 +52,7 @@ export default function EditProfilePage() {
       if (job) profileData.job = job;
 
       const res = await EditProfile(profileData, selectedFile || undefined); // EditProfile 함수 호출
-      login(id, "", "", "", res.data.accessToken, res.data.refreshToken);
+      login(id, "", "", "", "", res.data.accessToken, res.data.refreshToken);
       console.log("프로필 수정 완료!");
       console.log("id", id);
       navigate(`/userProfile?id=${id}`);

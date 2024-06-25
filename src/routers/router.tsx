@@ -27,11 +27,34 @@ import StampBoard from "../routes/challenge/StampBoard";
 import Notification from "../routes/notification/NotificationPage";
 import SearchPage from "../routes/search/SearchPage";
 import SearchResultPage from "../routes/search/SearchResultPage";
+import ProtectedLayout from "../routes/ProtectedLayout";
 
 export const mainRouter = [
   {
-    path: "/",
+    path: "/signin",
+    element: <LoginPage />,
+  },
+  {
+    path: "/signup",
     element: <Layout />,
+    children: [
+      {
+        path: "",
+        element: <SignUpPage />,
+      },
+      {
+        path: "profile",
+        element: <SignUpProfilePage />,
+      },
+      {
+        path: "success",
+        element: <SignUpSuccessPage />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <ProtectedLayout />,
     children: [
       {
         path: "",
@@ -44,27 +67,6 @@ export const mainRouter = [
       },
       { path: "searchResult", element: <SearchResultPage /> },
       { path: "notification", element: <Notification /> },
-      {
-        path: "signin",
-        element: <LoginPage />,
-      },
-      {
-        path: "signup",
-        children: [
-          {
-            path: "",
-            element: <SignUpPage />,
-          },
-          {
-            path: "profile",
-            element: <SignUpProfilePage />,
-          },
-          {
-            path: "success",
-            element: <SignUpSuccessPage />,
-          },
-        ],
-      },
       {
         path: "asset",
         children: [

@@ -15,11 +15,12 @@ interface MyResponsivePieProps {
 const MyResponsivePie: FC<MyResponsivePieProps> = ({ data }) => (
   <ResponsivePie
     data={data}
-    margin={{ top: 20, right: 5, bottom: 100, left: 120 }}
+    margin={{ top: 20, right: 120, bottom: 100, left: 5 }}
     innerRadius={0.5}
     padAngle={0.7}
     cornerRadius={3}
     activeOuterRadiusOffset={8}
+    colors={{scheme: 'set3'}}
     borderWidth={1}
     borderColor={{
       from: "color",
@@ -123,13 +124,13 @@ const MyResponsivePie: FC<MyResponsivePieProps> = ({ data }) => (
         anchor: "bottom-left",
         direction: "column",
         justify: false,
-        translateX: -100,
+        translateX: 280,
         translateY: 70,
         itemsSpacing: 3,
         itemWidth: 10,
         itemHeight: 18,
         itemTextColor: "black",
-        itemDirection: "left-to-right",
+        itemDirection: "right-to-left",
         itemOpacity: 1,
         symbolSize: 18,
         symbolShape: "circle",

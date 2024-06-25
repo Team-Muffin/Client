@@ -11,13 +11,14 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { OutputData } from "@editorjs/editorjs";
 import BoardEditor from "../../components/board/BoardEditor";
-import { createBoard, CreateBoardRequest } from "../../libs/apis/board";
+import { BoardRequest, createBoard, CreateBoardRequest, updateBoard, UpdateBoardRequest } from "../../libs/apis/board";
+import BoardModifier from "../../components/board/BoardModifier";
 
 export default function BoardWritePage() {
   const [selected, setSelected] = useState("정보");
   const [categoryId, setCategoryId] = useState<string>(1 + "");
   const [boardData, setBoardData] = useState<OutputData | undefined>();
-  const [title, setTitle] = useState<String>("");
+  const [title, setTitle] = useState<string>("");
   const [productId, setProductId] = useState<String | null>(null);
   const [challengeId, setChallengeId] = useState<String | null>(null);
 
@@ -44,7 +45,7 @@ export default function BoardWritePage() {
       console.log(location.state);
       setCategoryId(location.state.category);
       setTitle(location.state.title);
-      setBoardData(location.state.content);
+      setBoardData(JSON.parse(location.state.content));
     }
   }, [boardId]);
 
@@ -83,18 +84,31 @@ export default function BoardWritePage() {
       return;
     }
 
-    const requestBody: CreateBoardRequest = {
+    const boardRequest: BoardRequest = {
       title: title,
-      content: boardData,
-      category: selected,
-      product: productId,
-      challenge: challengeId,
-    };
-    const response = await createBoard(requestBody);
-    console.log(response.data.boardId);
+      content: boardData 
+    }
+
+    const requestBody: CreateBoardRequest | UpdateBoardRequest = boardId ? 
+      {
+        ...boardRequest,
+        boardId: boardId
+      }
+      :
+      {
+        ...boardRequest,
+        category: selected,
+        productId: productId,
+        challengeId: challengeId
+      };
+    
+    const response = ("boardId" in requestBody) ?
+      await updateBoard(requestBody.boardId, requestBody)
+      : await createBoard(requestBody);
+    
 
     if (response.success == true) {
-      navigate(`/board/${response.data.boardId}`);
+      navigate(`/board/${boardId ? boardId : response.data.boardId}`);
     } else {
       window.alert("게시글 작성에 실패했습니다.");
     }
@@ -114,7 +128,7 @@ export default function BoardWritePage() {
             />
             <Menu as="div" className=" flex justify-end inline-block text-left">
               <div className="">
-                <MenuButton className="inline-flex w-full justify-center rounded-md bg-white text-lg text-black font-medium">
+                <MenuButton className="inline-flex w-full justify-center rounded-md bg-white text-lg text-black font-medium" disabled={boardId ? true : false}>
                   {selected}
                   <ChevronDownIcon
                     className="-mr-1 h-[1.5rem] w-[1.5rem] text-C333333"
@@ -135,13 +149,12 @@ export default function BoardWritePage() {
                   <div className="py-1">
                     {filterList.map((text, index) => (
                       <div onClick={() => handleMenuItemClick(text)}>
-                        <MenuItem key={index}>
+                        <MenuItem key={text}>
                           {({ active }) => (
                             <a
                               href="#"
-                              className={`${
-                                active ? "bg-gray-100" : ""
-                              }text-black block px-4 py-2 text-[1rem]`}
+                              className={`${active ? "bg-gray-100" : ""
+                                }text-black block px-4 py-2 text-[1rem]`}
                             >
                               {text}
                             </a>
@@ -167,12 +180,22 @@ export default function BoardWritePage() {
         <div className="mt-[4vh]"></div>
 
         {/* 민우 TODO: 여기부터 Editor 관련 */}
-        <BoardEditor
-          setData={setBoardData}
-          data={boardData}
-          setTitle={setTitle}
-          title={title}
-        />
+        {
+          boardId ?
+            <BoardModifier
+              setData={setBoardData}
+              data={boardData}
+              setTitle={setTitle}
+              title={title}
+            />
+            :
+            <BoardEditor
+              setData={setBoardData}
+              data={boardData}
+              setTitle={setTitle}
+              title={title}
+            />
+        }
       </div>
     </>
   );
