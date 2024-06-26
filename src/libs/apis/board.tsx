@@ -22,7 +22,7 @@ export async function fetchBoardList(options: {
   return { data: response.data };
 }
 
-interface BoardListResponse {
+export interface BoardListResponse {
   success: boolean;
   message: string;
   data: {

@@ -3,9 +3,7 @@ import MyResponsivePie from "./PieChart";
 import MyResponsiveBar from "./BarChart";
 import Modal from "../../components/common/Modal";
 import fetchFinancialData from "../../libs/apis/dart";  // Adjust the import path as needed
-import { PortfolioDetails } from "../../libs/apis/user";
-import useAuthStore from "../../store/useAuthStore";
-import useAuth2Store from "../../store/useAuth2Store";
+import { PortfolioDetails, getUserDetails, UserDetailsResponse } from "../../libs/apis/user";
 import { useSearchParams } from "react-router-dom";
 import { PieData } from "./PieChart";  // Import PieData type
 
@@ -15,14 +13,25 @@ interface PortfolioProps {
 
 const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
   const [totalAssets, setTotalAssets] = useState<string>("");
-  const nickname = useAuth2Store((state) => state.nickname);
-  const Id = useAuthStore((state) => state.id);
+  const [userDetails, setUserDetails] = useState<UserDetailsResponse["data"] | null>(null);
   const [searchParams] = useSearchParams();
   const otherId = parseInt(searchParams.get("id") || "", 10);
 
   const [selectedStock, setSelectedStock] = useState<null | PieData>(null);
   const [showModal, setShowModal] = useState(false);
   const [financialData, setFinancialData] = useState<any>(null);
+
+  useEffect(() => {
+    if (otherId) {
+      getUserDetails(otherId)
+        .then((response) => {
+          setUserDetails(response.data);
+        })
+        .catch((error) => {
+          console.error("유저 상세 정보 조회 중 오류 발생", error);
+        });
+    }
+  }, [otherId]);
 
   const formatTotalAmount = (amount: number): string => {
     const hundredMillion = Math.floor(amount / 100000000);
@@ -129,8 +138,12 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
 
   return (
     <div className="flex flex-col px-[4.5vw] py-[2vh]">
-      <p className="text-lg ml-[3vw]">{nickname}님의 순자산</p>
-      <p className="text-xl font-bold ml-[3vw]">{totalAssets}</p>
+      {userDetails && (
+        <>
+          <p className="text-lg ml-[3vw]">{userDetails.nickname}님의 순자산</p>
+          <p className="text-xl font-bold ml-[3vw]">{totalAssets}</p>
+        </>
+      )}
       <div style={{ height: "20vh" }}>
         <MyResponsiveBar data={barChartData} />
       </div>
@@ -158,7 +171,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
 
       {showModal && selectedStock && (
         <Modal onClose={closeModal}>
-          <div style={{ width:"80vw"}}>
+          <div style={{ width: "80vw" }}>
             <div className="text-xl font-bold mb-[2vh]">{selectedStock.label}</div>
             {financialData ? (
               <div>
@@ -167,7 +180,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
             ) : (
               <p>Loading...</p>
             )}
-            <button onClick={closeModal}></button>
+            <button onClick={closeModal}>Close</button>
           </div>
         </Modal>
       )}

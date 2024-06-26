@@ -1,6 +1,6 @@
 import instance from "./base";
 
-interface FetchSearchedBoardListParams {
+export interface FetchSearchedBoardListParams {
   keyword: string;
   pageNo?: number;
   size?: number;

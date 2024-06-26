@@ -291,6 +291,7 @@ export interface PortfolioResponse {
 
 export async function getPortfolio(id: number): Promise<PortfolioResponse> {
   try {
+    console.log(id);
     const response = await instance.get(`/user-service/users/${id}/portfolios`);
     // console.log(" 조회 API 호출 성공:", response.data); // 성공 로그 출력
     return response.data;
@@ -448,3 +449,62 @@ export async function getBirth(): Promise<string> {
     throw err;
   }
 }
+
+// 핀 조회
+export interface FetchUserBoardListParams {
+  keyword: string;
+  pageNo?: number;
+  size?: number;
+  category?: string;
+  userId?: number | undefined;
+}
+
+// 게시글 리스트 검색
+export async function fetchUserBoardList({
+  keyword,
+  pageNo,
+  size,
+  category,
+  userId,
+}: FetchUserBoardListParams): Promise<{ data: BoardData[] }> {
+  const params = new URLSearchParams();
+  params.append("keyword", keyword);
+  if (pageNo !== undefined) {
+    params.append("pageNo", pageNo.toString());
+  }
+  if (size !== undefined) {
+    params.append("size", size.toString());
+  }
+  if (category !== undefined) {
+    params.append("category", category);
+  }
+  if (userId !== undefined) {
+    params.append("userId", userId.toString());
+  }
+  const queryString = params.toString();
+  const response = await instance.get<BoardListResponse>(
+    `/board-service/boards?${queryString}`
+  );
+
+  return { data: response.data.data };
+}
+
+
+  export interface BoardData {
+    id: number;
+    title: string;
+    summary: string;
+    thumbnail: string | null;
+    createdTime: string;
+    likeCount: number;
+    commentCount: number;
+    authorNickname: string;
+    authorProfile: string;
+  }
+
+  export interface BoardListResponse {
+    success: boolean;
+    message: string;
+    data: BoardData[];
+  }
+  
