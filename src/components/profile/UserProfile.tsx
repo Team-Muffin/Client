@@ -13,6 +13,7 @@ interface UserProfileProps {
   tofinId: string;
   job: string;
   ageRange: number;
+  role: string; // 추가된 role 속성
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({
@@ -22,6 +23,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
   tofinId,
   job,
   ageRange,
+  role, // 추가된 role 속성
 }) => {
   const [followersCount, setFollowersCount] = useState<number>(0);
   const [followingsCount, setFollowingsCount] = useState<number>(0);
@@ -67,7 +69,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
   return (
     <div className="flex flex-col items-center">
       <div className="flex justify-center gap-[8vw] items-center">
-        <Link to="/challenge/detail/stampboard">
+        <Link to="/challenge/detail/badgeboard">
           <img
             src={MyChallengeImg}
             alt="My Challenge"
@@ -80,9 +82,11 @@ const UserProfile: React.FC<UserProfileProps> = ({
             <img src={CheckedImg} alt="Checked" />
           </div>
           <p className="text-sm mr-[1vw] mb-[0.3vh]">@{tofinId}</p>
-          <p className="text-xs text-[#748BFF]">
-            {ageRange}대 {job}
-          </p>
+          {role !== "CORP" && ( // role이 corp가 아닌 경우에만 ageRange를 표시
+            <p className="text-xs text-[#748BFF]">
+              {ageRange}대 {job}
+            </p>
+          )}
         </div>
         {/* <div className="text-base font-normal text-[#748BFF] bg-[#ECF0FF] rounded-2xl shadow my-[2vh] px-[2vw]">
           팔로잉

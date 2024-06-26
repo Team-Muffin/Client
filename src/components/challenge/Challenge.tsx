@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SmallLogoImg from "../../assets/small-profile.svg";
 import DateImg from "../../assets/date.svg";
 import CheckImg from "../../assets/check.svg";
 import Coin from "../../assets/coin.svg";
 import { getLinkByChallengeType } from "../../utils/challengeUtil";
+import { fetchSavingProductSummary } from "../../libs/apis/product";
+import SelectAccountModal from "../common/SelectAccountModal";
+import { getMyChallenges, joinEmoChallenge } from "../../libs/apis/challenge";
+import useAuth2Store from "../../store/useAuth2Store";
 
 interface ChallengeProps {
   id: number;
@@ -22,7 +26,6 @@ interface ChallengeProps {
 const Challenge: React.FC<ChallengeProps> = ({
   id,
   title,
-  status,
   challengeType,
   description,
   dateRange,
@@ -32,9 +35,30 @@ const Challenge: React.FC<ChallengeProps> = ({
   reward,
 }) => {
   const navigate = useNavigate();
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [inProgress, setProgress] = useState<boolean>(false);
+  const userId = useAuth2Store((state) => state.id);
+  useEffect(() => {
+    const fetchMyChallengeStatus = async (userId: number, id: number) => {
+      const res = await getMyChallenges(0, userId);
+      for (let i = 0; i < res.length; i++) {
+        if (id === res[i].challengeId && res[i].status === "진행중") {
+          setProgress(true);
+          console.log("dksehla?");
+        }
+        console.log(res[i].challengeId, id, res[i].status);
+      }
+    };
+
+    fetchMyChallengeStatus(userId!, id);
+  }, [id]);
 
   const handleLink = () => {
-    const confirmed = window.confirm(`${title}에 참여하시겠습니까?`);
+    if (inProgress) {
+      alert("이미 참여 중인 챌린지입니다!");
+      return;
+    }
+
 
     if (confirmed) {
       let url;
@@ -44,6 +68,17 @@ const Challenge: React.FC<ChallengeProps> = ({
         url = `/board/write?challengeId=${id}`;
       }
       navigate(url);
+
+    const confirmed = window.confirm(`${title}에 참여하시겠습니까?`);
+    if (challengeType === 1) {
+      if (confirmed) {
+        setModalOpen(true);
+      }
+    } else {
+      if (confirmed) {
+        navigate(`/board/write?challengeId=${id}`);
+      }
+
     }
   };
 
@@ -95,15 +130,26 @@ const Challenge: React.FC<ChallengeProps> = ({
       </div>
 
       <div className="flex justify-center mt-[2vh]">
-        <div
+        <button
+          type="button"
           onClick={handleLink}
-          data-modal-target="popup-modal"
-          data-modal-toggle="popup-modal"
           className="text-base font-semibold text-[#748BFF] bg-[#ECF0FF] rounded-3xl shadow py-[0.5vh] px-[10vw]"
         >
-          참여하기
-        </div>
+          {inProgress ? "참여중" : "참여하기"}
+        </button>
       </div>
+      {isModalOpen ? (
+        <SelectAccountModal
+          onClose={() => setModalOpen(false)}
+          callback={(toAcc, fromAcc) => {
+            joinEmoChallenge(id, toAcc, fromAcc).then((res) =>
+              navigate(`/challenge/calendar/${res}`)
+            );
+          }}
+        />
+      ) : (
+        <></>
+      )}
       <div className="w-full h-[2vh] bg-[#F4F3F8] mt-[2vh] mb-[2vh]"></div>
       <div className="flex items-center mb-20">
         <img src={detailDescription} alt="Detail Description" />

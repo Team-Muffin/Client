@@ -16,11 +16,24 @@ export interface Challenge {
   participation: number;
 }
 
+// Define the Badge type
+export interface Badge {
+  imgUrl: string;
+  badgeName: string;
+  challengeName: string;
+}
+
 // Define the response type
 interface OurChallengeResp {
   success: boolean;
   message: string;
   data: Challenge[]; // This should be an array of challenges
+}
+
+interface SuccessBadgesResp {
+  success: boolean;
+  message: string;
+  data: Badge[];
 }
 
 // Fetch function
@@ -86,15 +99,78 @@ export async function fetchChallengeById(
   }
 }
 
-export async function joinEmoChallenge(): Promise<number> {
+export async function joinEmoChallenge(
+  id: number,
+  toAcc: string,
+  fromAcc: string
+): Promise<number> {
   try {
     const res = await instance.post<GlobalResponse<number>>(
-      "/my-emoChallenges",
-      {}
+      "challenge-service/my-emoChallenges",
+      {
+        challengeId: id,
+        inACNT: toAcc,
+        outACNT: fromAcc,
+      }
     );
 
     return res.data.data;
   } catch (error) {
     throw error;
+  }
+}
+
+export async function getMyChallenges(isDone: number, userId: number) {
+  try {
+    const res = await instance.get(`challenge-service/my-challenges`, {
+      params: {
+        isDone: isDone,
+        userId: userId,
+      },
+    });
+
+    return res.data.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+// 성공한 뱃지 조회
+export async function fetchSuccessBadges(userId: string): Promise<Badge[]> {
+  try {
+    const response = await instance.get<SuccessBadgesResp>(
+      `challenge-service/my-challenges/badge`,
+      {
+        params: { userId },
+      }
+    );
+    console.log("Success Badge Response data: ", response.data);
+    return response.data.data;
+  } catch (error) {
+    console.log("성공한 뱃지 조회 오류: ", error);
+    throw error;
+  }
+}
+
+export async function getEmoChallengeLog() {
+  try {
+    const res = await instance.get("challenge-service/my-emoChallenges/log");
+
+    return res.data.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function postEmoChallenge(emojiId: number): Promise<void> {
+  try {
+    const response = await instance.post(
+      "challenge-service/my-emoChallenges/emoji",
+      {
+        emojiId: emojiId,
+      }
+    );
+  } catch (err) {
+    throw err;
   }
 }

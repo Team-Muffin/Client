@@ -23,7 +23,7 @@ import TendencyAnalysisPage from "../routes/signup/TendencyAnalysisPage";
 import SignUpSuccessPage from "../routes/signup/SignUpSuccessPage";
 import ProfilePage from "../routes/profile/ProfilePage";
 import EditProfilePage from "../routes/profile/EditProfilePage";
-import StampBoard from "../routes/challenge/StampBoard";
+import BadgeBoard from "../routes/challenge/BadgeBoard";
 import Notification from "../routes/notification/NotificationPage";
 import SearchPage from "../routes/search/SearchPage";
 import SearchResultPage from "../routes/search/SearchResultPage";
@@ -107,8 +107,8 @@ export const mainRouter = [
             element: <ChallengeCAL />,
           },
           {
-            path: "stampboard",
-            element: <StampBoard />,
+            path: "detail/badgeBoard",
+            element: <BadgeBoard />,
           },
         ],
       },

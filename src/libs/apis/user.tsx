@@ -1,4 +1,5 @@
 import instance from "./base";
+import { GlobalResponse } from "./responses/response";
 
 //회원가입
 interface SignUpRequest {
@@ -275,8 +276,8 @@ export interface PortfolioDetails {
   returnRate: number;
   domesticRatio: number;
   foreignRatio: number;
-  domesticStocks: { code: string; name: string; rate: number }[];
-  foreignStocks: { code: string; name: string; rate: number }[];
+  domesticStocks: { code: string; name: string; rate: number; dartCode: string;}[];
+  foreignStocks: { code: string; name: string; rate: number; dartCode: string; }[];
 }
 
 export interface PortfolioResponse {
@@ -318,6 +319,18 @@ export async function subscribePortfolio(
   } catch (error) {
     console.error("포트폴리오 조회 중 오류 발생", error);
     throw error;
+  }
+}
+
+export async function isAssetConnected(): Promise<boolean> {
+  try {
+    const res = await instance.get<GlobalResponse<boolean>>(
+      "/user-service/users/assets/status"
+    );
+
+    return res.data.data;
+  } catch (err) {
+    throw err;
   }
 }
 
@@ -405,4 +418,33 @@ interface followerResponse {
     users: UserData[];
     last: boolean;
   };
+}
+export type AccountResponse = {
+  number: string;
+  productType: string;
+  name: string;
+  cash: number;
+  image: string;
+};
+export async function getAccounts(): Promise<AccountResponse[]> {
+  try {
+    const res = await instance.get<GlobalResponse<AccountResponse[]>>(
+      "/user-service/users/accounts"
+    );
+    return res.data.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function getBirth(): Promise<string> {
+  try {
+    const res = await instance.get<GlobalResponse<string>>(
+      "/user-service/users/birth"
+    );
+
+    return res.data.data;
+  } catch (err) {
+    throw err;
+  }
 }
