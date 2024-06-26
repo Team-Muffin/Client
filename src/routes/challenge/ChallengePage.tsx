@@ -65,14 +65,16 @@ const ChallengePage = () => {
   return (
     <>
       <div className="relative py-[3vh] px-[8vw] bg-[#758BFF] w-screen">
-        <div className="mb-2">
-          <p className="text-lg font-black text-white">
+        <div className="mb-[1vh]">
+          <p className="text-lg font-semibold text-white ">
             {nickname}님이 참여 중인 챌린지
           </p>
           <p className="text-xs pb-8 font-base text-white">
-            {myChallenges.length > 0
-              ? `${myChallenges.length}개의 챌린지에 참여 중이시네요!`
-              : "아직 참여하는 챌린지가 없습니다."}
+            {myChallenges.length > 0 ? (
+              `${myChallenges.length}개의 챌린지에 참여 중이시네요!`
+            ) : (
+              <></>
+            )}
           </p>
         </div>
 
@@ -106,7 +108,7 @@ const ChallengePage = () => {
         ) : (
           <div className="block w-[55vw] h-[12vh] py-[1vh] px-[2vw] mb-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 mb-4">
             <div className="flex flex-col justify-center items-center h-full">
-              <p className="text-sm font-black text-gray-900 mb-2">
+              <p className="text-sm font-semibold text-gray-900 mb-2">
                 금융 챌린지에 참여해보세요! <br />
               </p>
               <p className="text-xs font-normal text-gray-700 text-center">
@@ -124,19 +126,21 @@ const ChallengePage = () => {
 
       <div className="relative border -mt-6 px-[8vw] py-[3vh] h-[21vh] rounded-[30px] bg-[#ECF0FF]">
         <div className="flex">
-          <p className="text-base items-center mb-4 mr-2 font-bold text-black-900">
+          <p className="text-base items-center mb-4 mr-2 font-semibold text-black-900">
             신규 챌린지
           </p>
 
-          <p className="text-sm items-center font-bold text-red-600 mt-0.5">
+          <p className="text-sm items-center font-semibold text-red-600 mt-0.5">
             NEW!
           </p>
         </div>
 
         <div className="flex justify-between">
           <div className="flex flex-col">
-            <p className="text-base font-bold text-black-900">감정 저축하기</p>
-            <p className="text-xs mb-2 ml-1 font-bold text-gray-600">
+            <p className="text-base font-semibold text-black-900">
+              감정 저축하기
+            </p>
+            <p className="text-xs mb-2 ml-1 font-semibold text-gray-600">
               마감 기한 없음
             </p>
           </div>
@@ -149,7 +153,7 @@ const ChallengePage = () => {
 
       <div className="relative border -mt-10 px-[8vw] py-[3vh] rounded-[30px] bg-white">
         <div className="flex justify-between">
-          <p className="text-base font-bold text-black-900">자체 챌린지</p>
+          <p className="text-base font-semibold text-black-900">자체 챌린지</p>
         </div>
 
         <div className="mt-[2vh] overflow-y-scroll">
@@ -170,10 +174,10 @@ const ChallengePage = () => {
           ))}
         </div>
 
-        <div className="pb-[7vh]" />
+        <div className="pb-[4vh]" />
 
         <div className="flex justify-between">
-          <p className="text-base font-bold text-black-900">기업 챌린지</p>
+          <p className="text-base font-semibold text-black-900">기업 챌린지</p>
           <div className="flex">
             <div
               className={`${

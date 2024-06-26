@@ -146,7 +146,7 @@ export default function BoardDetailPage() {
     } catch (error) {
       console.error("핀 삭제 중 오류 발생", error);
     }
-    navigate(-1);
+    navigate("/board");
   };
 
   const handleBackButtonClick = () => {

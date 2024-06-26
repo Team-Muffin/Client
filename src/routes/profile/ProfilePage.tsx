@@ -242,37 +242,37 @@ const ProfilePage: React.FC = () => {
       />
       {userCategory === "챌린지" && (
         <>
-          <div className="relative px-[8vw] py-[3vh] bg-white">
+          <div className="relative px-[7vw] py-[3vh] bg-white">
             <div className="flex justify-between">
-              <p className="text-base font-bold text-black-900">
+              <p className="text-[1.1rem] font-semibold text-C333333">
                 참여중인 챌린지
               </p>
             </div>
             {challengeList.length > 0 ? (
               <ChallengeList challenges={challengeList} />
             ) : (
-              <div className="flex flex-col items-center py-[8vh] px-[6vw] bg-white rounded">
-                <p className="text-lg font-semibold mb-[3vh]">
+              <div className="flex flex-col items-center py-[3vh] px-[6vw] bg-white rounded">
+                <div className="text-C333333 py-[2vh] px-[1.5vh] text-[1rem]">
                   아직 참여한 챌린지가 없어요 <br /> &nbsp; 챌린지에
                   참여해보세요!
-                </p>
+                </div>
               </div>
             )}
           </div>
 
-          <div className="relative px-[8vw] py-[3vh] bg-white">
+          <div className="relative px-[7vw] py-[3vh] bg-white">
             <div className="flex justify-between">
-              <p className="text-base font-bold text-black-900">
+              <p className="text-[1.1rem] font-semibold text-C333333">
                 참여했던 챌린지
               </p>
             </div>
             {challengeList.length > 0 ? (
               <ChallengeList challenges={endChallengeList} />
             ) : (
-              <div className="flex flex-col items-center py-[8vh] px-[6vw] bg-white rounded">
-                <p className="text-lg font-semibold mb-[3vh]">
-                  아직 완료한 챌린지가 없어요!
-                </p>
+              <div className="flex flex-col items-center py-[3vh] px-[6vw] bg-white rounded">
+                <div className="text-C333333 py-[2vh] px-[1.5vh] text-[1rem]">
+                  참여했던 챌린지가 없어요!
+                </div>
               </div>
             )}
           </div>

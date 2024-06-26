@@ -35,8 +35,11 @@ const Credit: React.FC<CreditProps> = ({
         <div className="flex items-center">
           <img src={CreditImg} alt="credit" className="w-[20vw] h-[12vh]" />
           <div className="ml-[2vw]">
-            <p className="text-base font-semibold text-gray-800">나의 Credit</p>
-            <p className="text-2xl font-bold text-gray-700">{credit}🪙</p> {/* Display fetched credit */}
+            <p className="text-base font-medium text-gray-800">나의 Credit</p>
+            <p className="text-2xl font-semibold text-gray-700">
+              {credit}🪙
+            </p>{" "}
+            {/* Display fetched credit */}
             <button className="bg-[white] text-[#748BFF] text-sm font-normal py-[0.5vh] px-[2vw] rounded-lg shadow-md mt-[1vh] mr-[2vw]">
               환전하기
             </button>
