@@ -66,7 +66,7 @@ const Challenge: React.FC<ChallengeProps> = ({
       }
     } else {
       if (confirmed) {
-        console.log("챌린지 타입 ㅋㅋ");
+        navigate(`/board/write?challengeId=${id}`);
       }
     }
   };

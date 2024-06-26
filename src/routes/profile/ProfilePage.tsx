@@ -10,10 +10,12 @@ import Credit from "../../components/profile/Credit";
 import PurpleBtn from "../../components/common/PurpleBtn";
 import Modal from "../../components/common/Modal";
 
+
 import { getUserDetails, UserDetailsResponse, getFollowers, FollowersReq, getMyChallenge, getMyEndChallenge } from "../../libs/apis/user";
 import { getPortfolio, PortfolioResponse, Challenge } from "../../libs/apis/user";
 import { subscribePortfolio } from "../../libs/apis/user";// 포트폴리오 구독 API import
 import ChallengeList from "../../components/profile/Challenge";
+
 
 const ProfilePage: React.FC = () => {
   const [userCategory, setUserCategory] = useState<string>("나의 핀");
@@ -25,17 +27,20 @@ const ProfilePage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const userId = searchParams.get("id");
   const otherId = parseInt(searchParams.get("id") || "", 10);
+  const nickname = useAuth2Store((state) => state.nickname);
 
   const [selectedFollowerId, setSelectedFollowerId] = useState<number | null>(
     null
   );
   const [followers, setFollowers] = useState<FollowersReq[]>([]);
-  const [portfolioDetails, setPortfolioDetails] = useState<
-    PortfolioResponse["data"]["details"] | null
-  >(null);
+
+  const [portfolioDetails, setPortfolioDetails] = useState<PortfolioResponse["data"]["details"] | null>(null);
+  const [portfolioAbstracts, setPortfolioAbstracts] = useState<PortfolioResponse["data"]["abstracts"] | null>(null);
+
   const [portfolioError, setPortfolioError] = useState<string | null>(null); // State to track portfolio fetch error
   const [challengeList, setChallengeList] = useState<Challenge[]>([]);
   const[endChallengeList, setEndChallengeList] = useState<Challenge[]>([]);
+
 
   useEffect(() => {
     if (userId) {
@@ -54,7 +59,11 @@ const ProfilePage: React.FC = () => {
     }
   }, [userId, otherId]);
 
-  const categories: string[] = ["게시물", "챌린지", "포트폴리오", "크레딧"];
+
+  const categories: string[] = userData?.role === "CORP" 
+    ? ["게시물", "챌린지"]
+    : ["게시물", "챌린지", "포트폴리오", "크레딧"];
+
 
   const handleUserCategoryClick = (selection: string) => {
     setUserCategory(selection);
@@ -71,6 +80,7 @@ const ProfilePage: React.FC = () => {
       const response = await subscribePortfolio(otherId);
       if (response.success) {
         // If successfully subscribed, refetch portfolio data
+        setIsSubscribed(true);
         fetchPortfolioData(otherId);
       } else {
         console.error("포트폴리오 구독 실패:", response.message);
@@ -100,13 +110,17 @@ const ProfilePage: React.FC = () => {
       const response = await getPortfolio(otherId);
       if (response.success) {
         setPortfolioDetails(response.data.details);
+        setPortfolioAbstracts(response.data.abstracts);
         setPortfolioError(null); // Reset error state if successful
+        setIsSubscribed(true); // Set as subscribed if successful
       } else {
         setPortfolioError(response.message); // Set error message if not successful
+        setIsSubscribed(false); // Set as not subscribed if not successful
       }
     } catch (error) {
       console.error("포트폴리오 데이터 조회 중 오류 발생", error);
       setPortfolioError("포트폴리오 데이터 조회 중 오류 발생");
+      setIsSubscribed(false); // Set as not subscribed if error occurs
     }
   };
 
@@ -169,6 +183,7 @@ const ProfilePage: React.FC = () => {
               tofinId={userData.tofinId}
               job={userData.job}
               ageRange={userData.ageRange}
+              role={userData.role} // role 속성 추가
             />
           </>
         )}
@@ -213,8 +228,9 @@ const ProfilePage: React.FC = () => {
         </>
       )}
       {userCategory === "포트폴리오" && (
+      {userCategory === "포트폴리오" && userData?.role === "FINFLUENCER" && (
         <>
-          {portfolioDetails ? (
+          {(portfolioDetails || portfolioAbstracts) ? (
             <Portfolio portfolioDetails={portfolioDetails} />
           ) : (
             <div className="flex flex-col items-center py-[8vh] px-[6vw] bg-white rounded">
