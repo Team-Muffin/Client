@@ -31,6 +31,7 @@ import {
   FetchUserBoardListParams,
 } from "../../libs/apis/user";
 import ChallengeList from "../../components/profile/Challenge";
+import useAuth2Store from "../../store/useAuth2Store";
 
 const ProfilePage: React.FC = () => {
   const [userCategory, setUserCategory] = useState<string>("핀");
@@ -59,7 +60,9 @@ const ProfilePage: React.FC = () => {
   const [boardList, setBoardList] = useState<BoardData[]>([]); // 게시물 목록 상태 추가
 
   const [challengeList, setChallengeList] = useState<Challenge[]>([]);
-  const [endChallengeList, setEndChallengeList] = useState<Challenge[]>([]);
+  const[endChallengeList, setEndChallengeList] = useState<Challenge[]>([]);
+  const myId = useAuth2Store((state) => state.id);
+
 
   useEffect(() => {
     if (userId) {
@@ -281,8 +284,8 @@ const ProfilePage: React.FC = () => {
 
       {userCategory === "포트폴리오" && userData?.role === "FINFLUENCER" && (
         <>
-          {portfolioDetails || portfolioAbstracts ? (
-            <Portfolio portfolioDetails={portfolioDetails} />
+          {(portfolioDetails || portfolioAbstracts) ? (
+            <Portfolio portfolioDetails={userData.id===myId?portfolioDetails:portfolioAbstracts} />
           ) : (
             <div className="flex flex-col items-center py-[8vh] px-[6vw] bg-white rounded">
               <p className="text-lg font-semibold mb-[3vh]">
