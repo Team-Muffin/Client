@@ -11,7 +11,7 @@ import Navbar from "../../components/common/Navbar";
 import character1_small from "../../assets/character1-small.svg";
 import Send from "../../assets/send.svg";
 import More from "../../assets/more-vertical.svg";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import {
   fetchBoardDetail,
   deleteBoard,
@@ -21,6 +21,7 @@ import {
   fetchFollowStatus,
   followStatusResponse,
   followUser,
+  unlockBoard,
 } from "../../libs/apis/board";
 import TimeAgo from "../../utils/timeAgo";
 import BackBtn from "../../assets/back.svg";
@@ -40,6 +41,8 @@ export default function BoardDetailPage() {
   const { id } = useAuth2Store((state) => ({
     id: state.id,
   }));
+
+  const location = useLocation();
 
   const navigate = useNavigate();
 
@@ -109,13 +112,17 @@ export default function BoardDetailPage() {
     authorProfile: string;
     liked: boolean;
     bookmarked: boolean;
+    locked: boolean;
+    unlockedCount: number;
   }
 
   const callBoardData = async () => {
     try {
       const response = await fetchBoardDetail(boardId);
+      console.log("board", response.data);
       if (response.data) {
         setBoardData(response.data.data);
+        // console.log("boardData", boardData);
       } else {
         console.error("보드 데이터가 없습니다.");
       }
@@ -123,6 +130,10 @@ export default function BoardDetailPage() {
       console.error("상세 페이지 보드 데이터 호출 중 에러:", error);
     }
   };
+
+  useEffect(() => {
+    console.log("boardData", boardData);
+  }, [boardData]);
 
   useEffect(() => {
     callBoardData();
@@ -225,6 +236,8 @@ export default function BoardDetailPage() {
     navigate(`/userProfile?id=${authorId}`);
   };
 
+  console.log(boardData);
+
   // console.log(commentData);
   return (
     <>
@@ -310,6 +323,7 @@ export default function BoardDetailPage() {
                 liked={boardData.liked}
                 bookmarked={boardData.bookmarked}
                 userIdPk={Number(id)}
+                locked={boardData.locked}
               />
             </div>
             <hr className="border-CD9D9D9 my-[1vh]" />

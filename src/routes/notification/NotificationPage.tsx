@@ -6,7 +6,6 @@ import {
   deleteAlert,
   readAllAlert,
   Alert,
-  AlertUnviewedResponse,
 } from "../../libs/apis/notification";
 import { useNavigate } from "react-router-dom";
 import timeAgo from "../../utils/timeAgo";
@@ -14,37 +13,6 @@ import useAuth2Store from "../../store/useAuth2Store";
 
 export default function Notification() {
   const navigate = useNavigate();
-
-  const notisEx = [
-    {
-      content: "user123님이 회원님을 팔로우하기 시작했습니다.",
-      createdTime: "2024-06-23T04:05:41.018Z",
-      img: "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDAzMTdfMTc0%2FMDAxNzEwNjY4NTI5MzM3.zbD2jP9EDJza4QDEIXEoB6hLJosuK7FExqXZc3OF7H0g.5c02aVkNNpNqV3TCZdC25_viesXls3BSirn97AyilzMg.JPEG%2F20240314%25A3%25DF143624.jpg&type=sc960_832",
-      link: "/",
-      isViewed: true,
-    },
-    {
-      content: "user123님이 회원님을 팔로우하기 시작했습니다.",
-      createdTime: "2024-06-23T04:05:41.018Z",
-      img: "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDAzMTdfMTc0%2FMDAxNzEwNjY4NTI5MzM3.zbD2jP9EDJza4QDEIXEoB6hLJosuK7FExqXZc3OF7H0g.5c02aVkNNpNqV3TCZdC25_viesXls3BSirn97AyilzMg.JPEG%2F20240314%25A3%25DF143624.jpg&type=sc960_832",
-      link: "/",
-      isViewed: true,
-    },
-    {
-      content: "user123님이 회원님을 팔로우하기 시작했습니다.",
-      createdTime: "2024-06-23T04:05:41.018Z",
-      img: "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDAzMTdfMTc0%2FMDAxNzEwNjY4NTI5MzM3.zbD2jP9EDJza4QDEIXEoB6hLJosuK7FExqXZc3OF7H0g.5c02aVkNNpNqV3TCZdC25_viesXls3BSirn97AyilzMg.JPEG%2F20240314%25A3%25DF143624.jpg&type=sc960_832",
-      link: "/",
-      isViewed: true,
-    },
-    {
-      content: "user123님이 회원님을 팔로우하기 시작했습니다.",
-      createdTime: "2024-06-23T04:05:41.018Z",
-      img: "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDAzMTdfMTc0%2FMDAxNzEwNjY4NTI5MzM3.zbD2jP9EDJza4QDEIXEoB6hLJosuK7FExqXZc3OF7H0g.5c02aVkNNpNqV3TCZdC25_viesXls3BSirn97AyilzMg.JPEG%2F20240314%25A3%25DF143624.jpg&type=sc960_832",
-      link: "/",
-      isViewed: true,
-    },
-  ];
 
   const [alertListData, setAlertListData] = useState<Alert[]>([]);
   const [alertData, setAlertData] = useState<Alert>();
@@ -88,6 +56,7 @@ export default function Notification() {
   const readAllAlerts = async () => {
     try {
       await readAllAlert();
+      window.location.reload();
     } catch (error) {
       console.log("알림 전체 읽음 중 오류");
     }

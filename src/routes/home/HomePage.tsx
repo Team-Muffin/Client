@@ -39,8 +39,11 @@ export default function HomePage() {
   const callUnviewedAlertCnt = async () => {
     try {
       const { data } = await fetchUnviewedAlertCnt();
+      console.log(data.data);
       if (data.data > 0) {
         setAlert(true);
+      } else {
+        setAlert(false);
       }
       // console.log(data);
     } catch (error) {
@@ -81,10 +84,19 @@ export default function HomePage() {
   }, []);
 
   const fetchCombinedData = async (pageParam: number) => {
+    const categories = ["정보", "재미", "투자", "기업", "고급"];
+
+    const getRandomCategory = () => {
+      const randomIndex = Math.floor(Math.random() * categories.length);
+      return categories[randomIndex];
+    };
+
+    const randomCategory = getRandomCategory();
+
     const boardResponse = await fetchBoardList({
       pageNo: pageParam,
       size: 10,
-      category: "정보",
+      category: randomCategory,
       sort: "최신순",
     });
 
@@ -169,7 +181,7 @@ export default function HomePage() {
           type="logoLeftSearchAndAlarmRight"
           searchBtn={handleSearchBtnClick}
           notiBtn={handleNotificationBtnClick}
-          alert
+          alert={alert}
         />
         <div className="mt-[5.5vh]"></div>
 

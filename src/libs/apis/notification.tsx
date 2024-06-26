@@ -11,7 +11,7 @@ export interface Alert {
   id: number;
   clientId: number;
   messageType: string;
-  targetId: number;
+  targetId: number | null;
   content: string;
   viewed: boolean;
   thumbnail: string;

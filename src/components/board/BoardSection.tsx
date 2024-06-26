@@ -6,8 +6,13 @@ import Reply from "../../assets/reply.svg";
 import FilledScrap from "../../assets/scrap-filled.svg";
 import Scrap from "../../assets/scrap.svg";
 import { createBookmark, createLike } from "../../libs/apis/board";
-import { fetchFollowStatus, followUser } from "../../libs/apis/board";
+import {
+  fetchFollowStatus,
+  followUser,
+  unlockBoard,
+} from "../../libs/apis/board";
 import BoardViewer from "./BoardViewer";
+import BlurredImage from "../../assets/blurred-image.png";
 
 interface BoardContentProps {
   authorId?: number;
@@ -23,6 +28,7 @@ interface BoardContentProps {
   liked: boolean;
   bookmarked: boolean;
   userIdPk?: number;
+  locked?: boolean;
 }
 
 const BoardSection: React.FC<BoardContentProps> = ({
@@ -39,12 +45,27 @@ const BoardSection: React.FC<BoardContentProps> = ({
   liked,
   bookmarked,
   userIdPk,
+  locked,
 }) => {
   const [heartClicked, setHeartClicked] = useState(false);
   const [scrapClicked, setScrapClicked] = useState(false);
   const [likeCnt, setLikeCnt] = useState(0);
   const [followStatus, setFollowStatus] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const handlePurchaseClick = async (boardId: number) => {
+    if (window.confirm("10 크레딧을 내고 프리미엄 핀을 열람하시겠습니까?")) {
+      const msg = await unlockBoard(boardId);
+      console.log(msg);
+      if (msg == "success") {
+        window.location.reload();
+      } else {
+        alert(msg);
+      }
+    } else {
+      return;
+    }
+  };
 
   const callFollowData = async () => {
     try {
@@ -85,7 +106,6 @@ const BoardSection: React.FC<BoardContentProps> = ({
   const handleFollowBtnClicked = async (selection: boolean) => {
     try {
       if (authorId) {
-        console.log("aa");
         await followUser(authorId);
         setFollowStatus(selection);
       }
@@ -165,7 +185,19 @@ const BoardSection: React.FC<BoardContentProps> = ({
             </div>
 
             <p className="py-[1vh] text-[1.25rem] font-medium">{title}</p>
-            <BoardViewer strData={content} />
+            {console.log(locked)}
+            {locked !== true ? (
+              <BoardViewer strData={content} />
+            ) : (
+              <>
+                <div onClick={() => handlePurchaseClick(Number(boardId))}>
+                  <img src={BlurredImage} />
+                </div>
+              </>
+            )}
+
+            {/* <BoardViewer strData={content} /> */}
+
             {/* <p className="text-[0.95rem] break-words">
               <br />
             </p> */}

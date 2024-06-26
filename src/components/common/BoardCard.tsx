@@ -13,6 +13,7 @@ interface BoardCardProps {
   replyCount: number;
   imageUrl: string | null;
   authorImageUrl?: string;
+  locked?: boolean;
 }
 
 const BoardCard: React.FC<BoardCardProps> = ({
@@ -24,14 +25,22 @@ const BoardCard: React.FC<BoardCardProps> = ({
   replyCount,
   imageUrl,
   authorImageUrl,
+  locked,
 }) => {
   return (
     <>
       <div className="flex justify-between items-center my-[1.75vh] px-[1vw] ">
         <div className="pr-[2.5vw] mr-[0.8vw]">
-          <p className="text-[1.05rem] text-C333333 font-medium line-clamp-1">
-            {title}
-          </p>
+          {locked ? (
+            <span className="text-[1.05rem] text-C333333 font-medium line-clamp-1">
+              🔒 {title}
+            </span>
+          ) : (
+            <span className="text-[1.05rem] text-C333333 font-medium line-clamp-1">
+              {title}
+            </span>
+          )}
+
           <p className="text-[0.9rem] text-C333333 line-clamp-1 mt-[0.25vh]">
             {description}
           </p>
