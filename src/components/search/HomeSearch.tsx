@@ -38,8 +38,8 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
   const [userPageNo, setUserPageNo] = useState(0);
   const observerRef = useRef<HTMLDivElement | null>(null);
   const [pageNo, setPageNo] = useState(0);
-  const [size, setSize] = useState(10);
-  const [userLimit, setUserLimit] = useState(10);
+  const [size, setSize] = useState(100);
+  const [userLimit, setUserLimit] = useState(100);
   const [userLast, setUserLast] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState("최신순");
 
