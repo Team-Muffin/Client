@@ -11,7 +11,7 @@ export interface FetchSearchedBoardListParams {
 export async function fetchSearchedBoardList({
   keyword,
   pageNo,
-  size,
+  size = 100,
   category,
 }: FetchSearchedBoardListParams): Promise<{ data: BoardData[] }> {
   const params = new URLSearchParams();

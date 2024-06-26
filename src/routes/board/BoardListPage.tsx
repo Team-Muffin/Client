@@ -35,12 +35,13 @@ export default function BoardListPage() {
     (state) => state.setCategoryAndFilters
   );
 
-  const handleBoardCardClick = async (link: string) => {
+  const handleBoardCardClick = async (link: string, locked?: boolean) => {
     if (category && selectedFilter) {
       setCategoryAndFilters(category, selectedFilter);
     } else if (category) {
       setCategoryAndFilters(category, null);
     }
+
     navigate(link);
   };
 
@@ -147,7 +148,11 @@ export default function BoardListPage() {
       {data &&
         data.pages.map((item, index) => (
           <React.Fragment key={index}>
-            <div onClick={() => handleBoardCardClick(`/board/${item.id}`)}>
+            <div
+              onClick={() =>
+                handleBoardCardClick(`/board/${item.id}`, item.locked)
+              }
+            >
               <BoardCard
                 title={item.title}
                 description={item.summary}
@@ -157,11 +162,12 @@ export default function BoardListPage() {
                 replyCount={item.commentCount}
                 imageUrl={item.thumbnail}
                 authorImageUrl={item.authorProfile}
+                locked={item.locked}
               />
             </div>
           </React.Fragment>
         ))}
-      <div ref={observerRef} className="pb-[8.5vh]" />
+      <div ref={observerRef} className="pb-[1.5vh]" />
 
       {isLoading && <LoadingSpinner />}
       {isError && <p>Error loading data...</p>}

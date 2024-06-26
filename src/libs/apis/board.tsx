@@ -35,6 +35,7 @@ export interface BoardListResponse {
     commentCount: number;
     authorNickname: string;
     authorProfile: string;
+    locked: boolean;
   }[];
 }
 
@@ -45,6 +46,8 @@ export async function fetchBoardDetail(
   const response = await instance.get<BoardResponse>(
     `/board-service/boards/${boardId}`
   );
+
+  console.log("dd", response);
   return { data: response.data };
 }
 
@@ -82,6 +85,8 @@ export interface BoardResponse {
     authorProfile: string;
     liked: boolean;
     bookmarked: boolean;
+    locked: boolean;
+    unlockedCount: number;
   };
 }
 
@@ -171,12 +176,17 @@ export interface UpdateBoardRequest extends BoardRequest {
   boardId: string;
 }
 
-export async function updateBoard(boardId: string, requestBody: UpdateBoardRequest) {
-  const response = await instance.put(`board-service/boards/${boardId}`, requestBody);
+export async function updateBoard(
+  boardId: string,
+  requestBody: UpdateBoardRequest
+) {
+  const response = await instance.put(
+    `board-service/boards/${boardId}`,
+    requestBody
+  );
 
   return response.data;
 }
-
 
 //팔로우 토글
 export async function followUser(userId: number) {
@@ -203,4 +213,18 @@ export interface followStatusResponse {
     followings: number;
     isFollow: boolean;
   };
+}
+
+//구매하기
+interface UnlockBoardResponse {
+  success: boolean;
+  message: string;
+  data?: string | any[];
+}
+
+export async function unlockBoard(boardId: number): Promise<string> {
+  const response = await instance.post<UnlockBoardResponse>(
+    `/board-service/boards/${boardId}/unlock`
+  );
+  return response.data.message;
 }

@@ -5,3 +5,7 @@
 #board-view .ce-block:first-child {
   display: none;
 }
+
+.image-tool__caption {
+  display: none;
+}

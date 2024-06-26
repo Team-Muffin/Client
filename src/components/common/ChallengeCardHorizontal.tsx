@@ -48,7 +48,10 @@ const ChallengeCardHorizontal: React.FC<Challenge> = ({
             </div>
           </div>
 
-          <p className="mt-[0.2vh] text-C333333 text-[0.8rem] whitespace-normal leading-tight">
+          <p
+            className="mt-[0.2vh] text-C333333 text-[0.8rem] whitespace-normal leading-tight"
+            style={{ wordBreak: "keep-all" }}
+          >
             {description}
           </p>
           <p className="text-C333333 text-[0.75rem] mt-[0.5vh]">

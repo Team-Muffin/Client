@@ -107,7 +107,10 @@ const Challenge: React.FC<ChallengeProps> = ({
                 height={"20vh"}
                 alt="Small Logo"
               />
-              <p className="text-xs font-semibold text-black-900 dark:text-black mt-[0.5vh]">
+              <p
+                className="text-xs font-semibold text-black-900 dark:text-black mt-[0.5vh]"
+                style={{ wordBreak: "keep-all" }}
+              >
                 {description}
               </p>
             </div>
