@@ -181,7 +181,7 @@ export default function HomePage() {
           type="logoLeftSearchAndAlarmRight"
           searchBtn={handleSearchBtnClick}
           notiBtn={handleNotificationBtnClick}
-          alert={alert}
+          isAlert={alert}
         />
         <div className="mt-[5.5vh]"></div>
 
