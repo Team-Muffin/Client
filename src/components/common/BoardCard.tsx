@@ -60,6 +60,7 @@ const BoardCard: React.FC<BoardCardProps> = ({
             <p className="text-[0.85rem] mr-[1vw] text-C333333">{replyCount}</p>
           </div>
         </div>
+
         {imageUrl && (
           <img
             className="w-[22vw] h-[22vw] rounded-[0.75rem]"

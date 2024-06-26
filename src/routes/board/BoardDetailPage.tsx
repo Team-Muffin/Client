@@ -150,7 +150,7 @@ export default function BoardDetailPage() {
   };
 
   const handleBackButtonClick = () => {
-    navigate("/board");
+    navigate(-1);
   };
 
   const handleEditButtonClick = () => {
