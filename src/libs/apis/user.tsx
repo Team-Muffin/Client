@@ -276,8 +276,18 @@ export interface PortfolioDetails {
   returnRate: number;
   domesticRatio: number;
   foreignRatio: number;
-  domesticStocks: { code: string; name: string; rate: number; dartCode: string;}[];
-  foreignStocks: { code: string; name: string; rate: number; dartCode: string; }[];
+  domesticStocks: {
+    code: string;
+    name: string;
+    rate: number;
+    dartCode: string;
+  }[];
+  foreignStocks: {
+    code: string;
+    name: string;
+    rate: number;
+    dartCode: string;
+  }[];
 }
 
 export interface PortfolioResponse {
@@ -489,25 +499,23 @@ export async function fetchUserBoardList({
   return { data: response.data.data };
 }
 
+export interface BoardData {
+  id: number;
+  title: string;
+  summary: string;
+  thumbnail: string | null;
+  createdTime: string;
+  likeCount: number;
+  commentCount: number;
+  authorNickname: string;
+  authorProfile: string;
+}
 
-  export interface BoardData {
-    id: number;
-    title: string;
-    summary: string;
-    thumbnail: string | null;
-    createdTime: string;
-    likeCount: number;
-    commentCount: number;
-    authorNickname: string;
-    authorProfile: string;
-  }
-
-  export interface BoardListResponse {
-    success: boolean;
-    message: string;
-    data: BoardData[];
-  }
-  
+export interface BoardListResponse {
+  success: boolean;
+  message: string;
+  data: BoardData[];
+}
 
 export interface Challenge {
   myChallengeId: number;
@@ -532,28 +540,49 @@ export interface ChallengeResponse {
 }
 
 //참여중인 챌린지 조회
-export async function getMyChallenge(id:number):Promise<ChallengeResponse>{
+export async function getMyChallenge(id: number): Promise<ChallengeResponse> {
   try {
-    console.log("유저!!!!!!!!!",id);
-    const response = await instance.get(`/challenge-service/my-challenges?isDone=0&userId=${id}`);
+    console.log("유저!!!!!!!!!", id);
+    const response = await instance.get(
+      `/challenge-service/my-challenges?isDone=0&userId=${id}`
+    );
     console.log("참여중인 챌린지 조회 API 호출 성공:", response.data); // 성공 로그 출력
     return response.data;
   } catch (error) {
     console.error("참여중인 챌린지 조회 중 오류 발생", error);
     throw error;
   }
-
 }
 
 //참여했던 챌린지 조회
-export async function getMyEndChallenge(id:number):Promise<ChallengeResponse>{
+export async function getMyEndChallenge(
+  id: number
+): Promise<ChallengeResponse> {
   try {
-    const response = await instance.get(`/challenge-service/my-challenges?isDone=1&userId=${id}`);
+    const response = await instance.get(
+      `/challenge-service/my-challenges?isDone=1&userId=${id}`
+    );
     console.log("참여중인 챌린지 조회 API 호출 성공:", response.data); // 성공 로그 출력
     return response.data;
   } catch (error) {
     console.error("참여중인 챌린지 조회 중 오류 발생", error);
     throw error;
   }
+}
 
+//핀플루언서 등업
+
+export async function becomeFinfluencer(): Promise<{
+  data: FinFluencerResponse;
+}> {
+  const response = await instance.put<FinFluencerResponse>(
+    `/user-service/finfluencer`
+  );
+  return { data: response.data };
+}
+
+export interface FinFluencerResponse {
+  success: boolean;
+  message: string;
+  data?: any;
 }

@@ -11,7 +11,13 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { OutputData } from "@editorjs/editorjs";
 import BoardEditor from "../../components/board/BoardEditor";
-import { BoardRequest, createBoard, CreateBoardRequest, updateBoard, UpdateBoardRequest } from "../../libs/apis/board";
+import {
+  BoardRequest,
+  createBoard,
+  CreateBoardRequest,
+  updateBoard,
+  UpdateBoardRequest,
+} from "../../libs/apis/board";
 import BoardModifier from "../../components/board/BoardModifier";
 
 export default function BoardWritePage() {
@@ -85,32 +91,31 @@ export default function BoardWritePage() {
     }
 
     let locked: boolean = false;
-    if (selected === "고급" && window.confirm("비밀 게시글로 등록할까요?"))
+    if (selected === "고급" && window.confirm("프리미엄 핀으로 등록할까요?"))
       locked = true;
 
     const boardRequest: BoardRequest = {
       title: title,
-      content: boardData
-    }
+      content: boardData,
+    };
 
-    const requestBody: CreateBoardRequest | UpdateBoardRequest = boardId ?
-      {
-        ...boardRequest,
-        boardId: boardId
-      }
-      :
-      {
-        ...boardRequest,
-        category: selected,
-        productId: productId,
-        challengeId: challengeId,
-        locked: locked
-      };
+    const requestBody: CreateBoardRequest | UpdateBoardRequest = boardId
+      ? {
+          ...boardRequest,
+          boardId: boardId,
+        }
+      : {
+          ...boardRequest,
+          category: selected,
+          productId: productId,
+          challengeId: challengeId,
+          locked: locked,
+        };
 
-    const response = ("boardId" in requestBody) ?
-      await updateBoard(requestBody.boardId, requestBody)
-      : await createBoard(requestBody);
-
+    const response =
+      "boardId" in requestBody
+        ? await updateBoard(requestBody.boardId, requestBody)
+        : await createBoard(requestBody);
 
     if (response.success == true) {
       navigate(`/board/${boardId ? boardId : response.data.boardId}`);
@@ -133,7 +138,10 @@ export default function BoardWritePage() {
             />
             <Menu as="div" className=" flex justify-end inline-block text-left">
               <div className="">
-                <MenuButton className="inline-flex w-full justify-center rounded-md bg-white text-lg text-black font-medium" disabled={boardId ? true : false}>
+                <MenuButton
+                  className="inline-flex w-full justify-center rounded-md bg-white text-lg text-black font-medium"
+                  disabled={boardId ? true : false}
+                >
                   {selected}
                   <ChevronDownIcon
                     className="-mr-1 h-[1.5rem] w-[1.5rem] text-C333333"
@@ -158,8 +166,9 @@ export default function BoardWritePage() {
                           {({ active }) => (
                             <a
                               href="#"
-                              className={`${active ? "bg-gray-100" : ""
-                                }text-black block px-4 py-2 text-[1rem]`}
+                              className={`${
+                                active ? "bg-gray-100" : ""
+                              }text-black block px-4 py-2 text-[1rem]`}
                             >
                               {text}
                             </a>
@@ -184,23 +193,21 @@ export default function BoardWritePage() {
         {/* 여기까지 헤더 */}
         <div className="mt-[4vh]"></div>
 
-        {/* 민우 TODO: 여기부터 Editor 관련 */}
-        {
-          boardId ?
-            <BoardModifier
-              setData={setBoardData}
-              data={boardData}
-              setTitle={setTitle}
-              title={title}
-            />
-            :
-            <BoardEditor
-              setData={setBoardData}
-              data={boardData}
-              setTitle={setTitle}
-              title={title}
-            />
-        }
+        {boardId ? (
+          <BoardModifier
+            setData={setBoardData}
+            data={boardData}
+            setTitle={setTitle}
+            title={title}
+          />
+        ) : (
+          <BoardEditor
+            setData={setBoardData}
+            data={boardData}
+            setTitle={setTitle}
+            title={title}
+          />
+        )}
       </div>
     </>
   );

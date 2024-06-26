@@ -84,20 +84,11 @@ export default function HomePage() {
   }, []);
 
   const fetchCombinedData = async (pageParam: number) => {
-    const categories = ["정보", "재미", "투자", "기업", "고급"];
-
-    const getRandomCategory = () => {
-      const randomIndex = Math.floor(Math.random() * categories.length);
-      return categories[randomIndex];
-    };
-
-    const randomCategory = getRandomCategory();
-
     const boardResponse = await fetchBoardList({
       pageNo: pageParam,
       size: 10,
-      category: randomCategory,
-      sort: "최신순",
+      category: "정보",
+      sort: "인기순",
     });
 
     const productResponse = await fetchRandomProductList(productLimit);

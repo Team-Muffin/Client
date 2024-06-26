@@ -77,13 +77,15 @@ const UserProfile: React.FC<UserProfileProps> = ({
           />
         </Link>
         <div className="flex flex-col justify-center items-center">
-          <div className="flex items-center">
-            <p className="text-2xl">{nickname}</p>
-            {role==="NORMAL"?<></>:<img src={CheckedImg} alt="Checked" />}
+
+          <div className="flex items-center my-[0.5vh]">
+            <p className="text-2xl mr-[1vh] ">{nickname}</p>
+           {role==="NORMAL"?<></>:<img src={CheckedImg} alt="Checked" />}
+
           </div>
           <p className="text-sm mr-[1vw] mb-[0.3vh]">@{tofinId}</p>
           {role !== "CORP" && ( // role이 corp가 아닌 경우에만 ageRange를 표시
-            <p className="text-xs text-[#748BFF]">
+            <p className="text-xs text-[#748BFF] text-center">
               {ageRange}대 {job}
             </p>
           )}

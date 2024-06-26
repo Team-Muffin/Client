@@ -34,7 +34,7 @@ const UserStats: React.FC<UserStatsProps> = ({
         onClick={goToFollowers}
       >
         <p className="text-base">팔로워</p>
-        <p className="text-xl font-bold">{followers}</p>
+        <p className="text-xl font-semibold">{followers}</p>
       </div>
       <div className="relative">
         <img src={ProfileCircleImg} alt="Profile Circle" className="w-[35vw]" />
@@ -49,7 +49,7 @@ const UserStats: React.FC<UserStatsProps> = ({
         onClick={goToFollowing}
       >
         <p className="text-base">팔로잉</p>
-        <p className="text-xl font-bold">{followings}</p>
+        <p className="text-xl font-semibold">{followings}</p>
       </div>
     </div>
   );

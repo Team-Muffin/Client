@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import MyResponsivePie from "./PieChart";
 import MyResponsiveBar from "./BarChart";
 import Modal from "../../components/common/Modal";
-import fetchFinancialData from "../../libs/apis/dart";  // Adjust the import path as needed
-import { PortfolioDetails, getUserDetails, UserDetailsResponse } from "../../libs/apis/user";
+import fetchFinancialData from "../../libs/apis/dart"; // Adjust the import path as needed
+import {
+  PortfolioDetails,
+  getUserDetails,
+  UserDetailsResponse,
+} from "../../libs/apis/user";
 import { useSearchParams } from "react-router-dom";
-import { PieData } from "./PieChart";  // Import PieData type
+import { PieData } from "./PieChart"; // Import PieData type
 
 interface PortfolioProps {
   portfolioDetails: PortfolioDetails | null;
@@ -13,7 +17,9 @@ interface PortfolioProps {
 
 const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
   const [totalAssets, setTotalAssets] = useState<string>("");
-  const [userDetails, setUserDetails] = useState<UserDetailsResponse["data"] | null>(null);
+  const [userDetails, setUserDetails] = useState<
+    UserDetailsResponse["data"] | null
+  >(null);
   const [searchParams] = useSearchParams();
   const otherId = parseInt(searchParams.get("id") || "", 10);
 
@@ -37,7 +43,9 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
     const hundredMillion = Math.floor(amount / 100000000);
     const tenThousand = Math.floor((amount % 100000000) / 10000);
     const rest = amount % 10000;
-    return `${hundredMillion ? `${hundredMillion}억 ` : ""}${tenThousand ? `${tenThousand}만 ` : ""}${rest}원`;
+    return `${hundredMillion ? `${hundredMillion}억 ` : ""}${
+      tenThousand ? `${tenThousand}만 ` : ""
+    }${rest}원`;
   };
 
   useEffect(() => {
@@ -52,6 +60,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
     const hue = Math.random() * 360;
     return `hsl(${hue}, 70%, 80%)`;
   };
+
 
   const getData = (details: PortfolioDetails | null) => details || {
     totalAmount: 0,
@@ -87,6 +96,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
     value: parseFloat(formatPercentage(stock.rate)),
     color: generatePastelColor(),
   })) || [];
+
 
   const investData = [
     {
@@ -142,12 +152,14 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
       return null;
     }
     console.log("Financial data list:", financialData.list);
-    const items = [1, 3, 5].map(idx => financialData.list[idx]);
+    const items = [1, 3, 5].map((idx) => financialData.list[idx]);
     console.log("Selected items for display:", items);
     return items.map((item, index) => (
       <div key={index}>
         {item ? (
-          <p>{item.idx_nm}: {item.idx_val}%</p>
+          <p>
+            {item.idx_nm}: {item.idx_val}%
+          </p>
         ) : (
           <p>데이터 없음</p>
         )}
@@ -159,8 +171,10 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
     <div className="flex flex-col px-[4.5vw] py-[2vh]">
       {userDetails && (
         <>
-          <p className="text-lg ml-[3vw]">{userDetails.nickname}님의 순자산</p>
-          <p className="text-xl font-bold ml-[3vw]">{totalAssets}</p>
+          <p className="text-[1.1rem] ml-[3vw]">
+            {userDetails.nickname}님의 순자산
+          </p>
+          <p className="text-[1.15rem] font-semibold ml-[3vw]">{totalAssets}</p>
         </>
       )}
       <div style={{ height: "20vh" }}>
@@ -179,10 +193,15 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
         </div>
         <div style={{ height: "30vh", width: "85vw" }}>
           <p className="font-semibold text-lg mb-[2vh] ml-[3vw]">국내주식</p>
-          <MyResponsivePie data={domesticStocksData} onClick={handleStockClick} />
+          <MyResponsivePie
+            data={domesticStocksData}
+            onClick={handleStockClick}
+          />
         </div>
         <div style={{ height: "30vh", width: "85vw" }}>
-          <p className="font-semibold text-lg mb-[2vh] mt-[5vh] ml-[3vw]">해외주식</p>
+          <p className="font-semibold text-lg mb-[2vh] mt-[5vh] ml-[3vw]">
+            해외주식
+          </p>
           <MyResponsivePie data={foreignStocksData} />
         </div>
       </div>
@@ -191,11 +210,11 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
       {showModal && selectedStock && (
         <Modal onClose={closeModal}>
           <div style={{ width: "80vw" }}>
-            <div className="text-xl font-bold mb-[2vh]">{selectedStock.label}</div>
+            <div className="text-xl font-semibold mb-[2vh]">
+              {selectedStock.label}
+            </div>
             {financialData ? (
-              <div>
-                {displayFinancialData()}
-              </div>
+              <div>{displayFinancialData()}</div>
             ) : (
               <p>Loading...</p>
             )}
