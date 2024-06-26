@@ -6,6 +6,7 @@ import { useLocation, useParams } from "react-router";
 import { fetchBoardList, BoardData } from "../../libs/apis/product";
 import { useInfiniteQuery } from "react-query";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
+import { Link } from "react-router-dom";
 
 export default function RelatedBoardPage() {
   const location = useLocation();
@@ -80,16 +81,18 @@ export default function RelatedBoardPage() {
           {data &&
             data.pages.map((item, index) => (
               <div key={index}>
-                <BoardCard
-                  title={item.title}
-                  description={item.summary}
-                  author={item.authorNickname}
-                  time={item.createdTime}
-                  heartCount={item.likeCount}
-                  replyCount={item.commentCount}
-                  imageUrl={item.thumbnail}
-                  authorImageUrl={item.authorProfile}
-                />
+                <Link to={`/board/${item.id}`}>
+                  <BoardCard
+                    title={item.title}
+                    description={item.summary}
+                    author={item.authorNickname}
+                    time={item.createdTime}
+                    heartCount={item.likeCount}
+                    replyCount={item.commentCount}
+                    imageUrl={item.thumbnail}
+                    authorImageUrl={item.authorProfile}
+                  />
+                </Link>
               </div>
             ))}
         </div>
