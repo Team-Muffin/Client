@@ -53,7 +53,26 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
     return `hsl(${hue}, 70%, 80%)`;
   };
 
-  const domesticStocksData = portfolioDetails?.domesticStocks.map((stock) => ({
+  const getData = (details: PortfolioDetails | null) => details || {
+    totalAmount: 0,
+    savingRate: 0,
+    savingAmount: 0,
+    depositRate: 0,
+    depositAmount: 0,
+    cmaRate: 0,
+    cmaAmount: 0,
+    investRate: 0,
+    investAmount: 0,
+    returnRate: 0,
+    domesticRatio: 0,
+    foreignRatio: 0,
+    domesticStocks: [],
+    foreignStocks: [],
+  };
+
+  const data = getData(portfolioDetails);
+
+  const domesticStocksData = data.domesticStocks.map((stock) => ({
     id: stock.name,
     label: stock.name,
     value: parseFloat(formatPercentage(stock.rate)),
@@ -62,7 +81,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
     dartCode: stock.dartCode
   })) || [];
 
-  const foreignStocksData = portfolioDetails?.foreignStocks.map((stock) => ({
+  const foreignStocksData = data.foreignStocks.map((stock) => ({
     id: stock.name,
     label: stock.name,
     value: parseFloat(formatPercentage(stock.rate)),
@@ -73,13 +92,13 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
     {
       id: "국내 주식",
       label: "국내 주식",
-      value: parseFloat(formatPercentage(portfolioDetails?.domesticRatio || 0)),
+      value: parseFloat(formatPercentage(data.domesticRatio || 0)),
       color: generatePastelColor(),
     },
     {
       id: "해외 주식",
       label: "해외 주식",
-      value: parseFloat(formatPercentage(portfolioDetails?.foreignRatio || 0)),
+      value: parseFloat(formatPercentage(data.foreignRatio || 0)),
       color: generatePastelColor(),
     },
   ];
@@ -87,16 +106,16 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolioDetails }) => {
   const barChartData = [
     {
       id: "자산 비율",
-      입출금: parseFloat(formatPercentage(portfolioDetails?.savingRate || 0)),
-      저축: parseFloat(formatPercentage(portfolioDetails?.depositRate || 0)),
-      CMA: parseFloat(formatPercentage(portfolioDetails?.cmaRate || 0)),
-      투자: parseFloat(formatPercentage(portfolioDetails?.investRate || 0)),
-      cmaAmount: portfolioDetails?.cmaAmount || 0,
-      depositAmount: portfolioDetails?.depositAmount || 0,
+      입출금: parseFloat(formatPercentage(data.savingRate || 0)),
+      저축: parseFloat(formatPercentage(data.depositRate || 0)),
+      CMA: parseFloat(formatPercentage(data.cmaRate || 0)),
+      투자: parseFloat(formatPercentage(data.investRate || 0)),
+      cmaAmount: data.cmaAmount || 0,
+      depositAmount: data.depositAmount || 0,
     },
   ];
 
-  const returnRate = formatPercentage(portfolioDetails?.returnRate || 0);
+  const returnRate = formatPercentage(data.returnRate || 0);
 
   const handleStockClick = async (stock: PieData) => {
     setSelectedStock(stock);
