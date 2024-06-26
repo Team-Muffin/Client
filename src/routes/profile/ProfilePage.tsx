@@ -10,34 +10,32 @@ import Credit from "../../components/profile/Credit";
 import PurpleBtn from "../../components/common/PurpleBtn";
 import Modal from "../../components/common/Modal";
 
-
-import { getUserDetails, UserDetailsResponse, getFollowers, FollowersReq, getMyChallenge, getMyEndChallenge } from "../../libs/apis/user";
-import { getPortfolio, PortfolioResponse, Challenge } from "../../libs/apis/user";
-import { subscribePortfolio } from "../../libs/apis/user";// 포트폴리오 구독 API import
+import BoardCard from "../../components/common/BoardCard"; // BoardCard 컴포넌트 import
+import { getUserDetails, UserDetailsResponse, getFollowers, FollowersReq , getMyChallenge, getMyEndChallenge } from "../../libs/apis/user";
+import { getPortfolio, PortfolioResponse, Challenge,subscribePortfolio } from "../../libs/apis/user"; // 포트폴리오 구독 및 게시물 목록 API import
+import { fetchUserBoardList, BoardData, FetchUserBoardListParams } from "../../libs/apis/user";
 import ChallengeList from "../../components/profile/Challenge";
 
 
+
 const ProfilePage: React.FC = () => {
-  const [userCategory, setUserCategory] = useState<string>("나의 핀");
+  const [userCategory, setUserCategory] = useState<string>("핀");
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const [showCreditTip, setShowCreditTip] = useState<boolean>(false);
-  const [userData, setUserData] = useState<UserDetailsResponse["data"] | null>(
-    null
-  );
+  const [userData, setUserData] = useState<UserDetailsResponse["data"] | null>(null);
   const [searchParams] = useSearchParams();
   const userId = searchParams.get("id");
   const otherId = parseInt(searchParams.get("id") || "", 10);
-  const nickname = useAuth2Store((state) => state.nickname);
 
-  const [selectedFollowerId, setSelectedFollowerId] = useState<number | null>(
-    null
-  );
+  const [selectedFollowerId, setSelectedFollowerId] = useState<number | null>(null);
   const [followers, setFollowers] = useState<FollowersReq[]>([]);
-
   const [portfolioDetails, setPortfolioDetails] = useState<PortfolioResponse["data"]["details"] | null>(null);
   const [portfolioAbstracts, setPortfolioAbstracts] = useState<PortfolioResponse["data"]["abstracts"] | null>(null);
-
   const [portfolioError, setPortfolioError] = useState<string | null>(null); // State to track portfolio fetch error
+
+  const [isSubscribed, setIsSubscribed] = useState<boolean>(false); // State to track if the portfolio is subscribed
+  const [boardList, setBoardList] = useState<BoardData[]>([]); // 게시물 목록 상태 추가
+
   const [challengeList, setChallengeList] = useState<Challenge[]>([]);
   const[endChallengeList, setEndChallengeList] = useState<Challenge[]>([]);
 
@@ -47,6 +45,7 @@ const ProfilePage: React.FC = () => {
       getUserDetails(parseInt(userId))
         .then((response) => {
           setUserData(response.data);
+          setIsFollowing(response.data.isFollow); // Set follow state from user data
         })
         .catch((error) => {
           console.error("유저 상세 정보 조회 중 오류 발생", error);
@@ -59,11 +58,15 @@ const ProfilePage: React.FC = () => {
     }
   }, [userId, otherId]);
 
+  useEffect(() => {
+    if (userCategory === "핀") {
+      fetchBoardListData(); // 핀 카테고리를 선택하면 게시물 목록을 가져옵니다.
+    }
+  }, [userCategory]);
 
   const categories: string[] = userData?.role === "CORP" 
-    ? ["게시물", "챌린지"]
-    : ["게시물", "챌린지", "포트폴리오", "크레딧"];
-
+    ? ["핀", "챌린지"]
+    : ["핀", "챌린지", "포트폴리오", "크레딧"];
 
   const handleUserCategoryClick = (selection: string) => {
     setUserCategory(selection);
@@ -124,6 +127,23 @@ const ProfilePage: React.FC = () => {
     }
   };
 
+  const fetchBoardListData = async () => {
+    try {
+      const params: FetchUserBoardListParams = { keyword: "", pageNo: 0, size: 10 };
+      if (userId) {
+        params.userId = parseInt(userId);
+      }
+      const response = await fetchUserBoardList(params);
+      if (response.data) {
+        setBoardList(response.data);
+      } else {
+        console.error("게시물 목록 조회 실패");
+      }
+    } catch (error) {
+      console.error("게시물 목록 조회 중 오류 발생", error);
+    }
+  };
+
   const fetchMyChallenge = async(userId: number)=>{
     try {
       const response = await getMyChallenge(userId);
@@ -156,6 +176,7 @@ const ProfilePage: React.FC = () => {
     }
   }
 
+
   const openFollowerModal = (followerId: number) => {
     setSelectedFollowerId(followerId);
   };
@@ -167,7 +188,7 @@ const ProfilePage: React.FC = () => {
   return (
     <>
       <div className="py-[2vh] px-[4.5vw]">
-        <Header text="프로필" type="backLeftTextCenterSettingRight" />
+        <Header text="마이페이지" type="backLeftTextCenterSettingRight" />
         <div className="mt-[5.5vh]" />
         {userData && (
           <>
@@ -237,13 +258,7 @@ const ProfilePage: React.FC = () => {
               <p className="text-lg font-semibold mb-[3vh]">
                 포트폴리오를 확인하기 위해 <br /> &nbsp; 크레딧을 사용해보세요!
               </p>
-              <button
-                type="button"
-                className="bg-[#748BFF] text-white p-[3vw] rounded-lg"
-                onClick={handleCreditTipClick}
-              >
-                크레딧 사용해보기
-              </button>
+              <button type="button" className="bg-[#748BFF] text-white p-[3vw] rounded-lg" onClick={handleCreditTipClick}>크레딧 사용해보기</button>
               {showCreditTip && (
                 <Credit
                   showCreditTip={showCreditTip}
@@ -254,13 +269,41 @@ const ProfilePage: React.FC = () => {
           )}
         </>
       )}
+      <div className="w-full">
+        {userCategory === "핀" && (
+          <div>
+            {boardList.length > 0 ? (
+              boardList.map((board) => (
+                <div className="flex justify-between items-center my-[1.75vh] px-[5vw]" key={board.id}>
+                  <BoardCard
+                    title={board.title}
+                    description={board.summary}
+                    author={board.authorNickname}
+                    time={board.createdTime}
+                    heartCount={board.likeCount}
+                    replyCount={board.commentCount}
+                    imageUrl={board.thumbnail}
+                    authorImageUrl={board.authorProfile}
+                  />
+                </div>
+              ))
+            ) : (
+              <div className="flex flex-col justify-between items-center py-[8vh] px-[6vw] bg-white rounded">
+                <p className="text-lg items-center font-semibold mb-[3vh]">
+                &nbsp; 작성한 게시물이 없어요. <br />  새로운 핀을 작성해주세요!
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
       {userCategory === "크레딧" && (
         <Credit
           showCreditTip={showCreditTip}
           handleCreditTipClick={handleCreditTipClick}
         />
       )}
-
+      
       <Navbar />
 
       {selectedFollowerId !== null && (

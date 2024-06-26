@@ -95,7 +95,7 @@ const SignUpProfilePage = () => {
 
   return (
     <>
-      <div className="px-[8vw] pt-[5vh]">
+      <div className="px-[8vw] pt-[5vh] pb-[20vh]">
         <div className="flex items-center">
           <p className="text-[#748BFF] text-4xl font-semibold">ToFin</p>
           <p className="text-2xl font-medium ml-[2vw]">에 </p>
@@ -236,6 +236,7 @@ const SignUpProfilePage = () => {
           </div>
         </div>
       )}
+      <div className="pb-[7vh]"></div>
     </>
   );
 };
