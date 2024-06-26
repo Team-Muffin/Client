@@ -59,16 +59,6 @@ const Challenge: React.FC<ChallengeProps> = ({
       return;
     }
 
-
-    if (confirmed) {
-      let url;
-      if (id === 1) {
-        url = "/challenge/calendar";
-      } else {
-        url = `/board/write?challengeId=${id}`;
-      }
-      navigate(url);
-
     const confirmed = window.confirm(`${title}에 참여하시겠습니까?`);
     if (challengeType === 1) {
       if (confirmed) {
@@ -78,7 +68,6 @@ const Challenge: React.FC<ChallengeProps> = ({
       if (confirmed) {
         navigate(`/board/write?challengeId=${id}`);
       }
-
     }
   };
 
