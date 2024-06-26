@@ -15,6 +15,7 @@ rm -rf ./output/
 
 echo 'execute container'
 mkdir output
+chmod 755 ./output
 docker run --name ${IMAGE_NAME} -v ./output:/output -d bkkmw/${IMAGE_NAME}
 
 echo 'remove existing files'
