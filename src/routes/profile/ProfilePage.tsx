@@ -248,7 +248,7 @@ const ProfilePage: React.FC = () => {
         </div>
         </>
       )}
-      {userCategory === "포트폴리오" && (
+      
       {userCategory === "포트폴리오" && userData?.role === "FINFLUENCER" && (
         <>
           {(portfolioDetails || portfolioAbstracts) ? (
