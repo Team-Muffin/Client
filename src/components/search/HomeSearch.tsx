@@ -206,7 +206,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ keyword }) => {
                     heartCount={data.likeCount}
                     replyCount={data.commentCount}
                     imageUrl={data.thumbnail}
-                    authorImageUrl="https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg"
+                    authorImageUrl={data.authorProfile}
                   />
                 </div>
               </React.Fragment>
