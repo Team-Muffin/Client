@@ -29,5 +29,5 @@ MZ 세대는 금융 정보를 SNS에서 얻습니다. 그에 반해 금융 정�
 <img src="https://img.shields.io/badge/jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white"/><img src="https://img.shields.io/badge/amazon%20ec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white"/><img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"/><img src="https://img.shields.io/badge/redis-FF4438?style=for-the-badge&logo=redis&logoColor=white"/>
 
 # Architecture ⚙️
-![아키텍처](https://github.com/Team-Muffin/Server/assets/63653473/19867db4-1c7b-4ec5-bc3b-cca037868d57)
+![스크린샷 2024-09-05 오전 10 17 58](https://github.com/user-attachments/assets/00d59b99-043d-4dd8-99d4-f1a8dd964794)
 
